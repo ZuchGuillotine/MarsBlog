@@ -9,8 +9,9 @@ import { sampleLocations } from '../data/locations';
   <div class="mars-globe-container">
     <!-- Mars Globe - Main Focus -->
     <div class="absolute inset-0 z-0">
-      <SimpleTestGlobe 
+      <MarsGlobeWrapper 
         client:load 
+        locations={sampleLocations}
       />
     </div>
     

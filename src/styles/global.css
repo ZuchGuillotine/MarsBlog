@@ -79,7 +79,7 @@
   /* Mars globe container */
   .mars-globe-container {
     @apply relative w-full h-screen overflow-hidden;
-    @apply bg-gradient-to-b from-black via-gray-900 to-mars-brown/20;
+    background: linear-gradient(180deg, #000000 0%, #1a1a2e 30%, #2d1b33 60%, #8b4513 100%);
   }
 
   /* Navigation styles */

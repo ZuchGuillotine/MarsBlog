@@ -23,6 +23,12 @@ function Planet() {
     '/mars-data/mars_mola_roughness.png'
   ], (textures) => {
     console.log('Mars textures loaded successfully:', textures.length);
+    // Ensure textures are properly configured
+    textures.forEach((texture, index) => {
+      texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+      texture.flipY = false; // Important for Mars textures
+      console.log(`Texture ${index} configured:`, texture);
+    });
   });
 
   // Auto-rotate the planet
@@ -32,18 +38,18 @@ function Planet() {
     }
   });
 
-  console.log('Planet component rendering...');
+  console.log('Mars Planet component rendering...');
 
   return (
-    <mesh ref={meshRef} position={[0, 0, 0]} castShadow receiveShadow>
-      <sphereGeometry args={[2.2, 64, 64]} />
+    <mesh ref={meshRef} position={[0, 0, 0]}>
+      <sphereGeometry args={[2, 64, 64]} />
       <meshStandardMaterial
         map={colorMap}
         normalMap={normalMap}
         roughnessMap={roughnessMap}
-        roughness={0.7}
+        roughness={0.8}
         metalness={0.1}
-        normalScale={[0.5, 0.5]}
+        normalScale={[0.3, 0.3]}
       />
     </mesh>
   );
@@ -93,17 +99,13 @@ function Scene({ locations, onLocationSelect, onLocationHover }: {
   onLocationSelect?: (location: LocationData) => void;
   onLocationHover?: (location: LocationData | null) => void;
 }) {
+  console.log('Mars Scene component rendering with', locations?.length, 'locations');
+  
   return (
     <>
-      {/* Lighting */}
-      <ambientLight intensity={0.4} />
-      <directionalLight
-        position={[10, 10, 5]}
-        intensity={1}
-        castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
-      />
+      {/* Lighting - similar to test globe */}
+      <ambientLight intensity={0.6} />
+      <directionalLight position={[10, 10, 5]} intensity={1} />
       <pointLight position={[-10, -10, -5]} intensity={0.3} />
       
       {/* Mars Planet */}
@@ -117,21 +119,18 @@ function Scene({ locations, onLocationSelect, onLocationHover }: {
         selectedLocation={null}
       />
       
-      {/* Camera Controls */}
+      {/* Camera Controls - matching test globe */}
       <OrbitControls
         enablePan={false}
         enableZoom={true}
         enableRotate={true}
-        minDistance={3.5}
-        maxDistance={10}
+        minDistance={3}
+        maxDistance={8}
         autoRotate={false}
         autoRotateSpeed={0.5}
         dampingFactor={0.05}
         enableDamping={true}
       />
-      
-      {/* Camera */}
-      <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={50} />
     </>
   );
 }
@@ -143,54 +142,19 @@ export default function MarsGlobe({
   onLocationHover, 
   className = "" 
 }: MarsGlobeProps) {
-  const [error, setError] = useState<Error | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  console.log('MarsGlobe component mounting with', locations?.length, 'locations');
 
-  // Check WebGL support
-  useEffect(() => {
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    
-    if (!gl) {
-      setError(new Error('WebGL not supported'));
-    }
-  }, []);
-
-  // Handle canvas errors
-  const handleCreated = ({ gl, scene, camera }: { gl: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera }) => {
-    console.log('WebGL context created successfully');
-    console.log('Scene:', scene);
-    console.log('Camera:', camera);
-    
-    gl.setClearColor('#000000');
+  const handleCreated = ({ gl }: { gl: THREE.WebGLRenderer }) => {
+    console.log('WebGL context created in Mars globe');
+    gl.setClearColor('#000011');
     gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    gl.shadowMap.enabled = true;
-    gl.shadowMap.type = THREE.PCFSoftShadowMap;
-    
-    // Handle context loss
-    gl.domElement.addEventListener('webglcontextlost', (event) => {
-      console.error('WebGL context lost');
-      event.preventDefault();
-      setError(new Error('WebGL context lost'));
-    });
-    
-    gl.domElement.addEventListener('webglcontextrestored', () => {
-      console.log('WebGL context restored');
-      setError(null);
-    });
   };
 
-  if (error) {
-    return <ErrorFallback error={error} />;
-  }
-
   return (
-    <div className={`relative w-full h-full ${className}`}>
+    <div className={`w-full h-full ${className}`}>
       <Canvas
-        ref={canvasRef}
         onCreated={handleCreated}
-        dpr={[1, 2]}
-        performance={{ min: 0.5 }}
+        camera={{ position: [0, 0, 5], fov: 50 }}
         className="w-full h-full"
         onPointerMissed={() => {
           // Deselect location when clicking empty space
@@ -212,6 +176,11 @@ export default function MarsGlobe({
         <div className="bg-black/50 backdrop-blur-md rounded-lg p-2 text-white text-xs">
           Mars imagery: NASA/JPL
         </div>
+      </div>
+      
+      {/* Debug info */}
+      <div className="absolute top-4 right-4 bg-black/80 text-white p-2 rounded text-xs">
+        Mars Globe - {locations?.length || 0} locations
       </div>
     </div>
   );

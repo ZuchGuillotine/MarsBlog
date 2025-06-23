@@ -38,7 +38,7 @@ export default function MarsGlobeWrapper({ locations }: MarsGlobeWrapperProps) {
 
   if (!isLoaded) {
     return (
-      <div className="w-full h-full flex items-center justify-center bg-gradient-to-b from-black via-gray-900 to-mars-brown/20">
+      <div className="w-full h-full flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="w-96 h-96 bg-mars-gradient rounded-full animate-pulse opacity-30 mx-auto"></div>
           <div className="absolute inset-0 flex items-center justify-center">
