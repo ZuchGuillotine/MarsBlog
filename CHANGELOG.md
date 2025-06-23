@@ -7,19 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### In Progress
+- Interactive location markers on Mars globe
+- Information panels for location details
+- Content management system for terraforming articles
+
+## [0.1.1] - 2025-06-23 (Day 1 Complete)
+
 ### Added
-- Interactive 3D Mars globe with real NASA textures
+- 🌍 **Interactive 3D Mars globe with photorealistic NASA textures**
+- Real Mars surface imagery (5672_mars_6k_color.jpg, 4.5MB high-resolution)
+- Normal mapping and roughness textures for surface detail
+- Smooth camera controls with OrbitControls (drag to rotate, scroll to zoom)
 - Location markers for major Mars features (Olympus Mons, Valles Marineris, Polar Ice Caps, Hellas Basin, Amazonis Planitia)
 - Responsive base layout with Mars-themed design system
-- Comprehensive project documentation
+- Beautiful space-themed gradient background (black → blue → purple → mars brown)
+- Comprehensive project documentation (CHANGELOG.md, PROGRESS_SUMMARY.md)
 - Development environment with ESLint, Prettier, and VS Code configurations
 - Sample location data with terraforming potential ratings
+- Debug components for troubleshooting Three.js issues
 
 ### Fixed
 - CSS import order issues causing PostCSS warnings
-- WebGL rendering and Three.js integration
-- Background gradient for improved visual contrast
-- Font loading and preload issues
+- WebGL rendering and Three.js integration problems
+- Camera positioning and scene setup for proper globe visibility
+- Background gradient restoration for improved visual contrast
+- Font loading and preload issues causing 404 errors
+- Texture loading configuration and error handling
+
+### Technical Improvements
+- Comprehensive console logging for debugging WebGL issues
+- Modular component architecture for Mars globe system
+- Performance optimization with proper texture configuration
+- Error boundaries and fallback states for WebGL failures
 
 ## [0.1.0] - 2025-06-23
 
