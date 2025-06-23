@@ -6,44 +6,42 @@ import { sampleLocations } from '../data/locations';
 
 <BaseLayout title="Terraforming Mars: Map the Future">
   <div class="mars-globe-container">
-    <!-- Hero Section -->
-    <div class="relative z-10 flex items-center justify-center h-screen">
-      <div class="text-center space-y-6 max-w-2xl mx-auto px-4">
-        <h1 class="text-4xl md:text-6xl font-display font-bold text-white text-shadow-mars animate-fade-in">
-          Terraforming Mars
-        </h1>
-        <p class="text-xl md:text-2xl font-display text-mars-tan animate-fade-in">
-          Map the Future
-        </p>
-        <p class="text-lg text-gray-300 max-w-lg mx-auto animate-fade-in">
-          Explore Mars in 3D and discover the science, engineering, and ethics of making the Red Planet our new home.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
-          <button class="btn-primary text-lg px-8 py-4">
-            Explore Mars Globe
-          </button>
-          <a href="/explore" class="btn-secondary text-lg px-8 py-4">
-            Learn More
-          </a>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Mars Globe -->
-    <div class="absolute inset-0">
+    <!-- Mars Globe - Main Focus -->
+    <div class="absolute inset-0 z-0">
       <MarsGlobeWrapper 
         client:load 
         locations={sampleLocations}
       />
     </div>
     
-    <!-- Floating UI hints -->
-    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center">
-      <p class="text-gray-400 text-sm mb-2">Click and drag to explore</p>
-      <div class="w-6 h-6 mx-auto animate-bounce">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="text-gray-400">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-        </svg>
+    <!-- Hero Text Overlay - Top Left -->
+    <div class="absolute top-8 left-8 z-20 max-w-md">
+      <div class="bg-black/50 backdrop-blur-md rounded-xl p-6 space-y-4">
+        <h1 class="text-3xl md:text-4xl font-display font-bold text-white text-shadow-mars">
+          Terraforming Mars
+        </h1>
+        <p class="text-lg md:text-xl font-display text-mars-tan">
+          Map the Future
+        </p>
+        <p class="text-sm text-gray-300">
+          Explore Mars in 3D and discover the science of making the Red Planet our new home.
+        </p>
+        <div class="flex flex-col gap-2">
+          <button class="btn-primary text-sm px-6 py-3">
+            Explore Globe
+          </button>
+          <a href="/explore" class="btn-secondary text-sm px-6 py-3">
+            Learn More
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Globe Controls - Bottom Right -->
+    <div class="absolute bottom-8 right-8 z-20">
+      <div class="bg-black/50 backdrop-blur-md rounded-lg p-3 text-white text-center">
+        <p class="text-xs mb-1">🌍 Drag to rotate</p>
+        <p class="text-xs">🔍 Scroll to zoom</p>
       </div>
     </div>
   </div>

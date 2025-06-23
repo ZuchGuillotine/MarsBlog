@@ -32,7 +32,7 @@ function Planet() {
 
   return (
     <mesh ref={meshRef} position={[0, 0, 0]}>
-      <sphereGeometry args={[2, 64, 64]} />
+      <sphereGeometry args={[2.5, 64, 64]} />
       <meshStandardMaterial
         map={colorMap}
         normalMap={normalMap}
@@ -117,8 +117,8 @@ function Scene({ locations, onLocationSelect, onLocationHover }: {
         enablePan={false}
         enableZoom={true}
         enableRotate={true}
-        minDistance={3}
-        maxDistance={8}
+        minDistance={4}
+        maxDistance={12}
         autoRotate={false}
         autoRotateSpeed={0.5}
         dampingFactor={0.05}
@@ -126,7 +126,7 @@ function Scene({ locations, onLocationSelect, onLocationHover }: {
       />
       
       {/* Camera */}
-      <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={50} />
+      <PerspectiveCamera makeDefault position={[0, 0, 6]} fov={60} />
     </>
   );
 }
@@ -190,17 +190,8 @@ export default function MarsGlobe({
         </Suspense>
       </Canvas>
       
-      {/* Overlay UI */}
-      <div className="absolute top-4 left-4 z-10">
-        <div className="bg-black/50 backdrop-blur-md rounded-lg p-3 text-white">
-          <p className="text-sm font-display">
-            🌍 Drag to rotate • 🔍 Scroll to zoom
-          </p>
-        </div>
-      </div>
-      
       {/* Attribution */}
-      <div className="absolute bottom-4 right-4 z-10">
+      <div className="absolute bottom-4 left-4 z-10">
         <div className="bg-black/50 backdrop-blur-md rounded-lg p-2 text-white text-xs">
           Mars imagery: NASA/JPL
         </div>

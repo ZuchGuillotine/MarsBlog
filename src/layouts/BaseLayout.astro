@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 export interface Props {
   title: string;
   description?: string;
@@ -15,8 +17,8 @@ const {
   className = ""
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const socialImage = ogImage || new URL('/mars-og-image.jpg', Astro.url.origin);
+const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url;
+const socialImage = ogImage || `${Astro.url.origin}/mars-og-image.jpg`;
 ---
 
 <!DOCTYPE html>
@@ -70,8 +72,7 @@ const socialImage = ogImage || new URL('/mars-og-image.jpg', Astro.url.origin);
     <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/mars-data/5672_mars_6k_color.jpg" as="image" />
     
-    <!-- Global CSS -->
-    <link rel="stylesheet" href="/src/styles/global.css" />
+    <!-- Global CSS will be handled by Astro automatically -->
   </head>
   
   <body class={`min-h-screen bg-gwern-bg dark:bg-gwern-bg-dark text-gwern-text dark:text-gwern-text-dark ${className}`}>
