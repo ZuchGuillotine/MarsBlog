@@ -131,6 +131,9 @@ function Scene({ locations, onLocationSelect, onLocationHover }: {
         dampingFactor={0.05}
         enableDamping={true}
       />
+      
+      {/* Camera */}
+      <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={50} />
     </>
   );
 }
@@ -154,7 +157,6 @@ export default function MarsGlobe({
     <div className={`w-full h-full ${className}`}>
       <Canvas
         onCreated={handleCreated}
-        camera={{ position: [0, 0, 5], fov: 50 }}
         className="w-full h-full"
         onPointerMissed={() => {
           // Deselect location when clicking empty space
@@ -162,7 +164,7 @@ export default function MarsGlobe({
           onLocationHover?.(null);
         }}
       >
-        <Suspense fallback={<LoadingFallback />}>
+        <Suspense fallback={null}>
           <Scene
             locations={locations}
             onLocationSelect={onLocationSelect}
