@@ -1,0 +1,227 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  showDonationCTA?: boolean;
+  className?: string;
+}
+
+const { 
+  title, 
+  description = "Explore Mars in 3D and learn about the science, engineering, and ethics of terraforming the Red Planet.", 
+  ogImage,
+  showDonationCTA = true,
+  className = ""
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImage = ogImage || new URL('/mars-og-image.jpg', Astro.url.origin);
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- SEO -->
+    <title>{title}</title>
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:site_name" content="Terraforming Mars Explorer" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={socialImage} />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Terraforming Mars Explorer",
+        "description": "Interactive exploration of Mars terraforming science and technology",
+        "url": canonicalURL,
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "/search?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/mars-data/5672_mars_6k_color.jpg" as="image" />
+    
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="/src/styles/global.css" />
+  </head>
+  
+  <body class={`min-h-screen bg-gwern-bg dark:bg-gwern-bg-dark text-gwern-text dark:text-gwern-text-dark ${className}`}>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-mars-red text-white px-4 py-2 rounded-md z-50">
+      Skip to main content
+    </a>
+    
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-gwern-bg/95 dark:bg-gwern-bg-dark/95 backdrop-blur-sm border-b border-gwern-border dark:border-gwern-border-dark">
+      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <div class="flex items-center">
+            <a href="/" class="flex items-center space-x-3 group">
+              <div class="w-8 h-8 bg-mars-gradient rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <span class="font-display font-semibold text-lg text-gwern-text dark:text-gwern-text-dark">
+                Mars Explorer
+              </span>
+            </a>
+          </div>
+          
+          <!-- Desktop Navigation -->
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-8">
+              <a href="/" class="nav-link">Home</a>
+              <a href="/explore" class="nav-link">Explore</a>
+              <a href="/locations" class="nav-link">Locations</a>
+              <a href="/about" class="nav-link">About</a>
+              {showDonationCTA && (
+                <a href="/support" class="btn-primary">
+                  Support Research
+                </a>
+              )}
+            </div>
+          </div>
+          
+          <!-- Mobile menu button -->
+          <div class="md:hidden">
+            <button 
+              type="button" 
+              class="btn-ghost p-2" 
+              aria-controls="mobile-menu" 
+              aria-expanded="false"
+              id="mobile-menu-button"
+            >
+              <span class="sr-only">Open main menu</span>
+              <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="md:hidden hidden" id="mobile-menu">
+          <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gwern-border dark:border-gwern-border-dark">
+            <a href="/" class="block nav-link">Home</a>
+            <a href="/explore" class="block nav-link">Explore</a>
+            <a href="/locations" class="block nav-link">Locations</a>
+            <a href="/about" class="block nav-link">About</a>
+            {showDonationCTA && (
+              <a href="/support" class="block btn-primary mt-4">
+                Support Research
+              </a>
+            )}
+          </div>
+        </div>
+      </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-50 dark:bg-gray-900 border-t border-gwern-border dark:border-gwern-border-dark">
+      <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <!-- About -->
+          <div class="col-span-1 md:col-span-2">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="w-8 h-8 bg-mars-gradient rounded-full flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <span class="font-display font-semibold text-lg">Mars Explorer</span>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 max-w-md">
+              Explore Mars in 3D and learn about the science, engineering, and ethics of terraforming the Red Planet.
+            </p>
+          </div>
+          
+          <!-- Quick Links -->
+          <div>
+            <h3 class="font-display font-semibold text-gwern-text dark:text-gwern-text-dark mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li><a href="/about" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">About</a></li>
+              <li><a href="/privacy" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">Privacy</a></li>
+              <li><a href="/terms" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">Terms</a></li>
+              <li><a href="/contact" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">Contact</a></li>
+            </ul>
+          </div>
+          
+          <!-- Social Links -->
+          <div>
+            <h3 class="font-display font-semibold text-gwern-text dark:text-gwern-text-dark mb-4">Connect</h3>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">
+                <span class="sr-only">Twitter</span>
+                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                </svg>
+              </a>
+              <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">
+                <span class="sr-only">GitHub</span>
+                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-8 pt-8 border-t border-gwern-border dark:border-gwern-border-dark">
+          <p class="text-center text-gray-600 dark:text-gray-400 text-sm">
+            © 2025 Mars Explorer. Built with ❤️ for the future of humanity.
+          </p>
+        </div>
+      </div>
+    </footer>
+    
+    <!-- Mobile menu toggle script -->
+    <script>
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+          const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+          mobileMenuButton.setAttribute('aria-expanded', (!isExpanded).toString());
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,224 @@
+---
+export interface Props {
+  title: string;
+  level?: 1 | 2 | 3 | 4;
+  defaultOpen?: boolean;
+  icon?: 'arrow' | 'plus' | 'chevron';
+  id?: string;
+  className?: string;
+}
+
+const { 
+  title, 
+  level = 2, 
+  defaultOpen = false, 
+  icon = 'arrow',
+  id,
+  className = ''
+} = Astro.props;
+
+const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
+const sectionId = id || title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+---
+
+<details 
+  class={`collapsible-section ${className}`}
+  open={defaultOpen}
+  data-section-id={sectionId}
+>
+  <summary class="collapsible-summary">
+    <div class="summary-content">
+      <HeadingTag class="summary-title">
+        {title}
+      </HeadingTag>
+      <div class={`summary-icon summary-icon--${icon}`}>
+        {icon === 'arrow' && (
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8.5 3.5L13 8l-4.5 4.5L7 11l2.5-2.5H2v-1h7.5L7 5l1.5-1.5z"/>
+          </svg>
+        )}
+        {icon === 'plus' && (
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        )}
+        {icon === 'chevron' && (
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M4.5 6l3.5 3.5L11.5 6"/>
+          </svg>
+        )}
+      </div>
+    </div>
+  </summary>
+  
+  <div class="collapsible-content">
+    <slot />
+  </div>
+</details>
+
+<style>
+  .collapsible-section {
+    @apply border border-gray-200 dark:border-gray-700 rounded-lg mb-4 overflow-hidden;
+    @apply transition-all duration-200 ease-in-out;
+  }
+
+  .collapsible-section:hover {
+    @apply border-mars-orange/30 dark:border-mars-tan/30;
+  }
+
+  .collapsible-section[open] {
+    @apply border-mars-red/20 dark:border-mars-orange/20;
+  }
+
+  .collapsible-summary {
+    @apply cursor-pointer select-none;
+    @apply bg-gray-50 dark:bg-gray-800/50;
+    @apply px-4 py-3 border-b border-gray-200 dark:border-gray-700;
+    @apply transition-colors duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-mars-orange focus:ring-inset;
+  }
+
+  .collapsible-summary:hover {
+    @apply bg-gray-100 dark:bg-gray-700/50;
+  }
+
+  .collapsible-section[open] .collapsible-summary {
+    @apply bg-mars-red/5 dark:bg-mars-orange/10;
+    @apply border-b-mars-red/10 dark:border-b-mars-orange/20;
+  }
+
+  .summary-content {
+    @apply flex items-center justify-between w-full;
+  }
+
+  .summary-title {
+    @apply font-display font-semibold text-gray-900 dark:text-gray-100;
+    @apply m-0 leading-tight;
+  }
+
+  .summary-title:is(h1) {
+    @apply text-xl;
+  }
+
+  .summary-title:is(h2) {
+    @apply text-lg;
+  }
+
+  .summary-title:is(h3) {
+    @apply text-base;
+  }
+
+  .summary-title:is(h4) {
+    @apply text-sm;
+  }
+
+  .summary-icon {
+    @apply flex-shrink-0 ml-3 text-gray-500 dark:text-gray-400;
+    @apply transition-all duration-200 ease-in-out;
+  }
+
+  .summary-icon--arrow {
+    @apply rotate-0;
+  }
+
+  .collapsible-section[open] .summary-icon--arrow {
+    @apply rotate-90;
+  }
+
+  .summary-icon--plus svg {
+    @apply transition-transform duration-200;
+  }
+
+  .collapsible-section[open] .summary-icon--plus svg {
+    @apply rotate-45;
+  }
+
+  .summary-icon--chevron {
+    @apply rotate-0;
+  }
+
+  .collapsible-section[open] .summary-icon--chevron {
+    @apply rotate-180;
+  }
+
+  .collapsible-content {
+    @apply px-4 py-4 bg-white dark:bg-gray-900;
+    @apply prose prose-mars dark:prose-invert max-w-none;
+  }
+
+  /* Remove default details styling */
+  .collapsible-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .collapsible-summary::marker {
+    content: '';
+  }
+
+  /* Smooth animation for content */
+  .collapsible-section:not([open]) .collapsible-content {
+    animation: collapse 0.2s ease-out;
+  }
+
+  .collapsible-section[open] .collapsible-content {
+    animation: expand 0.2s ease-out;
+  }
+
+  @keyframes expand {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes collapse {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+</style>
+
+<script>
+  // Enhanced accessibility and state management
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.collapsible-section');
+    
+    sections.forEach((section) => {
+      const summary = section.querySelector('.collapsible-summary');
+      const sectionId = section.getAttribute('data-section-id');
+      
+      if (!summary || !sectionId) return;
+      
+      // Save state to sessionStorage
+      section.addEventListener('toggle', () => {
+        const isOpen = section.hasAttribute('open');
+        sessionStorage.setItem(`section-${sectionId}`, isOpen.toString());
+      });
+      
+      // Restore state from sessionStorage
+      const savedState = sessionStorage.getItem(`section-${sectionId}`);
+      if (savedState === 'true' && !section.hasAttribute('open')) {
+        section.setAttribute('open', '');
+      } else if (savedState === 'false' && section.hasAttribute('open')) {
+        section.removeAttribute('open');
+      }
+      
+      // Keyboard navigation
+      summary.addEventListener('keydown', (e) => {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          section.toggleAttribute('open');
+        }
+      });
+    });
+  });
+</script>

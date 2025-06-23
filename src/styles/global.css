@@ -1,0 +1,237 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import custom fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ET Book font fallback */
+@font-face {
+  font-family: 'ET Book';
+  src: local('Georgia'), local('Times New Roman');
+  font-display: swap;
+}
+
+@layer base {
+  html {
+    font-family: 'ET Book', Georgia, serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-gwern-bg dark:bg-gwern-bg-dark text-gwern-text dark:text-gwern-text-dark;
+    @apply transition-colors duration-300;
+  }
+
+  /* Focus styles for accessibility */
+  *:focus {
+    @apply outline-2 outline-mars-orange outline-offset-2;
+  }
+
+  /* Remove default button styles */
+  button {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  /* Mars-themed button styles */
+  .btn-primary {
+    @apply bg-mars-red hover:bg-mars-rust text-white font-display font-medium;
+    @apply px-6 py-3 rounded-lg transition-all duration-200;
+    @apply shadow-md hover:shadow-lg;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent hover:bg-mars-red/10 text-mars-red border-2 border-mars-red;
+    @apply font-display font-medium px-6 py-3 rounded-lg transition-all duration-200;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-mars-red/5 text-gwern-text dark:text-gwern-text-dark;
+    @apply font-display font-medium px-4 py-2 rounded-md transition-all duration-200;
+  }
+
+  /* Card components */
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gwern-border dark:border-gwern-border-dark;
+    @apply transition-all duration-200;
+  }
+
+  .card-hover {
+    @apply hover:shadow-lg hover:scale-[1.02] cursor-pointer;
+  }
+
+  /* Info panel styles */
+  .info-panel {
+    @apply fixed right-4 top-1/2 transform -translate-y-1/2 z-50;
+    @apply bg-white/95 dark:bg-gray-900/95 backdrop-blur-md;
+    @apply rounded-xl shadow-2xl border border-gwern-border dark:border-gwern-border-dark;
+    @apply w-80 max-w-sm p-6 max-h-[80vh] overflow-y-auto;
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .info-panel-hidden {
+    @apply translate-x-full opacity-0 pointer-events-none;
+  }
+
+  /* Mars globe container */
+  .mars-globe-container {
+    @apply relative w-full h-screen overflow-hidden;
+    @apply bg-gradient-to-b from-black via-gray-900 to-mars-brown/20;
+  }
+
+  /* Navigation styles */
+  .nav-link {
+    @apply font-display font-medium text-gwern-text dark:text-gwern-text-dark;
+    @apply hover:text-mars-red dark:hover:text-mars-orange transition-colors duration-200;
+    @apply relative py-2 px-3;
+  }
+
+  .nav-link.active::after {
+    content: '';
+    @apply absolute bottom-0 left-1/2 transform -translate-x-1/2;
+    @apply w-1/2 h-0.5 bg-mars-red dark:bg-mars-orange;
+  }
+
+  /* Collapsible sections */
+  .collapsible-section {
+    @apply border border-gwern-border dark:border-gwern-border-dark rounded-lg overflow-hidden;
+    @apply mb-4 transition-all duration-200;
+  }
+
+  .collapsible-header {
+    @apply bg-gray-50 dark:bg-gray-800 p-4 cursor-pointer;
+    @apply font-display font-medium text-gwern-text dark:text-gwern-text-dark;
+    @apply hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200;
+    @apply flex items-center justify-between;
+  }
+
+  .collapsible-content {
+    @apply p-4 prose prose-slate dark:prose-invert max-w-none;
+  }
+
+  /* Loading spinner */
+  .loading-spinner {
+    @apply inline-block w-6 h-6 border-2 border-mars-red border-t-transparent;
+    @apply rounded-full animate-spin;
+  }
+
+  /* Search box */
+  .search-box {
+    @apply relative w-full max-w-md;
+  }
+
+  .search-input {
+    @apply w-full px-4 py-2 pr-10 border border-gwern-border dark:border-gwern-border-dark;
+    @apply rounded-lg bg-white dark:bg-gray-800 text-gwern-text dark:text-gwern-text-dark;
+    @apply focus:ring-2 focus:ring-mars-orange focus:border-transparent;
+    @apply transition-all duration-200;
+  }
+
+  .search-results {
+    @apply absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800;
+    @apply border border-gwern-border dark:border-gwern-border-dark rounded-lg shadow-lg;
+    @apply max-h-80 overflow-y-auto z-50;
+  }
+
+  .search-result-item {
+    @apply p-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer;
+    @apply border-b border-gwern-border dark:border-gwern-border-dark last:border-b-0;
+  }
+}
+
+@layer utilities {
+  /* Text shadows for Mars atmosphere effect */
+  .text-shadow-mars {
+    text-shadow: 0 2px 4px rgba(205, 92, 92, 0.3);
+  }
+
+  /* Gradient backgrounds */
+  .bg-mars-gradient {
+    background: linear-gradient(135deg, #cd5c5c 0%, #ff8c42 50%, #8b4513 100%);
+  }
+
+  .bg-space-gradient {
+    background: linear-gradient(180deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
+  }
+
+  /* Backdrop blur utilities */
+  .backdrop-blur-mars {
+    backdrop-filter: blur(8px) saturate(1.2);
+  }
+
+  /* Custom scrollbar */
+  .scrollbar-mars {
+    scrollbar-width: thin;
+    scrollbar-color: #cd5c5c #f1f1f1;
+  }
+
+  .scrollbar-mars::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-mars::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  .scrollbar-mars::-webkit-scrollbar-thumb {
+    background: #cd5c5c;
+    border-radius: 3px;
+  }
+
+  .scrollbar-mars::-webkit-scrollbar-thumb:hover {
+    background: #b7410e;
+  }
+
+  /* Animation utilities */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from { box-shadow: 0 0 10px #cd5c5c; }
+    to { box-shadow: 0 0 20px #ff8c42, 0 0 30px #cd5c5c; }
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .btn-primary {
+    @apply bg-black text-white border-2 border-white;
+  }
+  
+  .btn-secondary {
+    @apply bg-white text-black border-2 border-black;
+  }
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}

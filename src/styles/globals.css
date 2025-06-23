@@ -1,0 +1,342 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS Variables for Mars Theme */
+:root {
+  /* Mars Color Palette */
+  --color-mars-red: #cd5c5c;
+  --color-mars-orange: #ff8c42;
+  --color-mars-brown: #8b4513;
+  --color-mars-tan: #deb887;
+  --color-mars-rust: #b7410e;
+  --color-mars-clay: #cc8e35;
+  --color-mars-dark: #2c1810;
+  --color-mars-darker: #1a0f08;
+  
+  /* Gwern-inspired Typography */
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-body: 'ET Book', 'Georgia', serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+  
+  /* Spacing Scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+  
+  /* Shadows */
+  --shadow-mars: 0 4px 6px -1px rgba(205, 92, 92, 0.1), 0 2px 4px -1px rgba(205, 92, 92, 0.06);
+  --shadow-mars-lg: 0 10px 15px -3px rgba(205, 92, 92, 0.1), 0 4px 6px -2px rgba(205, 92, 92, 0.05);
+  
+  /* Gradients */
+  --gradient-mars: linear-gradient(135deg, var(--color-mars-red) 0%, var(--color-mars-orange) 100%);
+  --gradient-mars-subtle: linear-gradient(135deg, rgba(205, 92, 92, 0.1) 0%, rgba(255, 140, 66, 0.1) 100%);
+}
+
+/* Dark theme variables */
+.dark {
+  --color-mars-red: #e57373;
+  --color-mars-orange: #ffab70;
+  --color-mars-brown: #a0522d;
+  --color-mars-tan: #f5deb3;
+  --color-mars-rust: #d7691e;
+  --color-mars-clay: #daa520;
+  --color-mars-dark: #1a0f08;
+  --color-mars-darker: #0f0906;
+}
+
+/* Base styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-body);
+  }
+  
+  body {
+    @apply bg-gwern-paper dark:bg-mars-darker text-gwern-ink dark:text-gwern-paper;
+    @apply font-body leading-relaxed;
+    @apply antialiased;
+  }
+  
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold;
+    @apply text-mars-red dark:text-mars-red;
+  }
+  
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+    @apply leading-tight tracking-tight;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl;
+    @apply leading-tight;
+  }
+  
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+  
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+  
+  /* Links */
+  a {
+    @apply text-gwern-accent dark:text-mars-orange;
+    @apply transition-colors duration-200;
+    @apply hover:text-mars-red dark:hover:text-mars-red;
+  }
+  
+  /* Focus styles for accessibility */
+  *:focus {
+    @apply outline-none ring-2 ring-mars-red ring-opacity-50;
+  }
+  
+  /* Button focus styles */
+  button:focus-visible {
+    @apply ring-2 ring-mars-red ring-opacity-50 ring-offset-2;
+  }
+  
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Component layer */
+@layer components {
+  /* Mars-themed buttons */
+  .btn-mars {
+    @apply px-6 py-3 rounded-lg font-medium;
+    @apply bg-mars-red hover:bg-mars-rust;
+    @apply text-white;
+    @apply transition-all duration-200;
+    @apply shadow-mars hover:shadow-mars-lg;
+    @apply transform hover:scale-105;
+    @apply focus:outline-none focus:ring-2 focus:ring-mars-red focus:ring-opacity-50;
+  }
+  
+  .btn-mars-outline {
+    @apply px-6 py-3 rounded-lg font-medium;
+    @apply border-2 border-mars-red text-mars-red;
+    @apply hover:bg-mars-red hover:text-white;
+    @apply transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-mars-red focus:ring-opacity-50;
+  }
+  
+  .btn-mars-ghost {
+    @apply px-6 py-3 rounded-lg font-medium;
+    @apply text-mars-red hover:text-mars-rust;
+    @apply hover:bg-mars-red hover:bg-opacity-10;
+    @apply transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-mars-red focus:ring-opacity-50;
+  }
+  
+  /* Card styles */
+  .card-mars {
+    @apply bg-white dark:bg-mars-dark;
+    @apply border border-gwern-border dark:border-mars-brown;
+    @apply rounded-lg shadow-lg;
+    @apply p-6;
+    @apply transition-all duration-200;
+    @apply hover:shadow-mars-lg;
+  }
+  
+  /* Input styles */
+  .input-mars {
+    @apply w-full px-4 py-2 rounded-lg;
+    @apply border border-gwern-border dark:border-mars-brown;
+    @apply bg-white dark:bg-mars-dark;
+    @apply text-gwern-ink dark:text-gwern-paper;
+    @apply placeholder-gwern-muted;
+    @apply focus:outline-none focus:ring-2 focus:ring-mars-red focus:border-transparent;
+    @apply transition-colors duration-200;
+  }
+  
+  /* Navigation styles */
+  .nav-link {
+    @apply px-4 py-2 rounded-md;
+    @apply text-gwern-ink dark:text-gwern-paper;
+    @apply hover:text-mars-red dark:hover:text-mars-orange;
+    @apply hover:bg-mars-red hover:bg-opacity-10;
+    @apply transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-mars-red focus:ring-opacity-50;
+  }
+  
+  .nav-link-active {
+    @apply bg-mars-red bg-opacity-10;
+    @apply text-mars-red dark:text-mars-orange;
+    @apply font-medium;
+  }
+  
+  /* Loading animations */
+  .loading-mars {
+    @apply animate-pulse;
+  }
+  
+  .loading-mars-spin {
+    @apply animate-spin;
+  }
+  
+  /* Mars-themed prose */
+  .prose-mars {
+    @apply prose prose-lg max-w-none;
+    @apply prose-headings:text-mars-red prose-headings:font-display;
+    @apply prose-p:text-gwern-ink dark:prose-p:text-gwern-paper;
+    @apply prose-a:text-gwern-accent prose-a:no-underline hover:prose-a:text-mars-red;
+    @apply prose-strong:text-gwern-ink dark:prose-strong:text-gwern-paper;
+    @apply prose-code:text-mars-red prose-code:bg-mars-red prose-code:bg-opacity-10;
+    @apply prose-pre:bg-mars-dark prose-pre:text-gwern-paper;
+    @apply prose-blockquote:border-l-mars-red prose-blockquote:text-gwern-muted;
+  }
+  
+  /* Utility classes */
+  .text-gradient-mars {
+    background: var(--gradient-mars);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .bg-gradient-mars {
+    background: var(--gradient-mars);
+  }
+  
+  .bg-gradient-mars-subtle {
+    background: var(--gradient-mars-subtle);
+  }
+  
+  /* Scroll behavior */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+  
+  /* Custom scrollbar */
+  .scrollbar-mars {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-mars-red) transparent;
+  }
+  
+  .scrollbar-mars::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .scrollbar-mars::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-mars::-webkit-scrollbar-thumb {
+    background-color: var(--color-mars-red);
+    border-radius: 3px;
+  }
+  
+  .scrollbar-mars::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-mars-rust);
+  }
+}
+
+/* Utility layer */
+@layer utilities {
+  /* Custom spacing utilities */
+  .space-mars {
+    gap: var(--space-md);
+  }
+  
+  /* Custom animations */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+  
+  .animate-slide-in-right {
+    animation: slideInRight 0.3s ease-out;
+  }
+  
+  .animate-slide-out-right {
+    animation: slideOutRight 0.3s ease-out;
+  }
+  
+  /* Responsive utilities */
+  .container-mars {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Accessibility utilities */
+  .sr-only-focusable {
+    @apply sr-only;
+  }
+  
+  .sr-only-focusable:focus {
+    @apply not-sr-only;
+    @apply absolute top-0 left-0;
+    @apply z-50 p-2;
+    @apply bg-white dark:bg-mars-dark;
+    @apply text-gwern-ink dark:text-gwern-paper;
+    @apply border border-gwern-border dark:border-mars-brown;
+    @apply rounded;
+  }
+}
+
+/* Additional keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    @apply text-black bg-white;
+  }
+  
+  a {
+    @apply text-black no-underline;
+  }
+  
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+}
