@@ -1,7 +1,7 @@
 import { Suspense, useState, useRef, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, useTexture } from '@react-three/drei';
-import { Vector3 } from 'three';
+import * as THREE from 'three';
 import type { LocationData } from '../../types/location';
 import LocationMarkers from './LocationMarkers';
 
@@ -16,29 +16,34 @@ interface MarsGlobeProps {
 function Planet() {
   const meshRef = useRef<THREE.Mesh>(null);
   
-  // Load Mars textures
+  // Load Mars textures with error handling
   const [colorMap, normalMap, roughnessMap] = useTexture([
     '/mars-data/5672_mars_6k_color.jpg',
     '/mars-data/marsgeology.jpg', // Using geology as normal map
     '/mars-data/mars_mola_roughness.png'
-  ]);
+  ], (textures) => {
+    console.log('Mars textures loaded successfully:', textures.length);
+  });
 
   // Auto-rotate the planet
   useFrame((state, delta) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.1; // Slow rotation
+      meshRef.current.rotation.y += delta * 0.05; // Slower rotation for better viewing
     }
   });
 
+  console.log('Planet component rendering...');
+
   return (
-    <mesh ref={meshRef} position={[0, 0, 0]}>
-      <sphereGeometry args={[2.5, 64, 64]} />
+    <mesh ref={meshRef} position={[0, 0, 0]} castShadow receiveShadow>
+      <sphereGeometry args={[2.2, 64, 64]} />
       <meshStandardMaterial
         map={colorMap}
         normalMap={normalMap}
         roughnessMap={roughnessMap}
-        roughness={0.8}
+        roughness={0.7}
         metalness={0.1}
+        normalScale={[0.5, 0.5]}
       />
     </mesh>
   );
@@ -117,8 +122,8 @@ function Scene({ locations, onLocationSelect, onLocationHover }: {
         enablePan={false}
         enableZoom={true}
         enableRotate={true}
-        minDistance={4}
-        maxDistance={12}
+        minDistance={3.5}
+        maxDistance={10}
         autoRotate={false}
         autoRotateSpeed={0.5}
         dampingFactor={0.05}
@@ -126,7 +131,7 @@ function Scene({ locations, onLocationSelect, onLocationHover }: {
       />
       
       {/* Camera */}
-      <PerspectiveCamera makeDefault position={[0, 0, 6]} fov={60} />
+      <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={50} />
     </>
   );
 }
@@ -152,14 +157,26 @@ export default function MarsGlobe({
   }, []);
 
   // Handle canvas errors
-  const handleCreated = ({ gl }: { gl: THREE.WebGLRenderer }) => {
+  const handleCreated = ({ gl, scene, camera }: { gl: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera }) => {
+    console.log('WebGL context created successfully');
+    console.log('Scene:', scene);
+    console.log('Camera:', camera);
+    
     gl.setClearColor('#000000');
     gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    gl.shadowMap.enabled = true;
+    gl.shadowMap.type = THREE.PCFSoftShadowMap;
     
     // Handle context loss
     gl.domElement.addEventListener('webglcontextlost', (event) => {
+      console.error('WebGL context lost');
       event.preventDefault();
       setError(new Error('WebGL context lost'));
+    });
+    
+    gl.domElement.addEventListener('webglcontextrestored', () => {
+      console.log('WebGL context restored');
+      setError(null);
     });
   };
 

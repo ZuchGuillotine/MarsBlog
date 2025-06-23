@@ -12,10 +12,14 @@ export default function MarsGlobeWrapper({ locations }: MarsGlobeWrapperProps) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    console.log('MarsGlobeWrapper mounted with', locations.length, 'locations');
     // Simulate loading delay for better UX
-    const timer = setTimeout(() => setIsLoaded(true), 500);
+    const timer = setTimeout(() => {
+      console.log('MarsGlobeWrapper loading complete');
+      setIsLoaded(true);
+    }, 1000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [locations]);
 
   const handleLocationSelect = (location: LocationData | null) => {
     setSelectedLocation(location);
