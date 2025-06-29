@@ -1,0 +1,422 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import marsLocations from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'olympus-mons');
+if (!location) {
+  throw new Error('Olympus Mons location not found');
+}
+---
+
+<LocationLayout title="Olympus Mons - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-orange-900 to-red-900 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          The largest volcano in the solar system
+        </p>
+        <p class="text-xs opacity-60">Image: NASA/MOLA Science Team</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Olympus Mons stands as a colossal monument to Mars' volcanic past,
+          rising as the tallest known volcano in our solar system. This massive
+          shield volcano towers approximately 21.2 kilometers (13.2 miles) above
+          the surrounding plains, nearly three times the height of Mount
+          Everest. Its base spans roughly 600 kilometers (370 miles) in
+          diameter, making it roughly the size of the state of Arizona.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Located in the Tharsis volcanic region, Olympus Mons formed over
+          millions of years through repeated basaltic lava flows. The volcano's
+          gentle slopes, averaging only 5 degrees, are characteristic of shield
+          volcanoes formed by low-viscosity lava flows that spread over vast
+          distances before cooling.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          What makes Olympus Mons particularly intriguing for future Mars
+          exploration is its extensive network of lava tubes - natural
+          underground tunnels that could serve as ready-made shelters for human
+          habitats, protecting settlers from radiation, extreme temperatures,
+          and dust storms.
+        </p>
+      </div>
+      <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Vital Statistics</h3>
+        <div class="space-y-3 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-400">Height:</span>
+            <span class="text-white">21.2 km (13.2 mi)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Base Diameter:</span>
+            <span class="text-white">~600 km (370 mi)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Volume:</span>
+            <span class="text-white">~300 million km³</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Last Activity:</span>
+            <span class="text-white">20-200 million years ago</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Type:</span>
+            <span class="text-white">Shield Volcano</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Geological Features -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Geological Features
+    </h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div>
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Volcanic Structure
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Olympus Mons exhibits a classic shield volcano profile with a large
+          summit caldera complex measuring about 80 kilometers wide and up to 3
+          kilometers deep. The caldera formed through repeated collapse events
+          as magma chambers emptied during eruptions.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The volcano's aureole, a distinctive scarp that surrounds the base,
+          drops 2-8 kilometers to the surrounding plains. This feature may have
+          formed through gravitational spreading of the massive volcanic pile or
+          through interaction with underlying sediments.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Lava Tube Networks
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Extensive lava tube systems have been identified across Olympus Mons'
+          flanks. These tubes formed when the outer surface of lava flows cooled
+          and solidified while molten lava continued to flow beneath, eventually
+          draining to leave hollow conduits.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          On Mars' lower gravity environment, these lava tubes can be
+          significantly larger than their Earth counterparts - potentially up to
+          several kilometers wide and hundreds of kilometers long.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Habitat Potential -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Lava Tubes as Human Habitats
+    </h2>
+    <div class="space-y-8">
+      <div
+        class="bg-gradient-to-r from-mars-900/40 to-gray-800/40 rounded-lg p-8 border border-mars-600"
+      >
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Natural Protection Systems
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Lava tubes on Olympus Mons offer unparalleled natural protection for
+          human settlements. The thick rock ceiling provides excellent shielding
+          from cosmic radiation, solar radiation, and micrometeorite impacts.
+          The stable internal environment maintains relatively constant
+          temperatures year-round.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-gray-800/30 rounded-lg p-4 border border-gray-700">
+            <h4 class="font-semibold text-white mb-2">Radiation Shielding</h4>
+            <p class="text-gray-300 text-sm">
+              Meters of rock overhead block harmful cosmic rays and solar
+              radiation that pose serious health risks on the surface.
+            </p>
+          </div>
+          <div class="bg-gray-800/30 rounded-lg p-4 border border-gray-700">
+            <h4 class="font-semibold text-white mb-2">Temperature Stability</h4>
+            <p class="text-gray-300 text-sm">
+              Interior temperatures remain stable, avoiding the extreme daily
+              temperature swings experienced on the surface.
+            </p>
+          </div>
+          <div class="bg-gray-800/30 rounded-lg p-4 border border-gray-700">
+            <h4 class="font-semibold text-white mb-2">
+              Atmospheric Protection
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Natural shelter from dust storms and the thin Martian atmosphere
+              that provides little protection from space hazards.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-xl font-semibold text-mars-orange mb-4">
+            Engineering Advantages
+          </h3>
+          <ul class="space-y-3 text-gray-300">
+            <li class="flex items-start">
+              <span class="text-mars-orange mr-2">•</span>
+              <span
+                ><strong>Ready-made structures:</strong> No need to excavate or build
+                pressure vessels from scratch</span
+              >
+            </li>
+            <li class="flex items-start">
+              <span class="text-mars-orange mr-2">•</span>
+              <span
+                ><strong>Scalable expansion:</strong> Multiple connected tubes allow
+                for modular habitat growth</span
+              >
+            </li>
+            <li class="flex items-start">
+              <span class="text-mars-orange mr-2">•</span>
+              <span
+                ><strong>Structural integrity:</strong> Natural arches proven stable
+                over millions of years</span
+              >
+            </li>
+            <li class="flex items-start">
+              <span class="text-mars-orange mr-2">•</span>
+              <span
+                ><strong>Access points:</strong> Skylights and collapsed sections
+                provide natural entrances</span
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-mars-orange mb-4">
+            Resource Potential
+          </h3>
+          <ul class="space-y-3 text-gray-300">
+            <li class="flex items-start">
+              <span class="text-mars-orange mr-2">•</span>
+              <span
+                ><strong>Volcanic materials:</strong> Rich in useful minerals for
+                construction and manufacturing</span
+              >
+            </li>
+            <li class="flex items-start">
+              <span class="text-mars-orange mr-2">•</span>
+              <span
+                ><strong>Water ice deposits:</strong> Potential ice accumulation
+                in permanently shadowed areas</span
+              >
+            </li>
+            <li class="flex items-start">
+              <span class="text-mars-orange mr-2">•</span>
+              <span
+                ><strong>Elevated position:</strong> Above much of the atmospheric
+                dust for clear communications</span
+              >
+            </li>
+            <li class="flex items-start">
+              <span class="text-mars-orange mr-2">•</span>
+              <span
+                ><strong>Geothermal potential:</strong> Residual heat from the volcanic
+                system</span
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Assessment -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming and Settlement Assessment
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          With a terraforming rating of 8/10, Olympus Mons offers exceptional
+          potential for human settlement, primarily due to its extensive lava
+          tube systems. The combination of natural protection, structural
+          integrity, and resource availability makes it one of the most
+          promising locations for establishing large-scale human presence on
+          Mars.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <h4 class="font-semibold text-white mb-3">Settlement Advantages</h4>
+            <ul class="text-gray-300 text-sm space-y-2">
+              <li>• Immediate radiation protection</li>
+              <li>• Stable environmental conditions</li>
+              <li>• Multiple habitat sites available</li>
+              <li>• Natural structural support</li>
+              <li>• Elevated communications position</li>
+              <li>• Rich mineral resources</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white mb-3">
+              Engineering Considerations
+            </h4>
+            <ul class="text-gray-300 text-sm space-y-2">
+              <li>• Sealing for atmospheric pressure</li>
+              <li>• Access and transportation challenges</li>
+              <li>• Interior lighting requirements</li>
+              <li>• Emergency egress planning</li>
+              <li>• Communication relay systems</li>
+              <li>• Life support redundancy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="bg-mars-900/30 rounded-lg p-6 border border-mars-600">
+        <h3 class="text-lg font-semibold text-mars-orange mb-4">
+          Primary Challenges
+        </h3>
+        <ul class="text-gray-300 text-sm space-y-2">
+          <li>• Extreme altitude effects</li>
+          <li>• Very thin atmospheric pressure</li>
+          <li>• Distance from other settlements</li>
+          <li>• Limited surface water access</li>
+          <li>• Potential seismic activity</li>
+          <li>• Transportation logistics</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Research and Exploration -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Current Research and Future Exploration
+    </h2>
+    <div class="bg-gray-800/30 rounded-lg p-8 border border-gray-700">
+      <h3 class="text-xl font-semibold text-mars-orange mb-4">
+        Ongoing Studies
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Scientists continue to study Olympus Mons using orbital imagery from
+        missions like Mars Reconnaissance Orbiter and Mars Express. These
+        missions have identified numerous lava tube skylights and mapped the
+        volcano's structure in unprecedented detail.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold text-white mb-3">Research Priorities</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Lava tube mapping and characterization</li>
+            <li>• Structural integrity assessment</li>
+            <li>• Resource distribution studies</li>
+            <li>• Geochemical composition analysis</li>
+            <li>• Climate and weather patterns</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-3">Future Mission Concepts</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Lava tube exploration rovers</li>
+            <li>• Skylight descent missions</li>
+            <li>• Underground habitat demonstrations</li>
+            <li>• Resource utilization experiments</li>
+            <li>• Communication relay deployment</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources -->
+  <section>
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <a
+          href="https://www.nasa.gov/olympus-mons"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            NASA: Olympus Mons Overview
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Official NASA overview of the solar system's largest volcano
+          </p>
+        </a>
+
+        <a
+          href="https://en.wikipedia.org/wiki/Martian_lava_tube"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Martian Lava Tubes
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Comprehensive information about lava tube formation and potential
+          </p>
+        </a>
+      </div>
+
+      <div class="space-y-4">
+        <a
+          href="https://www.lpi.usra.edu/meetings/abscicon2010/pdf/5633.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Olympus Mons Biology Research
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Scientific paper on Olympus Mons as a primary target for martian
+            biology
+          </p>
+        </a>
+
+        <a
+          href="https://orbiterchspacenews.blogspot.com/2021/02/first-permanent-habitat-on-mars-lava.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Habitat Potential Study
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Analysis of lava tube habitat potential on Olympus Mons
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+</LocationLayout>
+

@@ -1,0 +1,350 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import marsLocations from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'jezero-crater');
+if (!location) {
+  throw new Error('Jezero Crater location not found');
+}
+---
+
+<LocationLayout title="Jezero Crater - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Perseverance rover's 360-degree mosaic from "Airey Hill"
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL-Caltech/ASU/MSSS</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Jezero Crater is one of the most scientifically significant locations
+          on Mars, serving as the landing site for NASA's Perseverance rover
+          mission. This ancient impact crater, formed nearly 4 billion years
+          ago, once hosted a large lake fed by an ancient river delta system.
+          The crater preserves a remarkable geological record spanning over 3.5
+          billion years of Martian history.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The name "Jezero" comes from the Bosnian word for "lake," which is
+          fitting given the crater's history as a paleolake. The delta formation
+          within Jezero is exceptionally well-preserved, making it an ideal
+          location to search for signs of ancient microbial life and to
+          understand Mars' past habitability.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Since February 2021, the Perseverance rover has been systematically
+          exploring Jezero, collecting rock samples for eventual return to Earth
+          and making groundbreaking discoveries about Mars' geological and
+          hydrological history.
+        </p>
+      </div>
+      <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-400">Diameter:</span>
+            <span class="text-white">49 km (30 miles)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Age:</span>
+            <span class="text-white">~3.9 billion years</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Current Mission:</span>
+            <span class="text-white">Perseverance Rover</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Landing Date:</span>
+            <span class="text-white">February 18, 2021</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Samples Collected:</span>
+            <span class="text-white">24+ rock/soil samples</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Geological History -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Geological History
+    </h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div>
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Formation and Early History
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Jezero Crater formed almost 4 billion years ago from an asteroid
+          impact. The crater floor is made of igneous rock formed from magma
+          underground or volcanic activity at the surface. After the crater's
+          formation, it remained relatively dry for hundreds of millions of
+          years.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The first evidence of water appeared when rivers began flowing into
+          the crater, depositing sandstone and mudstone layers. This marked the
+          beginning of Jezero's transformation into a lake basin.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">Lake Period</h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Over time, Jezero hosted a lake that grew as wide as 22 miles (35
+          kilometers) in diameter and as deep as 100 feet (30 meters). Salt-rich
+          mudstones indicate periods when the shallow lake experienced
+          evaporation.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Fast-flowing water later carried boulders from outside Jezero,
+          distributing them atop the delta and throughout the crater, suggesting
+          dramatic flooding events in the lake's later history.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Current Mission -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Perseverance Mission Discoveries
+    </h2>
+    <div class="space-y-8">
+      <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Sample Collection Achievements
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          As of late 2023, Perseverance has collected over 24 samples from
+          Jezero Crater. Two samples stand out for their astrobiological
+          significance:
+        </p>
+        <ul class="list-disc list-inside text-gray-300 space-y-2">
+          <li>
+            <strong>"Lefroy Bay":</strong> Contains fine-grained silica, a material
+            known to preserve ancient fossils on Earth
+          </li>
+          <li>
+            <strong>"Otis Peak":</strong> Rich in phosphate, often associated with
+            life as we know it, and carbonate minerals
+          </li>
+        </ul>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+          <h3 class="text-xl font-semibold text-mars-orange mb-3">
+            Water History Evidence
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            Perseverance has found clear evidence of Jezero's watery past,
+            including delta deposits, sedimentary layers, and mineral formations
+            that only occur in the presence of liquid water. These discoveries
+            provide a timeline of environmental changes over billions of years.
+          </p>
+        </div>
+        <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+          <h3 class="text-xl font-semibold text-mars-orange mb-3">
+            Organic Potential
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            The combination of carbonates, phosphates, and fine-grained silica
+            creates ideal conditions for preserving signs of ancient life. These
+            minerals point to a watery, habitable environment with excellent
+            preservation potential.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Potential -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming and Settlement Potential
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          With a terraforming rating of 9/10, Jezero Crater represents one of
+          Mars' most promising locations for future human settlement. Its rich
+          geological diversity, evidence of past habitability, and ongoing
+          scientific mission make it an invaluable site for understanding Mars'
+          potential for life.
+        </p>
+
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Key Advantages
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4 mb-6">
+          <div>
+            <h4 class="font-semibold text-white mb-2">Resource Availability</h4>
+            <ul class="text-gray-300 text-sm space-y-1">
+              <li>• Evidence of subsurface water/ice</li>
+              <li>• Clay-rich sediments for construction</li>
+              <li>• Diverse mineral resources</li>
+              <li>• Relatively flat delta region</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white mb-2">Scientific Value</h4>
+            <ul class="text-gray-300 text-sm space-y-1">
+              <li>• Proven landing site accessibility</li>
+              <li>• Rich geological record</li>
+              <li>• Potential biosignature preservation</li>
+              <li>• Ongoing mission infrastructure</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="bg-mars-900/30 rounded-lg p-6 border border-mars-600">
+        <h3 class="text-lg font-semibold text-mars-orange mb-4">
+          Settlement Challenges
+        </h3>
+        <ul class="text-gray-300 text-sm space-y-2">
+          <li>• Dust accumulation during storms</li>
+          <li>• High radiation exposure</li>
+          <li>• Extreme temperature fluctuations</li>
+          <li>• Limited current water access</li>
+          <li>• Thin atmosphere challenges</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration
+    </h2>
+    <div
+      class="bg-gradient-to-r from-mars-900/40 to-gray-800/40 rounded-lg p-8 border border-mars-600"
+    >
+      <h3 class="text-xl font-semibold text-mars-orange mb-4">
+        Mars Sample Return Mission
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        The samples collected by Perseverance at Jezero Crater are scheduled to
+        be retrieved and returned to Earth as part of the Mars Sample Return
+        mission, planned for the early 2030s. This will be the first time
+        Martian materials are brought to Earth for detailed laboratory analysis.
+      </p>
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Laboratory analysis of these samples will provide unprecedented insights
+        into Mars' past habitability and potentially answer the fundamental
+        question of whether life ever existed on Mars.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold text-white mb-2">Planned Investigations</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Detailed age dating of rock samples</li>
+            <li>• Biosignature detection and analysis</li>
+            <li>• Mineral composition studies</li>
+            <li>• Organic compound identification</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-2">Scientific Impact</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Understanding Mars' climate evolution</li>
+            <li>• Assessing past habitability conditions</li>
+            <li>• Informing future human missions</li>
+            <li>• Advancing astrobiology research</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources -->
+  <section>
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <a
+          href="https://science.nasa.gov/mission/mars-2020-perseverance/science/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            NASA Perseverance Science
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Official NASA mission science overview and latest discoveries
+          </p>
+        </a>
+
+        <a
+          href="https://en.wikipedia.org/wiki/Jezero_%28crater%29"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Jezero Crater - Wikipedia
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Comprehensive overview of crater geology and exploration history
+          </p>
+        </a>
+      </div>
+
+      <div class="space-y-4">
+        <a
+          href="https://www.jpl.nasa.gov/news/nasas-perseverance-rover-deciphers-ancient-history-of-martian-lake/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Ancient Lake History
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Latest research on Jezero's ancient lake and delta system
+          </p>
+        </a>
+
+        <a
+          href="https://mars.nasa.gov/mars2020/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Mars 2020 Mission
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Real-time mission updates and rover status
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+</LocationLayout>
+

@@ -1,0 +1,445 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'gale-crater');
+if (!location) {
+  throw new Error('Gale Crater location not found');
+}
+---
+
+<LocationLayout title="Gale Crater - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-red-900 to-red-700 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Curiosity rover's view of Mount Sharp from Gale Crater floor
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL-Caltech/MSSS</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Gale Crater stands as one of Mars' most scientifically significant
+          locations, serving as the primary exploration site for NASA's
+          Curiosity rover since 2012. This 154-kilometer-wide impact crater was
+          formed approximately 3.5-3.8 billion years ago and contains compelling
+          evidence of Mars' ancient habitability potential.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The crater is dominated by Mount Sharp (Aeolis Mons), a
+          5.5-kilometer-tall layered mountain that preserves billions of years
+          of Martian geological history. Each layer tells a story of changing
+          environmental conditions, from ancient lake beds to desert formations,
+          making it a natural archive of Mars' climatic evolution.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Recent discoveries by Curiosity have revolutionized our understanding
+          of water's persistence on Mars, with evidence suggesting that water
+          activity continued much longer than previously thought, potentially
+          extending the window for past habitability.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Diameter:</span>
+            <span class="text-white block">154 km</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Age:</span>
+            <span class="text-white block">3.5-3.8 billion years</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Central Peak:</span>
+            <span class="text-white block">Mount Sharp (5.5 km high)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Current Explorer:</span>
+            <span class="text-white block">Curiosity Rover (2012-present)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Key Discovery:</span>
+            <span class="text-white block">Ancient lake environment</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mount Sharp Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Mount Sharp: A Geological Time Machine
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Mount Sharp represents one of the most remarkable geological features on
+        Mars. This towering mountain wasn't built by volcanic activity, but
+        rather by billions of years of sedimentary deposition. The layered
+        structure preserves a detailed record of Mars' environmental
+        transitions, from wet to dry conditions.
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Lower Layers</h4>
+          <p class="text-gray-300 text-sm">
+            Rich in clay minerals formed in neutral pH water conditions,
+            indicating a potentially habitable ancient environment. These layers
+            suggest extensive lake systems existed for extended periods.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Upper Layers</h4>
+          <p class="text-gray-300 text-sm">
+            Contain sulfate minerals formed in more acidic conditions, marking
+            the transition to the drier, more hostile environment we see today.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Discoveries Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Recent Groundbreaking Discoveries
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-yellow-900/50 to-yellow-800/30 p-6 rounded-lg border border-yellow-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Pure Sulfur Crystals (2024)
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          In a stunning discovery, Curiosity accidentally crushed a rock
+          revealing yellow sulfur crystals - the first pure elemental sulfur
+          found on Mars. This discovery has puzzled scientists as it forms only
+          under very specific conditions not previously associated with Gale
+          Crater.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The discovery occurred in the Gediz Vallis channel, an area carved by
+          ancient floods that left dramatic evidence of Mars' violent water
+          activity.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Boxwork Formations (2024)
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Curiosity has captured unprecedented close-up images of "boxwork"
+          patterns - crisscrossing ridges formed by ancient groundwater. These
+          formations provide dramatic evidence that water persisted in the
+          region much longer than previously thought.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The patterns stretch across miles and were likely formed when
+          groundwater left mineral deposits in rock fractures, which then
+          hardened and became visible through erosion.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Extended Water Activity Evidence
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        Recent analysis of sediment deformation structures suggests that water
+        persisted in Gale Crater during Mars' supposed "dry period." This
+        finding extends the timeline of potential habitability and challenges
+        our understanding of Mars' climate evolution.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        Chemical reactions caused by water have left "halo" shapes in rocks,
+        providing clear evidence of water-rock interactions that occurred long
+        after the main lake period ended.
+      </p>
+    </div>
+  </section>
+
+  <!-- Curiosity Mission Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Curiosity's Journey of Discovery
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Since landing on August 5, 2012, NASA's Curiosity rover has
+          transformed our understanding of Gale Crater and Mars' potential for
+          ancient life. The rover has drilled 41 rock samples, analyzed
+          thousands of targets, and traveled over 29 kilometers across the
+          crater floor and up Mount Sharp's foothills.
+        </p>
+
+        <div class="space-y-4 mb-6">
+          <div class="border-l-4 border-red-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              2012-2014: Initial Discoveries
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Early confirmation of ancient lake environment with neutral pH
+              water suitable for life.
+            </p>
+          </div>
+          <div class="border-l-4 border-orange-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              2014-2019: Mount Sharp Ascent
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Detailed analysis of the mountain's layers revealing Mars' climate
+              transition.
+            </p>
+          </div>
+          <div class="border-l-4 border-yellow-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              2020-Present: Revolutionary Discoveries
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Sulfur crystals, boxwork formations, and evidence of extended
+              water activity.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Mission Achievements
+        </h3>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Distance Traveled:</span>
+            <span class="text-white text-sm">29+ km</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Rock Samples:</span>
+            <span class="text-white text-sm">41 drilled</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Sol (Martian days):</span>
+            <span class="text-white text-sm">4,600+</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Images Taken:</span>
+            <span class="text-white text-sm">800,000+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Potential Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-green-900/30 to-green-800/20 p-8 rounded-lg border border-green-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">8</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            High Terraforming Potential
+          </h3>
+          <p class="text-green-300">
+            Excellent geological diversity and resources
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Proven ancient habitability</li>
+            <li>• Diverse mineral resources</li>
+            <li>• Evidence of sustained water activity</li>
+            <li>• Varied topography with Mount Sharp</li>
+            <li>• Rich geological history</li>
+            <li>• Accessible location near equator</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Dust accumulation issues</li>
+            <li>• Seasonal temperature variations</li>
+            <li>• Limited current water access</li>
+            <li>• Radiation exposure on crater floor</li>
+            <li>• Pervasive Martian dust</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scientific Significance Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Scientific Significance
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Astrobiology Impact
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          Gale Crater has provided the strongest evidence to date that Mars once
+          had conditions suitable for life. The discovery of organic compounds,
+          seasonal methane variations, and ancient lake environments has made it
+          a cornerstone location for astrobiology research.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Climate Evolution Understanding
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          The detailed stratigraphic record preserved in Mount Sharp provides
+          unprecedented insights into how Mars transitioned from a potentially
+          habitable world to its current state, informing models of planetary
+          climate evolution.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Opportunities
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        While Curiosity continues its mission, Gale Crater remains a priority
+        target for future Mars exploration. The recent discoveries of sulfur
+        crystals and boxwork formations have opened new questions about Mars'
+        geological processes and potential for past life.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Proposed Investigations
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Detailed sulfur formation analysis</li>
+            <li>• Boxwork pattern comprehensive mapping</li>
+            <li>• Mount Sharp summit exploration</li>
+            <li>• Advanced organic compound detection</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Sample Return Potential
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Preserved organic-rich samples</li>
+            <li>• Diverse mineral assemblages</li>
+            <li>• Ancient lake sediments</li>
+            <li>• Unique sulfur formations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://science.nasa.gov/mission/msl-curiosity/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mars Science Laboratory Mission
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://mars.nasa.gov/msl/home/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Curiosity Rover Official Site
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.jpl.nasa.gov/news/nasas-curiosity-rover-discovers-a-surprise-in-a-martian-rock"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Latest Sulfur Discovery News
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Papers</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://phys.org/news/2024-03-persisted-mars-gale-crater-longer.html"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Water Persistence Evidence (2024)
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.cbsnews.com/news/mars-rover-curiosity-images-ridges-planet-water-discovery/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Boxwork Formation Discovery
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>
+

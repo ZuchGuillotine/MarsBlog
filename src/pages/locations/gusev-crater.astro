@@ -1,0 +1,521 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'gusev-crater');
+if (!location) {
+  throw new Error('Gusev Crater location not found');
+}
+---
+
+<LocationLayout title="Gusev Crater - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-red-800 to-yellow-700 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Spirit rover's panoramic view of Columbia Hills from Gusev Crater
+          floor
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL-Caltech/Cornell</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Gusev Crater holds a special place in Mars exploration history as the
+          landing site of NASA's Spirit rover in 2004. This 160-kilometer-wide
+          impact crater was selected because orbital observations suggested it
+          once contained a large lake, making it an ideal target for searching
+          for evidence of past water activity and potential ancient life.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Named after Russian astronomer Matvei Gusev, the crater is breached by
+          Ma'adim Vallis, a massive outflow channel that appears to have once
+          carried enormous floods into the crater. While the main crater floor
+          revealed unexpected volcanic rocks instead of lake sediments, the
+          nearby Columbia Hills provided compelling evidence of ancient water
+          activity.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Recent reanalysis of Spirit's data has confirmed that Gusev Crater did
+          indeed once hold a lake, validating the original site selection and
+          providing new insights into Mars' ancient hydrology and climate.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Diameter:</span>
+            <span class="text-white block">160 km</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Location:</span>
+            <span class="text-white block">14.6°S 175.5°E</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Explorer:</span>
+            <span class="text-white block">Spirit Rover (2004-2010)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Mission Duration:</span>
+            <span class="text-white block">6+ years (planned: 90 days)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Key Discovery:</span>
+            <span class="text-white block">Ancient lake confirmation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spirit Mission Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Spirit's Epic Journey
+    </h2>
+    <div
+      class="bg-gradient-to-br from-red-900/30 to-orange-800/20 p-8 rounded-lg border border-red-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Spirit's mission at Gusev Crater began on January 4, 2004, with what was
+        planned as a 90-day mission but extended to over six years of
+        groundbreaking exploration. The rover far exceeded all expectations,
+        traveling 7.73 kilometers and making discoveries that revolutionized our
+        understanding of Mars' geological and hydrological history.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Landing & Early Exploration
+          </h4>
+          <p class="text-gray-300 text-sm mb-3">
+            Spirit bounced to a landing in the floor of Gusev Crater,
+            immediately beginning analysis of the surrounding volcanic rocks and
+            beginning the search for water-related minerals.
+          </p>
+          <ul class="space-y-1 text-gray-300 text-xs">
+            <li>• First 90 sols on crater floor</li>
+            <li>• Analysis of volcanic basalts</li>
+            <li>• Discovery of hematite spherules</li>
+            <li>• Evidence of past wind activity</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Columbia Hills Ascent
+          </h4>
+          <p class="text-gray-300 text-sm mb-3">
+            The journey to the Columbia Hills proved pivotal, revealing ancient
+            rocks altered by water and providing the strongest evidence for past
+            habitability at Gusev.
+          </p>
+          <ul class="space-y-1 text-gray-300 text-xs">
+            <li>• Hydrothermal mineral deposits</li>
+            <li>• Silica-rich outcrops</li>
+            <li>• Evidence of hot springs</li>
+            <li>• Water-altered volcanic rocks</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Final Years & Legacy
+          </h4>
+          <p class="text-gray-300 text-sm mb-3">
+            Spirit's final years were spent conducting detailed studies of
+            water-related minerals before becoming trapped in soft soil in 2009
+            and eventually falling silent in 2010.
+          </p>
+          <ul class="space-y-1 text-gray-300 text-xs">
+            <li>• Detailed carbonate analysis</li>
+            <li>• Seasonal atmospheric studies</li>
+            <li>• Long-term climate monitoring</li>
+            <li>• Final silent winter 2010</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Columbia Hills Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Columbia Hills: Window to Mars' Past
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The Columbia Hills, a group of seven hills rising about 300 feet above
+          the Gusev crater floor, became the most scientifically rewarding area
+          of Spirit's mission. These ancient geological formations, named after
+          the crew of Space Shuttle Columbia, preserved a remarkable record of
+          water activity on early Mars.
+        </p>
+
+        <div class="space-y-4 mb-6">
+          <div class="border-l-4 border-blue-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">Hydrothermal Activity</h4>
+            <p class="text-gray-300 text-sm">
+              Evidence of ancient hot springs similar to those in Yellowstone
+              National Park, with silica deposits and mineral assemblages
+              indicating high-temperature water activity.
+            </p>
+          </div>
+          <div class="border-l-4 border-green-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">Water-Altered Rocks</h4>
+            <p class="text-gray-300 text-sm">
+              Extensive alteration of volcanic rocks by water, creating clay
+              minerals and other hydrated phases that required long-term
+              water-rock interaction.
+            </p>
+          </div>
+          <div class="border-l-4 border-orange-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">Carbonate Discoveries</h4>
+            <p class="text-gray-300 text-sm">
+              The Comanche outcrop revealed magnesium-iron carbonate minerals,
+              providing evidence for ancient lake environments and moderate pH
+              conditions.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Hill Names</h3>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-400">Husband Hill:</span>
+            <span class="text-white">Highest point</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">McCool Hill:</span>
+            <span class="text-white">Silica deposits</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Anderson Hill:</span>
+            <span class="text-white">Basaltic rocks</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Brown Hill:</span>
+            <span class="text-white">Crater rim</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Chawla Hill:</span>
+            <span class="text-white">Layered rocks</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Clark Hill:</span>
+            <span class="text-white">Impact breccias</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Ramon Hill:</span>
+            <span class="text-white">Spirit's final area</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lake Discovery Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Ancient Lake Confirmation
+    </h2>
+
+    <div
+      class="bg-gradient-to-br from-blue-900/30 to-blue-800/20 p-8 rounded-lg border border-blue-700/50 mb-8"
+    >
+      <h3 class="text-2xl font-semibold text-white mb-4">The Lake That Was</h3>
+      <p class="text-gray-300 leading-relaxed mb-6">
+        After years of debate, a 2014 reanalysis of Spirit's data by Arizona
+        State University scientist Steve Ruff definitively confirmed that Gusev
+        Crater once contained a lake. The evidence came from detailed study of
+        the Comanche outcrop in the Columbia Hills, revealing carbonates formed
+        by evaporating lake waters rather than hydrothermal processes.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Formation Process
+          </h4>
+          <p class="text-gray-300 text-sm mb-3">
+            Floodwaters from Ma'adim Vallis entered the crater and ponded,
+            creating a shallow lake that repeatedly filled and evaporated,
+            concentrating minerals in the sediments.
+          </p>
+          <ul class="space-y-1 text-gray-300 text-sm">
+            <li>• Episodic flooding through breach</li>
+            <li>• Lake formation and evaporation cycles</li>
+            <li>• Carbonate precipitation from brines</li>
+            <li>• Wind erosion of evidence</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Chemical Evidence
+          </h4>
+          <p class="text-gray-300 text-sm mb-3">
+            The carbonate minerals in Comanche show chemical signatures
+            consistent with low-temperature surface waters rather than hot
+            hydrothermal fluids.
+          </p>
+          <ul class="space-y-1 text-gray-300 text-sm">
+            <li>• Magnesium-iron carbonates</li>
+            <li>• Low-temperature formation</li>
+            <li>• Evaporite mineral signatures</li>
+            <li>• Tephra alteration products</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Implications for Habitability
+      </h3>
+      <p class="text-gray-300 leading-relaxed">
+        The confirmation of an ancient lake at Gusev Crater, combined with
+        evidence of hydrothermal activity and moderate pH conditions, suggests
+        that this location had multiple potentially habitable environments. The
+        diverse water chemistry and long-term stability would have provided
+        excellent conditions for any early Martian life forms.
+      </p>
+    </div>
+  </section>
+
+  <!-- Key Discoveries Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Groundbreaking Discoveries
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-purple-900/50 to-purple-800/30 p-6 rounded-lg border border-purple-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Hydrothermal Silica
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Spirit discovered nearly pure silica deposits at a location dubbed
+          "Home Plate," formed by hot water or steam. These deposits are similar
+          to those found around hot springs on Earth and represent some of the
+          best preservation environments for potential biosignatures.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The silica was likely deposited by hot springs or fumaroles, creating
+          an environment that on Earth would be teeming with extremophile
+          microorganisms.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-green-900/50 to-green-800/30 p-6 rounded-lg border border-green-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Hematite Spherules
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The discovery of iron oxide spherules ("blueberries") similar to those
+          found by Opportunity at Meridiani Planum provided additional evidence
+          of water activity, though these formed through different processes at
+          Gusev.
+        </p>
+        <p class="text-gray-300 text-sm">
+          These spherules form through prolonged water-rock interaction and
+          serve as excellent indicators of ancient aqueous environments.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Dust Devil Encounters
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        Spirit encountered numerous dust devils during its mission, including
+        some that actually helped clean the rover's solar panels and extend its
+        operational life. These encounters provided valuable data about Martian
+        atmospheric dynamics and dust transport processes.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        The rover captured dramatic images and videos of dust devils crossing
+        the crater floor, contributing to our understanding of Martian
+        meteorology and the role of dust in the planet's climate system.
+      </p>
+    </div>
+  </section>
+
+  <!-- Terraforming Potential Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-yellow-900/30 to-orange-800/20 p-8 rounded-lg border border-yellow-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">7</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Good Terraforming Potential
+          </h3>
+          <p class="text-yellow-300">
+            Proven habitability with diverse water environments
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Confirmed ancient lake environment</li>
+            <li>• Hydrothermal activity evidence</li>
+            <li>• Diverse geological features</li>
+            <li>• Good solar exposure</li>
+            <li>• Natural topographic variety</li>
+            <li>• Evidence of stable water chemistry</li>
+            <li>• Moderate latitude location</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Limited current water access</li>
+            <li>• Dust devil activity</li>
+            <li>• Volcanic rock terrain</li>
+            <li>• Potential perchlorate contamination</li>
+            <li>• Seasonal dust accumulation</li>
+            <li>• Limited mineral diversity</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scientific Legacy Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Scientific Legacy
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Mission Impact</h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Spirit's mission at Gusev Crater fundamentally changed our
+          understanding of Mars' geological and hydrological history. The
+          rover's discoveries provided the first definitive proof of
+          hydrothermal environments on Mars and confirmed the presence of
+          ancient lakes through chemical analysis of mineral deposits.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The mission's success led directly to the development of more advanced
+          rovers like Curiosity and Perseverance, and established Gusev as a
+          model site for understanding Mars' potential for past habitability.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Future Exploration Potential
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          Gusev Crater remains a high-priority target for future Mars
+          exploration missions. The diverse geological environments, confirmed
+          water activity, and well-characterized terrain make it an ideal
+          location for follow-up studies with more advanced instruments,
+          particularly for searching for biosignatures in the hydrothermal
+          deposits.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://mars.nasa.gov/mer/home/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mars Exploration Rovers Mission
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.jpl.nasa.gov/news/spirit-finds-multi-layer-hints-of-past-water-at-mars-gusev-site/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Spirit's Water Discoveries
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://mars.nasa.gov/mer/mission/rover/spirit/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Spirit Rover Details
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Papers</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://phys.org/news/2014-04-gusev-crater-held-lake-mars.html"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Lake Confirmation Study (2014)
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://news.asu.edu/content/gusev-crater-once-held-lake-after-all-says-asu-mars-scientist"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ASU Research Analysis
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>
+

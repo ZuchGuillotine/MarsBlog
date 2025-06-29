@@ -1,0 +1,512 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'hellas-basin');
+if (!location) {
+  throw new Error('Hellas Basin location not found');
+}
+---
+
+<LocationLayout title="Hellas Basin - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-gray-900 to-orange-900 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          MOLA topographic view of Hellas Basin showing its immense depth
+        </p>
+        <p class="text-xs opacity-60">NASA/MOLA Science Team</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Hellas Basin stands as a monument to the violent early history of our
+          solar system. With a diameter of 2,300 kilometers and a depth reaching
+          9 kilometers below the Martian datum, it is not only the largest
+          impact crater on Mars but the largest well-preserved impact structure
+          in the entire solar system.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          This colossal basin was carved during the Late Heavy Bombardment
+          period, approximately 4.1 to 3.8 billion years ago, when a massive
+          asteroid or protoplanet estimated to be around 370 kilometers in
+          diameter struck the southern highlands of Mars with devastating force.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Today, Hellas Basin serves as both a geological laboratory and a
+          natural atmospheric laboratory, with unique features ranging from
+          possible buried glaciers to honeycomb terrain formations that continue
+          to puzzle planetary scientists.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Diameter:</span>
+            <span class="text-white block">2,300 km</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Depth:</span>
+            <span class="text-white block">9 km below datum</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Age:</span>
+            <span class="text-white block">4.1-3.8 billion years</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Impactor Size:</span>
+            <span class="text-white block">~370 km diameter</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Atmospheric Pressure:</span>
+            <span class="text-white block">1.15 kPa (twice Mars average)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Formation and Impact Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      The Great Impact
+    </h2>
+    <div
+      class="bg-gradient-to-br from-red-900/30 to-orange-800/20 p-8 rounded-lg border border-red-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The formation of Hellas Basin represents one of the most catastrophic
+        events in Mars' history. The impact that created this massive depression
+        released energy equivalent to billions of nuclear weapons, fundamentally
+        altering the planet's geology and possibly its early atmosphere.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Impact Mechanics
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Impactor velocity: ~20-25 km/s</li>
+            <li>• Energy released: >10²⁶ joules</li>
+            <li>• Ejecta thrown across entire planet</li>
+            <li>• Created ring mountains up to 2 km high</li>
+            <li>• Excavated material to 15+ km depth</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Geological Consequences
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Triggered global hot rainfall</li>
+            <li>• Induced massive volcanic activity</li>
+            <li>• Created antipodal effects at Alba Patera</li>
+            <li>• Altered planetary crustal structure</li>
+            <li>• Exposed deep crustal materials</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Unique Features Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Extraordinary Geological Features
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">Honeycomb Terrain</h3>
+        <p class="text-gray-300 text-sm mb-4">
+          One of Mars' most mysterious features, the honeycomb terrain consists
+          of flat-lying polygonal "cells" with concentric layers resembling a
+          giant honeycomb. These formations may have been created by ice diapirs
+          - massive ice bodies pushing up through overlying rock layers.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The ice layers responsible could have been 100 meters to 1 kilometer
+          thick, creating dome structures that were later eroded to reveal the
+          current circular patterns.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-cyan-900/50 to-cyan-800/30 p-6 rounded-lg border border-cyan-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">Buried Glaciers</h3>
+        <p class="text-gray-300 text-sm mb-4">
+          SHARAD radar data from Mars Reconnaissance Orbiter has detected buried
+          ice deposits up to 450 meters thick in eastern Hellas. These "lobate
+          debris aprons" are actually glaciers of water ice hidden beneath
+          protective layers of dirt and rock.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The region shows evidence of multiple glaciation periods, suggesting
+          complex climate cycles that repeatedly accumulated and melted ice
+          deposits over geological time.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Twisted "Taffy Pull" Terrain
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        The floor of Hellas Basin displays remarkable twisted bands and viscous
+        flow features that resemble taffy being pulled and stretched. These
+        formations suggest that the basin floor materials underwent deformation,
+        possibly due to ice content or thermal processes.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        High-resolution HiRISE images reveal intricate patterns of ridges and
+        valleys that indicate flow-like behavior of materials across the basin
+        floor, creating some of the most alien-looking landscapes on Mars.
+      </p>
+    </div>
+  </section>
+
+  <!-- Atmospheric Dynamics Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Atmospheric Laboratory
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Hellas Basin's immense depth creates a unique atmospheric environment
+          on Mars. At the bottom of the basin, atmospheric pressure reaches 1.15
+          kPa - nearly twice the Martian average and remarkably close to the
+          triple point of water (0.61 kPa), where liquid water can theoretically
+          exist under the right temperature conditions.
+        </p>
+
+        <div class="space-y-4 mb-6">
+          <div class="border-l-4 border-orange-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">Dust Storm Genesis</h4>
+            <p class="text-gray-300 text-sm">
+              The basin frequently generates localized dust storms that can grow
+              into planet-spanning events. The unique topography and atmospheric
+              dynamics create ideal conditions for dust lifting and transport.
+            </p>
+          </div>
+          <div class="border-l-4 border-blue-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Temperature Variations
+            </h4>
+            <p class="text-gray-300 text-sm">
+              The deep basin experiences more moderate temperature swings than
+              the Martian surface average, with the thicker atmosphere providing
+              better thermal regulation.
+            </p>
+          </div>
+          <div class="border-l-4 border-green-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">Cloud Formation</h4>
+            <p class="text-gray-300 text-sm">
+              Water ice clouds frequently form in and around the basin,
+              particularly during southern winter when atmospheric conditions
+              favor condensation.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Pressure Comparison
+        </h3>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Mars Average:</span>
+            <span class="text-white text-sm">0.6 kPa</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Hellas Basin:</span>
+            <span class="text-white text-sm">1.15 kPa</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Water Triple Point:</span>
+            <span class="text-white text-sm">0.61 kPa</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Earth Sea Level:</span>
+            <span class="text-white text-sm">101.3 kPa</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Water and Ice History Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Ancient Water and Ice Activity
+    </h2>
+    <div class="space-y-6">
+      <div
+        class="bg-gradient-to-br from-blue-900/30 to-blue-800/20 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Evidence of Ancient Lakes
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Orbital imagery has revealed what appear to be ancient shorelines,
+          delta formations, and terraced deposits within Hellas Basin. These
+          features suggest that the basin may have periodically contained large
+          bodies of liquid water during Mars' more hospitable past.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The combination of the basin's depth, which provides higher
+          atmospheric pressure, and possible greenhouse warming could have
+          created conditions suitable for stable liquid water for extended
+          periods.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-cyan-900/30 to-cyan-800/20 p-6 rounded-lg border border-cyan-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">Glacial Activity</h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Subsurface radar mapping has revealed extensive ice deposits buried
+          beneath dust and debris. These buried glaciers represent remnants of
+          past ice ages when Mars' axial tilt was different, allowing ice to
+          accumulate at lower latitudes.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The ice deposits show evidence of flow patterns and multiple episodes
+          of accumulation and melting, indicating that Hellas Basin has
+          experienced repeated cycles of glaciation throughout its history.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Potential Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-yellow-900/30 to-yellow-800/20 p-8 rounded-lg border border-yellow-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">6</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Moderate Terraforming Potential
+          </h3>
+          <p class="text-yellow-300">
+            Unique advantages offset by significant challenges
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Highest atmospheric pressure on Mars</li>
+            <li>• Potential access to buried ice deposits</li>
+            <li>• Natural atmospheric containment</li>
+            <li>• Large flat areas for development</li>
+            <li>• Possible liquid water conditions</li>
+            <li>• Rich mineral diversity from impact</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Extreme southern latitude location</li>
+            <li>• Severe dust storm activity</li>
+            <li>• Limited direct sunlight in winter</li>
+            <li>• Complex terrain features</li>
+            <li>• Uncertain ice accessibility</li>
+            <li>• Potential for toxic perchlorates</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scientific Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Scientific Exploration
+    </h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Orbital Studies</h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Multiple Mars orbiters have studied Hellas Basin extensively, using
+          everything from high-resolution cameras to ground-penetrating radar.
+          These studies have revealed the basin's complex geological history and
+          hidden ice deposits.
+        </p>
+        <ul class="space-y-1 text-gray-300 text-sm">
+          <li>• Mars Reconnaissance Orbiter (MRO)</li>
+          <li>• Mars Express</li>
+          <li>• Mars Global Surveyor</li>
+          <li>• Mars Odyssey</li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Future Mission Potential
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Hellas Basin represents a prime target for future Mars missions,
+          particularly those focused on subsurface exploration and ice
+          prospecting. The basin's unique features could provide insights into
+          Mars' climate history and potential for past life.
+        </p>
+        <ul class="space-y-1 text-gray-300 text-sm">
+          <li>• Ice drilling missions</li>
+          <li>• Atmospheric research stations</li>
+          <li>• Geological sampling expeditions</li>
+          <li>• Climate monitoring networks</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Theoretical Terraforming Concepts Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Theoretical Terraforming Concepts
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Hellas Basin has been the subject of numerous theoretical terraforming
+        studies due to its unique atmospheric properties. Some concepts propose
+        using the basin as a testing ground for atmospheric manipulation
+        technologies or as a contained environment for initial terraforming
+        experiments.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Atmospheric Concentration
+          </h4>
+          <p class="text-gray-300 text-sm mb-3">
+            Theoretical proposals include using the basin's natural depth to
+            concentrate denser atmospheres, potentially creating habitable zones
+            within the depression while the rest of Mars remains hostile.
+          </p>
+          <ul class="space-y-1 text-gray-300 text-sm">
+            <li>• Dense gas injection experiments</li>
+            <li>• Greenhouse gas concentration</li>
+            <li>• Partial pressure dome concepts</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Ice Utilization</h4>
+          <p class="text-gray-300 text-sm mb-3">
+            The buried ice deposits could serve as both a water source and a
+            means of atmospheric enhancement through controlled sublimation and
+            chemical processing.
+          </p>
+          <ul class="space-y-1 text-gray-300 text-sm">
+            <li>• Large-scale ice extraction</li>
+            <li>• Atmospheric water injection</li>
+            <li>• Pressure regulation systems</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.nasa.gov/news/releases/2008/PIA11433.html"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Buried Glaciers Discovery
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://mars.nasa.gov/mro/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mars Reconnaissance Orbiter
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.nasa.gov/offices/mep/overview/index.html"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mars Exploration Program
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Research Papers</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://en.wikipedia.org/wiki/Hellas_Planitia"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Hellas Planitia Overview
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.whiteclouds.com/articles/hellas-basin/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Geological Analysis
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>
+

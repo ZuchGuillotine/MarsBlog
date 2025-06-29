@@ -1,0 +1,509 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import marsLocations from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'valles-marineris');
+if (!location) {
+  throw new Error('Valles Marineris location not found');
+}
+---
+
+<LocationLayout title="Valles Marineris - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-red-900 to-orange-900 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          The Grand Canyon of Mars - Solar System's largest canyon
+        </p>
+        <p class="text-xs opacity-60">Image: NASA/Viking Orbiter</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Valles Marineris stands as one of the most spectacular geological
+          features in our solar system - a vast canyon system that stretches
+          over 4,000 kilometers (2,500 miles) across the Martian equatorial
+          region. Named after the Mariner 9 spacecraft that first revealed its
+          grandeur in 1971, this colossal rift system dwarfs Earth's Grand
+          Canyon in every dimension.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The canyon system reaches depths of up to 7 kilometers (4.3 miles) and
+          widths of up to 200 kilometers (120 miles), making it roughly 10 times
+          longer, 20 times wider, and 5 times deeper than the Grand Canyon. If
+          placed on Earth, Valles Marineris would stretch across the entire
+          continental United States from New York to Los Angeles.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          This massive tectonic feature provides an unparalleled window into
+          Mars' geological history, exposing rock layers that span billions of
+          years and offering compelling evidence of the planet's dynamic past,
+          including periods of intense volcanic activity and the possible
+          presence of ancient lakes.
+        </p>
+      </div>
+      <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Massive Scale</h3>
+        <div class="space-y-3 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-400">Length:</span>
+            <span class="text-white">4,000 km (2,500 mi)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Maximum Width:</span>
+            <span class="text-white">200 km (120 mi)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Maximum Depth:</span>
+            <span class="text-white">7 km (4.3 mi)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Age:</span>
+            <span class="text-white">3.5+ billion years</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Location:</span>
+            <span class="text-white">Equatorial region</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Canyon Sections -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Major Canyon Sections
+    </h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Western Region
+        </h3>
+        <h4 class="font-semibold text-white mb-2">Noctis Labyrinthus</h4>
+        <p class="text-gray-300 text-sm mb-4">
+          The "Labyrinth of the Night" - a complex maze of intersecting valleys
+          and canyons up to 10 km deep, formed by tectonic fracturing as the
+          Tharsis bulge expanded.
+        </p>
+        <ul class="text-gray-300 text-sm space-y-1">
+          <li>• Rectangular canyon patterns</li>
+          <li>• Deepest sections of system</li>
+          <li>• Complex fracture networks</li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Central Region
+        </h3>
+        <h4 class="font-semibold text-white mb-2">Main Chasmata</h4>
+        <p class="text-gray-300 text-sm mb-4">
+          Including Ius, Tithonium, Melas, Candor, and Ophir Chasmata - parallel
+          chasms 5-8 km deep that likely formed through rifting and tectonic
+          processes.
+        </p>
+        <ul class="text-gray-300 text-sm space-y-1">
+          <li>• Linear east-west orientation</li>
+          <li>• Evidence of ancient lakes</li>
+          <li>• Massive landslide deposits</li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Eastern Region
+        </h3>
+        <h4 class="font-semibold text-white mb-2">Outflow Channels</h4>
+        <p class="text-gray-300 text-sm mb-4">
+          Ganges, Capri, and Eos Chasmata leading to chaotic terrain and outflow
+          channels that drain toward Chryse Planitia in the northern plains.
+        </p>
+        <ul class="text-gray-300 text-sm space-y-1">
+          <li>• Broad, shallow canyons</li>
+          <li>• Chaotic terrain formations</li>
+          <li>• Ancient flood channels</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Formation and Geology -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Formation and Geological History
+    </h2>
+    <div class="space-y-8">
+      <div
+        class="bg-gradient-to-r from-mars-900/40 to-gray-800/40 rounded-lg p-8 border border-mars-600"
+      >
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Tectonic Origins
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Most scientists agree that Valles Marineris formed primarily through
+          tectonic processes related to the massive Tharsis volcanic region to
+          the west. As this enormous volcanic bulge formed and grew over
+          billions of years, it created tremendous stress on the Martian crust,
+          leading to rifting and fracturing that carved out the initial canyon
+          system.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h4 class="font-semibold text-white mb-3">
+              Primary Formation Processes
+            </h4>
+            <ul class="text-gray-300 text-sm space-y-2">
+              <li>• Crustal rifting from Tharsis uplift</li>
+              <li>• Graben formation and collapse</li>
+              <li>• Tectonic stress fracturing</li>
+              <li>• Possible magma withdrawal subsidence</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white mb-3">
+              Secondary Modification
+            </h4>
+            <ul class="text-gray-300 text-sm space-y-2">
+              <li>• Massive landslides and erosion</li>
+              <li>• Ancient lake formation and drainage</li>
+              <li>• Wind erosion and sediment transport</li>
+              <li>• Seasonal frost and sublimation cycles</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-xl font-semibold text-mars-orange mb-4">
+            Evidence of Ancient Water
+          </h3>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Multiple lines of evidence suggest that parts of Valles Marineris
+            once contained substantial bodies of water, possibly including lakes
+            that persisted for extended periods.
+          </p>
+          <ul class="text-gray-300 text-sm space-y-2">
+            <li>• Layered sedimentary deposits in canyon floors</li>
+            <li>• Mineral formations requiring liquid water</li>
+            <li>• Delta-like features and terraces</li>
+            <li>• Hydrated minerals in canyon walls</li>
+            <li>• Outflow channel networks</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-mars-orange mb-4">
+            Geological Exposures
+          </h3>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The canyon walls expose an unprecedented cross-section of Martian
+            crustal history, revealing layers of rock formed over billions of
+            years.
+          </p>
+          <ul class="text-gray-300 text-sm space-y-2">
+            <li>• Ancient crustal basement rocks</li>
+            <li>• Volcanic flow sequences</li>
+            <li>• Sedimentary layer formations</li>
+            <li>• Impact breccia deposits</li>
+            <li>• Sulfate and clay mineral deposits</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Settlement Potential -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Human Settlement Potential
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          With a terraforming rating of 7/10, Valles Marineris presents unique
+          opportunities and challenges for human settlement. The canyon's
+          location on the equator makes it one of the warmest regions on Mars,
+          while its depth provides significantly higher atmospheric pressure
+          than the surrounding highlands.
+        </p>
+
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Unique Advantages
+        </h3>
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <h4 class="font-semibold text-white mb-3">
+              Environmental Benefits
+            </h4>
+            <ul class="text-gray-300 text-sm space-y-2">
+              <li>• Equatorial location for maximum solar energy</li>
+              <li>• Higher atmospheric pressure at depth</li>
+              <li>• Natural wind protection from canyon walls</li>
+              <li>• Evidence of subsurface water/ice</li>
+              <li>• Relatively stable temperatures</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white mb-3">
+              Resource Opportunities
+            </h4>
+            <ul class="text-gray-300 text-sm space-y-2">
+              <li>• Diverse mineral deposits in canyon walls</li>
+              <li>• Potential water ice in shadowed areas</li>
+              <li>• Natural building materials</li>
+              <li>• Protected sites for infrastructure</li>
+              <li>• Multiple microclimate zones</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bg-yellow-900/20 border border-yellow-600 rounded-lg p-4">
+          <h4 class="font-semibold text-yellow-400 mb-2">
+            Atmospheric Advantage
+          </h4>
+          <p class="text-gray-300 text-sm">
+            The canyon floor experiences atmospheric pressure that is
+            significantly higher than the rim - potentially 2-3 times greater at
+            the deepest points. This increased pressure could make certain
+            activities easier and provide better protection from radiation.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-mars-900/30 rounded-lg p-6 border border-mars-600">
+        <h3 class="text-lg font-semibold text-mars-orange mb-4">
+          Settlement Challenges
+        </h3>
+        <ul class="text-gray-300 text-sm space-y-2">
+          <li>• Limited current water access</li>
+          <li>• Dust accumulation and storms</li>
+          <li>• Radiation exposure on canyon floor</li>
+          <li>• Landslide and erosion risks</li>
+          <li>• Communication difficulties from depth</li>
+          <li>• Transportation and access challenges</li>
+          <li>• Extreme elevation differences</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scientific Importance -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Scientific Significance
+    </h2>
+    <div class="bg-gray-800/30 rounded-lg p-8 border border-gray-700">
+      <h3 class="text-xl font-semibold text-mars-orange mb-4">
+        Research Priorities
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Valles Marineris represents one of the most scientifically valuable
+        locations on Mars, offering insights into planetary formation, climate
+        history, and the potential for past or present life. The canyon's vast
+        exposures provide an unparalleled geological record.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div>
+          <h4 class="font-semibold text-white mb-3">Geological Studies</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Crustal composition analysis</li>
+            <li>• Volcanic history reconstruction</li>
+            <li>• Tectonic process understanding</li>
+            <li>• Impact event chronology</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-3">Climate Research</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Ancient atmospheric conditions</li>
+            <li>• Water cycle reconstruction</li>
+            <li>• Climate change indicators</li>
+            <li>• Seasonal process monitoring</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-3">Astrobiology</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Ancient lake deposit analysis</li>
+            <li>• Biosignature preservation potential</li>
+            <li>• Hydrothermal activity evidence</li>
+            <li>• Subsurface habitat assessment</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Opportunities
+    </h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div
+        class="bg-gradient-to-r from-mars-900/40 to-gray-800/40 rounded-lg p-6 border border-mars-600"
+      >
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Proposed Missions
+        </h3>
+        <ul class="text-gray-300 text-sm space-y-3">
+          <li class="flex items-start">
+            <span class="text-mars-orange mr-2">•</span>
+            <span
+              ><strong>Canyon Floor Rovers:</strong> Mobile laboratories to explore
+              the diverse terrains and collect samples</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span class="text-mars-orange mr-2">•</span>
+            <span
+              ><strong>Atmospheric Studies:</strong> Weather stations to monitor
+              unique canyon climate conditions</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span class="text-mars-orange mr-2">•</span>
+            <span
+              ><strong>Deep Drilling:</strong> Core samples from ancient lake deposits
+              and layered formations</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span class="text-mars-orange mr-2">•</span>
+            <span
+              ><strong>Human Reconnaissance:</strong> Crewed missions to assess settlement
+              potential</span
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div
+        class="bg-gradient-to-r from-mars-900/40 to-gray-800/40 rounded-lg p-6 border border-mars-600"
+      >
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Technology Demonstrations
+        </h3>
+        <ul class="text-gray-300 text-sm space-y-3">
+          <li class="flex items-start">
+            <span class="text-mars-orange mr-2">•</span>
+            <span
+              ><strong>Aerial Surveys:</strong> Helicopter or drone exploration of
+              canyon sections</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span class="text-mars-orange mr-2">•</span>
+            <span
+              ><strong>Habitat Testing:</strong> Prototype structures in protected
+              canyon alcoves</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span class="text-mars-orange mr-2">•</span>
+            <span
+              ><strong>Resource Utilization:</strong> Water extraction and processing
+              demonstrations</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span class="text-mars-orange mr-2">•</span>
+            <span
+              ><strong>Communication Networks:</strong> Relay systems for canyon-to-surface
+              communications</span
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources -->
+  <section>
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <a
+          href="https://en.wikipedia.org/wiki/Valles_Marineris"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Valles Marineris - Wikipedia
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Comprehensive overview of formation, geology, and exploration
+            history
+          </p>
+        </a>
+
+        <a
+          href="https://mars.nasa.gov/education/modules/gcact4.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            NASA Formation Study
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Educational case study on how Valles Marineris formed
+          </p>
+        </a>
+      </div>
+
+      <div class="space-y-4">
+        <a
+          href="https://www.whiteclouds.com/articles/valles-marineris/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Detailed Geological Analysis
+          </h3>
+          <p class="text-gray-400 text-sm">
+            In-depth exploration of canyon sections and geological features
+          </p>
+        </a>
+
+        <a
+          href="https://marspedia.org/Valles_Marineris"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Settlement Potential
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Analysis of Valles Marineris as a possible habitat location
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+</LocationLayout>
+

@@ -87,16 +87,6 @@ function LocationMarker({
     [location, onSelect]
   );
 
-  // Handle navigation to location page
-  const handleLocationClick = useCallback(
-    (e: any) => {
-      e.stopPropagation();
-      e.preventDefault();
-      window.location.href = `/locations/${location.id}`;
-    },
-    [location.id]
-  );
-
   const markerColor = getMarkerColor();
 
   return (
@@ -123,26 +113,25 @@ function LocationMarker({
         <meshBasicMaterial color={markerColor} transparent opacity={1} />
       </mesh>
 
-      {/* Interactive Card - ONLY on hover - Now Clickable */}
+      {/* Interactive Card - ONLY on hover */}
       {hovered && (
         <Html
           center
           distanceFactor={10}
           position={[0, 0.03, 0]}
           style={{
-            pointerEvents: 'auto',
+            pointerEvents: 'none',
             userSelect: 'none',
-            fontSize: '10px',
+            fontSize: '10px', // Even smaller base font size
           }}
         >
           <div
-            className="bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded p-1.5 shadow-xl cursor-pointer hover:bg-gray-800/95 transition-colors duration-200"
+            className="bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded p-1.5 shadow-xl"
             style={{
               minWidth: '140px',
               maxWidth: '180px',
-              fontSize: '9px',
+              fontSize: '9px', // Tiny font for minimal intrusion
             }}
-            onClick={handleLocationClick}
           >
             {/* Location Name */}
             <h3
@@ -170,20 +159,13 @@ function LocationMarker({
 
             {/* Very brief description */}
             <p
-              className="text-gray-300 leading-tight mb-1"
+              className="text-gray-300 leading-tight"
               style={{ fontSize: '8px' }}
             >
               {location.description.length > 60
                 ? location.description.substring(0, 60) + '...'
                 : location.description}
             </p>
-
-            {/* Click to learn more indicator */}
-            <div className="flex items-center justify-center pt-1 border-t border-gray-700">
-              <span className="text-xs text-blue-400 font-medium">
-                Click to explore
-              </span>
-            </div>
           </div>
         </Html>
       )}
