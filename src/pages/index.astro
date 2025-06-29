@@ -1,101 +1,66 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import MarsGlobeWrapper from '../components/MarsGlobeWrapper';
-import SimpleTestGlobe from '../components/SimpleTestGlobe';
-import { sampleLocations } from '../data/locations';
+import ExpandableSidebar from '../components/ExpandableSidebar';
+import marsLocations from '../data/marsLocations';
 ---
 
-<BaseLayout title="Terraforming Mars: Map the Future">
-  <div class="mars-globe-container">
-    <!-- Mars Globe - Main Focus -->
-    <div class="absolute inset-0 z-0">
-      <MarsGlobeWrapper 
-        client:load 
-        locations={sampleLocations}
-      />
+<BaseLayout title="Mars Population - Interactive Globe">
+  <div class="relative w-full h-screen bg-black overflow-hidden">
+    <!-- Mars Globe -->
+    <div class="w-full h-full">
+      <MarsGlobeWrapper client:load locations={marsLocations} />
     </div>
-    
-    <!-- Hero Text Overlay - Top Left -->
-    <div class="absolute top-8 left-8 z-20 max-w-md">
-      <div class="bg-black/50 backdrop-blur-md rounded-xl p-6 space-y-4">
-        <h1 class="text-3xl md:text-4xl font-display font-bold text-white text-shadow-mars">
-          Terraforming Mars
+
+    <!-- Sidebar -->
+    <ExpandableSidebar client:load className="z-50" />
+
+    <!-- Welcome Overlay -->
+    <div class="absolute top-8 left-8 z-40 max-w-md">
+      <div
+        class="bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-lg p-6 shadow-2xl"
+      >
+        <h1 class="text-white font-display text-2xl font-bold mb-2">
+          Mars Population
         </h1>
-        <p class="text-lg md:text-xl font-display text-mars-tan">
-          Map the Future
+        <p class="text-gray-300 text-sm leading-relaxed mb-4">
+          Explore 27 key Mars locations with interactive markers. Hover over
+          markers to see detailed information about each site's terraforming
+          potential.
         </p>
-        <p class="text-sm text-gray-300">
-          Explore Mars in 3D and discover the science of making the Red Planet our new home.
-        </p>
-        <div class="flex flex-col gap-2">
-          <button class="btn-primary text-sm px-6 py-3">
-            Explore Globe
-          </button>
-          <a href="/explore" class="btn-secondary text-sm px-6 py-3">
-            Learn More
-          </a>
+        <div class="flex items-center space-x-4 text-xs text-gray-400">
+          <div class="flex items-center space-x-1">
+            <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+            <span>High Potential (9-10)</span>
+          </div>
+          <div class="flex items-center space-x-1">
+            <div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
+            <span>Medium (7-8)</span>
+          </div>
+          <div class="flex items-center space-x-1">
+            <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
+            <span>Low (5-6)</span>
+          </div>
         </div>
       </div>
     </div>
-    
-    <!-- Globe Controls - Bottom Right -->
-    <div class="absolute bottom-8 right-8 z-20">
-      <div class="bg-black/50 backdrop-blur-md rounded-lg p-3 text-white text-center">
-        <p class="text-xs mb-1">🌍 Drag to rotate</p>
-        <p class="text-xs">🔍 Scroll to zoom</p>
+
+    <!-- Instructions -->
+    <div class="absolute bottom-8 right-8 z-40 max-w-sm">
+      <div
+        class="bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-lg p-4 shadow-2xl"
+      >
+        <h3 class="text-white font-display text-sm font-semibold mb-2">
+          How to Explore
+        </h3>
+        <ul class="text-gray-300 text-xs space-y-1">
+          <li>• Hover over markers to see location details</li>
+          <li>• Click markers to select and view full info</li>
+          <li>• Drag to rotate the globe</li>
+          <li>• Scroll to zoom in/out</li>
+          <li>• Use sidebar to explore categories</li>
+        </ul>
       </div>
     </div>
   </div>
-  
-  <!-- Quick Info Section -->
-  <section class="py-16 bg-white dark:bg-gray-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-display font-bold text-gwern-text dark:text-gwern-text-dark mb-4">
-          Discover Terraforming Science
-        </h2>
-        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Interactive exploration of the technologies and strategies that could transform Mars into humanity's second home.
-        </p>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="card card-hover p-6 text-center">
-          <div class="w-12 h-12 bg-mars-red rounded-lg mx-auto mb-4 flex items-center justify-center">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-display font-semibold mb-2">Radiation Mitigation</h3>
-          <p class="text-gray-600 dark:text-gray-400">
-            Explore structural, geological, and long-term health strategies for protecting human settlements.
-          </p>
-        </div>
-        
-        <div class="card card-hover p-6 text-center">
-          <div class="w-12 h-12 bg-mars-orange rounded-lg mx-auto mb-4 flex items-center justify-center">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-display font-semibold mb-2">Energy Systems</h3>
-          <p class="text-gray-600 dark:text-gray-400">
-            Discover sustainable power generation methods for Martian settlements and terraforming operations.
-          </p>
-        </div>
-        
-        <div class="card card-hover p-6 text-center">
-          <div class="w-12 h-12 bg-mars-brown rounded-lg mx-auto mb-4 flex items-center justify-center">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-display font-semibold mb-2">Water & Agriculture</h3>
-          <p class="text-gray-600 dark:text-gray-400">
-            Learn about water extraction, processing, and sustainable food production systems for Mars.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
 </BaseLayout>

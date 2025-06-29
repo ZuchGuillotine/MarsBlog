@@ -7,8 +7,12 @@ interface MarsGlobeWrapperProps {
 }
 
 export default function MarsGlobeWrapper({ locations }: MarsGlobeWrapperProps) {
-  const [selectedLocation, setSelectedLocation] = useState<LocationData | null>(null);
-  const [hoveredLocation, setHoveredLocation] = useState<LocationData | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<LocationData | null>(
+    null
+  );
+  const [hoveredLocation, setHoveredLocation] = useState<LocationData | null>(
+    null
+  );
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -17,7 +21,7 @@ export default function MarsGlobeWrapper({ locations }: MarsGlobeWrapperProps) {
     const timer = setTimeout(() => {
       console.log('MarsGlobeWrapper loading complete');
       setIsLoaded(true);
-    }, 1000);
+    }, 500);
     return () => clearTimeout(timer);
   }, [locations]);
 
@@ -25,7 +29,6 @@ export default function MarsGlobeWrapper({ locations }: MarsGlobeWrapperProps) {
     setSelectedLocation(location);
     if (location) {
       console.log('Selected location:', location.name);
-      // Future: Show info panel
     }
   };
 
@@ -38,13 +41,15 @@ export default function MarsGlobeWrapper({ locations }: MarsGlobeWrapperProps) {
 
   if (!isLoaded) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
+      <div className="w-full h-full flex items-center justify-center bg-black">
         <div className="text-center space-y-4">
           <div className="w-96 h-96 bg-mars-gradient rounded-full animate-pulse opacity-30 mx-auto"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center space-y-4">
               <div className="loading-spinner w-8 h-8"></div>
-              <p className="text-white font-display">Initializing Mars Globe...</p>
+              <p className="text-white font-display">
+                Initializing Mars Globe...
+              </p>
             </div>
           </div>
         </div>
@@ -53,14 +58,16 @@ export default function MarsGlobeWrapper({ locations }: MarsGlobeWrapperProps) {
   }
 
   return (
-    <>
+    <div className="w-full h-full">
       <MarsGlobe
         locations={locations}
         onLocationSelect={handleLocationSelect}
         onLocationHover={handleLocationHover}
+        autoRotate={false}
+        showMarkers={true}
         className="w-full h-full"
       />
-      
+
       {/* Debug info - remove in production */}
       {(selectedLocation || hoveredLocation) && (
         <div className="absolute top-4 right-4 z-20 bg-black/80 backdrop-blur-sm text-white p-4 rounded-lg max-w-sm">
@@ -69,7 +76,8 @@ export default function MarsGlobeWrapper({ locations }: MarsGlobeWrapperProps) {
               <strong>Selected:</strong> {selectedLocation.name}
               <br />
               <small>
-                {selectedLocation.coordinates.lat.toFixed(2)}°, {selectedLocation.coordinates.lng.toFixed(2)}°
+                {selectedLocation.coordinates.lat.toFixed(2)}°,{' '}
+                {selectedLocation.coordinates.lng.toFixed(2)}°
               </small>
             </div>
           )}
@@ -80,6 +88,6 @@ export default function MarsGlobeWrapper({ locations }: MarsGlobeWrapperProps) {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 }

@@ -8,18 +8,18 @@ import type { Coordinates, Position3D } from '../types/location';
  * @returns 3D position vector
  */
 export function coordinatesToPosition3D(
-  lat: number, 
-  lng: number, 
+  lat: number,
+  lng: number,
   radius: number = 1
 ): Position3D {
-  // Convert degrees to radians
-  const latRad = (lat * Math.PI) / 180;
-  const lngRad = (lng * Math.PI) / 180;
+  // Convert degrees to radians using the working approach from original component
+  const phi = (90 - lat) * (Math.PI / 180);
+  const theta = (lng + 180) * (Math.PI / 180);
 
   // Calculate 3D position on sphere surface
-  const x = radius * Math.cos(latRad) * Math.cos(lngRad);
-  const y = radius * Math.sin(latRad);
-  const z = radius * Math.cos(latRad) * Math.sin(lngRad);
+  const x = -radius * Math.sin(phi) * Math.cos(theta);
+  const y = radius * Math.cos(phi);
+  const z = radius * Math.sin(phi) * Math.sin(theta);
 
   return { x, y, z };
 }
@@ -31,17 +31,17 @@ export function coordinatesToPosition3D(
  * @returns Latitude/longitude coordinates
  */
 export function position3DToCoordinates(
-  position: Position3D, 
+  position: Position3D,
   radius: number = 1
 ): Coordinates {
   const { x, y, z } = position;
-  
+
   // Calculate latitude
   const lat = Math.asin(y / radius) * (180 / Math.PI);
-  
+
   // Calculate longitude
   const lng = Math.atan2(z, x) * (180 / Math.PI);
-  
+
   return { lat, lng };
 }
 
@@ -53,8 +53,8 @@ export function position3DToCoordinates(
  * @returns Distance in kilometers
  */
 export function calculateDistance(
-  coord1: Coordinates, 
-  coord2: Coordinates, 
+  coord1: Coordinates,
+  coord2: Coordinates,
   marsRadius: number = 3389.5
 ): number {
   const lat1Rad = (coord1.lat * Math.PI) / 180;
@@ -62,13 +62,15 @@ export function calculateDistance(
   const deltaLatRad = ((coord2.lat - coord1.lat) * Math.PI) / 180;
   const deltaLngRad = ((coord2.lng - coord1.lng) * Math.PI) / 180;
 
-  const a = 
+  const a =
     Math.sin(deltaLatRad / 2) * Math.sin(deltaLatRad / 2) +
-    Math.cos(lat1Rad) * Math.cos(lat2Rad) *
-    Math.sin(deltaLngRad / 2) * Math.sin(deltaLngRad / 2);
-  
+    Math.cos(lat1Rad) *
+      Math.cos(lat2Rad) *
+      Math.sin(deltaLngRad / 2) *
+      Math.sin(deltaLngRad / 2);
+
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  
+
   return marsRadius * c;
 }
 
@@ -80,24 +82,24 @@ export function calculateDistance(
  * @returns Array of hotspot coordinates
  */
 export function generateHotspots(
-  center: Coordinates, 
-  count: number, 
+  center: Coordinates,
+  count: number,
   radius: number = 5
 ): Coordinates[] {
   const hotspots: Coordinates[] = [];
-  
+
   for (let i = 0; i < count; i++) {
     const angle = (i * 2 * Math.PI) / count;
     const lat = center.lat + radius * Math.cos(angle);
     const lng = center.lng + radius * Math.sin(angle);
-    
+
     // Clamp to valid ranges
     const clampedLat = Math.max(-90, Math.min(90, lat));
     const clampedLng = ((lng + 180) % 360) - 180;
-    
+
     hotspots.push({ lat: clampedLat, lng: clampedLng });
   }
-  
+
   return hotspots;
 }
 
@@ -108,8 +110,10 @@ export function generateHotspots(
  */
 export function isValidMarsCoordinate(coordinates: Coordinates): boolean {
   return (
-    coordinates.lat >= -90 && coordinates.lat <= 90 &&
-    coordinates.lng >= -180 && coordinates.lng <= 180
+    coordinates.lat >= -90 &&
+    coordinates.lat <= 90 &&
+    coordinates.lng >= -180 &&
+    coordinates.lng <= 180
   );
 }
 
@@ -121,9 +125,9 @@ export function isValidMarsCoordinate(coordinates: Coordinates): boolean {
 export function formatCoordinates(coordinates: Coordinates): string {
   const latDirection = coordinates.lat >= 0 ? 'N' : 'S';
   const lngDirection = coordinates.lng >= 0 ? 'E' : 'W';
-  
+
   const lat = Math.abs(coordinates.lat).toFixed(2);
   const lng = Math.abs(coordinates.lng).toFixed(2);
-  
+
   return `${lat}°${latDirection}, ${lng}°${lngDirection}`;
 }

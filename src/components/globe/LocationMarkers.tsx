@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Html, Billboard } from '@react-three/drei';
-import { Vector3, Raycaster } from 'three';
+import { Vector3, Raycaster, Color, Mesh, MeshBasicMaterial } from 'three';
 import type { LocationData } from '../../types/location';
 import { coordinatesToPosition3D } from '../../utils/coordinates';
 
@@ -21,117 +21,168 @@ interface LocationMarkerProps {
 }
 
 // Individual Location Marker Component
-function LocationMarker({ 
-  location, 
-  onSelect, 
-  onHover, 
+function LocationMarker({
+  location,
+  onSelect,
+  onHover,
   isSelected = false,
-  isHovered = false 
+  isHovered = false,
 }: LocationMarkerProps) {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const meshRef = useRef<Mesh>(null);
+  const glowRef = useRef<Mesh>(null);
   const [hovered, setHovered] = useState(false);
-  
+
   // Convert lat/lng to 3D position on sphere surface
   const position = coordinatesToPosition3D(
-    location.coordinates.lat, 
-    location.coordinates.lng, 
-    2.05 // Slightly above Mars surface
+    location.coordinates.lat,
+    location.coordinates.lng,
+    1.01 // Slightly above Mars surface
   );
 
+  // Get marker color based on terraforming potential
+  const getMarkerColor = useCallback(() => {
+    const rating = location.terraformingPotential.rating;
+    if (isSelected) return '#ffffff'; // White for selected
+    if (hovered || isHovered) return '#ffcc00'; // Gold for hover
+    if (rating >= 9) return '#4ade80'; // Green for high potential
+    if (rating >= 7) return '#fbbf24'; // Yellow for medium-high
+    if (rating >= 5) return '#f97316'; // Orange for medium
+    return '#6b7280'; // Gray for low potential
+  }, [location.terraformingPotential.rating, isSelected, hovered, isHovered]);
+
   // Animate marker
-  useFrame((state) => {
-    if (meshRef.current) {
-      // Pulsing animation
-      const scale = 1 + Math.sin(state.clock.elapsedTime * 3) * 0.1;
-      meshRef.current.scale.setScalar(isSelected || hovered ? scale * 1.5 : scale);
+  useFrame(state => {
+    if (meshRef.current && glowRef.current) {
+      const time = state.clock.elapsedTime;
+
+      // Only pulse if selected or hovered
+      if (isSelected || hovered) {
+        const pulseScale = 1 + Math.sin(time * 4) * 0.2;
+        meshRef.current.scale.setScalar(pulseScale);
+        glowRef.current.scale.setScalar(pulseScale * 1.5);
+      } else {
+        meshRef.current.scale.setScalar(1);
+        glowRef.current.scale.setScalar(1.2);
+      }
     }
   });
 
-  const handlePointerEnter = () => {
+  const handlePointerEnter = useCallback(() => {
     setHovered(true);
     onHover?.(location);
     document.body.style.cursor = 'pointer';
-  };
+  }, [location, onHover]);
 
-  const handlePointerLeave = () => {
+  const handlePointerLeave = useCallback(() => {
     setHovered(false);
     onHover?.(null);
     document.body.style.cursor = 'default';
-  };
+  }, [onHover]);
 
-  const handleClick = (e: any) => {
-    e.stopPropagation();
-    onSelect?.(location);
-  };
+  const handleClick = useCallback(
+    (e: any) => {
+      e.stopPropagation();
+      onSelect?.(location);
+    },
+    [location, onSelect]
+  );
+
+  const markerColor = getMarkerColor();
 
   return (
     <group position={[position.x, position.y, position.z]}>
-      {/* Marker Sphere */}
+      {/* Glow Effect - subtle and small */}
+      <mesh
+        ref={glowRef}
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
+        onClick={handleClick}
+      >
+        <sphereGeometry args={[0.02, 8, 8]} />
+        <meshBasicMaterial color={markerColor} transparent opacity={0.3} />
+      </mesh>
+
+      {/* Main Marker Sphere - small fixed size */}
       <mesh
         ref={meshRef}
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
         onClick={handleClick}
-        scale={isSelected ? 1.5 : 1}
       >
-        <sphereGeometry args={[0.02, 16, 16]} />
-        <meshBasicMaterial
-          color={isSelected ? '#ff8c42' : hovered ? '#cd5c5c' : '#ffffff'}
-          transparent
-          opacity={0.9}
-        />
+        <sphereGeometry args={[0.012, 12, 12]} />
+        <meshBasicMaterial color={markerColor} transparent opacity={1} />
       </mesh>
-      
-      {/* Glow Effect */}
-      <mesh
-        scale={isSelected ? 2 : hovered ? 1.5 : 1}
-        onPointerEnter={handlePointerEnter}
-        onPointerLeave={handlePointerLeave}
-        onClick={handleClick}
-      >
-        <sphereGeometry args={[0.03, 16, 16]} />
-        <meshBasicMaterial
-          color={isSelected ? '#ff8c42' : '#cd5c5c'}
-          transparent
-          opacity={0.3}
-        />
-      </mesh>
-      
-      {/* Label */}
-      {(hovered || isSelected) && (
-        <Billboard follow={true} lockX={false} lockY={false} lockZ={false}>
-          <Html
-            center
-            distanceFactor={10}
-            position={[0, 0.1, 0]}
+
+      {/* Interactive Card - ONLY on hover */}
+      {hovered && (
+        <Html
+          center
+          distanceFactor={10}
+          position={[0, 0.03, 0]}
+          style={{
+            pointerEvents: 'none',
+            userSelect: 'none',
+            fontSize: '10px', // Even smaller base font size
+          }}
+        >
+          <div
+            className="bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded p-1.5 shadow-xl"
             style={{
-              pointerEvents: 'none',
-              userSelect: 'none',
+              minWidth: '140px',
+              maxWidth: '180px',
+              fontSize: '9px', // Tiny font for minimal intrusion
             }}
           >
-            <div className="bg-black/80 backdrop-blur-sm text-white px-2 py-1 rounded-md text-sm font-display whitespace-nowrap">
+            {/* Location Name */}
+            <h3
+              className="text-white font-semibold leading-tight mb-0.5"
+              style={{ fontSize: '10px' }}
+            >
               {location.name}
-              <div className="text-xs text-gray-300">
-                {location.elevation.toLocaleString()}m
-              </div>
+            </h3>
+
+            {/* Coordinates & Rating on same line */}
+            <div
+              className="flex items-center justify-between mb-0.5"
+              style={{ fontSize: '8px' }}
+            >
+              <span className="text-gray-400">
+                {location.coordinates.lat.toFixed(1)}°
+                {location.coordinates.lat >= 0 ? 'N' : 'S'},{' '}
+                {Math.abs(location.coordinates.lng).toFixed(1)}°
+                {location.coordinates.lng >= 0 ? 'E' : 'W'}
+              </span>
+              <span className="text-green-400 font-medium">
+                {location.terraformingPotential.rating}/10
+              </span>
             </div>
-          </Html>
-        </Billboard>
+
+            {/* Very brief description */}
+            <p
+              className="text-gray-300 leading-tight"
+              style={{ fontSize: '8px' }}
+            >
+              {location.description.length > 60
+                ? location.description.substring(0, 60) + '...'
+                : location.description}
+            </p>
+          </div>
+        </Html>
       )}
     </group>
   );
 }
 
 // Main Location Markers Component
-export default function LocationMarkers({ 
-  locations, 
-  onSelect, 
-  onHover, 
-  selectedLocation 
+export default function LocationMarkers({
+  locations,
+  onSelect,
+  onHover,
+  selectedLocation,
 }: LocationMarkersProps) {
   return (
     <>
-      {locations.map((location) => (
+      {locations.map(location => (
         <LocationMarker
           key={location.id}
           location={location}

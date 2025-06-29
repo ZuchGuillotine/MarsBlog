@@ -95,6 +95,19 @@
     @apply w-1/2 h-0.5 bg-mars-red dark:bg-mars-orange;
   }
 
+  /* Dark themed navigation links */
+  .nav-link-dark {
+    @apply font-display font-medium text-white bg-gray-900 dark:bg-gray-800;
+    @apply hover:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-200;
+    @apply border-2 border-gray-500 dark:border-gray-400;
+    @apply px-4 py-2 relative;
+    border-radius: 0;
+  }
+
+  .nav-link-dark:hover {
+    @apply shadow-md border-gray-400 dark:border-gray-300;
+  }
+
   /* Collapsible sections */
   .collapsible-section {
     @apply border border-gwern-border dark:border-gwern-border-dark rounded-lg overflow-hidden;

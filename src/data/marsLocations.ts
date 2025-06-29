@@ -1,345 +1,659 @@
-import type { LocationData } from '../types/mars';
+import type { LocationData } from '../types/location';
 
 export const marsLocations: LocationData[] = [
   {
-    id: 'olympus-mons',
-    name: 'Olympus Mons',
-    coordinates: {
-      lat: 18.65,
-      lng: -133.8
-    },
-    elevation: 21287,
-    type: 'volcano',
-    description: 'The largest volcano in the solar system, Olympus Mons stands at over 21 kilometers high and spans roughly 600 kilometers in diameter. This massive shield volcano could potentially provide geothermal energy for future Mars colonies.',
-    terraformingPotential: {
-      rating: 7,
-      factors: [
-        'Geothermal energy potential',
-        'High elevation for atmospheric processing',
-        'Diverse mineral resources',
-        'Unique geological features'
-      ]
-    },
-    relatedArticles: [
-      'olympus-mons-exploration',
-      'mars-volcanism-terraforming',
-      'geothermal-energy-mars'
-    ],
-    discoveredBy: 'Mariner 9',
-    discoveryDate: '1971',
-    significance: 'Largest known volcano in the solar system',
-    size: {
-      diameter: 600000,
-      depth: 21287
-    }
-  },
-  {
-    id: 'valles-marineris',
-    name: 'Valles Marineris',
-    coordinates: {
-      lat: -14.0,
-      lng: -59.0
-    },
-    elevation: -3000,
-    type: 'canyon',
-    description: 'The largest canyon system in the solar system, stretching over 4,000 kilometers long and reaching depths of up to 7 kilometers. This massive rift could serve as a natural shelter and potential site for underground colonies.',
-    terraformingPotential: {
-      rating: 8,
-      factors: [
-        'Natural shelter from radiation',
-        'Protected from dust storms',
-        'Evidence of past water activity',
-        'Stable temperature variations',
-        'Mineral-rich canyon walls'
-      ]
-    },
-    relatedArticles: [
-      'valles-marineris-habitat',
-      'underground-mars-colonies',
-      'mars-canyon-exploration'
-    ],
-    discoveredBy: 'Mariner 9',
-    discoveryDate: '1971',
-    significance: 'Largest canyon system in the solar system',
-    size: {
-      length: 4000000,
-      width: 200000,
-      depth: 7000
-    }
-  },
-  {
-    id: 'hellas-basin',
-    name: 'Hellas Basin',
-    coordinates: {
-      lat: -42.4,
-      lng: 70.5
-    },
-    elevation: -8180,
-    type: 'crater',
-    description: 'One of the largest impact basins in the solar system, Hellas Basin is over 2,300 kilometers in diameter. Its low elevation creates higher atmospheric pressure, making it one of the most Earth-like locations on Mars.',
+    id: 'jezero-crater',
+    name: 'Jezero Crater',
+    coordinates: { lat: 18.38, lng: 77.58 },
+    elevation: -2700,
+    description:
+      'Ancient lake-delta rich in clays; Mars 2020 is caching the first samples for return.',
     terraformingPotential: {
       rating: 9,
       factors: [
-        'Highest atmospheric pressure on Mars',
-        'Potential for liquid water',
-        'Large flat area for development',
-        'Protected from global dust storms',
-        'Evidence of past hydrothermal activity'
-      ]
+        'Ancient lake sediments rich in clays',
+        'Diverse geological history',
+        'Sample return mission site',
+        'Potential for organic preservation',
+      ],
+      challenges: [
+        'Dust accumulation',
+        'Radiation exposure',
+        'Temperature extremes',
+      ],
     },
-    relatedArticles: [
-      'hellas-basin-atmosphere',
-      'mars-impact-basins',
-      'atmospheric-pressure-terraforming'
+    relatedArticles: ['perseverance-mission', 'mars-sample-return'],
+    externalLinks: [
+      {
+        title: 'Jezero (crater) - Wikipedia',
+        url: 'https://en.wikipedia.org/wiki/Jezero_%28crater%29',
+        type: 'wiki',
+      },
     ],
-    discoveredBy: 'Giovanni Schiaparelli',
-    discoveryDate: '1877',
-    significance: 'Deepest point on Mars with highest atmospheric pressure',
-    size: {
-      diameter: 2300000,
-      depth: 8180
-    }
-  },
-  {
-    id: 'north-polar-cap',
-    name: 'North Polar Ice Cap',
-    coordinates: {
-      lat: 85.0,
-      lng: 0.0
-    },
-    elevation: 0,
-    type: 'polar',
-    description: 'Mars\' northern ice cap contains vast amounts of water ice and some dry ice. This represents one of the largest accessible water reserves on Mars, crucial for any terraforming efforts.',
-    terraformingPotential: {
-      rating: 6,
-      factors: [
-        'Massive water ice reserves',
-        'Seasonal CO2 sublimation',
-        'Potential for atmospheric modification',
-        'Extreme but manageable temperatures'
-      ]
-    },
-    relatedArticles: [
-      'mars-polar-ice-caps',
-      'water-extraction-mars',
-      'polar-base-designs'
-    ],
-    discoveredBy: 'William Herschel',
-    discoveryDate: '1784',
-    significance: 'Largest water ice reservoir on Mars',
-    size: {
-      diameter: 1000000
-    }
   },
   {
     id: 'gale-crater',
     name: 'Gale Crater',
-    coordinates: {
-      lat: -5.4,
-      lng: 137.8
-    },
+    coordinates: { lat: -5.4, lng: 137.8 },
     elevation: -4500,
-    type: 'crater',
-    description: 'Home to NASA\'s Curiosity rover, Gale Crater contains Mount Sharp (Aeolis Mons) and shows extensive evidence of past water activity. The crater\'s layered geology tells the story of Mars\' climate history.',
+    description:
+      'Layered Mt. Sharp preserves 3-billion-year climate record; rover found organic molecules.',
     terraformingPotential: {
       rating: 8,
       factors: [
-        'Confirmed past habitability',
-        'Diverse mineral composition',
-        'Evidence of ancient rivers and lakes',
-        'Central mountain for varied elevations',
-        'Active research and mapping'
-      ]
+        '3-billion-year climate record',
+        'Organic molecules detected',
+        'Layered geological history',
+        'Mount Sharp provides elevation diversity',
+      ],
+      challenges: [
+        'Extreme elevation changes',
+        'Dust storms',
+        'Limited water resources',
+      ],
     },
-    relatedArticles: [
-      'gale-crater-exploration',
-      'curiosity-rover-discoveries',
-      'mars-ancient-climate'
+    relatedArticles: ['curiosity-rover', 'mount-sharp'],
+    externalLinks: [
+      {
+        title: 'Gale (crater) - Wikipedia',
+        url: 'https://en.wikipedia.org/wiki/Gale_%28crater%29',
+        type: 'wiki',
+      },
     ],
-    discoveredBy: 'Walter F. Gale',
-    discoveryDate: '1919',
-    significance: 'Site of major rover exploration and habitability evidence',
-    size: {
-      diameter: 154000
-    }
   },
   {
-    id: 'jezero-crater',
-    name: 'Jezero Crater',
-    coordinates: {
-      lat: 18.38,
-      lng: 77.58
-    },
-    elevation: -2500,
-    type: 'crater',
-    description: 'The landing site of NASA\'s Perseverance rover, Jezero Crater was once a lake fed by rivers. Its preserved river delta and diverse geology make it an ideal location for studying past life and future habitability.',
-    terraformingPotential: {
-      rating: 9,
-      factors: [
-        'Ancient lake environment',
-        'Preserved organic materials',
-        'River delta deposits',
-        'Carbonate and clay minerals',
-        'Potential biosignatures'
-      ]
-    },
-    relatedArticles: [
-      'jezero-crater-astrobiology',
-      'perseverance-rover-mission',
-      'mars-ancient-lakes'
-    ],
-    discoveredBy: 'Mars Global Surveyor',
-    discoveryDate: '1997',
-    significance: 'Prime location for astrobiology research',
-    size: {
-      diameter: 45000
-    }
-  },
-  {
-    id: 'tharsis-region',
-    name: 'Tharsis Volcanic Region',
-    coordinates: {
-      lat: 0.0,
-      lng: -100.0
-    },
-    elevation: 5000,
-    type: 'volcano',
-    description: 'The largest volcanic region on Mars, containing several massive shield volcanoes including Olympus Mons. This region represents enormous geothermal potential and mineral resources.',
+    id: 'gusev-crater',
+    name: 'Gusev Crater (Columbia Memorial Station)',
+    coordinates: { lat: -14.6, lng: 175.5 },
+    elevation: -1900,
+    description:
+      'Basaltic plains altered by hydrothermal water hint at early habitability.',
     terraformingPotential: {
       rating: 7,
       factors: [
-        'Multiple geothermal sources',
-        'Rich mineral deposits',
-        'Elevated terrain',
-        'Volcanic soil for agriculture',
-        'Natural landmarks for navigation'
-      ]
+        'Hydrothermal alteration evidence',
+        'Basaltic plains for construction',
+        'Early habitability indicators',
+        'Relatively flat terrain',
+      ],
+      challenges: [
+        'Limited water resources',
+        'Dust accumulation',
+        'Radiation exposure',
+      ],
     },
-    relatedArticles: [
-      'tharsis-volcanism',
-      'mars-geological-history',
-      'volcanic-soil-agriculture'
-    ],
-    discoveredBy: 'Mariner 9',
-    discoveryDate: '1971',
-    significance: 'Largest volcanic province in the solar system',
-    size: {
-      diameter: 4000000
-    }
+    relatedArticles: ['spirit-rover', 'hydrothermal-activity'],
+  },
+  {
+    id: 'meridiani-planum',
+    name: 'Meridiani Planum',
+    coordinates: { lat: -1.95, lng: 354.47 },
+    elevation: -1400,
+    description:
+      'Hematite "blueberries" proved long-lasting acidic groundwater.',
+    terraformingPotential: {
+      rating: 6,
+      factors: [
+        'Hematite deposits',
+        'Evidence of past groundwater',
+        'Flat terrain for construction',
+        'Mineral resources',
+      ],
+      challenges: [
+        'Acidic groundwater history',
+        'Limited current water',
+        'Dust storms',
+      ],
+    },
+    relatedArticles: ['opportunity-rover', 'hematite-deposits'],
   },
   {
     id: 'chryse-planitia',
-    name: 'Chryse Planitia',
-    coordinates: {
-      lat: 22.7,
-      lng: -50.0
-    },
-    elevation: -2500,
-    type: 'plain',
-    description: 'The landing site of Viking 1, Chryse Planitia is a large plain that shows evidence of massive ancient floods. Its relatively flat terrain and moderate elevation make it suitable for large-scale development.',
+    name: 'Chryse Planitia (Viking 1)',
+    coordinates: { lat: 22.3, lng: -48.0 },
+    elevation: -2700,
+    description:
+      'First successful Mars landing (1976); benchmark soil & atmosphere data.',
     terraformingPotential: {
       rating: 7,
       factors: [
-        'Flat terrain for construction',
-        'Evidence of past water flow',
-        'Moderate elevation',
-        'Well-studied geology',
-        'Historical landing site'
-      ]
+        'Well-characterized site',
+        'Baseline atmospheric data',
+        'Relatively flat terrain',
+        'Historical significance',
+      ],
+      challenges: [
+        'Limited water resources',
+        'Dust accumulation',
+        'Radiation exposure',
+      ],
     },
-    relatedArticles: [
-      'chryse-planitia-geology',
-      'viking-landing-sites',
-      'mars-flood-plains'
+    relatedArticles: ['viking-missions', 'mars-atmosphere'],
+  },
+  {
+    id: 'utopia-planitia-viking2',
+    name: 'Viking 2 landing, Utopia Planitia',
+    coordinates: { lat: 48.0, lng: 134.3 },
+    elevation: -4300,
+    description:
+      'High-latitude soils and seasonal frost studies; periglacial terrain.',
+    terraformingPotential: {
+      rating: 8,
+      factors: [
+        'Seasonal frost presence',
+        'Periglacial terrain',
+        'High-latitude water ice',
+        'Cold climate adaptation',
+      ],
+      challenges: [
+        'Extreme cold temperatures',
+        'Limited sunlight',
+        'Seasonal variations',
+      ],
+    },
+    relatedArticles: ['viking-missions', 'seasonal-frost'],
+  },
+  {
+    id: 'zhurong-site',
+    name: 'Zhurong rover site, Utopia Planitia',
+    coordinates: { lat: 25.07, lng: 109.93 },
+    elevation: -4100,
+    description:
+      "China's rover is probing shallow ice and ancient shoreline deposits.",
+    terraformingPotential: {
+      rating: 8,
+      factors: [
+        'Shallow subsurface ice',
+        'Ancient shoreline deposits',
+        'Water resource potential',
+        'Recent exploration data',
+      ],
+      challenges: [
+        'Dust accumulation',
+        'Radiation exposure',
+        'Temperature extremes',
+      ],
+    },
+    relatedArticles: ['zhurong-rover', 'subsurface-ice'],
+    externalLinks: [
+      {
+        title:
+          'Geomorphic contexts and science focus of the Zhurong landing site on Mars',
+        url: 'https://www.nature.com/articles/s41550-021-01519-5',
+        type: 'research',
+      },
     ],
-    discoveredBy: 'Viking 1',
-    discoveryDate: '1976',
-    significance: 'First successful Mars landing site',
-    size: {
-      diameter: 1600000
-    }
+  },
+  {
+    id: 'elysium-planitia',
+    name: 'Elysium Planitia (InSight)',
+    coordinates: { lat: 4.5, lng: 135.9 },
+    elevation: -2600,
+    description:
+      'InSight recorded >1,000 marsquakes, revealing crust–mantle structure.',
+    terraformingPotential: {
+      rating: 6,
+      factors: [
+        'Seismic data available',
+        'Crust-mantle structure known',
+        'Flat terrain for construction',
+        'Geological stability data',
+      ],
+      challenges: [
+        'Limited water resources',
+        'Dust accumulation',
+        'Radiation exposure',
+      ],
+    },
+    relatedArticles: ['insight-lander', 'mars-seismology'],
+  },
+  {
+    id: 'isidis-planitia',
+    name: 'Isidis Planitia (Beagle 2)',
+    coordinates: { lat: 11.5, lng: 90.4 },
+    elevation: -3700,
+    description: 'Basin rim exposes some of the oldest hydrated crust on Mars.',
+    terraformingPotential: {
+      rating: 7,
+      factors: [
+        'Oldest hydrated crust',
+        'Basin rim geology',
+        'Water history evidence',
+        'Diverse terrain',
+      ],
+      challenges: [
+        'Limited current water',
+        'Dust accumulation',
+        'Radiation exposure',
+      ],
+    },
+    relatedArticles: ['beagle-2', 'hydrated-crust'],
+  },
+  {
+    id: 'ares-vallis',
+    name: 'Ares Vallis (Pathfinder)',
+    coordinates: { lat: 19.13, lng: -33.22 },
+    elevation: -1900,
+    description:
+      'Flood channel delivered a rock field from many Martian regions.',
+    terraformingPotential: {
+      rating: 6,
+      factors: [
+        'Diverse rock samples',
+        'Flood channel history',
+        'Relatively flat terrain',
+        'Geological diversity',
+      ],
+      challenges: [
+        'Limited water resources',
+        'Dust accumulation',
+        'Radiation exposure',
+      ],
+    },
+    relatedArticles: ['pathfinder-mission', 'flood-channels'],
+  },
+  {
+    id: 'oxia-planum',
+    name: 'Oxia Planum',
+    coordinates: { lat: 18.2, lng: 335.5 },
+    elevation: -2000,
+    description:
+      'Clay-rich plains ideal for drilling >2 m for ancient organics.',
+    terraformingPotential: {
+      rating: 9,
+      factors: [
+        'Clay-rich plains',
+        'Deep drilling potential',
+        'Ancient organic preservation',
+        'Water history evidence',
+      ],
+      challenges: [
+        'Dust accumulation',
+        'Radiation exposure',
+        'Temperature extremes',
+      ],
+    },
+    relatedArticles: ['exomars-2028', 'clay-deposits'],
   },
   {
     id: 'arcadia-planitia',
     name: 'Arcadia Planitia',
-    coordinates: {
-      lat: 40.0,
-      lng: -120.0
-    },
+    coordinates: { lat: 46.7, lng: 171.9 },
     elevation: -3000,
-    type: 'plain',
-    description: 'A smooth plain in Mars\' northern lowlands with significant subsurface ice deposits. Recent studies suggest this region has some of the most accessible water ice on Mars.',
+    description:
+      'SWIM map shows ice <30 cm deep—prime ISRU site for astronauts.',
+    terraformingPotential: {
+      rating: 9,
+      factors: [
+        'Shallow subsurface ice',
+        'Prime ISRU location',
+        'Water resource abundance',
+        'Accessible depth',
+      ],
+      challenges: [
+        'Cold temperatures',
+        'Seasonal variations',
+        'Limited sunlight',
+      ],
+    },
+    relatedArticles: ['subsurface-ice', 'isru-technology'],
+    externalLinks: [
+      {
+        title: 'Arcadia Planitia - Gazetteer of Planetary Nomenclature',
+        url: 'https://planetarynames.wr.usgs.gov/Feature/348',
+        type: 'nasa',
+      },
+      {
+        title: 'Best places to find ice on Mars revealed in new NASA map',
+        url: 'https://earthsky.org/space/ice-on-mars-mars-map-subsurface-water-ice-mapping-project/',
+        type: 'other',
+      },
+    ],
+  },
+  {
+    id: 'deuteronilus-mensae',
+    name: 'Deuteronilus Mensae',
+    coordinates: { lat: 42, lng: 330 },
+    elevation: -1000,
+    description: 'Lobate debris aprons interpreted as debris-covered glaciers.',
     terraformingPotential: {
       rating: 8,
       factors: [
-        'Abundant subsurface ice',
-        'Smooth terrain',
-        'Low elevation for higher pressure',
-        'Protected from dust storms',
-        'Potential for ice mining'
-      ]
+        'Debris-covered glaciers',
+        'Water ice resources',
+        'Elevation diversity',
+        'Cold climate adaptation',
+      ],
+      challenges: [
+        'Extreme cold temperatures',
+        'Limited sunlight',
+        'Seasonal variations',
+      ],
     },
-    relatedArticles: [
-      'arcadia-planitia-ice',
-      'mars-subsurface-water',
-      'ice-mining-techniques'
-    ],
-    discoveredBy: 'Mars Global Surveyor',
-    discoveryDate: '1997',
-    significance: 'Major subsurface ice deposits',
-    size: {
-      diameter: 1000000
-    }
+    relatedArticles: ['glaciers-mars', 'debris-aprons'],
   },
   {
-    id: 'amazonis-planitia',
-    name: 'Amazonis Planitia',
-    coordinates: {
-      lat: 0.0,
-      lng: -160.0
+    id: 'cerberus-fossae',
+    name: 'Cerberus Fossae',
+    coordinates: { lat: 11, lng: 166 },
+    elevation: -2000,
+    description:
+      'Young fissures that produced marsquakes and recent volcanic/ash flows.',
+    terraformingPotential: {
+      rating: 5,
+      factors: [
+        'Recent geological activity',
+        'Volcanic resources',
+        'Seismic data available',
+        'Young surface features',
+      ],
+      challenges: [
+        'Geological instability',
+        'Limited water resources',
+        'Dust accumulation',
+      ],
     },
+    relatedArticles: ['marsquakes', 'volcanic-activity'],
+  },
+  {
+    id: 'eberswalde-crater',
+    name: 'Eberswalde Crater',
+    coordinates: { lat: -24, lng: 327 },
     elevation: -1000,
-    type: 'plain',
-    description: 'One of the smoothest and youngest plains on Mars, Amazonis Planitia shows evidence of recent volcanic activity. Its flat surface and central location make it ideal for a major spaceport.',
+    description:
+      'Textbook inverted-channel delta; once finalist for Mars 2020.',
+    terraformingPotential: {
+      rating: 7,
+      factors: [
+        'Inverted channel delta',
+        'Water history evidence',
+        'Diverse geology',
+        'Elevation diversity',
+      ],
+      challenges: [
+        'Limited current water',
+        'Dust accumulation',
+        'Radiation exposure',
+      ],
+    },
+    relatedArticles: ['inverted-channels', 'delta-systems'],
+  },
+  {
+    id: 'nili-fossae',
+    name: 'Nili Fossae',
+    coordinates: { lat: 21, lng: 78 },
+    elevation: -500,
+    description:
+      'Carbonate & olivine bedrock records a less-acidic early Mars.',
+    terraformingPotential: {
+      rating: 8,
+      factors: [
+        'Carbonate deposits',
+        'Less-acidic history',
+        'Mineral resources',
+        'Diverse geology',
+      ],
+      challenges: [
+        'Limited water resources',
+        'Dust accumulation',
+        'Radiation exposure',
+      ],
+    },
+    relatedArticles: ['carbonate-deposits', 'early-mars-climate'],
+  },
+  {
+    id: 'mawrth-vallis',
+    name: 'Mawrth Vallis',
+    coordinates: { lat: 24, lng: 342 },
+    elevation: -2000,
+    description:
+      'Thick phyllosilicate layers point to long-lived surface water.',
+    terraformingPotential: {
+      rating: 8,
+      factors: [
+        'Thick phyllosilicate layers',
+        'Long-lived water history',
+        'Clay deposits',
+        'Water resource potential',
+      ],
+      challenges: [
+        'Limited current water',
+        'Dust accumulation',
+        'Radiation exposure',
+      ],
+    },
+    relatedArticles: ['phyllosilicates', 'ancient-water'],
+  },
+  {
+    id: 'hellas-basin',
+    name: 'Hellas Basin',
+    coordinates: { lat: -42.7, lng: 70 },
+    elevation: -7000,
+    description:
+      '7-km-deep basin drives massive dust storms and traps volatiles.',
     terraformingPotential: {
       rating: 6,
       factors: [
-        'Extremely flat surface',
-        'Young geological age',
-        'Central location',
-        'Potential recent volcanism',
-        'Ideal for large infrastructure'
-      ]
+        'Deep basin environment',
+        'Volatile trapping',
+        'Unique atmospheric conditions',
+        'Elevation extremes',
+      ],
+      challenges: [
+        'Massive dust storms',
+        'Extreme elevation',
+        'Harsh environment',
+      ],
     },
-    relatedArticles: [
-      'amazonis-planitia-geology',
-      'mars-spaceport-design',
-      'recent-mars-volcanism'
-    ],
-    discoveredBy: 'Mariner 9',
-    discoveryDate: '1971',
-    significance: 'Youngest large plain on Mars',
-    size: {
-      diameter: 1600000
-    }
-  }
+    relatedArticles: ['hellas-basin', 'dust-storms'],
+  },
+  {
+    id: 'valles-marineris',
+    name: 'Valles Marineris (Central canyon)',
+    coordinates: { lat: -14, lng: 290 },
+    elevation: -4000,
+    description:
+      'Solar-system-scale canyon exposes 8 km of crust; hosts recurring slope lineae.',
+    terraformingPotential: {
+      rating: 7,
+      factors: [
+        'Deep canyon environment',
+        'Crustal exposure',
+        'Elevation diversity',
+        'Unique microclimates',
+      ],
+      challenges: [
+        'Extreme elevation changes',
+        'Limited water resources',
+        'Dust accumulation',
+      ],
+    },
+    relatedArticles: ['valles-marineris', 'recurring-slope-lineae'],
+  },
+  {
+    id: 'olympus-mons',
+    name: 'Olympus Mons (Tharsis)',
+    coordinates: { lat: 18.65, lng: 226.2 },
+    elevation: 21200,
+    description:
+      'Tallest known volcano; lava tubes are candidate human habitats.',
+    terraformingPotential: {
+      rating: 8,
+      factors: [
+        'Lava tube habitats',
+        'Elevation advantages',
+        'Volcanic resources',
+        'Natural protection',
+      ],
+      challenges: [
+        'Extreme elevation',
+        'Limited water resources',
+        'Thin atmosphere',
+      ],
+    },
+    relatedArticles: ['olympus-mons', 'lava-tubes'],
+  },
+  {
+    id: 'planum-boreum',
+    name: 'Planum Boreum (North polar cap)',
+    coordinates: { lat: 85, lng: 0 },
+    elevation: 3000,
+    description:
+      'Multi-km water-ice reserve; drives Martian water cycle each summer.',
+    terraformingPotential: {
+      rating: 9,
+      factors: [
+        'Massive water ice reserves',
+        'Water cycle driver',
+        'Cold climate adaptation',
+        'Resource abundance',
+      ],
+      challenges: [
+        'Extreme cold temperatures',
+        'Limited sunlight',
+        'Seasonal variations',
+      ],
+    },
+    relatedArticles: ['north-polar-cap', 'water-cycle'],
+  },
+  {
+    id: 'planum-australe',
+    name: 'Planum Australe (South polar cap)',
+    coordinates: { lat: -85, lng: 0 },
+    elevation: 3000,
+    description:
+      'CO₂ slab ice atop water ice; radar hints at sub-ice brine lakes.',
+    terraformingPotential: {
+      rating: 9,
+      factors: [
+        'Water ice reserves',
+        'CO₂ resources',
+        'Potential sub-ice lakes',
+        'Cold climate adaptation',
+      ],
+      challenges: [
+        'Extreme cold temperatures',
+        'Limited sunlight',
+        'Seasonal variations',
+      ],
+    },
+    relatedArticles: ['south-polar-cap', 'sub-ice-lakes'],
+  },
+  {
+    id: 'medusae-fossae',
+    name: 'Medusae Fossae Formation',
+    coordinates: { lat: -5, lng: 213 },
+    elevation: -1000,
+    description:
+      'Easily-mined volcanic ash deposit; major source of Martian dust.',
+    terraformingPotential: {
+      rating: 6,
+      factors: [
+        'Easily-mined deposits',
+        'Volcanic resources',
+        'Construction materials',
+        'Dust source understanding',
+      ],
+      challenges: [
+        'Dust accumulation',
+        'Limited water resources',
+        'Radiation exposure',
+      ],
+    },
+    relatedArticles: ['medusae-fossae', 'volcanic-ash'],
+  },
+  {
+    id: 'arabia-terra',
+    name: 'Arabia Terra',
+    coordinates: { lat: 5, lng: 30 },
+    elevation: 0,
+    description:
+      'Site of possible super-volcano calderas; abundant clay-bearing rocks.',
+    terraformingPotential: {
+      rating: 7,
+      factors: [
+        'Clay-bearing rocks',
+        'Super-volcano calderas',
+        'Mineral resources',
+        'Diverse geology',
+      ],
+      challenges: [
+        'Limited water resources',
+        'Dust accumulation',
+        'Radiation exposure',
+      ],
+    },
+    relatedArticles: ['arabia-terra', 'super-volcanoes'],
+  },
+  {
+    id: 'protonilus-mensae',
+    name: 'Protonilus Mensae lobate debris aprons',
+    coordinates: { lat: 42, lng: 45 },
+    elevation: -1000,
+    description:
+      'Accessible buried ice beneath thin debris—natural refrigeration.',
+    terraformingPotential: {
+      rating: 8,
+      factors: [
+        'Accessible buried ice',
+        'Natural refrigeration',
+        'Water resources',
+        'Cold climate adaptation',
+      ],
+      challenges: [
+        'Extreme cold temperatures',
+        'Limited sunlight',
+        'Seasonal variations',
+      ],
+    },
+    relatedArticles: ['lobate-debris-aprons', 'buried-ice'],
+  },
+  {
+    id: 'horowitz-crater',
+    name: 'Horowitz Crater RSL',
+    coordinates: { lat: -32.1, lng: 165.9 },
+    elevation: -2000,
+    description:
+      'Recurring dark streaks may involve seasonal brines or dry flows.',
+    terraformingPotential: {
+      rating: 7,
+      factors: [
+        'Recurring slope lineae',
+        'Seasonal activity',
+        'Water-related features',
+        'Recent geological activity',
+      ],
+      challenges: [
+        'Limited water resources',
+        'Dust accumulation',
+        'Radiation exposure',
+      ],
+    },
+    relatedArticles: ['recurring-slope-lineae', 'seasonal-brines'],
+  },
+  {
+    id: 'athabasca-valles',
+    name: 'Athabasca Valles',
+    coordinates: { lat: 10, lng: 155 },
+    elevation: -2000,
+    description:
+      'Geologically young flood-lava channel, possible recent groundwater release.',
+    terraformingPotential: {
+      rating: 6,
+      factors: [
+        'Recent geological activity',
+        'Flood lava channels',
+        'Groundwater evidence',
+        'Young surface features',
+      ],
+      challenges: [
+        'Limited water resources',
+        'Dust accumulation',
+        'Radiation exposure',
+      ],
+    },
+    relatedArticles: ['flood-lava', 'recent-groundwater'],
+  },
 ];
-
-// Export additional location categories
-export const locationsByType = {
-  volcano: marsLocations.filter(loc => loc.type === 'volcano'),
-  crater: marsLocations.filter(loc => loc.type === 'crater'),
-  plain: marsLocations.filter(loc => loc.type === 'plain'),
-  canyon: marsLocations.filter(loc => loc.type === 'canyon'),
-  polar: marsLocations.filter(loc => loc.type === 'polar')
-};
-
-export const highPotentialLocations = marsLocations.filter(
-  loc => loc.terraformingPotential.rating >= 8
-);
-
-export const landingSites = marsLocations.filter(
-  loc => ['gale-crater', 'jezero-crater', 'chryse-planitia'].includes(loc.id)
-);
 
 export default marsLocations;
