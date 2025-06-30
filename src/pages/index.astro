@@ -7,57 +7,51 @@ import marsLocations from '../data/marsLocations';
 
 <BaseLayout title="Mars Population - Interactive Globe">
   <div class="relative w-full h-screen bg-black overflow-hidden">
-    <!-- Main Content Area with Left Padding for Mars Population Card -->
-    <div class="flex w-full h-full">
-      <!-- Left Sidebar Area for Mars Population Card -->
-      <div class="w-80 flex-shrink-0 bg-black">
-        <!-- Mars Population Card - Pinned to top-left -->
-        <div class="absolute top-16 left-4 z-30 w-72">
-          <div
-            class="bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-lg p-6 shadow-2xl"
-          >
-            <h1 class="text-white font-display text-2xl font-bold mb-3">
-              Mars Population
-            </h1>
+    <!-- Mars Globe - Full Screen -->
+    <div class="w-full h-full">
+      <MarsGlobeWrapper client:load locations={marsLocations} />
+    </div>
 
-            <!-- Current Date/Time and Population Counter -->
-            <div class="mb-4 space-y-2">
-              <div class="text-gray-300 text-sm" id="current-datetime">
-                <!-- Date/time will be populated by client-side script -->
-              </div>
-              <div class="flex items-center space-x-3">
-                <span class="text-gray-400 text-sm">Current Population:</span>
-                <span class="text-mars-orange font-display text-lg font-bold"
-                  >0</span
-                >
-              </div>
-            </div>
+    <!-- Mars Population Card - Pinned to top-left -->
+    <div class="absolute top-16 left-4 z-30 w-72 max-w-[calc(100vw-2rem)]">
+      <div
+        class="bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-lg p-6 shadow-2xl"
+      >
+        <h1 class="text-white font-display text-2xl font-bold mb-3">
+          Mars Population
+        </h1>
 
-            <div class="flex items-center space-x-4 text-xs text-gray-400">
-              <div class="flex items-center space-x-1">
-                <div class="w-2 h-2 bg-green-400 rounded-full"></div>
-                <span>High Potential (9-10)</span>
-              </div>
-              <div class="flex items-center space-x-1">
-                <div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                <span>Medium (7-8)</span>
-              </div>
-              <div class="flex items-center space-x-1">
-                <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
-                <span>Low (5-6)</span>
-              </div>
-            </div>
+        <!-- Current Date/Time and Population Counter -->
+        <div class="mb-4 space-y-2">
+          <div class="text-gray-300 text-sm" id="current-datetime">
+            <!-- Date/time will be populated by client-side script -->
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="text-gray-400 text-sm">Current Population:</span>
+            <span class="text-mars-orange font-display text-lg font-bold"
+              >0</span
+            >
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-4 text-xs text-gray-400">
+          <div class="flex items-center space-x-1">
+            <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+            <span>High Potential (9-10)</span>
+          </div>
+          <div class="flex items-center space-x-1">
+            <div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
+            <span>Medium (7-8)</span>
+          </div>
+          <div class="flex items-center space-x-1">
+            <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
+            <span>Low (5-6)</span>
           </div>
         </div>
       </div>
-
-      <!-- Mars Globe Container -->
-      <div class="flex-1 h-full">
-        <MarsGlobeWrapper client:load locations={marsLocations} />
-      </div>
     </div>
 
-    <!-- Sidebar - Higher z-index than Mars Population card -->
+    <!-- Sidebar - Highest z-index -->
     <ExpandableSidebar client:load className="z-50" />
   </div>
 </BaseLayout>
