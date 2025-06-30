@@ -70,7 +70,7 @@ export default function MarsGlobeWrapper({ locations }: MarsGlobeWrapperProps) {
 
       {/* Debug info - remove in production */}
       {(selectedLocation || hoveredLocation) && (
-        <div className="absolute top-4 right-4 z-20 bg-black/80 backdrop-blur-sm text-white p-4 rounded-lg max-w-sm">
+        <div className="absolute top-4 right-4 z-10 bg-black/80 backdrop-blur-sm text-white p-4 rounded-lg max-w-sm">
           {selectedLocation && (
             <div className="mb-2">
               <strong>Selected:</strong> {selectedLocation.name}

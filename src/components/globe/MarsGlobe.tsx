@@ -228,7 +228,7 @@ export default function MarsGlobe({
 
       {/* Location Info Panel */}
       {selectedLocation && (
-        <div className="absolute top-4 left-4 z-10 max-w-sm">
+        <div className="absolute top-4 left-4 z-20 max-w-sm">
           <div className="bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-lg p-4 shadow-2xl">
             <div className="flex items-start justify-between mb-3">
               <h3 className="text-white font-display font-semibold text-lg">

@@ -161,7 +161,7 @@ function LocationMarker({
             transform: 'scale(0.8)',
             transformOrigin: 'center',
             fontSize: '14px',
-            zIndex: 40,
+            zIndex: 100,
           }}
         >
           <div
@@ -170,7 +170,8 @@ function LocationMarker({
               minWidth: '180px',
               maxWidth: '220px',
               fontSize: '13px',
-              zIndex: 50,
+              zIndex: 100,
+              position: 'relative',
             }}
           >
             {/* Close Button */}
