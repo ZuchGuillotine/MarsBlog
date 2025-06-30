@@ -1,0 +1,403 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'utopia-planitia-viking2');
+if (!location) {
+  throw new Error('Utopia Planitia Viking 2 location not found');
+}
+---
+
+<LocationLayout title="Utopia Planitia (Viking 2) - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-indigo-900 to-indigo-700 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Viking 2 lander view showing seasonal frost in Utopia Planitia
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL Viking 2 Lander</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Utopia Planitia holds the distinction of being the site of humanity's second successful landing on Mars, when Viking 2 touched down on September 3, 1976. Located at 47.97° N, 225.74° W, this high-latitude location was strategically chosen near the edge of Mars' polar ice cap where water ice was expected to be found.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The Viking 2 lander made groundbreaking observations of seasonal water-ice frost formation, documenting thin layers of water ice that persisted for about 100 days during each Martian winter. Recent orbital surveys have revealed extensive subsurface water ice deposits throughout the region, covering approximately 375,000 square kilometers of southwestern Utopia Planitia.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          This location represents one of the best-characterized high-latitude sites on Mars, with decades of atmospheric and soil data providing crucial baseline information for future human missions to Mars' northern regions.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Landing Date:</span>
+            <span class="text-white block">September 3, 1976</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Mission Duration:</span>
+            <span class="text-white block">3.7 years (planned 90 days)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Frost Thickness:</span>
+            <span class="text-white block">100-200 micrometers</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Ice Coverage:</span>
+            <span class="text-white block">375,000 km² subsurface</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Historical Significance:</span>
+            <span class="text-white block">Second Mars landing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Viking 2 Mission Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Viking 2 Mission Legacy
+    </h2>
+    <div class="bg-gradient-to-br from-red-900/50 to-red-800/30 p-8 rounded-lg border border-red-700/50">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The Viking 2 lander was strategically positioned in Utopia Planitia to study high-latitude Martian conditions and search for signs of life. Mission planners selected this site near the polar ice cap where water ice was anticipated, making it an ideal location for studying Mars' water cycle and seasonal changes.
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Mission Achievements</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• First observations of Martian seasonal frost</li>
+            <li>• Documented water ice formation cycles</li>
+            <li>• Analyzed high-latitude soil composition</li>
+            <li>• Provided baseline atmospheric data</li>
+            <li>• Operated 1,281 sols (3.7 Earth years)</li>
+            <li>• Transmitted over 18,000 images</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Scientific Discoveries</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Water ice frost formation in winter</li>
+            <li>• Periglacial terrain characteristics</li>
+            <li>• High-latitude atmospheric dynamics</li>
+            <li>• Soil chemistry at northern latitudes</li>
+            <li>• Temperature and pressure variations</li>
+            <li>• Wind patterns and seasonal changes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Water Ice Observations Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Water Ice Discoveries
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-cyan-900/50 to-cyan-800/30 p-6 rounded-lg border border-cyan-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Seasonal Frost Formation
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Viking 2 captured the first direct observations of seasonal water-ice frost on Mars on May 18, 1979. The lander documented thin coatings of water ice on rocks and soil, with frost layers measuring 100-200 micrometers thick.
+        </p>
+        <p class="text-gray-300 text-sm">
+          This frost persisted for approximately 100 days during each Martian winter, providing crucial evidence of Mars' active water cycle at high latitudes.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Subsurface Ice Deposits
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Modern orbital surveys have revealed extensive subsurface water ice deposits covering approximately 375,000 square kilometers of southwestern Utopia Planitia. These deposits represent some of the lowest latitude water ice found on Mars.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The deposits are tens of meters thick in many areas, providing evidence for broad areas of subsurface ice throughout the northern plains.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Periglacial Terrain Features
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        Utopia Planitia exhibits characteristic periglacial terrain with a system of shallow troughs that may be associated with ice-wedge activity resulting from permafrost processes. Scalloped terrain is particularly prominent in this region between 45° and 60° north latitude.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        These features led to the discovery of substantial underground ice deposits and provide important insights into Mars' past and present climate conditions at high latitudes.
+      </p>
+    </div>
+  </section>
+
+  <!-- High-Latitude Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      High-Latitude Water Resources
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">H₂O</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Abundant Water Ice Resources
+          </h3>
+          <p class="text-purple-300">
+            Extensive subsurface deposits and seasonal availability
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Resource Characteristics</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Seasonal surface frost formation</li>
+            <li>• Extensive subsurface ice deposits</li>
+            <li>• 375,000 km² coverage area</li>
+            <li>• Tens of meters thick deposits</li>
+            <li>• Lowest latitude ice found on Mars</li>
+            <li>• Periglacial terrain indicators</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">ISRU Applications</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Seasonal water harvesting</li>
+            <li>• Subsurface ice extraction</li>
+            <li>• Life support water supply</li>
+            <li>• Fuel production capabilities</li>
+            <li>• Agricultural water sources</li>
+            <li>• Thermal management systems</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Climate and Environment Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Climate and Environmental Conditions
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Viking 2's long operational period provided comprehensive data on high-latitude Martian climate conditions. The lander documented significant seasonal temperature variations, with winter temperatures cold enough to support water ice formation and summer conditions warm enough for sublimation.
+      </p>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Temperature Range</h4>
+          <p class="text-gray-300 text-sm">
+            Extreme seasonal variations from -120°C in winter to -20°C in summer, with frost formation occurring during the coldest periods of the Martian year.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Atmospheric Pressure</h4>
+          <p class="text-gray-300 text-sm">
+            Typical low Martian pressures with seasonal variations due to CO₂ condensation and sublimation at the polar caps, affecting local weather patterns.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Seasonal Cycles</h4>
+          <p class="text-gray-300 text-sm">
+            Well-documented frost formation and sublimation cycles lasting approximately 100 days, providing insights into Mars' active water cycle.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Assessment Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-green-900/30 to-green-800/20 p-8 rounded-lg border border-green-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">8</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            High Terraforming Potential
+          </h3>
+          <p class="text-green-300">
+            Excellent water resources and proven habitability data
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Extensive baseline mission data</li>
+            <li>• Proven seasonal frost formation</li>
+            <li>• Vast subsurface ice deposits</li>
+            <li>• Well-characterized environment</li>
+            <li>• Historical mission success</li>
+            <li>• Periglacial terrain features</li>
+            <li>• Active water cycle evidence</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Extreme seasonal temperature variations</li>
+            <li>• High latitude solar limitations</li>
+            <li>• Long winter frost periods</li>
+            <li>• Deep ice extraction requirements</li>
+            <li>• Permafrost access challenges</li>
+            <li>• Limited growing season</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Opportunities
+    </h2>
+    <div
+      class="bg-gradient-to-br from-orange-900/30 to-orange-800/20 p-8 rounded-lg border border-orange-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Utopia Planitia's combination of historical significance, extensive baseline data, and abundant water resources makes it an attractive target for future Mars missions. The region's well-documented environmental conditions and proven accessibility provide a strong foundation for mission planning.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Research Priorities
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Subsurface ice characterization</li>
+            <li>• Permafrost dynamics studies</li>
+            <li>• Seasonal water cycle monitoring</li>
+            <li>• High-latitude agriculture testing</li>
+            <li>• Climate adaptation strategies</li>
+            <li>• Ice extraction technology validation</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Mission Applications
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• High-latitude settlement studies</li>
+            <li>• ISRU technology demonstrations</li>
+            <li>• Cold climate adaptation research</li>
+            <li>• Long-term monitoring stations</li>
+            <li>• Resource utilization pilots</li>
+            <li>• Historical site preservation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://science.nasa.gov/mission/viking-2/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Viking 2 Mission Overview
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.space.com/18803-viking-2.html"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Viking 2 Mission Details
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.jpl.nasa.gov/images/pia00571-ice-on-mars-utopia-planitia-again/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ice on Mars Observations
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.planetary.org/articles/1122-subsurface-water-ice-in-utopia-planitia-mars"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Subsurface Water Ice Analysis
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.britannica.com/place/Utopia-Planitia"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Utopia Planitia Overview
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

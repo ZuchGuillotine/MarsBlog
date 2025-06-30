@@ -1,0 +1,441 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'cerberus-fossae');
+if (!location) {
+  throw new Error('Cerberus Fossae location not found');
+}
+---
+
+<LocationLayout title="Cerberus Fossae - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-red-900 to-orange-800 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Mars Express view of Cerberus Fossae's dramatic fracture system
+        </p>
+        <p class="text-xs opacity-60">ESA/DLR/FU Berlin</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Cerberus Fossae represents one of Mars' most geologically active regions, 
+          consisting of a series of parallel fractures extending over 1,200 kilometers 
+          across the Elysium Planitia. This dramatic fissure system has emerged as 
+          the primary source of marsquakes detected by NASA's InSight mission, 
+          challenging our understanding of Mars as a geologically dormant world.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The fossae (Latin for "trenches") are relatively young geological features, 
+          formed within the last few million years through tectonic activity driven 
+          by volcanic processes beneath the surface. These parallel fractures represent 
+          active extension of the Martian crust, with some segments showing evidence 
+          of recent lava flows and pyroclastic deposits.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Recent discoveries from InSight's seismometer have revealed that over 90% 
+          of detected marsquakes originate from this region, suggesting ongoing 
+          magmatic activity at depths of 30-50 kilometers. This makes Cerberus Fossae 
+          a cornerstone location for understanding Mars' current geological processes 
+          and potential for continued volcanic activity.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Length:</span>
+            <span class="text-white block">1,200+ km</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Age:</span>
+            <span class="text-white block">&lt;5 million years</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Width:</span>
+            <span class="text-white block">Up to 2 km wide</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Marsquake Source:</span>
+            <span class="text-white block">90% of InSight detections</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Key Discovery:</span>
+            <span class="text-white block">Active magmatic processes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Geological Formation Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Geological Formation and Structure
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The Cerberus Fossae system formed through extensional tectonics, where 
+        the Martian crust stretched and fractured due to underlying magmatic 
+        processes. These parallel grabens (down-dropped blocks) create a distinctive 
+        pattern visible from orbit, with individual fossae ranging from hundreds 
+        of meters to several kilometers in width.
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Formation Mechanism</h4>
+          <p class="text-gray-300 text-sm">
+            Tectonic extension driven by magma intrusion creates parallel 
+            fractures as the crust pulls apart. This process is ongoing, 
+            with seismic evidence suggesting continued magmatic activity 
+            at depths of 30-50 kilometers beneath the surface.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Volcanic Features</h4>
+          <p class="text-gray-300 text-sm">
+            Recent pyroclastic deposits less than 250,000 years old indicate 
+            explosive volcanic activity. Dark dust deposits suggest even 
+            more recent volcanism, possibly within the last 50,000 years.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- InSight Discoveries Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Revolutionary InSight Discoveries
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-red-900/50 to-red-800/30 p-6 rounded-lg border border-red-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Marsquake Epicenter (2022-2024)
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          InSight's seismometer detected 1,319 marsquakes during its mission, 
+          with over 90% originating from Cerberus Fossae. This concentration 
+          of seismic activity was unprecedented and revealed that Mars is 
+          far more geologically active than previously thought.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The strongest marsquakes reached magnitudes of 4.7, releasing 
+          significant seismic energy equivalent to 1.4–5.6 × 10¹⁵ N·m per year, 
+          representing at least half of Mars' total planetary seismicity.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-orange-900/50 to-orange-800/30 p-6 rounded-lg border border-orange-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Active Magmatic Processes
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Low-frequency marsquakes suggest a structurally weak, potentially 
+          warm source region consistent with molten lava or magma at depth. 
+          This challenges the long-held belief that Mars is volcanically dormant.
+        </p>
+        <p class="text-gray-300 text-sm">
+          Spectral analysis indicates magmatic activity occurring at 40-kilometer 
+          depths, with the graben system continuing to actively open and extend, 
+          driven by ongoing subsurface processes.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Seismic Monitoring Breakthrough
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        The concentration of seismic activity at Cerberus Fossae was initially 
+        surprising to scientists who expected more distributed seismicity across 
+        Mars. Instead, they discovered that most Martian surface faults are 
+        not seismically active, with activity focused on this single population 
+        of tectonic structures.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        This finding has revolutionized understanding of Martian tectonics, 
+        suggesting that active geological processes are more localized but 
+        more intense than previously modeled, with implications for understanding 
+        Mars' thermal evolution and interior dynamics.
+      </p>
+    </div>
+  </section>
+
+  <!-- Recent Volcanic Activity Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Evidence of Recent Volcanic Activity
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Geological evidence suggests that Cerberus Fossae has experienced 
+          volcanic activity much more recently than most of Mars. Dark-toned 
+          deposits and fresh-appearing lava flows indicate volcanism may have 
+          occurred within the past 50,000 years—extremely recent in geological terms.
+        </p>
+
+        <div class="space-y-4 mb-6">
+          <div class="border-l-4 border-orange-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Pyroclastic Deposits
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Evidence of explosive volcanism less than 250,000 years old, 
+              including volcanic ash deposits in the central fossae region.
+            </p>
+          </div>
+          <div class="border-l-4 border-red-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Lava Flow Evidence
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Fresh-appearing basaltic flows with minimal crater density, 
+              suggesting emplacement within the last few million years.
+            </p>
+          </div>
+          <div class="border-l-4 border-yellow-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Dark Surface Deposits
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Distinctive dark-toned materials possibly related to very 
+              recent volcanic activity, within the last 50,000 years.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Volcanic Timeline
+        </h3>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Formation:</span>
+            <span class="text-white text-sm">&lt;5 Myr ago</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Pyroclastic:</span>
+            <span class="text-white text-sm">&lt;250 kyr ago</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Recent flows:</span>
+            <span class="text-white text-sm">&lt;50 kyr ago</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Marsquakes:</span>
+            <span class="text-white text-sm">Ongoing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Assessment Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-yellow-900/30 to-orange-800/20 p-8 rounded-lg border border-yellow-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">5</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Moderate Terraforming Potential
+          </h3>
+          <p class="text-yellow-300">
+            Active geology with significant challenges
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Active geological processes indicate thermal energy</li>
+            <li>• Recent volcanic activity suggests accessible magma</li>
+            <li>• Potential geothermal energy resources</li>
+            <li>• Fresh volcanic materials for construction</li>
+            <li>• Ongoing outgassing could contribute to atmosphere</li>
+            <li>• Well-studied seismic activity for planning</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• High seismic risk from ongoing marsquakes</li>
+            <li>• Potential for future volcanic eruptions</li>
+            <li>• Geological instability complicates construction</li>
+            <li>• Limited surface water resources</li>
+            <li>• Dust accumulation in fracture systems</li>
+            <li>• Unpredictable future activity patterns</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scientific Significance Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Scientific Significance
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Martian Seismology Revolution
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          Cerberus Fossae has fundamentally changed our understanding of Mars' 
+          interior structure and dynamics. The concentration of seismic activity 
+          here has provided unprecedented insights into the planet's crustal 
+          structure, thermal state, and ongoing geological processes, establishing 
+          Mars as a seismically active world.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Active Planet Paradigm
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          The discovery of ongoing magmatic activity challenges the traditional 
+          view of Mars as a geologically dead planet. Evidence for recent volcanism 
+          and active magma chambers suggests Mars remains thermally active, with 
+          implications for understanding planetary evolution and the potential 
+          for ongoing atmosphere modification through volcanic outgassing.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Potential
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        As one of Mars' most geologically active regions, Cerberus Fossae 
+        presents both unique opportunities and challenges for future exploration. 
+        The ongoing seismic activity and evidence of recent volcanism make it 
+        a priority target for understanding Mars' current state and future evolution.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Research Priorities
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Direct sampling of recent volcanic deposits</li>
+            <li>• Continuous seismic monitoring network</li>
+            <li>• Subsurface magma chamber detection</li>
+            <li>• Gas emission monitoring and analysis</li>
+            <li>• Thermal mapping of active regions</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Engineering Considerations
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Seismic-resistant infrastructure design</li>
+            <li>• Real-time hazard monitoring systems</li>
+            <li>• Geothermal energy exploitation potential</li>
+            <li>• Safe distance protocols for settlements</li>
+            <li>• Emergency response planning</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://mars.nasa.gov/insight/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              InSight Mars Mission
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.jpl.nasa.gov/edu/resources/teachable-moment/how-insight-revealed-the-heart-of-mars/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              How InSight Revealed Mars' Interior
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Papers</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.nature.com/articles/s41550-022-01803-y"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Tectonics of Cerberus Fossae (Nature, 2022)
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2021JE007118"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Marsquake Properties Study (AGU, 2022)
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

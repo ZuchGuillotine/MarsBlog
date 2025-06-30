@@ -1,0 +1,421 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'protonilus-mensae');
+if (!location) {
+  throw new Error('Protonilus Mensae location not found');
+}
+---
+
+<LocationLayout title="Protonilus Mensae - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-teal-900 to-teal-700 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Lobate debris aprons with buried ice in Protonilus Mensae
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL/University of Arizona/HiRISE</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Protonilus Mensae, located at coordinates 43.86° N and 49.4° E, represents one of Mars' most accessible ice resource locations. Situated between Deuteronilus Mensae and Nilosyrtis Mensae along the Martian dichotomy boundary, this region features exceptional lobate debris aprons with accessible buried ice beneath thin protective debris layers.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The area is characterized by fretted terrain containing dramatic cliffs, mesas, and wide flat valleys shaped by debris-covered glacial processes. The lobate debris aprons (LDA) surrounding these features are composed of nearly pure water ice (>80% ice content) with protective surface debris layers that act as natural refrigeration systems, preserving the ice from sublimation.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Recent studies indicate that these formations contain a minimum of 0.9-1.0 × 10⁵ km³ of sequestered ice, making Protonilus Mensae one of the most significant water resource repositories on Mars and an ideal target for future human missions requiring accessible water ice.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Ice Content:</span>
+            <span class="text-white block">>80% pure water ice</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Ice Volume:</span>
+            <span class="text-white block">0.9-1.0 × 10⁵ km³</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Terrain Type:</span>
+            <span class="text-white block">Fretted terrain</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Protection:</span>
+            <span class="text-white block">Natural debris refrigeration</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Accessibility:</span>
+            <span class="text-white block">Thin debris cover</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lobate Debris Aprons Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Lobate Debris Aprons and Buried Ice
+    </h2>
+    <div class="bg-gradient-to-br from-cyan-900/50 to-cyan-800/30 p-8 rounded-lg border border-cyan-700/50">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The lobate debris aprons in Protonilus Mensae are remarkable geological features that emanate from massifs and mesas, forming lobe-shaped formations with distinctive flow patterns. These aprons are composed of nearly pure water ice with protective debris layers that function as natural refrigeration systems, preventing ice sublimation over geological timescales.
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Debris Apron Characteristics</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Lobe-shaped formations from massifs</li>
+            <li>• Nearly pure water ice composition</li>
+            <li>• Thin protective debris surface layer</li>
+            <li>• Viscous flow morphology indicators</li>
+            <li>• Lineated and pitted surface textures</li>
+            <li>• Natural refrigeration preservation</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Ice Preservation Mechanism</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Surface debris insulation layer</li>
+            <li>• Protection from direct sublimation</li>
+            <li>• Thermal stability maintenance</li>
+            <li>• Long-term geological preservation</li>
+            <li>• Reduced sublimation rates</li>
+            <li>• Accessible extraction depths</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Water Ice Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      High-Purity Water Ice Resources
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Radar-Confirmed Ice Content
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Comprehensive orbital radar sounding surveys using SHARAD have confirmed that the majority of lobate debris aprons in Protonilus Mensae are composed of material with dielectric properties consistent with >80% water ice content.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The high ice purity is maintained by dielectric constant values of ε' = 3 and low loss tangent values (tanδ ≈ 0.002), indicating minimal contamination and excellent preservation.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-emerald-900/50 to-emerald-800/30 p-6 rounded-lg border border-emerald-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Massive Ice Volume
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Regional ice budget calculations indicate that Protonilus Mensae contains a minimum of 0.9-1.0 × 10⁵ cubic kilometers of sequestered water ice, representing one of the largest accessible water reservoirs on Mars.
+        </p>
+        <p class="text-gray-300 text-sm">
+          This volume is sufficient to support extensive human settlements and industrial operations, making it a cornerstone resource for Mars colonization efforts.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Subsurface Pit Formation
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        Linear arrays of pits observed throughout Protonilus Mensae may have formed when ground ice sublimated, creating subsurface voids. When surface material collapsed into these voids, distinctive pit patterns were created. These features provide direct evidence of near-surface ice and indicate locations where buried ice is particularly accessible.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        The formation of these pits suggests that ice extraction operations could be enhanced by targeting areas where natural sublimation has already begun creating access points to the buried ice resources.
+      </p>
+    </div>
+  </section>
+
+  <!-- Wet Debris Flow Evidence Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Evidence of Water-Related Processes
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-purple-900/50 to-purple-800/30 p-6 rounded-lg border border-purple-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Wet Debris Flow Features
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Detailed analysis of Protonilus Mensae has identified lobate deposits interpreted as evidence of wet debris flows, indicating local dominance of water-lubricated mass movement processes in gully and lobe formation.
+        </p>
+        <p class="text-gray-300 text-sm">
+          These observations suggest top-down melting of ice components within the latitude-dependent mantle terrain, with debris flows initiated by mobilization of the dusty lithic components.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-orange-900/50 to-orange-800/30 p-6 rounded-lg border border-orange-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Climate-Driven Formation
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Formation of lobate debris aprons is linked to Mars' obliquity cycles, with typical formation times clustering around 400-500 thousand years from initial bedrock exposure to complete debris cover development.
+        </p>
+        <p class="text-gray-300 text-sm">
+          Temperature ranges of -85 to -40°C and sublimation rates of 6-14 mm/year indicate ongoing ice preservation under current Martian climate conditions.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Debris-Cover Armoring Process
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        The formation process involves regional ice sheet collapse, where the surface drops below cliff and massif margins, exposing bedrock and initiating debris deposition on cold-based glacier surfaces. Reduced sublimation due to debris-cover armoring creates surface slopes that drive ice flow carrying debris away from rock outcrops.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        As collapse and ice retreat continue, the debris train eventually reaches the substrate surface at the glacier front, leaving the entire debris apron armored by protective debris cover that ensures long-term ice preservation.
+      </p>
+    </div>
+  </section>
+
+  <!-- ISRU and Accessibility Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Resource Accessibility and ISRU Applications
+    </h2>
+    <div
+      class="bg-gradient-to-br from-green-900/30 to-green-800/20 p-8 rounded-lg border border-green-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">H₂O</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Premier Water Resource Location
+          </h3>
+          <p class="text-green-300">
+            Accessible buried ice with natural refrigeration
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Extraction Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Thin protective debris layer</li>
+            <li>• >80% pure water ice content</li>
+            <li>• Massive volume availability</li>
+            <li>• Natural preservation system</li>
+            <li>• Multiple extraction site options</li>
+            <li>• Pit formation access points</li>
+            <li>• Minimal processing requirements</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">ISRU Applications</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Life support water production</li>
+            <li>• Oxygen generation for breathing</li>
+            <li>• Hydrogen fuel for return missions</li>
+            <li>• Agricultural water supply</li>
+            <li>• Industrial process water</li>
+            <li>• Radiation shielding material</li>
+            <li>• Thermal management systems</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Assessment Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-green-900/30 to-green-800/20 p-8 rounded-lg border border-green-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">8</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Excellent Terraforming Potential
+          </h3>
+          <p class="text-green-300">
+            Outstanding water resources with exceptional accessibility
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Exceptional water ice accessibility</li>
+            <li>• Natural refrigeration preservation</li>
+            <li>• Massive water resource volume</li>
+            <li>• High ice purity (>80%)</li>
+            <li>• Multiple extraction locations</li>
+            <li>• Evidence of water-related processes</li>
+            <li>• Diverse terrain for settlements</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• High latitude cold temperatures</li>
+            <li>• Limited solar energy availability</li>
+            <li>• Seasonal climate variations</li>
+            <li>• Terrain accessibility complexities</li>
+            <li>• Debris removal requirements</li>
+            <li>• Long polar winter periods</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Opportunities
+    </h2>
+    <div
+      class="bg-gradient-to-br from-blue-900/30 to-blue-800/20 p-8 rounded-lg border border-blue-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Protonilus Mensae stands as one of the most promising locations for water resource utilization missions on Mars. The combination of high ice purity, massive volume, and accessibility makes it an ideal target for ISRU demonstrations and future human settlement support infrastructure.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Research Priorities
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Detailed ice thickness mapping</li>
+            <li>• Debris layer composition analysis</li>
+            <li>• Optimal extraction site selection</li>
+            <li>• Pit formation mechanism studies</li>
+            <li>• Ice purity verification</li>
+            <li>• Preservation dynamics monitoring</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Mission Applications
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• ISRU technology validation</li>
+            <li>• Water extraction demonstrations</li>
+            <li>• Resource utilization pilots</li>
+            <li>• Settlement site preparation</li>
+            <li>• Long-term resource monitoring</li>
+            <li>• International collaboration hub</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://mars.nasa.gov/resources/26450/lines-of-pits-in-protonilus-mensae/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Lines of Pits Formation Analysis
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://experts.arizona.edu/en/publications/high-ice-purity-of-martian-lobate-debris-aprons-at-the-regional-s"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              University of Arizona Research
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Papers</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2018GL079759"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              High Ice Purity Regional Survey
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.sciencedirect.com/science/article/abs/pii/S0012821X09004580"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Wet Debris Flow Evidence
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://journals.sagepub.com/doi/abs/10.1177/0309133320986902"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Earth-Mars Glacier Comparison
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

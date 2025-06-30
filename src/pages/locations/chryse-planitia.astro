@@ -1,0 +1,305 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import marsLocations from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'chryse-planitia');
+if (!location) {
+  throw new Error('Chryse Planitia location not found');
+}
+---
+
+<LocationLayout title="Chryse Planitia - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Viking 1's first image from the Martian surface, July 20, 1976
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL-Caltech</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Chryse Planitia, meaning "Golden Plain," holds the distinction of being humanity's first successful landing site on Mars. On July 20, 1976—exactly seven years after the Apollo 11 Moon landing—NASA's Viking 1 lander touched down on this ancient floodplain in Mars' northern hemisphere, beginning the era of surface exploration of the Red Planet.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Located at the mouth of massive ancient outflow channels, Chryse Planitia was carved by catastrophic floods that occurred billions of years ago. These floods transported materials from many different Martian regions, creating a diverse geological landscape that provided Viking 1 with an excellent natural laboratory for studying Mars' composition and history.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Recent research suggests that Viking 1 may have landed on terrain formed by an ancient megatsunami, adding another fascinating chapter to our understanding of this historically significant site and Mars' violent geological past.
+        </p>
+      </div>
+      <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-400">Landing Date:</span>
+            <span class="text-white">July 20, 1976</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Mission Duration:</span>
+            <span class="text-white">6 years, 116 days</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Images Taken:</span>
+            <span class="text-white">4,500+ surface images</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Weather Measurements:</span>
+            <span class="text-white">3+ million readings</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Historical Significance:</span>
+            <span class="text-white">First successful Mars landing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Geological History -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Geological Features and Formation
+    </h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div>
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Ancient Flood Plains
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Chryse Planitia was shaped by massive ancient floods that carved through the Martian landscape billions of years ago. The basin contains materials from various geological units, including Hesperian Ridged plains materials that feature lunar-like mare ridges and both fresh and buried impact craters.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The surface consists of smooth plains with prominent wrinkle ridges, mesas and plateaus, etched surfaces, fields of knobs, and low shields that may be volcanic in origin. This diversity reflects the complex geological processes that shaped the region over billions of years.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">Megatsunami Theory</h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Recent studies suggest that Viking 1 landed near the edge of an ancient megatsunami deposit created by an asteroid impact about 3.4 billion years ago. This catastrophic event would have displaced massive amounts of water and sediment across the northern plains.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The megatsunami hypothesis helps explain the diverse rock types and sedimentary features observed at the landing site, as such an event would have mixed materials from vast areas of the Martian surface into a complex deposit.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Viking Mission -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Viking 1 Mission Legacy
+    </h2>
+    <div class="space-y-8">
+      <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Historic First Landing
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Viking 1's successful landing at Chryse Planitia marked humanity's first controlled touchdown on the Martian surface. The mission was designed not only to study the surface and atmosphere but also to search for signs of microbial life using three sophisticated biological experiments.
+        </p>
+        <ul class="list-disc list-inside text-gray-300 space-y-2">
+          <li>First successful Mars surface mission in human history</li>
+          <li>Operated for over 6 years, far exceeding its planned mission</li>
+          <li>Conducted first in-situ analysis of Martian soil</li>
+          <li>Provided first detailed weather measurements from Mars</li>
+        </ul>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+          <h3 class="text-xl font-semibold text-mars-orange mb-3">
+            Scientific Discoveries
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            Viking 1 revealed the presence of sand drifts, boulders, and rocks (including the famous "Big Joe" boulder). The lander's robotic arm collected soil samples and conducted the first chemical analysis of Martian regolith, providing baseline data still used today.
+          </p>
+        </div>
+        <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+          <h3 class="text-xl font-semibold text-mars-orange mb-3">
+            Life Detection Experiments
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            The three biology experiments discovered unexpected chemical activity in Martian soil but provided no definitive evidence for living microorganisms. These results continue to be debated and have informed the design of subsequent life-detection missions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Potential -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Settlement and Resource Potential
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          With a terraforming rating of 7/10, Chryse Planitia offers good potential for future human settlement. Its historical significance as the first successful landing site, combined with decades of accumulated knowledge about local conditions, makes it a well-understood location for establishing human presence on Mars.
+        </p>
+
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Strategic Advantages
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4 mb-6">
+          <div>
+            <h4 class="font-semibold text-white mb-2">Historical Knowledge</h4>
+            <ul class="text-gray-300 text-sm space-y-1">
+              <li>• 47+ years of accumulated data</li>
+              <li>• Proven landing site accessibility</li>
+              <li>• Well-characterized surface conditions</li>
+              <li>• Baseline atmospheric measurements</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white mb-2">Physical Advantages</h4>
+            <ul class="text-gray-300 text-sm space-y-1">
+              <li>• Relatively flat terrain for construction</li>
+              <li>• Diverse geological materials</li>
+              <li>• Evidence of past water activity</li>
+              <li>• Ancient floodplain sediments</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="bg-mars-900/30 rounded-lg p-6 border border-mars-600">
+        <h3 class="text-lg font-semibold text-mars-orange mb-4">
+          Settlement Challenges
+        </h3>
+        <ul class="text-gray-300 text-sm space-y-2">
+          <li>• Limited current water resource access</li>
+          <li>• Frequent dust storm activity</li>
+          <li>• High radiation exposure levels</li>
+          <li>• Temperature extremes (-85°C to -5°C)</li>
+          <li>• Potential geological instability</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration and Research
+    </h2>
+    <div
+      class="bg-gradient-to-r from-mars-900/40 to-gray-800/40 rounded-lg p-8 border border-mars-600"
+    >
+      <h3 class="text-xl font-semibold text-mars-orange mb-4">
+        Return to Chryse Planitia
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        As humanity prepares for eventual crewed missions to Mars, Chryse Planitia's status as a well-characterized, historically significant site makes it a compelling candidate for future exploration. The site offers both practical advantages and symbolic importance for establishing permanent human presence on Mars.
+      </p>
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Modern instruments could revisit Viking 1's controversial life-detection results with more sophisticated techniques, potentially resolving decades-old scientific questions while preparing the groundwork for human habitation infrastructure.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold text-white mb-2">Future Mission Potential</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Human landing site candidate</li>
+            <li>• Historical preservation site</li>
+            <li>• Resource utilization testing</li>
+            <li>• Climate monitoring station</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-2">Research Opportunities</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Re-examine Viking life-detection data</li>
+            <li>• Study megatsunami deposits</li>
+            <li>• Long-term atmospheric monitoring</li>
+            <li>• Geological resource assessment</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources -->
+  <section>
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <a
+          href="https://science.nasa.gov/mission/viking/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Viking Project - NASA Science
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Official NASA overview of the historic Viking missions
+          </p>
+        </a>
+
+        <a
+          href="https://www.history.com/this-day-in-history/viking-1-lands-on-mars"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Viking 1 Landing - History Channel
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Historical context of the first successful Mars landing
+          </p>
+        </a>
+      </div>
+
+      <div class="space-y-4">
+        <a
+          href="https://earthsky.org/space/viking-1-mars-megatsunami-chryse-planitia/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Megatsunami Theory Research
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Recent research on Viking 1 landing site formation
+          </p>
+        </a>
+
+        <a
+          href="https://www.planetary.org/space-missions/viking"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Viking Missions - Planetary Society
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Comprehensive overview of Viking 1 and 2 achievements
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

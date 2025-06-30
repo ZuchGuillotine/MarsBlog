@@ -1,0 +1,445 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'medusae-fossae');
+if (!location) {
+  throw new Error('Medusae Fossae Formation location not found');
+}
+---
+
+<LocationLayout title="Medusae Fossae Formation - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-orange-900 to-red-700 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Mars Express radar view of layered deposits in Medusae Fossae Formation
+        </p>
+        <p class="text-xs opacity-60">ESA/Mars Express/MARSIS</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The Medusae Fossae Formation (MFF) stands as one of Mars' most enigmatic 
+          geological features, extending discontinuously for over 5,000 kilometers 
+          along the planet's equator. This massive deposit, covering an area equal 
+          to 20% the size of the continental United States, represents the largest 
+          source of dust on Mars and potentially one of its most significant water 
+          ice reservoirs.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Recent 2024 discoveries have revolutionized our understanding of the MFF, 
+          revealing extensive water ice deposits beneath its surface that could 
+          cover the entire planet in an ocean 1.5 to 2.7 meters deep if melted. 
+          This finding transforms the formation from a simple dust source into a 
+          potential treasure trove of resources for future Mars exploration.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The formation's easily eroded volcanic ash and dust composition has 
+          played a crucial role in shaping Mars' global atmosphere and climate, 
+          while its buried ice deposits suggest complex geological processes 
+          involving both volcanic activity and water ice accumulation over 
+          billions of years.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Length:</span>
+            <span class="text-white block">5,000+ km</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Area:</span>
+            <span class="text-white block">20% of continental US</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Ice Thickness:</span>
+            <span class="text-white block">Up to 3.7 km deep</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Composition:</span>
+            <span class="text-white block">Volcanic ash, dust, water ice</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Age:</span>
+            <span class="text-white block">Amazonian period</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Formation and Origins Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Formation and Volcanic Origins
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The Medusae Fossae Formation is composed of weakly cemented particles, 
+        most likely formed by massive volcanic ash deposits from pyroclastic 
+        flows or similar explosive volcanic activity. These materials were 
+        deposited over extensive periods during Mars' Amazonian era, creating 
+        one of the largest sedimentary formations on the planet.
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Volcanic Sources</h4>
+          <p class="text-gray-300 text-sm">
+            Recent research suggests multiple volcanic sources contributed to the 
+            MFF, including ash from Olympus Mons, Apollinaris Mons, Arsia Mons, 
+            and Pavonis Mons. The formation may have originated from pumice rafts 
+            and massive explosive eruptions that distributed ash across vast 
+            equatorial regions.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Dust Production</h4>
+          <p class="text-gray-300 text-sm">
+            The MFF's easily eroded nature makes it the single largest source 
+            of dust on Mars. Its chemical composition, rich in sulfur and 
+            chlorine, provides the best match to global Martian dust measurements, 
+            confirming its role as the primary contributor to Mars' dusty atmosphere.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2024 Breakthrough Discoveries Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      2024 Breakthrough: Hidden Water Ice Reservoirs
+    </h2>
+
+    <div class="grid md:grid-cols-1 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-cyan-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Massive Subsurface Ice Discovery
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Using updated data from Mars Express's MARSIS radar, scientists discovered 
+          extensive layered deposits of water ice beneath the MFF, reaching depths 
+          of up to 3.7 kilometers. These deposits are protected by a layer of dry 
+          dust or ash several hundred meters thick, preserving them from sublimation.
+        </p>
+        <p class="text-gray-300 text-sm">
+          If all the suspected water ice in the formation melted, it would create 
+          a global ocean covering Mars to a depth of 1.5 to 2.7 meters - making 
+          it one of the largest water reservoirs on the planet outside the polar caps.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Implications for Mars Exploration
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        This discovery fundamentally changes our understanding of water distribution 
+        on Mars. The MFF's equatorial location makes it far more accessible than 
+        polar ice caps, potentially providing a crucial water source for future 
+        human missions and settlements.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        The protective dust layer above the ice suggests that these deposits could 
+        remain stable over geological timescales, offering a reliable and accessible 
+        water resource for in-situ resource utilization (ISRU) activities.
+      </p>
+    </div>
+  </section>
+
+  <!-- Dust Source Significance Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Mars' Primary Dust Factory
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The Medusae Fossae Formation plays a crucial role in Mars' atmospheric 
+          dynamics as the planet's largest dust source. Long-term deflation and 
+          erosion of the formation have significantly contributed to the global 
+          Martian dust reservoir that creates the planet's characteristic dusty 
+          atmosphere and global dust storms.
+        </p>
+
+        <div class="space-y-4 mb-6">
+          <div class="border-l-4 border-orange-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Chemical Fingerprint
+            </h4>
+            <p class="text-gray-300 text-sm">
+              The MFF has the highest abundance of sulfur and chlorine compounds, 
+              providing the best chemical match to surface measurements of Martian dust.
+            </p>
+          </div>
+          <div class="border-l-4 border-red-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Global Distribution
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Volume estimates suggest that eroded materials from the MFF have 
+              distributed dust across the entire planet through atmospheric transport.
+            </p>
+          </div>
+          <div class="border-l-4 border-yellow-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Climate Impact
+            </h4>
+            <p class="text-gray-300 text-sm">
+              The continuous dust production affects Mars' radiation balance, 
+              atmospheric opacity, and seasonal weather patterns.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Dust Production Statistics
+        </h3>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Formation Size:</span>
+            <span class="text-white text-sm">~2 million km²</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Sulfur Content:</span>
+            <span class="text-white text-sm">Highest on Mars</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Erosion Rate:</span>
+            <span class="text-white text-sm">Continuous</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Dust Contribution:</span>
+            <span class="text-white text-sm">Global reservoir</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Assessment Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-yellow-900/30 to-orange-800/20 p-8 rounded-lg border border-yellow-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">6</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Moderate Terraforming Potential
+          </h3>
+          <p class="text-yellow-300">
+            Significant water resources but challenging dust environment
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Massive water ice deposits (up to 3.7 km deep)</li>
+            <li>• Equatorial location for accessibility</li>
+            <li>• Easily mined volcanic ash deposits</li>
+            <li>• Construction material availability</li>
+            <li>• Protected subsurface ice reservoirs</li>
+            <li>• Prime ISRU water extraction site</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Continuous dust production and accumulation</li>
+            <li>• Extreme dust storm activity</li>
+            <li>• Equipment maintenance issues</li>
+            <li>• Respiratory hazards from fine particles</li>
+            <li>• Solar panel efficiency reduction</li>
+            <li>• Radiation exposure concerns</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scientific Significance Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Scientific Significance
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Planetary Climate Archive
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          The layered structure of dust, ash, and ice in the MFF preserves a 
+          detailed record of Mars' climate evolution over billions of years. 
+          Each layer represents different epochs of volcanic activity, dust 
+          accumulation, and ice deposition, providing insights into how Mars 
+          transitioned from its ancient climate to current conditions.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Atmospheric Dynamics
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          Understanding the MFF's role as Mars' primary dust source is crucial 
+          for modeling planetary atmospheric processes, dust storm formation, 
+          and long-term climate patterns. This knowledge is essential for 
+          planning future missions and understanding Mars' current and past 
+          habitability potential.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Opportunities
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The 2024 discovery of massive water ice deposits has elevated the MFF 
+        to a high-priority target for future Mars exploration. The formation's 
+        equatorial location and abundant resources make it an ideal candidate 
+        for establishing sustainable human presence on Mars.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Priority Investigations
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Detailed subsurface ice mapping</li>
+            <li>• Water extraction feasibility studies</li>
+            <li>• Dust mitigation technology testing</li>
+            <li>• Volcanic ash resource utilization</li>
+            <li>• Climate record analysis</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            ISRU Potential
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Water extraction from subsurface ice</li>
+            <li>• Volcanic ash for construction materials</li>
+            <li>• Dust particle analysis for hazard assessment</li>
+            <li>• Atmospheric dust source monitoring</li>
+            <li>• Ice-ash layer dating techniques</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Latest Research</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://phys.org/news/2024-01-mars-evidence-large-deposit-medusae.html"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mars Express Water Ice Discovery (2024)
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.nature.com/articles/s41467-018-05291-5"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              MFF as Single Largest Dust Source (Nature)
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023GL105490"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ice-Rich Layered Deposits Evidence (2024)
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Mission Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.esa.int/Science_Exploration/Space_Science/Mars_Express"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ESA Mars Express Mission
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.sci.news/space/mars-express-ice-rich-layered-deposits-medusae-fossae-12621.html"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Latest Ice Discovery News
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://en.wikipedia.org/wiki/Medusae_Fossae_Formation"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Medusae Fossae Formation - Wikipedia
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

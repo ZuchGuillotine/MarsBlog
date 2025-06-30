@@ -1,0 +1,415 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'zhurong-site');
+if (!location) {
+  throw new Error('Zhurong site location not found');
+}
+---
+
+<LocationLayout title="Zhurong Rover Site - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-red-900 to-orange-700 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Zhurong rover exploring Utopia Planitia's subsurface ice deposits
+        </p>
+        <p class="text-xs opacity-60">CNSA/CAST Tianwen-1 Mission</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The Zhurong rover landing site in southern Utopia Planitia represents China's groundbreaking entry into Mars surface exploration. Landing on May 14, 2021, at coordinates 25.07° N, 109.93° E, Zhurong has made remarkable discoveries about shallow subsurface ice deposits and ancient water activity in this region of Mars.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Using ground-penetrating radar and spectral analysis, Zhurong has revealed a complex subsurface structure with evidence of freeze-thaw cycles, buried polygonal terrain, and hydrated mineral deposits. These findings suggest that water activity persisted in Utopia Planitia much more recently than previously thought, with implications for both astrobiology and future resource utilization.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The rover's discoveries of potential ancient shoreline deposits and evidence of recent aqueous activities have revolutionized our understanding of Mars' climate evolution and the persistence of water at lower latitudes than previously documented.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Landing Date:</span>
+            <span class="text-white block">May 14, 2021</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Mission Status:</span>
+            <span class="text-white block">Active (Extended)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Polygons Detected:</span>
+            <span class="text-white block">16 within traverse path</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Subsurface Depth:</span>
+            <span class="text-white block">70+ meters analyzed</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Key Discovery:</span>
+            <span class="text-white block">Recent aqueous activities</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Zhurong Mission Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Zhurong Mission and Discoveries
+    </h2>
+    <div class="bg-gradient-to-br from-red-900/50 to-red-800/30 p-8 rounded-lg border border-red-700/50">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The Zhurong rover, named after the Chinese god of fire, is part of China's ambitious Tianwen-1 Mars exploration mission. Equipped with advanced ground-penetrating radar, multispectral cameras, and magnetic field detectors, Zhurong has been investigating the morphology, mineralogy, and subsurface structure of southern Utopia Planitia.
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Mission Objectives</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Investigate surface morphology and geology</li>
+            <li>• Study subsurface structure and water distribution</li>
+            <li>• Analyze mineralogy and soil composition</li>
+            <li>• Monitor space environment conditions</li>
+            <li>• Search for signs of ancient life</li>
+            <li>• Map potential resource locations</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Scientific Instruments</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Ground-penetrating radar system</li>
+            <li>• Multispectral camera suite</li>
+            <li>• Short-wave infrared spectrometer</li>
+            <li>• Magnetic field detector</li>
+            <li>• Climate monitoring station</li>
+            <li>• Laser-induced breakdown spectroscopy</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subsurface Ice Discoveries Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Subsurface Ice and Water Evidence
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Polygonal Terrain Discovery
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Zhurong's ground-penetrating radar detected 16 buried polygonal structures within its traverse path, located below 35 meters depth. These polygons are interpreted as evidence of repeated freeze-thaw cycles, indicating the presence of ground ice in the subsurface.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The widespread distribution of these features suggests that similar ice-related polygons may be common throughout Utopia Planitia, representing a significant water resource.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-cyan-900/50 to-cyan-800/30 p-6 rounded-lg border border-cyan-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Hydrated Mineral Detection
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Using short-wave infrared spectral analysis, Zhurong identified hydrated sulfate and silica materials associated with bright-toned rocks interpreted as duricrust. These formations suggest interaction with substantial liquid water.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The hydrated minerals indicate water activity that may have originated from groundwater rising or subsurface ice melting during recent climate fluctuations.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Multi-Layered Subsurface Structure
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        Zhurong's radar survey constructed a detailed subsurface profile revealing a roughly 70-meter-thick, multi-layered structure beneath the regolith. Two distinct fining-upward layers with similar vertical structures were identified, interpreted as sedimentary deposits formed during the advance and retreat of ancient water bodies.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        This layered structure provides compelling evidence for episodic water activity and suggests that Utopia Planitia may have experienced multiple periods of aqueous conditions throughout its geological history.
+      </p>
+    </div>
+  </section>
+
+  <!-- Recent Aqueous Activity Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Evidence of Recent Aqueous Activities
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-green-900/50 to-green-800/30 p-6 rounded-lg border border-green-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Duricrust Formation
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Zhurong discovered lithified duricrusts formed by cementation processes requiring substantial liquid water. These formations suggest water activity that is much more recent than previously thought for this region of Mars.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The presence of these crusts indicates a more active Amazonian hydrosphere than previously understood, with implications for recent habitability conditions.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-purple-900/50 to-purple-800/30 p-6 rounded-lg border border-purple-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Ancient Shoreline Evidence
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Recent analysis of the landing area has unveiled evidence for a probable ancient nearshore zone in southern Utopia Planitia, suggesting the region once hosted significant bodies of standing water.
+        </p>
+        <p class="text-gray-300 text-sm">
+          Marine sedimentary rocks identified in the area provide additional support for extensive aqueous environments in Mars' geological past.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Water Source Mechanisms
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        Zhurong's findings suggest multiple potential sources for the water and ice required for freeze-thaw processes: cryogenic suction-induced moisture migration from underground aquifers, snowfall from the atmosphere, or vapor diffusion for pore ice deposition.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        Higher obliquities during Mars' past could have stabilized ground ice at the Zhurong landing site for extended periods, with hydrated minerals and salt cementations implying the presence of briny liquid water generated by melting ground ice during temporary climate perturbations.
+      </p>
+    </div>
+  </section>
+
+  <!-- Geological Context Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Geological Features and Context
+    </h2>
+    <div
+      class="bg-gradient-to-br from-orange-900/30 to-orange-800/20 p-8 rounded-lg border border-orange-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The Zhurong landing site is characterized by diverse geological features within a 30-kilometer radius, including pitted cones, ghost craters, mesas, troughs, and ridges. These features are indicative of possible volatile presence in the shallow subsurface, supporting the rover's discoveries of ice-related processes.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Surface Features</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Pitted cones</li>
+            <li>• Ghost craters</li>
+            <li>• Mesa formations</li>
+            <li>• Linear troughs</li>
+            <li>• Ridge systems</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Volatile Indicators</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Polygonal ground patterns</li>
+            <li>• Periglacial features</li>
+            <li>• Hydrated mineral deposits</li>
+            <li>• Salt cementations</li>
+            <li>• Frost indicators</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Water Evidence</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Sedimentary layering</li>
+            <li>• Ancient shoreline deposits</li>
+            <li>• Marine rock formations</li>
+            <li>• Duricrust development</li>
+            <li>• Aqueous alteration</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Assessment Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-green-900/30 to-green-800/20 p-8 rounded-lg border border-green-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">8</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            High Terraforming Potential
+          </h3>
+          <p class="text-green-300">
+            Active exploration site with proven water resources
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Currently active exploration site</li>
+            <li>• Shallow subsurface ice deposits</li>
+            <li>• Evidence of recent water activity</li>
+            <li>• Diverse geological features</li>
+            <li>• Proven resource accessibility</li>
+            <li>• Modern mission data available</li>
+            <li>• Lower latitude location</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Deep ice extraction requirements</li>
+            <li>• Dust accumulation issues</li>
+            <li>• Temperature extremes</li>
+            <li>• Radiation exposure concerns</li>
+            <li>• Seasonal climate variations</li>
+            <li>• Complex subsurface layering</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Opportunities
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The Zhurong landing site represents an ideal location for follow-up missions focused on subsurface resource characterization and water extraction technology development. The rover's ongoing discoveries continue to refine our understanding of water accessibility and distribution in this region.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Research Priorities
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Deep subsurface ice characterization</li>
+            <li>• Polygonal terrain detailed mapping</li>
+            <li>• Hydrated mineral analysis</li>
+            <li>• Ancient shoreline investigation</li>
+            <li>• Water extraction feasibility studies</li>
+            <li>• Climate history reconstruction</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibool text-white mb-3">
+            Mission Applications
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• International collaboration site</li>
+            <li>• ISRU technology demonstrations</li>
+            <li>• Subsurface drilling operations</li>
+            <li>• Water resource utilization</li>
+            <li>• Astrobiology investigations</li>
+            <li>• Long-term monitoring stations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Mission Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.jpl.nasa.gov/images/pia24914-the-zhurong-rover-explores-utopia-planitia"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Zhurong Rover Mission Overview
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://earthsky.org/space/zhurong-rover-china-polygons-utopia-planitia-mars/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Subsurface Discoveries Analysis
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Papers</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.science.org/doi/10.1126/sciadv.abn8555"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Recent Aqueous Activities Evidence
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.nature.com/articles/s41586-022-05147-5"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Layered Subsurface Analysis
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.nature.com/articles/s41598-024-75507-w"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ancient Nearshore Zone Evidence
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

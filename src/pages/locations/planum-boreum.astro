@@ -1,0 +1,441 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'planum-boreum');
+if (!location) {
+  throw new Error('Planum Boreum location not found');
+}
+---
+
+<LocationLayout title="Planum Boreum - North Polar Ice Cap" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-blue-900 to-cyan-700 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Mars north polar ice cap layered deposits and spiral troughs
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL-Caltech/MSSS</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Planum Boreum, Mars' north polar ice cap, represents one of the largest 
+          water reservoirs on the Red Planet. This massive dome-shaped structure 
+          extends approximately 1,000 kilometers in diameter and rises up to 3 
+          kilometers above the surrounding terrain, containing enough water ice 
+          to cover the entire planet with a 1.5-meter layer if melted.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The ice cap consists of layered deposits that preserve millions of years 
+          of Martian climate history, with alternating layers of water ice and dust 
+          that record ancient climate cycles. These polar layered deposits make up 
+          the majority of the ice cap's volume and offer scientists an unprecedented 
+          archive of Mars' atmospheric evolution.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Recent 2024 research has revealed that the ice cap is currently 
+          undergoing active retreat through ice block falls and mass wasting, 
+          providing new insights into how Mars' water cycle continues to shape 
+          the planet's polar regions in the present day.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Diameter:</span>
+            <span class="text-white block">~1,000 km</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Maximum Thickness:</span>
+            <span class="text-white block">~3 km</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Water Ice Volume:</span>
+            <span class="text-white block">~1.1 million km³</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Composition:</span>
+            <span class="text-white block">95% water ice, 5% dust</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Climate Record:</span>
+            <span class="text-white block">Millions of years</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ice Structure Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Layered Ice Architecture
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The north polar ice cap's structure reveals a complex history of climate 
+        change on Mars. The layered deposits extend up to 2 kilometers thick and 
+        consist of alternating bands of relatively clean water ice and dusty ice 
+        layers, each recording different periods of Martian atmospheric conditions.
+      </p>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Seasonal Cap</h4>
+          <p class="text-gray-300 text-sm">
+            A thin layer of CO₂ frost that forms each winter and sublimates during 
+            summer, driving the planet's seasonal atmospheric pressure changes.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Residual Cap</h4>
+          <p class="text-gray-300 text-sm">
+            The permanent water ice core that persists year-round, containing the 
+            vast majority of the ice cap's water reserves.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Basal Unit</h4>
+          <p class="text-gray-300 text-sm">
+            The foundation layer composed of sand and dust cemented by water ice, 
+            forming the base upon which the layered deposits accumulated.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Water Cycle Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Mars Water Cycle Engine
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Seasonal Water Exchange
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Each Martian summer, the north polar ice cap releases significant amounts 
+          of water vapor into the atmosphere, driving global water transport. This 
+          seasonal sublimation creates atmospheric humidity that can travel to 
+          other parts of Mars, including the equatorial regions.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The water vapor can condense and precipitate as frost at night or during 
+          winter, creating a planet-wide water cycle centered on the polar ice caps.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-cyan-900/50 to-cyan-800/30 p-6 rounded-lg border border-cyan-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Climate History Archive
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The layered structure preserves evidence of Mars' orbital variations 
+          and climate shifts over millions of years. Each layer represents 
+          different atmospheric dust concentrations and ice accumulation rates.
+        </p>
+        <p class="text-gray-300 text-sm">
+          Scientists can read these layers like tree rings, revealing periods 
+          of dust storms, atmospheric thickness changes, and water availability.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Discoveries Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Recent Scientific Breakthroughs
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-red-900/50 to-red-800/30 p-6 rounded-lg border border-red-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Active Ice Cap Retreat (2024)
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Groundbreaking 2024 research published in Nature Communications revealed 
+          that the north polar ice cap is actively retreating through ongoing 
+          mass wasting processes. Ice block falls are intensive at the marginal 
+          steep scarps, causing asymmetric retreat of the ice cap.
+        </p>
+        <p class="text-gray-300 text-sm">
+          This discovery quantifies current water ice loss and provides evidence 
+          of basal unit undercutting effects, showing that Mars' climate is still 
+          actively reshaping its polar regions.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-green-900/50 to-green-800/30 p-6 rounded-lg border border-green-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          SHARAD Radar Discoveries
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The SHARAD radar sounder aboard Mars Reconnaissance Orbiter has mapped 
+          the base of the north polar cap 1.5-2 km beneath the surface, revealing 
+          the true extent of water ice reserves and internal structure.
+        </p>
+        <p class="text-gray-300 text-sm">
+          These observations confirmed that the ice cap contains approximately 
+          55% water ice by volume, with enough water to cover Mars with a 
+          1.5-meter global ocean if melted.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Spiral Trough Formation
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        The ice cap's distinctive spiral trough patterns, visible from orbit, 
+        are formed by katabatic winds flowing down from the ice cap's center. 
+        These troughs expose the internal layered structure and provide natural 
+        cross-sections for studying the ice cap's composition and history.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        Recent analysis suggests these troughs are actively maintained by 
+        wind erosion and sublimation processes, making them dynamic features 
+        that continue to evolve under current Martian conditions.
+      </p>
+    </div>
+  </section>
+
+  <!-- Terraforming Potential Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-green-900/30 to-green-800/20 p-8 rounded-lg border border-green-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">9</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Exceptional Terraforming Potential
+          </h3>
+          <p class="text-green-300">
+            Massive water reserves and climate regulation capabilities
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Largest accessible water reservoir on Mars</li>
+            <li>• Natural climate regulation through water cycle</li>
+            <li>• Existing atmospheric water transport system</li>
+            <li>• Layered structure ideal for mining operations</li>
+            <li>• Evidence of ongoing geological processes</li>
+            <li>• Rich climate history for understanding Mars</li>
+            <li>• Potential for large-scale water extraction</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Extreme polar temperatures (-150°C to -70°C)</li>
+            <li>• Limited solar radiation for energy generation</li>
+            <li>• Extreme seasonal day/night cycles</li>
+            <li>• Active ice retreat and instability</li>
+            <li>• Difficult access and harsh conditions</li>
+            <li>• Dust accumulation in equipment</li>
+            <li>• Radiation exposure at high latitudes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resource Utilization Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      In-Situ Resource Utilization
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Water Extraction Potential
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          The north polar ice cap represents the most significant water resource 
+          for future Mars missions. With relatively pure water ice accessible 
+          near the surface through the exposed layers in spiral troughs, 
+          extraction operations could provide water for drinking, agriculture, 
+          and industrial processes.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Water can also be electrolyzed to produce oxygen for life support 
+          and hydrogen for rocket fuel, making the polar ice caps crucial 
+          infrastructure for Mars exploration and settlement.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Atmospheric Engineering Implications
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          Any terraforming efforts on Mars would need to carefully consider 
+          the polar ice caps' role in the planet's water cycle. While melting 
+          the ice caps could provide atmospheric water vapor, their current 
+          function as climate regulators and seasonal water sources makes 
+          them valuable in their present state for supporting life across Mars.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Opportunities
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The north polar ice cap remains one of the highest priority targets 
+        for future Mars exploration. Understanding its structure, dynamics, 
+        and accessibility will be crucial for planning sustainable human 
+        presence on Mars and unlocking the planet's water resources.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Proposed Mission Objectives
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Deep ice core drilling for climate history</li>
+            <li>• Characterization of spiral trough dynamics</li>
+            <li>• Water ice purity and accessibility mapping</li>
+            <li>• Long-term monitoring of ice cap retreat</li>
+            <li>• Assessment of extraction technologies</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Technological Requirements
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Cold-weather operational capabilities</li>
+            <li>• Automated drilling and sampling systems</li>
+            <li>• Long-range transportation methods</li>
+            <li>• Extended power systems for polar night</li>
+            <li>• Advanced radar and imaging technology</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://science.nasa.gov/resource/stratigraphy-of-the-north-polar-deposits/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Stratigraphy of North Polar Deposits
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://marsed.asu.edu/mep/ice/polar-caps/planum-boreum"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mars Education - North Polar Ice Cap
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://science.nasa.gov/resource/the-changing-ice-cap-of-mars/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              The Changing Ice Cap of Mars
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Recent Research</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.nature.com/articles/s41467-025-56018-2"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mass Wasting and Ice Cap Retreat (2024)
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://faculty.dartmouth.edu/artsandsciences/news/2024/08/ice-caps-mars-offer-clues-ancient-climates"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ice Caps Offer Clues to Ancient Climates
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5791158/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              3-D Imaging Using Orbital Radar Data
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

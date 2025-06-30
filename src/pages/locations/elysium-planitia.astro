@@ -1,0 +1,305 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import marsLocations from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'elysium-planitia');
+if (!location) {
+  throw new Error('Elysium Planitia location not found');
+}
+---
+
+<LocationLayout title="Elysium Planitia - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          InSight lander's view of the Elysium Planitia landscape
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL-Caltech</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Elysium Planitia is a vast plain in Mars' northern lowlands that became the first location where humanity could listen to the deep interior of the Red Planet. Serving as the landing site for NASA's InSight (Interior Exploration using Seismic Investigations, Geodesy and Heat Transport) mission, this region has revolutionized our understanding of Mars' internal structure and seismic activity.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Located approximately 600 kilometers from Curiosity's landing site at Gale Crater, Elysium Planitia was carefully selected for its remarkably flat terrain and optimal conditions for sensitive seismic measurements. The region sits between ancient highlands and younger volcanic features, providing a unique window into Mars' geological evolution.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          From 2018 to 2022, InSight recorded over 1,300 marsquakes, transforming our understanding of Mars from a geologically dead world to one that remains seismically active, with implications for both planetary science and future human exploration.
+        </p>
+      </div>
+      <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-400">Landing Date:</span>
+            <span class="text-white">November 26, 2018</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Mission Duration:</span>
+            <span class="text-white">4 years, 19 days</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Marsquakes Recorded:</span>
+            <span class="text-white">1,300+ seismic events</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Sols Operated:</span>
+            <span class="text-white">1,440 Martian days</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Crater Location:</span>
+            <span class="text-white">Degraded impact crater</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Geological History -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Geological Structure and Formation
+    </h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div>
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Subsurface Stratigraphy
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          InSight's seismic data revealed a complex subsurface structure beneath Elysium Planitia. The uppermost layer consists of approximately 3 meters of sandy regolith, beneath which lies a 15-meter thick layer of coarse blocky ejecta from ancient meteorite impacts.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Below this, two distinct basaltic layers tell the story of Mars' volcanic history: shallow lava flows from the Amazonian period (1.7 billion years old) overlying much older Hesperian-era basalts (3.6 billion years old) formed during widespread volcanic activity.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">Regional Geology</h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Elysium Planitia occupies a strategic position between diverse geological terrains. The plains are bounded by ancient highlands to the south and west, ridges of the Medusae Fossae Formation to the east, and volcanic deposits from Elysium Mons—Mars' second-largest volcanic complex—to the north.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The region also lies within 1,500 kilometers of Cerberus Fossae, one of Mars' youngest fault systems, which continues to generate marsquakes that InSight detected throughout its mission.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- InSight Mission -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      InSight Mission Discoveries
+    </h2>
+    <div class="space-y-8">
+      <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Seismological Breakthroughs
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          InSight's SEIS (Seismic Experiment for Interior Structure) instrument achieved unprecedented sensitivity, detecting ground motions in the nanometer range and recording the lowest seismic noise floor ever measured in the solar system. This sensitivity allowed the mission to confirm that Mars remains seismically active.
+        </p>
+        <ul class="list-disc list-inside text-gray-300 space-y-2">
+          <li>First deployment of a seismometer on Mars since the Viking missions</li>
+          <li>Detected marsquakes as large as magnitude 5.0</li>
+          <li>Mapped Mars' internal structure from crust to core</li>
+          <li>Revealed ongoing tectonic activity across the planet</li>
+        </ul>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+          <h3 class="text-xl font-semibold text-mars-orange mb-3">
+            Interior Structure Revealed
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            InSight's data allowed scientists to map Mars' interior structure for the first time, revealing a thinner crust than expected, a liquid iron core, and a mantle with different properties than Earth's. These discoveries fundamentally changed our understanding of Mars' formation and evolution.
+          </p>
+        </div>
+        <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+          <h3 class="text-xl font-semibold text-mars-orange mb-3">
+            Atmospheric Dynamics
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            Beyond seismology, InSight provided detailed measurements of Mars' weather patterns, dust devil activity, and seasonal atmospheric changes. The mission revealed how wind-induced vibrations could be used to study subsurface structure.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Potential -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Settlement and Research Potential
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          With a terraforming rating of 6/10, Elysium Planitia offers moderate potential for future human settlement. Its strategic location near the equator provides excellent solar energy potential, while the wealth of geological data from InSight makes it one of the most scientifically valuable locations on Mars.
+        </p>
+
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Strategic Advantages
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4 mb-6">
+          <div>
+            <h4 class="font-semibold text-white mb-2">Scientific Infrastructure</h4>
+            <ul class="text-gray-300 text-sm space-y-1">
+              <li>• Comprehensive seismic monitoring data</li>
+              <li>• Detailed subsurface structure knowledge</li>
+              <li>• Proven landing site accessibility</li>
+              <li>• Established weather monitoring baseline</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white mb-2">Physical Advantages</h4>
+            <ul class="text-gray-300 text-sm space-y-1">
+              <li>• Exceptionally flat terrain for construction</li>
+              <li>• Optimal latitude for solar power generation</li>
+              <li>• Geological stability assessment available</li>
+              <li>• Dust accumulation patterns understood</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="bg-mars-900/30 rounded-lg p-6 border border-mars-600">
+        <h3 class="text-lg font-semibold text-mars-orange mb-4">
+          Settlement Challenges
+        </h3>
+        <ul class="text-gray-300 text-sm space-y-2">
+          <li>• Limited surface water resource access</li>
+          <li>• Ongoing seismic activity risks</li>
+          <li>• Dust accumulation on solar panels</li>
+          <li>• High radiation exposure levels</li>
+          <li>• Temperature extremes (-95°C to -5°C)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Research and Exploration
+    </h2>
+    <div
+      class="bg-gradient-to-r from-mars-900/40 to-gray-800/40 rounded-lg p-8 border border-mars-600"
+    >
+      <h3 class="text-xl font-semibold text-mars-orange mb-4">
+        Building on InSight's Legacy
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        InSight's revolutionary discoveries at Elysium Planitia have established this location as a cornerstone for future Mars exploration. The mission's comprehensive dataset provides essential baseline information for understanding Mars' geological hazards and resource potential for human settlement.
+      </p>
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The detailed knowledge of subsurface structure, seismic activity patterns, and atmospheric dynamics makes Elysium Planitia an ideal location for advanced scientific research stations and potentially one of the first permanent human research outposts on Mars.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold text-white mb-2">Research Applications</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Continued seismic monitoring network</li>
+            <li>• Subsurface resource exploration</li>
+            <li>• Atmospheric dynamics research</li>
+            <li>• Geological hazard assessment</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-2">Settlement Potential</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Scientific research outpost</li>
+            <li>• Geological monitoring station</li>
+            <li>• Seismological research center</li>
+            <li>• Solar power generation facility</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources -->
+  <section>
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <a
+          href="https://science.nasa.gov/mission/insight/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            InSight Lander - NASA Science
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Official NASA mission overview and scientific discoveries
+          </p>
+        </a>
+
+        <a
+          href="https://www.nature.com/articles/s41467-020-15251-7"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Mars Interior Structure - Nature
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Scientific paper on Mars' interior structure from InSight data
+          </p>
+        </a>
+      </div>
+
+      <div class="space-y-4">
+        <a
+          href="https://mars.nasa.gov/resources/21444/insights-landing-site-elysium-planitia/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            InSight Landing Site Information
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Detailed information about Elysium Planitia landing site selection
+          </p>
+        </a>
+
+        <a
+          href="https://en.wikipedia.org/wiki/InSight"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            InSight Mission - Wikipedia
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Comprehensive overview of the InSight mission and achievements
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

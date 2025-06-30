@@ -1,0 +1,518 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'horowitz-crater');
+if (!location) {
+  throw new Error('Horowitz Crater location not found');
+}
+---
+
+<LocationLayout title="Horowitz Crater RSL - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-blue-900 to-teal-700 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Dark seasonal streaks flowing down crater slopes in Horowitz Crater
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL-Caltech/University of Arizona</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Horowitz Crater stands out as one of Mars' most intriguing locations 
+          for studying recurring slope lineae (RSL) - mysterious dark streaks 
+          that appear and disappear seasonally on crater slopes. These enigmatic 
+          features have captured the attention of planetary scientists as potential 
+          evidence of contemporary water activity on Mars, representing some of 
+          the most dynamic geological processes currently observable on the planet.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The crater's steep slopes, ranging from 25° to 40°, provide ideal 
+          conditions for RSL formation during Mars' warmest seasons. These narrow 
+          features, typically 0.5 to 5 meters wide, exhibit distinctive dark 
+          markings that incrementally grow during warm periods and fade during 
+          cold seasons, showing a strong correlation with solar heating and 
+          surface temperatures.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          What makes Horowitz Crater particularly significant is the spectral 
+          evidence for hydrated salts detected on these slopes, supporting 
+          hypotheses about briny water involvement in RSL formation. However, 
+          recent studies have sparked scientific debate about whether these 
+          features represent active liquid water processes or dry granular flows.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">RSL Width:</span>
+            <span class="text-white block">0.5 - 5 meters</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Slope Angle:</span>
+            <span class="text-white block">25° - 40°</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Active Season:</span>
+            <span class="text-white block">Late spring to summer</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Temperature Range:</span>
+            <span class="text-white block">-23°C to 27°C</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Detected Salts:</span>
+            <span class="text-white block">Perchlorates, chlorates</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSL Formation and Characteristics Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Recurring Slope Lineae: Mars' Dynamic Features
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Recurring slope lineae at Horowitz Crater represent some of the most 
+        dynamic geological features currently active on Mars. These seasonal 
+        phenomena demonstrate a clear correlation with temperature cycles, 
+        appearing during the warmest months and fading during cooler periods, 
+        suggesting ongoing physical processes in the near-surface environment.
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Formation Characteristics</h4>
+          <p class="text-gray-300 text-sm">
+            RSL exhibit slow incremental growth, appearing first as small dark 
+            patches that gradually extend downslope over the course of weeks to 
+            months. They favor equator-facing slopes that receive maximum solar 
+            heating, with peak activity correlating with surface temperatures 
+            reaching their seasonal maximum.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Seasonal Behavior</h4>
+          <p class="text-gray-300 text-sm">
+            The features demonstrate remarkable seasonal fidelity, with annual 
+            fading and recurrence patterns that have been observed across multiple 
+            Martian years. This predictable behavior suggests a repeatable 
+            physical process tied to environmental conditions rather than random 
+            geological events.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Water Evidence and Spectral Analysis Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Evidence for Briny Water Activity
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-cyan-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Hydrated Salt Detection
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Spectroscopic analysis using the Compact Reconnaissance Imaging 
+          Spectrometer (CRISM) has detected hydrated salts on RSL slopes at 
+          Horowitz Crater. The salts most consistent with spectral features 
+          include magnesium perchlorate, magnesium chlorate, and sodium perchlorate.
+        </p>
+        <p class="text-gray-300 text-sm">
+          These findings strongly support the hypothesis that RSL form as a 
+          result of contemporary water activity, as these salts would likely 
+          require liquid water for their formation and preservation in the 
+          observed hydrated state.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-teal-900/50 to-blue-800/30 p-6 rounded-lg border border-teal-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Brine Formation Mechanisms
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The detected perchlorate salts can significantly lower the freezing 
+          point of water, allowing liquid brines to exist at temperatures well 
+          below pure water's freezing point. This property makes them ideal 
+          candidates for enabling liquid water activity in Mars' current climate.
+        </p>
+        <p class="text-gray-300 text-sm">
+          Proposed mechanisms include deliquescence, where atmospheric water 
+          vapor is absorbed by salt crystals to form liquid solutions, or 
+          interactions between different salt types that produce landslide-triggering 
+          chemical reactions.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Contemporary Water Activity Evidence
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        The combination of seasonal behavior, temperature correlation, and 
+        hydrated salt detection provides compelling evidence for contemporary 
+        water activity at Horowitz Crater. While the actual volumes of liquid 
+        water involved may be very small, the implications for understanding 
+        current Martian processes are significant.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        This evidence suggests that Mars is not as geologically inactive as 
+        previously thought, with ongoing processes that could provide insights 
+        into the planet's current habitability potential and water cycle dynamics.
+      </p>
+    </div>
+  </section>
+
+  <!-- Scientific Debate Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      The RSL Formation Debate
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          While initial interpretations of RSL strongly favored liquid water 
+          processes, the scientific community continues to debate their exact 
+          formation mechanisms. Recent studies have proposed alternative 
+          explanations involving dry granular flows, challenging the water-based 
+          models and highlighting the complexity of these features.
+        </p>
+
+        <div class="space-y-4 mb-6">
+          <div class="border-l-4 border-blue-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Liquid Water Hypothesis
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Brines from subsurface aquifers or atmospheric processes create 
+              sufficient water activity to mobilize surface materials.
+            </p>
+          </div>
+          <div class="border-l-4 border-orange-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Dry Flow Hypothesis
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Temperature-triggered dry granular flows involving dust and fine 
+              particles, without requiring liquid water.
+            </p>
+          </div>
+          <div class="border-l-4 border-green-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Hybrid Mechanisms
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Combination processes involving minimal water activity that 
+              triggers larger-scale dry granular movements.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Current Research Focus
+        </h3>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Spectral Analysis:</span>
+            <span class="text-white text-sm">Ongoing</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Laboratory Studies:</span>
+            <span class="text-white text-sm">Active</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Modeling:</span>
+            <span class="text-white text-sm">Comparative</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Monitoring:</span>
+            <span class="text-white text-sm">Multi-year</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Planetary Protection Implications Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Planetary Protection and Habitability
+    </h2>
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-green-900/50 to-teal-800/30 p-6 rounded-lg border border-green-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Special Regions Classification
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Due to the potential involvement of liquid water, RSL sites like 
+          Horowitz Crater are classified as "Uncertain Regions, to be treated 
+          as Special Regions" under planetary protection guidelines. This 
+          classification recognizes that these areas might harbor conditions 
+          where Earth life could potentially survive.
+        </p>
+        <p class="text-gray-300 text-sm">
+          This designation requires special precautions for any future missions 
+          to these areas to prevent forward contamination and preserve the 
+          integrity of potential Martian biological processes.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-purple-900/50 to-indigo-800/30 p-6 rounded-lg border border-purple-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Habitability Assessment
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          While the brines associated with RSL may be too cold or too salty 
+          for most Earth life, they represent some of the most potentially 
+          habitable environments currently known on Mars. The combination of 
+          liquid water (even if briny) and seasonal activity suggests dynamic 
+          chemical processes.
+        </p>
+        <p class="text-gray-300 text-sm">
+          These conditions might support extremophile organisms adapted to 
+          high-salt, low-temperature environments, similar to organisms found 
+          in Earth's most extreme environments.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Assessment Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-yellow-900/30 to-orange-800/20 p-8 rounded-lg border border-yellow-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">7</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Good Terraforming Potential
+          </h3>
+          <p class="text-yellow-300">
+            Active water processes and diverse geological features
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Evidence of contemporary water activity</li>
+            <li>• Hydrated salt deposits for resource extraction</li>
+            <li>• Seasonal process understanding for prediction</li>
+            <li>• Diverse slope environments for habitat placement</li>
+            <li>• Active geological processes</li>
+            <li>• Potential subsurface water sources</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Extremely saline water conditions</li>
+            <li>• Limited water volumes</li>
+            <li>• Steep terrain navigation difficulties</li>
+            <li>• Seasonal temperature extremes</li>
+            <li>• Planetary protection restrictions</li>
+            <li>• Dust accumulation issues</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scientific Significance Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Scientific Significance
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Contemporary Mars Processes
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          Horowitz Crater's RSL provide crucial insights into currently active 
+          geological and potentially hydrological processes on Mars. Understanding 
+          these features helps scientists determine whether Mars remains 
+          geologically and hydrologically active, with implications for current 
+          habitability and future human exploration strategies.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Astrobiology Research
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          As one of the few locations on Mars with potential contemporary liquid 
+          water activity, Horowitz Crater represents a prime target for 
+          astrobiology research. The site offers opportunities to study how 
+          life might survive in extreme saline, low-temperature conditions 
+          and to search for biosignatures in currently active environments.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Opportunities
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Horowitz Crater represents a high-priority target for future Mars 
+        exploration, particularly for missions focused on astrobiology and 
+        understanding contemporary Martian processes. However, its classification 
+        as a Special Region requires careful mission planning to meet planetary 
+        protection requirements.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Research Priorities
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• In-situ RSL formation monitoring</li>
+            <li>• Subsurface water detection</li>
+            <li>• Salt deposit detailed analysis</li>
+            <li>• Seasonal process characterization</li>
+            <li>• Life detection experiments</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Mission Considerations
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Planetary protection compliance</li>
+            <li>• Sterilization requirements</li>
+            <li>• Remote sensing capabilities</li>
+            <li>• Multi-season monitoring</li>
+            <li>• Sample containment protocols</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Research</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.nature.com/articles/ngeo2546"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Spectral Evidence for Hydrated Salts (Nature)
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.sciencedirect.com/science/article/abs/pii/S0032063322000290"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Multiband Photometry of RSL at Horowitz
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6443380/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Deep Groundwater Origin for RSL
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://science.nasa.gov/resource/recurring-lineae-on-slopes-at-horowitz-crater"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              NASA RSL Resource Page
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://mars.nasa.gov/resources/3588/warm-season-flows-on-slope-in-horowitz-crater-eight-image-sequence/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              RSL Image Sequence Documentation
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://en.wikipedia.org/wiki/Seasonal_flows_on_warm_Martian_slopes"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Seasonal Flows on Mars - Wikipedia
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

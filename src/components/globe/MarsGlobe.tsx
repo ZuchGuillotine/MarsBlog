@@ -7,6 +7,7 @@ import {
 } from '@react-three/drei';
 import { Mesh, WebGLRenderer, RepeatWrapping, Group } from 'three';
 import type { LocationData } from '../../types/location';
+import type { LocationMarkersRef } from './LocationMarkers';
 import LocationMarkers from './LocationMarkers';
 import marsLocations from '../../data/marsLocations';
 
@@ -24,10 +25,12 @@ function Planet({
   locations,
   onLocationSelect,
   onLocationHover,
+  locationMarkersRef,
 }: {
   locations: LocationData[];
   onLocationSelect?: (location: LocationData | null) => void;
   onLocationHover?: (location: LocationData | null) => void;
+  locationMarkersRef?: React.RefObject<LocationMarkersRef | null>;
 }) {
   const groupRef = useRef<Group>(null);
 
@@ -75,6 +78,7 @@ function Planet({
 
       {/* Location Markers - now part of the rotating group */}
       <LocationMarkers
+        ref={locationMarkersRef}
         locations={locations}
         onSelect={onLocationSelect}
         onHover={onLocationHover}
@@ -102,11 +106,13 @@ function Scene({
   onLocationSelect,
   onLocationHover,
   autoRotate = false,
+  locationMarkersRef,
 }: {
   locations: LocationData[];
   onLocationSelect?: (location: LocationData | null) => void;
   onLocationHover?: (location: LocationData | null) => void;
   autoRotate?: boolean;
+  locationMarkersRef?: React.RefObject<LocationMarkersRef | null>;
 }) {
   console.log(
     'Mars Scene component rendering with',
@@ -127,6 +133,7 @@ function Scene({
         locations={locations}
         onLocationSelect={onLocationSelect}
         onLocationHover={onLocationHover}
+        locationMarkersRef={locationMarkersRef}
       />
 
       {/* Enhanced Camera Controls */}
@@ -171,6 +178,7 @@ export default function MarsGlobe({
   const [hoveredLocation, setHoveredLocation] = useState<LocationData | null>(
     null
   );
+  const locationMarkersRef = useRef<LocationMarkersRef>(null);
 
   const handleCreated = ({ gl }: { gl: WebGLRenderer }) => {
     console.log('WebGL context created in Mars globe');
@@ -194,9 +202,10 @@ export default function MarsGlobe({
         onCreated={handleCreated}
         className="w-full h-full"
         onPointerMissed={() => {
-          // Deselect location when clicking empty space
+          // Deselect location and dismiss cards when clicking empty space
           handleLocationSelect(null);
           handleLocationHover(null);
+          locationMarkersRef.current?.dismissCard();
         }}
       >
         <Suspense fallback={null}>
@@ -205,6 +214,7 @@ export default function MarsGlobe({
             onLocationSelect={handleLocationSelect}
             onLocationHover={handleLocationHover}
             autoRotate={autoRotate}
+            locationMarkersRef={locationMarkersRef}
           />
         </Suspense>
       </Canvas>

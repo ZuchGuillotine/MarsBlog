@@ -1,0 +1,523 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'isidis-planitia');
+if (!location) {
+  throw new Error('Isidis Planitia location not found');
+}
+---
+
+<LocationLayout title="Isidis Planitia - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-orange-900 to-red-700 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Artist's impression of the Beagle 2 lander on Mars' surface in Isidis Planitia
+        </p>
+        <p class="text-xs opacity-60">ESA/Beagle 2 Team</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Isidis Planitia represents one of Mars' most geologically significant
+          ancient impact basins, serving as the intended landing site for the
+          ill-fated but scientifically important Beagle 2 mission. This massive
+          impact structure, approximately 1,900 kilometers in diameter, holds
+          the distinction of being the third-largest confirmed impact basin on
+          Mars, formed during the violent early history of the planet
+          approximately 3.9 billion years ago.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The basin exposes some of the oldest hydrated crust on Mars, providing
+          a unique window into the planet's ancient past when water was more
+          abundant and conditions were potentially more hospitable to life. The
+          rim of this ancient impact crater preserves evidence of massive
+          glaciation events and extensive water-rock interactions that occurred
+          billions of years ago.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Recent discoveries have revealed that Isidis Planitia contains
+          magnesium carbonate deposits, indicating the presence of ancient
+          non-acidic water conditions that would have been favorable for
+          potential life. The basin's complex geological history includes
+          episodes of volcanic activity, catastrophic flooding, and massive
+          glaciation, making it a natural laboratory for understanding Mars'
+          climate evolution.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Diameter:</span>
+            <span class="text-white block">1,900 km</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Age:</span>
+            <span class="text-white block">3.9 billion years</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Basin Rank:</span>
+            <span class="text-white block">3rd largest on Mars</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Failed Mission:</span>
+            <span class="text-white block">Beagle 2 (2003)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Key Feature:</span>
+            <span class="text-white block">Oldest hydrated crust</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beagle 2 Mission Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      The Beagle 2 Mission: A Tale of Ambition and Discovery
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The Beagle 2 lander, launched as part of the European Space Agency's
+        Mars Express mission in 2003, was designed to search for signs of past
+        or present life on Mars. Named after Charles Darwin's famous ship, the
+        small lander carried sophisticated instruments to analyze Martian soil
+        and rocks for organic compounds and other biosignatures.
+      </p>
+      
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Mission Goals</h4>
+          <ul class="text-gray-300 text-sm space-y-2">
+            <li>• Search for organic compounds and biosignatures</li>
+            <li>• Analyze soil and rock composition</li>
+            <li>• Study atmospheric composition</li>
+            <li>• Investigate subsurface water content</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Scientific Instruments</h4>
+          <ul class="text-gray-300 text-sm space-y-2">
+            <li>• Gas Analysis Package (GAP)</li>
+            <li>• X-ray spectrometer</li>
+            <li>• Mössbauer spectrometer</li>
+            <li>• Rock corer and sample delivery system</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-red-900/30 p-6 rounded-lg border border-red-700/50">
+        <h4 class="text-lg font-semibold text-white mb-3">The Lost and Found Story</h4>
+        <p class="text-gray-300 text-sm mb-4">
+          Contact with Beagle 2 was lost on Christmas Day 2003, just hours
+          before its planned landing. For over a decade, the fate of the lander
+          remained a mystery until NASA's Mars Reconnaissance Orbiter spotted
+          it on the surface in January 2015, revealing that it had successfully
+          landed but failed to fully deploy its solar panels.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The discovery showed that Beagle 2 had landed just 5 kilometers from
+          its intended target in Isidis Planitia, demonstrating the precision
+          of its landing system. Though the mission couldn't complete its
+          scientific goals, its target location choice proved scientifically
+          prescient.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Geological History Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Ancient Impact Basin: A 3.9-Billion-Year Time Capsule
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Formation and Impact History
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Isidis Planitia was formed by a catastrophic asteroid or comet impact
+          during the Late Heavy Bombardment period of the early solar system.
+          The impact was so massive that it created a basin nearly 2,000
+          kilometers across, penetrating deep into Mars' crust and exposing
+          ancient materials.
+        </p>
+        <p class="text-gray-300 text-sm">
+          This impact basin is believed to be the last major basin-forming
+          impact on Mars, making it a crucial marker in understanding the
+          planet's geological timeline and the transition from the violent
+          early bombardment period to more stable conditions.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-green-900/50 to-green-800/30 p-6 rounded-lg border border-green-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Hydrated Crust Discovery
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The basin rim exposes some of the oldest hydrated crust on Mars,
+          containing minerals that formed through water-rock interactions
+          billions of years ago. These ancient hydrated minerals provide direct
+          evidence that water was present on Mars very early in its history.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The preservation of these hydrated minerals in the impact basin's
+          rim material suggests that early Mars had an environment where
+          liquid water could persist long enough to significantly alter rock
+          compositions through chemical weathering processes.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Three Major Geological Episodes
+      </h3>
+      <div class="space-y-4">
+        <div class="border-l-4 border-red-500 pl-4">
+          <h4 class="font-semibold text-white mb-2">
+            1. Impact-Dominated Episode (Until ~3.8 Ga)
+          </h4>
+          <p class="text-gray-300 text-sm">
+            Formation of the basin by massive impact, followed by continued
+            bombardment and mass-wasting processes that shaped the initial
+            basin structure and rim materials.
+          </p>
+        </div>
+        <div class="border-l-4 border-blue-500 pl-4">
+          <h4 class="font-semibold text-white mb-2">
+            2. Volcanic and Glacial Episode (~3.8-2.8 Ga)
+          </h4>
+          <p class="text-gray-300 text-sm">
+            Widespread volcanic resurfacing combined with massive glaciation
+            events. Ice sheets covered both the rim and floor of the basin,
+            eroding an estimated 35,000-50,000 cubic kilometers of material.
+          </p>
+        </div>
+        <div class="border-l-4 border-yellow-500 pl-4">
+          <h4 class="font-semibold text-white mb-2">
+            3. Wind-Dominated Episode (~2.8 Ga-Present)
+          </h4>
+          <p class="text-gray-300 text-sm">
+            Transition to the current arid climate with primarily wind-driven
+            surface modification, dust accumulation, and minor erosion
+            processes shaping the modern landscape.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Geological Discoveries Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Modern Discoveries and Scientific Insights
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-purple-900/50 to-purple-800/30 p-6 rounded-lg border border-purple-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Magnesium Carbonate Evidence
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Mars Reconnaissance Orbiter detected magnesium carbonate around the
+          Isidis basin, a mineral that forms only in neutral to alkaline water
+          conditions. This discovery indicates that ancient water in this
+          region was not acidic, creating pH conditions more favorable for
+          potential life.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The presence of carbonates suggests that early Mars had a thicker
+          atmosphere with higher CO2 levels, supporting theories about a
+          warmer, wetter early Mars climate that could have sustained
+          liquid water on the surface.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-orange-900/50 to-orange-800/30 p-6 rounded-lg border border-orange-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Volcanic Cone Formations
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The basin contains numerous conical landforms interpreted as tuff
+          cones formed during explosive magma-ice interactions. These cones,
+          300-500 meters in diameter and ~30 meters high, suggest that
+          volcanic activity occurred when subsurface ice was present.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The alignment of these cones in chains with characteristic furrows
+          indicates fissure volcanism along circumferential dikes, providing
+          evidence for the complex interplay between volcanism and water/ice
+          during Mars' early history.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Subsurface Water Indicators
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        Analysis of thermal inertia patterns and geological structures suggests
+        that Isidis Planitia has significant potential for subsurface water
+        resources. The eroded materials from massive glaciation events were
+        likely saturated with ice and water, forming wet deposits on the
+        basin floor that may persist in the subsurface today.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        Evidence for concentration and remobilization of volatiles makes Isidis
+        an area of particular interest for astrobiology research and future
+        exploration missions seeking to understand Mars' potential for past
+        or present habitability.
+      </p>
+    </div>
+  </section>
+
+  <!-- Terraforming Potential Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-yellow-900/30 to-yellow-800/20 p-8 rounded-lg border border-yellow-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">7</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Good Terraforming Potential
+          </h3>
+          <p class="text-yellow-300">
+            Ancient water evidence and mineral resources
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Oldest hydrated crust on Mars</li>
+            <li>• Evidence of ancient neutral-pH water</li>
+            <li>• Magnesium carbonate deposits</li>
+            <li>• Potential subsurface water/ice resources</li>
+            <li>• Diverse geological history</li>
+            <li>• Large, relatively flat basin floor</li>
+            <li>• Volcanic activity history (geothermal potential)</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Limited confirmed current water access</li>
+            <li>• Ancient age of most geological activity</li>
+            <li>• Dust accumulation issues</li>
+            <li>• Radiation exposure on basin floor</li>
+            <li>• Distance from polar ice caps</li>
+            <li>• Complex subsurface structure</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scientific Significance Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Scientific Significance
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Window to Ancient Mars
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          Isidis Planitia serves as a unique window into Mars' ancient past,
+          preserving evidence of the planet's early climate conditions when
+          water was more abundant. The basin's geological record spans nearly
+          4 billion years, providing crucial insights into the transition from
+          a potentially habitable early Mars to its current arid state.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Astrobiology Research Target
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          The discovery of magnesium carbonates and evidence of ancient
+          neutral-pH water conditions makes Isidis Planitia a high-priority
+          target for astrobiology research. The basin's potential for preserving
+          ancient biosignatures in its hydrated crust and sedimentary deposits
+          could provide definitive evidence of past life on Mars.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Impact Basin Evolution Model
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          As one of the best-preserved large impact basins on Mars, Isidis
+          Planitia provides a natural laboratory for understanding how massive
+          impacts shape planetary surfaces and influence long-term geological
+          evolution. Its complex history of volcanism, glaciation, and
+          erosion offers insights applicable to impact basins throughout
+          the solar system.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Opportunities
+    </h2>
+    <div
+      class="bg-gradient-to-br from-green-900/30 to-green-800/20 p-8 rounded-lg border border-green-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Despite the failure of the Beagle 2 mission to complete its scientific
+        objectives, Isidis Planitia remains a high-priority target for future
+        Mars exploration. The basin's unique geological features and potential
+        for preserving ancient biosignatures make it an ideal location for
+        advanced astrobiology missions and eventual human exploration.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Proposed Mission Objectives
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Deep drilling into hydrated crust layers</li>
+            <li>• Carbonate deposit analysis for biosignatures</li>
+            <li>• Subsurface ice/water resource mapping</li>
+            <li>• Volcanic cone composition studies</li>
+            <li>• Ancient atmospheric reconstruction</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Human Exploration Benefits
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Large, flat landing area for heavy equipment</li>
+            <li>• Potential subsurface water resources</li>
+            <li>• Diverse geological materials for study</li>
+            <li>• Central location for regional exploration</li>
+            <li>• Historical significance for Mars exploration</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Mission Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://science.nasa.gov/resource/found-mars-reconnaissance-orbiter-locates-beagle-2-lander/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              NASA: Beagle 2 Lander Found
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://en.wikipedia.org/wiki/Beagle_2"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Beagle 2 Mission Wikipedia
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.esa.int/Science_Exploration/Space_Science/Mars_Express"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ESA Mars Express Mission
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Papers</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.sciencedirect.com/science/article/abs/pii/S0019103511004568"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Major Episodes of Geological History
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.researchgate.net/publication/257068051_Selection_of_the_Landing_Site_in_Isidis_Planitia_of_Mars_Probe_Beagle_2"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Beagle 2 Landing Site Selection
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://en.wikipedia.org/wiki/Isidis_Planitia"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Isidis Planitia Overview
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

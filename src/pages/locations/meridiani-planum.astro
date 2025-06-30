@@ -1,0 +1,305 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import marsLocations from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'meridiani-planum');
+if (!location) {
+  throw new Error('Meridiani Planum location not found');
+}
+---
+
+<LocationLayout title="Meridiani Planum - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Opportunity rover's view of hematite-rich "blueberry" spherules
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL-Caltech/Cornell</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Meridiani Planum, also known as Terra Meridiani, is a large equatorial plain on Mars that became one of the most thoroughly investigated regions of the planet. This ancient sedimentary landscape served as the landing site for NASA's Opportunity rover in 2004, which operated for nearly 15 years despite its original 90-day mission plan.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The plain sits atop an enormous body of sediments containing bound water and is distinguished by extensive hematite deposits that can only form in the presence of liquid water. The discovery of these iron-oxide minerals from orbit led to the selection of Meridiani Planum as a prime landing site for searching evidence of Mars' ancient aqueous environment.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Opportunity's ground-truth investigations revealed that the hematite exists within BB-sized spherules, dubbed "blueberries" by scientists, embedded within layered sedimentary rocks that tell a compelling story of ancient shallow water environments and acidic groundwater systems.
+        </p>
+      </div>
+      <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-400">Surface Area:</span>
+            <span class="text-white">~200,000 km² (77,000 sq mi)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Hematite Content:</span>
+            <span class="text-white">Up to 20% at surface</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Mission:</span>
+            <span class="text-white">Opportunity Rover</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Landing Date:</span>
+            <span class="text-white">January 25, 2004</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Mission Duration:</span>
+            <span class="text-white">14.75 years (5,352 sols)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Geological History -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Geological Features and Formation
+    </h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div>
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Hematite "Blueberries"
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          The most distinctive feature of Meridiani Planum is its abundant spherical hematite concretions, nicknamed "blueberries" despite their dark gray color. These BB-sized spherules form when strongly acidic groundwater interacts with goethite-rich basaltic sandstone, converting the iron-bearing minerals into crystalline hematite.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The spherules are found both embedded within soft, layered sedimentary rocks and scattered across the surface as a "lag deposit" where softer surrounding rock has eroded away, leaving the more resistant hematite spherules behind.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">Sedimentary Layers</h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          The bedrock consists of layered sandstones formed by both wind and water processes. These rocks show clear evidence of shallow, flowing water environments with cross-bedding and ripple marks typical of ancient aqueous deposition.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Mineral analysis reveals the sediments contain 36-37% hydrated sulfates, 35% hydrated aluminosilicates, 16% basaltic rock fragments, and significant amounts of hematite and other oxides, indicating complex water-rock interactions over geological time.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Opportunity Mission -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Opportunity Rover Discoveries
+    </h2>
+    <div class="space-y-8">
+      <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Revolutionary Mars Exploration
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Opportunity's landing at Meridiani Planum in Eagle Crater marked the beginning of the most successful Mars surface mission to date. The rover traveled over 45 kilometers across the plain, conducting the first detailed outcrop-scale investigation of sedimentary rocks on another planet.
+        </p>
+        <ul class="list-disc list-inside text-gray-300 space-y-2">
+          <li>First mission to grind Martian rock surfaces for interior analysis</li>
+          <li>Confirmed ground-truth evidence of hematite from orbital observations</li>
+          <li>Discovered extensive evidence of ancient aqueous environments</li>
+          <li>Operated 60 times longer than its planned 90-sol mission</li>
+        </ul>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+          <h3 class="text-xl font-semibold text-mars-orange mb-3">
+            Ancient Water Evidence
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            The layered rocks at Meridiani Planum preserve a detailed record of ancient water activity. Sedimentary structures, mineral compositions, and chemical signatures all point to environments ranging from shallow lakes to acidic groundwater systems that persisted for extended periods.
+          </p>
+        </div>
+        <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+          <h3 class="text-xl font-semibold text-mars-orange mb-3">
+            Preservation Potential
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            Iron oxide and hydroxide minerals like hematite are excellent at preserving microfossils and biosignatures. The extensive hematite deposits make Meridiani Planum a prime location for investigating whether Mars once harbored microbial life.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Potential -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Settlement and Resource Potential
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          With a terraforming rating of 6/10, Meridiani Planum offers moderate potential for future human settlement. Its equatorial location provides excellent solar energy potential, while the extensive geological knowledge gained from Opportunity's mission makes it one of the most well-characterized regions on Mars.
+        </p>
+
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Strategic Advantages
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4 mb-6">
+          <div>
+            <h4 class="font-semibold text-white mb-2">Location Benefits</h4>
+            <ul class="text-gray-300 text-sm space-y-1">
+              <li>• Equatorial location for optimal solar power</li>
+              <li>• Relatively flat terrain for construction</li>
+              <li>• Extensive scientific knowledge base</li>
+              <li>• Proven landing site accessibility</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white mb-2">Resource Availability</h4>
+            <ul class="text-gray-300 text-sm space-y-1">
+              <li>• Abundant iron-oxide minerals</li>
+              <li>• Sulfate deposits for chemical processes</li>
+              <li>• Evidence of subsurface water/ice</li>
+              <li>• Diverse construction materials</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="bg-mars-900/30 rounded-lg p-6 border border-mars-600">
+        <h3 class="text-lg font-semibold text-mars-orange mb-4">
+          Settlement Challenges
+        </h3>
+        <ul class="text-gray-300 text-sm space-y-2">
+          <li>• History of highly acidic groundwater</li>
+          <li>• Limited current surface water access</li>
+          <li>• Frequent dust storm activity</li>
+          <li>• High radiation exposure levels</li>
+          <li>• Temperature extremes (-80°C to -5°C)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Current Research -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Ongoing Research and Future Exploration
+    </h2>
+    <div
+      class="bg-gradient-to-r from-mars-900/40 to-gray-800/40 rounded-lg p-8 border border-mars-600"
+    >
+      <h3 class="text-xl font-semibold text-mars-orange mb-4">
+        Astrobiology Research Legacy
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        The wealth of data collected by Opportunity continues to inform our understanding of Mars' habitability potential. Current research focuses on understanding how the hematite spherules and associated minerals might preserve biosignatures from ancient microbial life.
+      </p>
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Laboratory studies of Earth analogs suggest that the iron-rich environment at Meridiani Planum could effectively mineralize and preserve microfossils, making it a priority target for future sample return missions or human exploration.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold text-white mb-2">Research Applications</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Biosignature preservation studies</li>
+            <li>• Ancient climate reconstruction</li>
+            <li>• Water-rock interaction processes</li>
+            <li>• Mineral resource assessment</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-2">Future Mission Potential</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Sample return mission target</li>
+            <li>• Human landing site candidate</li>
+            <li>• Resource utilization demonstrations</li>
+            <li>• Astrobiology field laboratory</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources -->
+  <section>
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <a
+          href="https://mars.nasa.gov/resources/26889/meridiani-planum/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            NASA Mars Exploration - Meridiani Planum
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Official NASA overview of Meridiani Planum's geological significance
+          </p>
+        </a>
+
+        <a
+          href="https://www.usgs.gov/publications/opportunity-rovers-athena-science-investigation-meridiani-planum-mars"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            USGS Scientific Investigation Report
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Comprehensive scientific analysis of Opportunity's discoveries
+          </p>
+        </a>
+      </div>
+
+      <div class="space-y-4">
+        <a
+          href="https://christensen.asu.edu/discovery/tes-discovered-hematite-in-meridiani-planum/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Hematite Discovery Research
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Original research on TES hematite detection at Meridiani Planum
+          </p>
+        </a>
+
+        <a
+          href="https://en.wikipedia.org/wiki/Meridiani_Planum"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Meridiani Planum - Wikipedia
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Comprehensive overview of geology and exploration history
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

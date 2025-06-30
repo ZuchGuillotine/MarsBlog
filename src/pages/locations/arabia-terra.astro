@@ -1,0 +1,494 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'arabia-terra');
+if (!location) {
+  throw new Error('Arabia Terra location not found');
+}
+---
+
+<LocationLayout title="Arabia Terra - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-red-900 to-orange-700 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Ancient calderas in Arabia Terra revealing supervolcanic history
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL-Caltech/ASU</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Arabia Terra represents one of Mars' most ancient and geologically 
+          significant highland regions, harboring evidence of massive supervolcanic 
+          eruptions that fundamentally shaped the planet's early history. This 
+          expansive terrain, covering thousands of square kilometers, preserves 
+          a record of explosive volcanism that rivals Earth's most catastrophic 
+          volcanic events.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Recent discoveries have revealed that Arabia Terra experienced thousands 
+          of "super eruptions" over a 500-million-year period approximately 4 
+          billion years ago. These massive volcanic events expelled the equivalent 
+          of 400 million Olympic-sized swimming pools of molten rock and gas, 
+          creating calderas and fundamentally altering Mars' early climate and 
+          geological evolution.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The region is characterized by abundant clay-bearing rocks, evidence 
+          of ancient hydrothermal activity, and numerous calderas that were 
+          previously misidentified as impact craters. This treasure trove of 
+          geological diversity makes Arabia Terra a prime target for understanding 
+          Mars' transition from a potentially habitable world to its current state.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Age:</span>
+            <span class="text-white block">4+ billion years (Noachian)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Volcanic Period:</span>
+            <span class="text-white block">500 million years active</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Calderas Identified:</span>
+            <span class="text-white block">7+ supervolcano calderas</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Rock Type:</span>
+            <span class="text-white block">Clay-bearing, altered minerals</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Significance:</span>
+            <span class="text-white block">Ancient highland terrain</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Supervolcano Discovery Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Supervolcano Calderas: A Geological Revolution
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        What were once thought to be ancient impact craters have been revealed 
+        as massive volcanic calderas formed by supervolcanic eruptions. These 
+        calderas collapsed inward after explosive eruptions emptied underground 
+        magma chambers, creating the distinctive basin-like features we observe today.
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Caldera Characteristics</h4>
+          <p class="text-gray-300 text-sm">
+            Seven major calderas have been identified, each representing collapsed 
+            volcanic structures similar to terrestrial supervolcanoes like Yellowstone. 
+            These low-relief features possess complex topographic depressions with 
+            evidence of structural collapse, effusive volcanism, and explosive eruptions.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Eruption Scale</h4>
+          <p class="text-gray-300 text-sm">
+            The scale of volcanic activity was enormous, with individual eruptions 
+            capable of degassing approximately 100 million kilograms of sulfur 
+            compounds into the atmosphere. These eruptions would have had profound 
+            climate-altering effects on early Mars.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ancient Volcanic Activity Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      500 Million Years of Explosive Volcanism
+    </h2>
+
+    <div class="grid md:grid-cols-1 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-red-900/50 to-orange-800/30 p-6 rounded-lg border border-red-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Thousands of Super Eruptions
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Arabia Terra experienced thousands of supervolcanic eruptions during 
+          a 500-million-year period around 4 billion years ago. These eruptions 
+          expelled massive volumes of water vapor, carbon dioxide, and sulfur 
+          dioxide into the atmosphere, fundamentally altering Mars' early climate.
+        </p>
+        <p class="text-gray-300 text-sm">
+          Each super eruption was capable of blasting hundreds of millions of 
+          tons of molten rock and gas through the surface, spreading thick 
+          blankets of ash across thousands of miles and leaving behind massive 
+          calderas when the volcanic structures collapsed.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Climate and Atmospheric Impact
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        The massive scale of volcanic outgassing from Arabia Terra's supervolcanoes 
+        would have dramatically altered Mars' early atmosphere and climate. The 
+        eruptions injected enormous quantities of sulfur compounds, water vapor, 
+        and other gases that could have supported a thicker atmosphere and 
+        potentially warmer surface conditions.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        However, these same eruptions may have also contributed to atmospheric 
+        loss over time, as the massive dust clouds and chemical changes could 
+        have triggered cooling events and atmospheric escape processes that 
+        gradually transformed Mars into the cold, dry world we see today.
+      </p>
+    </div>
+  </section>
+
+  <!-- Geological Evidence Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Preserved Volcanic Evidence
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The geological evidence for Arabia Terra's supervolcanic past is 
+          remarkably well preserved in the mineral composition and layered 
+          deposits throughout the region. Recent analysis has revealed that 
+          the volcanic ash layers remain intact and clearly stratified, 
+          providing a detailed record of individual eruption events.
+        </p>
+
+        <div class="space-y-4 mb-6">
+          <div class="border-l-4 border-red-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Mineral Evidence
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Clay-bearing rocks throughout Arabia Terra show evidence of 
+              hydrothermal alteration from volcanic processes and water interaction.
+            </p>
+          </div>
+          <div class="border-l-4 border-orange-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Ash Layer Preservation
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Well-preserved ash layers show clear stratification without wind 
+              or water mixing, indicating rapid deposition and burial.
+            </p>
+          </div>
+          <div class="border-l-4 border-yellow-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Pyroclastic Deposits
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Low-density pyroclastic deposits detected through gravitational 
+              modeling support explosive volcanic origin theories.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Research Techniques
+        </h3>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Mineral Mapping:</span>
+            <span class="text-white text-sm">Orbital spectrometry</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Topography:</span>
+            <span class="text-white text-sm">MOLA altimetry</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Gravity:</span>
+            <span class="text-white text-sm">Modeling analysis</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Dating:</span>
+            <span class="text-white text-sm">Crater counting</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Habitability Implications Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Early Mars Habitability Implications
+    </h2>
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-green-900/50 to-blue-800/30 p-6 rounded-lg border border-green-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Hydrothermal Systems
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The massive volcanic activity in Arabia Terra would have created 
+          extensive hydrothermal systems - environments where heated water 
+          interacts with rock, potentially creating conditions suitable for 
+          early life. The clay-bearing rocks throughout the region provide 
+          evidence of these water-rock interactions.
+        </p>
+        <p class="text-gray-300 text-sm">
+          Hydrothermal environments are considered some of the most promising 
+          locations for early life on Earth, and similar conditions in Arabia 
+          Terra may have provided habitable niches during Mars' early history.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-purple-900/50 to-indigo-800/30 p-6 rounded-lg border border-purple-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Atmospheric Evolution
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The supervolcanic eruptions contributed to Mars' atmospheric evolution 
+          by releasing massive amounts of gases. While initially thickening the 
+          atmosphere and potentially warming the surface, the long-term effects 
+          may have contributed to atmospheric loss processes.
+        </p>
+        <p class="text-gray-300 text-sm">
+          Understanding this volcanic influence is crucial for modeling Mars' 
+          transition from potentially habitable conditions to its current state.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Assessment Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-yellow-900/30 to-orange-800/20 p-8 rounded-lg border border-yellow-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">7</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Good Terraforming Potential
+          </h3>
+          <p class="text-orange-300">
+            Rich mineral resources and geological diversity
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Abundant clay-bearing rocks for construction</li>
+            <li>• Evidence of past hydrothermal systems</li>
+            <li>• Diverse mineral resources from volcanic activity</li>
+            <li>• Ancient highland elevation advantages</li>
+            <li>• Rich geological record for resource mapping</li>
+            <li>• Potential geothermal energy sources</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Limited current water resources</li>
+            <li>• Dust accumulation in highland terrain</li>
+            <li>• Ancient surface with impact crater hazards</li>
+            <li>• Radiation exposure concerns</li>
+            <li>• Temperature variations at elevation</li>
+            <li>• Complex terrain navigation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scientific Significance Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Scientific Significance
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Planetary Evolution Archive
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          Arabia Terra serves as a natural laboratory for understanding how 
+          massive volcanism can shape planetary evolution. The preserved record 
+          of 500 million years of supervolcanic activity provides unprecedented 
+          insights into early Mars' geological processes and their role in 
+          atmospheric and climate evolution.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Comparative Planetology
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          The scale of volcanic activity preserved in Arabia Terra exceeds 
+          anything seen on Earth, making it crucial for understanding how 
+          extreme volcanism affects planetary habitability. This research 
+          informs our understanding of volcanic processes on other worlds and 
+          the role of volcanism in planetary evolution throughout the solar system.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Opportunities
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Arabia Terra represents a high-priority target for future Mars exploration 
+        due to its unique geological history and potential for understanding 
+        early Martian habitability. The region's diverse mineral assemblages 
+        and well-preserved volcanic record make it ideal for both robotic and 
+        eventually human exploration.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Priority Research Goals
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Detailed caldera floor exploration</li>
+            <li>• Hydrothermal deposit analysis</li>
+            <li>• Ancient volcanic ash sampling</li>
+            <li>• Clay mineral characterization</li>
+            <li>• Astrobiology investigations</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Resource Potential
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Clay minerals for construction materials</li>
+            <li>• Volcanic glass for manufacturing</li>
+            <li>• Hydrothermal mineral deposits</li>
+            <li>• Potential geothermal energy sites</li>
+            <li>• Water-altered rock resources</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Papers</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.nature.com/articles/nature12482"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Supervolcanoes in Arabia Terra (Nature)
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2021GL093118"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Caldera Collapse and Volcanic Resurfacing (2021)
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.sciencedirect.com/science/article/abs/pii/S0019103522003955"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Supervolcanic Resurfacing Evidence
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.nasa.gov/solar-system/nasa-confirms-thousands-of-massive-ancient-volcanic-eruptions-on-mars/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              NASA Supervolcano Discovery News
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://mars.nasa.gov/news/9039/nasa-confirms-thousands-of-massive-ancient-volcanic-eruptions-on-mars/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mars Exploration Program Coverage
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.planetary.org/space-images/calderas-in-arabia-terra"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Calderas in Arabia Terra - Planetary Society
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

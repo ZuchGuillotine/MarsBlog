@@ -1,0 +1,429 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'deuteronilus-mensae');
+if (!location) {
+  throw new Error('Deuteronilus Mensae location not found');
+}
+---
+
+<LocationLayout title="Deuteronilus Mensae - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-slate-900 to-slate-700 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Debris-covered glaciers and lobate debris aprons in Deuteronilus Mensae
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL/University of Arizona/HiRISE</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Deuteronilus Mensae, located on the northern edge of Arabia Terra at approximately 39° North and 23° East, represents one of Mars' most spectacular examples of debris-covered glacial systems. This region lies along the Martian dichotomy boundary, where highland terrain transitions to the northern lowlands, creating ideal conditions for ice preservation.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The area is dominated by extensive lobate debris aprons (LDAs) that emanate from mesas and ridges, forming lobe-shaped formations with distinctive pitted and lineated textures. These features are interpreted as debris-covered glaciers composed primarily of water ice, protected from sublimation by an insulating layer of surface debris.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Orbital radar sounding has confirmed that these debris aprons contain material with dielectric properties consistent with high ice purity (>80% water ice), making Deuteronilus Mensae a significant reservoir of accessible water resources for future Mars exploration and settlement.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Location:</span>
+            <span class="text-white block">Northern Arabia Terra edge</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Ice Purity:</span>
+            <span class="text-white block">>80% water ice content</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Feature Type:</span>
+            <span class="text-white block">Debris-covered glaciers</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Formation Age:</span>
+            <span class="text-white block">Multiple glacial epochs</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Key Characteristic:</span>
+            <span class="text-white block">Lobate debris aprons</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Debris-Covered Glaciers Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Debris-Covered Glacial Systems
+    </h2>
+    <div class="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-8 rounded-lg border border-blue-700/50">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The debris-covered glaciers of Deuteronilus Mensae represent some of the most well-preserved ice deposits on Mars. These formations, known as lobate debris aprons (LDAs), commonly emanate from mesas and show distinctive flow patterns, lineated textures, and pitted surfaces that indicate the movement of ice-rich material.
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Glacial Characteristics</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Lobate debris aprons emanating from mesas</li>
+            <li>• Distinctive pitted and lineated textures</li>
+            <li>• Flow patterns indicating ice movement</li>
+            <li>• Debris cover protecting underlying ice</li>
+            <li>• High ice purity (>80% water ice)</li>
+            <li>• Evidence of multiple glacial events</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Formation Process</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Climate-driven ice accumulation</li>
+            <li>• Debris cover from mass wasting</li>
+            <li>• Viscous flow of ice-debris mixture</li>
+            <li>• Insulation preventing sublimation</li>
+            <li>• Long-term preservation mechanisms</li>
+            <li>• Periglacial landscape evolution</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ice Resources and Composition Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Ice Resources and Composition
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-cyan-900/50 to-cyan-800/30 p-6 rounded-lg border border-cyan-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          High Ice Purity Confirmed
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Orbital radar sounding surveys using the SHARAD instrument have confirmed that lobate debris aprons in Deuteronilus Mensae contain material with dielectric properties consistent with >80% water ice content.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The high ice purity makes these deposits excellent candidates for water extraction and ISRU operations, with minimal processing required to obtain pure water.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-green-900/50 to-green-800/30 p-6 rounded-lg border border-green-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Polygonal Ground Indicators
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The presence of polygonal ground patterns throughout Deuteronilus Mensae indicates widespread subsurface ice. These features form from repeated freeze-thaw cycles and thermal contraction of ice-rich ground.
+        </p>
+        <p class="text-gray-300 text-sm">
+          Polygonal terrain is commonly associated with permafrost environments and provides strong evidence for extensive ground ice distribution beyond the visible debris aprons.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Ice Preservation and Age
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        The debris cover acts as natural insulation, protecting the underlying ice from sublimation over geological time scales. While the most recent latitude-dependent mantling deposits may still be ice-rich, older deposits may show varying degrees of preservation depending on their burial depth and debris thickness.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        Evidence suggests that Deuteronilus Mensae has experienced multiple glacial events throughout Mars' history, with the suite of features representing outcomes of various glacial episodes driven by changes in Mars' orbital parameters.
+      </p>
+    </div>
+  </section>
+
+  <!-- Climate and Formation History Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Climate History and Formation
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-orange-900/50 to-orange-800/30 p-6 rounded-lg border border-orange-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Obliquity-Driven Ice Ages
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The formation of ice deposits in Deuteronilus Mensae is linked to large changes in Mars' obliquity (axial tilt), which has varied from the current 25 degrees to potentially over 80 degrees throughout geological time.
+        </p>
+        <p class="text-gray-300 text-sm">
+          During high obliquity periods, water ice could be stable at mid-latitudes, leading to the accumulation of the massive ice deposits we observe today.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-purple-900/50 to-purple-800/30 p-6 rounded-lg border border-purple-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Multiple Glacial Episodes
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Research has identified evidence for extensive glaciation in Deuteronilus Mensae, with inferences pointing toward multiple glacial events in past epochs. This suggests repeated cycles of ice accumulation and retreat.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The preservation of features from different glacial episodes provides a record of Mars' climate evolution and the dynamic nature of water ice distribution.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Landscape Evolution
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        The current landscape of Deuteronilus Mensae has been sculpted by glacial processes over millions of years. Mesas, their slopes, and surrounding aprons may all be saturated with water ice beneath an insulating blanket of dust and debris.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        Flow patterns in wide valleys and along ridges indicate movement of debris mixed with ice toward surrounding areas, creating formations that resemble rock glaciers commonly found in cold-climate regions on Earth.
+      </p>
+    </div>
+  </section>
+
+  <!-- Resource Accessibility Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Resource Accessibility and ISRU Potential
+    </h2>
+    <div
+      class="bg-gradient-to-br from-emerald-900/30 to-emerald-800/20 p-8 rounded-lg border border-emerald-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">ICE</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Excellent Water Resource Access
+          </h3>
+          <p class="text-emerald-300">
+            High-purity ice with natural protection systems
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Resource Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• >80% water ice purity confirmed</li>
+            <li>• Natural debris protection from sublimation</li>
+            <li>• Extensive distribution across region</li>
+            <li>• Multiple accessible deposit locations</li>
+            <li>• Well-preserved over geological time</li>
+            <li>• Reduced processing requirements</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Extraction Considerations</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Debris removal for ice access</li>
+            <li>• Slope stability on debris aprons</li>
+            <li>• Equipment protection from rockfall</li>
+            <li>• Seasonal accessibility variations</li>
+            <li>• Ice depth and thickness mapping</li>
+            <li>• Landing site selection criteria</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Assessment Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-green-900/30 to-green-800/20 p-8 rounded-lg border border-green-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">8</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            High Terraforming Potential
+          </h3>
+          <p class="text-green-300">
+            Extensive water ice resources with natural preservation
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Abundant high-purity water ice</li>
+            <li>• Natural ice preservation systems</li>
+            <li>• Diverse topographic features</li>
+            <li>• Evidence of climate stability</li>
+            <li>• Multiple resource extraction sites</li>
+            <li>• Well-documented glacial history</li>
+            <li>• Elevation diversity for settlements</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• High latitude cold temperatures</li>
+            <li>• Limited solar energy availability</li>
+            <li>• Steep terrain accessibility issues</li>
+            <li>• Debris removal requirements</li>
+            <li>• Seasonal climate variations</li>
+            <li>• Radiation exposure concerns</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Opportunities
+    </h2>
+    <div
+      class="bg-gradient-to-br from-blue-900/30 to-blue-800/20 p-8 rounded-lg border border-blue-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Deuteronilus Mensae represents a prime target for missions focused on water resource characterization and glacial history studies. The region's well-preserved debris-covered glaciers offer unique opportunities to study Mars' climate evolution while accessing significant water resources.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Research Priorities
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Detailed ice thickness mapping</li>
+            <li>• Debris layer composition analysis</li>
+            <li>• Glacial flow pattern studies</li>
+            <li>• Climate history reconstruction</li>
+            <li>• Resource extraction feasibility</li>
+            <li>• Landing site safety assessment</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Mission Applications
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Water resource utilization studies</li>
+            <li>• ISRU technology demonstrations</li>
+            <li>• Glacial geology investigations</li>
+            <li>• Climate monitoring stations</li>
+            <li>• Sample return mission targets</li>
+            <li>• Long-term settlement planning</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.nasa.gov/image-article/textures-deuteronilus-mensae/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              NASA Textures in Deuteronilus Mensae
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://themis.asu.edu/feature/5"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Rock and Ice Features Analysis
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.esa.int/Science_Exploration/Space_Science/Mars_Express/Breathtaking_views_of_Deuteronilus_Mensae_on_Mars"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ESA Mars Express Observations
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Papers</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2018GL079759"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              High Ice Purity Radar Survey
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.sciencedirect.com/science/article/abs/pii/S0032063313002298"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Evidence of Extensive Glaciation
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.marsdaily.com/reports/Glaciers_as_landscape_sculptors___the_mesas_of_Deuteronilus_Mensae_999.html"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Glacial Landscape Evolution
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

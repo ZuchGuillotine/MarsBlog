@@ -1,9 +1,19 @@
-import { useRef, useState, useCallback } from 'react';
+import {
+  useRef,
+  useState,
+  useCallback,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Html, Billboard } from '@react-three/drei';
 import { Vector3, Raycaster, Color, Mesh, MeshBasicMaterial } from 'three';
 import type { LocationData } from '../../types/location';
 import { coordinatesToPosition3D } from '../../utils/coordinates';
+
+export interface LocationMarkersRef {
+  dismissCard: () => void;
+}
 
 interface LocationMarkersProps {
   locations: LocationData[];
@@ -18,6 +28,8 @@ interface LocationMarkerProps {
   onHover?: (location: LocationData | null) => void;
   isSelected?: boolean;
   isHovered?: boolean;
+  showCard?: boolean;
+  onCardDismiss?: () => void;
 }
 
 // Individual Location Marker Component
@@ -27,6 +39,8 @@ function LocationMarker({
   onHover,
   isSelected = false,
   isHovered = false,
+  showCard = false,
+  onCardDismiss,
 }: LocationMarkerProps) {
   const meshRef = useRef<Mesh>(null);
   const glowRef = useRef<Mesh>(null);
@@ -87,7 +101,17 @@ function LocationMarker({
     [location, onSelect]
   );
 
-  // Handle navigation to location page
+  // Handle double-click for direct navigation
+  const handleDoubleClick = useCallback(
+    (e: any) => {
+      e.stopPropagation();
+      e.preventDefault();
+      window.location.href = `/locations/${location.id}`;
+    },
+    [location.id]
+  );
+
+  // Handle navigation to location page from card
   const handleLocationClick = useCallback(
     (e: any) => {
       e.stopPropagation();
@@ -107,6 +131,7 @@ function LocationMarker({
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
         onClick={handleClick}
+        onDoubleClick={handleDoubleClick}
       >
         <sphereGeometry args={[0.02, 8, 8]} />
         <meshBasicMaterial color={markerColor} transparent opacity={0.3} />
@@ -118,44 +143,58 @@ function LocationMarker({
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
         onClick={handleClick}
+        onDoubleClick={handleDoubleClick}
       >
         <sphereGeometry args={[0.012, 12, 12]} />
         <meshBasicMaterial color={markerColor} transparent opacity={1} />
       </mesh>
 
-      {/* Interactive Card - ONLY on hover - Now Clickable */}
-      {hovered && (
+      {/* Interactive Card - Show on hover, persist until dismissed */}
+      {(showCard || hovered) && (
         <Html
           center
-          distanceFactor={10}
+          distanceFactor={5}
           position={[0, 0.03, 0]}
           style={{
             pointerEvents: 'auto',
             userSelect: 'none',
-            fontSize: '10px',
+            transform: 'scale(0.8)',
+            transformOrigin: 'center',
+            fontSize: '14px',
           }}
         >
           <div
-            className="bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded p-1.5 shadow-xl cursor-pointer hover:bg-gray-800/95 transition-colors duration-200"
+            className="bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded p-3 shadow-xl transition-all duration-200 relative"
             style={{
-              minWidth: '140px',
-              maxWidth: '180px',
-              fontSize: '9px',
+              minWidth: '180px',
+              maxWidth: '220px',
+              fontSize: '13px',
             }}
-            onClick={handleLocationClick}
           >
+            {/* Close Button */}
+            <button
+              onClick={e => {
+                e.stopPropagation();
+                onCardDismiss?.();
+              }}
+              className="absolute top-2 right-2 text-gray-400 hover:text-white transition-colors duration-200 w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-700/50"
+              style={{ fontSize: '12px' }}
+            >
+              ×
+            </button>
+
             {/* Location Name */}
             <h3
-              className="text-white font-semibold leading-tight mb-0.5"
-              style={{ fontSize: '10px' }}
+              className="text-white font-semibold leading-tight mb-1 pr-6"
+              style={{ fontSize: '14px' }}
             >
               {location.name}
             </h3>
 
             {/* Coordinates & Rating on same line */}
             <div
-              className="flex items-center justify-between mb-0.5"
-              style={{ fontSize: '8px' }}
+              className="flex items-center justify-between mb-1"
+              style={{ fontSize: '11px' }}
             >
               <span className="text-gray-400">
                 {location.coordinates.lat.toFixed(1)}°
@@ -170,19 +209,22 @@ function LocationMarker({
 
             {/* Very brief description */}
             <p
-              className="text-gray-300 leading-tight mb-1"
-              style={{ fontSize: '8px' }}
+              className="text-gray-300 leading-tight mb-2"
+              style={{ fontSize: '11px' }}
             >
               {location.description.length > 60
                 ? location.description.substring(0, 60) + '...'
                 : location.description}
             </p>
 
-            {/* Click to learn more indicator */}
-            <div className="flex items-center justify-center pt-1 border-t border-gray-700">
-              <span className="text-xs text-blue-400 font-medium">
-                Click to explore
-              </span>
+            {/* Action buttons */}
+            <div className="flex items-center gap-2 pt-1 border-t border-gray-700">
+              <button
+                onClick={handleLocationClick}
+                className="flex-1 text-sm text-blue-400 hover:text-blue-300 font-medium py-1 px-2 rounded hover:bg-blue-400/10 transition-colors duration-200"
+              >
+                Explore Details
+              </button>
             </div>
           </div>
         </Html>
@@ -192,23 +234,65 @@ function LocationMarker({
 }
 
 // Main Location Markers Component
-export default function LocationMarkers({
-  locations,
-  onSelect,
-  onHover,
-  selectedLocation,
-}: LocationMarkersProps) {
-  return (
-    <>
-      {locations.map(location => (
-        <LocationMarker
-          key={location.id}
-          location={location}
-          onSelect={onSelect}
-          onHover={onHover}
-          isSelected={selectedLocation?.id === location.id}
-        />
-      ))}
-    </>
-  );
-}
+const LocationMarkers = forwardRef<LocationMarkersRef, LocationMarkersProps>(
+  function LocationMarkers(
+    { locations, onSelect, onHover, selectedLocation },
+    ref
+  ) {
+    const [openCardId, setOpenCardId] = useState<string | null>(null);
+    const [hoveredId, setHoveredId] = useState<string | null>(null);
+
+    const handleMarkerClick = useCallback(
+      (location: LocationData) => {
+        // Click behavior - can be used for selection or direct navigation
+        onSelect?.(location);
+      },
+      [onSelect]
+    );
+
+    const handleMarkerHover = useCallback(
+      (location: LocationData | null) => {
+        setHoveredId(location?.id || null);
+        if (location) {
+          // Once hovered, persist the card
+          setOpenCardId(location.id);
+        }
+        onHover?.(location);
+      },
+      [onHover]
+    );
+
+    const handleCardDismiss = useCallback(() => {
+      setOpenCardId(null);
+      setHoveredId(null);
+    }, []);
+
+    // Expose dismissCard function to parent
+    useImperativeHandle(
+      ref,
+      () => ({
+        dismissCard: handleCardDismiss,
+      }),
+      [handleCardDismiss]
+    );
+
+    return (
+      <>
+        {locations.map(location => (
+          <LocationMarker
+            key={location.id}
+            location={location}
+            onSelect={handleMarkerClick}
+            onHover={handleMarkerHover}
+            isSelected={selectedLocation?.id === location.id}
+            isHovered={hoveredId === location.id}
+            showCard={openCardId === location.id}
+            onCardDismiss={handleCardDismiss}
+          />
+        ))}
+      </>
+    );
+  }
+);
+
+export default LocationMarkers;

@@ -1,0 +1,477 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'planum-australe');
+if (!location) {
+  throw new Error('Planum Australe location not found');
+}
+---
+
+<LocationLayout title="Planum Australe - South Polar Ice Cap" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-slate-900 to-blue-800 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Mars south polar ice cap with CO₂ and water ice layers
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL-Caltech/MSSS</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Planum Australe, Mars' south polar ice cap, is a unique and complex 
+          structure that differs significantly from its northern counterpart. 
+          This ice cap features a permanent residual cap of frozen carbon dioxide 
+          (dry ice) overlaying vast water ice deposits, making it the only 
+          known permanent CO₂ ice cap in our solar system.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The south polar region has captured scientific attention due to 
+          groundbreaking radar discoveries of potential sub-ice liquid water 
+          bodies beneath the ice cap. These findings, first announced in 2018, 
+          suggest the presence of stable saltwater lakes that could represent 
+          some of the most accessible liquid water on Mars today.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Recent research has revealed massive subsurface CO₂ ice deposits 
+          containing enough frozen carbon dioxide to potentially double Mars' 
+          atmospheric pressure if released, making this region crucial for 
+          understanding both current Martian climate and terraforming potential.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Diameter:</span>
+            <span class="text-white block">~420 km</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">CO₂ Ice Thickness:</span>
+            <span class="text-white block">8-10 meters</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Total Thickness:</span>
+            <span class="text-white block">~3 km</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Sub-ice Lakes:</span>
+            <span class="text-white block">Multiple detected</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">CO₂ Reserves:</span>
+            <span class="text-white block">4-5 mbar equivalent</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Unique Structure Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Unique Dual-Ice Structure
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Unlike the primarily water ice north polar cap, Planum Australe features 
+        a complex layered structure with both CO₂ and water ice components. 
+        This unique configuration makes it scientifically fascinating and 
+        potentially valuable for future Mars exploration and terraforming efforts.
+      </p>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Residual CO₂ Cap</h4>
+          <p class="text-gray-300 text-sm">
+            A permanent 8-10 meter thick layer of frozen carbon dioxide that 
+            persists year-round, making this the only known permanent CO₂ ice 
+            cap in our solar system.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Water Ice Base</h4>
+          <p class="text-gray-300 text-sm">
+            Beneath the CO₂ layer lies extensive water ice deposits similar to 
+            the north polar cap, containing significant water resources for 
+            future missions.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Subsurface CO₂</h4>
+          <p class="text-gray-300 text-sm">
+            SHARAD radar has revealed massive buried CO₂ ice deposits with 
+            volume comparable to Lake Superior, embedded within the water ice.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sub-ice Lakes Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Groundbreaking Sub-ice Lake Discoveries
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          MARSIS Radar Detection (2018)
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The Mars Advanced Radar for Subsurface and Ionosphere Sounding 
+          (MARSIS) instrument detected a 20-kilometer-wide subglacial lake 
+          1.5 kilometers beneath the south polar ice cap. This represents 
+          the first confirmed stable body of liquid water on Mars.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The lake's radar signature suggests it contains briny, salty water 
+          that remains liquid despite the extreme cold due to dissolved salts 
+          lowering the freezing point.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-teal-900/50 to-teal-800/30 p-6 rounded-lg border border-teal-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Multiple Lake System (2020)
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Follow-up studies confirmed the existence of multiple large saltwater 
+          lakes beneath the ice cap, suggesting a complex hydrological system 
+          that may have persisted for extended periods.
+        </p>
+        <p class="text-gray-300 text-sm">
+          These discoveries have revolutionized our understanding of water 
+          on Mars, showing that liquid water may be more common and accessible 
+          than previously thought.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Astrobiological Implications
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        The potential sub-ice lakes represent some of the most promising 
+        locations for current life on Mars. The combination of liquid water, 
+        potential dissolved nutrients, and protection from radiation creates 
+        conditions that could support microbial life.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        However, recent studies have also suggested that the radar signals 
+        could potentially be explained by other geological features, making 
+        direct exploration crucial for confirming the presence of liquid water.
+      </p>
+    </div>
+  </section>
+
+  <!-- CO2 Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Massive CO₂ Ice Reserves
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-purple-900/50 to-purple-800/30 p-6 rounded-lg border border-purple-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          SHARAD Discovery of Buried CO₂
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The SHARAD ice-penetrating radar identified a massive body of nearly 
+          pure CO₂ ice embedded within the polar layered deposits. This buried 
+          CO₂ deposit has a volume approximately equal to Lake Superior.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The deposits represent about 80% of Mars' current atmospheric mass, 
+          equivalent to 4-5 millibar of atmospheric pressure if sublimated 
+          into the atmosphere.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-orange-900/50 to-orange-800/30 p-6 rounded-lg border border-orange-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Climate History Evidence
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The CO₂ deposits occur in three distinct layers that correspond to 
+          episodes of atmospheric collapse during periods of low obliquity, 
+          extending back at least 370,000 years.
+        </p>
+        <p class="text-gray-300 text-sm">
+          Each CO₂ layer is capped by approximately 30 meters of water ice, 
+          which prevents sublimation when Mars returns to higher obliquity 
+          periods with warmer polar temperatures.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seasonal Dynamics Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Dynamic Seasonal Processes
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Annual CO₂ Cycle
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Each Martian winter, a seasonal cap of CO₂ frost several meters thick 
+          forms over the permanent residual cap. During southern hemisphere 
+          summer, this seasonal frost sublimates, creating dramatic atmospheric 
+          pressure changes and driving global atmospheric circulation.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The sublimation process creates powerful winds and may trigger dust 
+          storms, making the south polar region a major driver of Mars' 
+          weather patterns and atmospheric dynamics.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Swiss Cheese Terrain
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          The residual CO₂ cap features distinctive "Swiss cheese" patterns 
+          created by differential sublimation. These circular and elongated 
+          pits form as CO₂ ice sublimates from below, creating a unique 
+          landscape that continues to evolve under current Martian conditions.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Potential Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-green-900/30 to-green-800/20 p-8 rounded-lg border border-green-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">9</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Exceptional Terraforming Potential
+          </h3>
+          <p class="text-green-300">
+            Unique combination of CO₂, water ice, and potential liquid water
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Massive CO₂ reserves for atmospheric thickening</li>
+            <li>• Potential accessible liquid water (sub-ice lakes)</li>
+            <li>• Water ice resources for human missions</li>
+            <li>• CO₂ could double atmospheric pressure if released</li>
+            <li>• Unique laboratory for astrobiology research</li>
+            <li>• Strategic location for climate modification</li>
+            <li>• Evidence of dynamic geological processes</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Extreme polar temperatures (-140°C to -80°C)</li>
+            <li>• Limited solar energy in polar region</li>
+            <li>• Extreme seasonal day/night variations</li>
+            <li>• Confirmation needed for sub-ice lakes</li>
+            <li>• Complex ice dynamics and instability</li>
+            <li>• Difficult access and harsh conditions</li>
+            <li>• CO₂ release could be uncontrollable</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exploration Priorities Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Critical Exploration Objectives
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Sub-ice Lake Confirmation
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Direct drilling or penetrating missions are needed to definitively 
+          confirm the existence of liquid water beneath the ice cap. This 
+          represents one of the highest priority objectives for Mars astrobiology.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Advanced radar studies and potential ice-penetrating probes could 
+          provide conclusive evidence and characterize the composition, depth, 
+          and extent of any subsurface water bodies.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          CO₂ Resource Assessment
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          Understanding the distribution, accessibility, and stability of 
+          buried CO₂ deposits is crucial for both scientific understanding 
+          and potential terraforming applications. These reserves could play 
+          a key role in any future atmospheric modification efforts.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Missions Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Mission Concepts
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The south polar ice cap presents unique opportunities and challenges 
+        for future Mars exploration. Several mission concepts have been 
+        proposed to investigate its mysteries and assess its resources.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Ice-Penetrating Missions
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Thermal or nuclear-powered ice melting probes</li>
+            <li>• Deep drilling systems for ice core sampling</li>
+            <li>• Submersible exploration of sub-ice lakes</li>
+            <li>• Advanced radar mapping of ice structure</li>
+            <li>• Long-term monitoring stations</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Resource Utilization Studies
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• CO₂ extraction and storage technologies</li>
+            <li>• Water ice mining feasibility studies</li>
+            <li>• Atmospheric modification modeling</li>
+            <li>• Life support system testing</li>
+            <li>• Energy generation in polar conditions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://marsed.asu.edu/mep/ice/polar-caps/planum-australe"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mars Education - South Polar Ice Cap
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.jpl.nasa.gov/images/pia25814-south-polar-ice/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              JPL South Polar Ice Images
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://science.nasa.gov/resource/dry-ice-on-mars/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Dry Ice on Mars
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Research Papers</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.science.org/doi/10.1126/science.aar7268"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Radar Evidence of Subglacial Liquid Water
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5791158/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              3-D Imaging Using Orbital Radar Data
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.sciencedaily.com/releases/2024/06/240607151725.htm"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Lake Under Mars Ice Cap Analysis (2024)
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

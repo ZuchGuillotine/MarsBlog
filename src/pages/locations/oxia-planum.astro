@@ -1,0 +1,309 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import marsLocations from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'oxia-planum');
+if (!location) {
+  throw new Error('Oxia Planum location not found');
+}
+---
+
+<LocationLayout title="Oxia Planum - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Clay-rich terrain in Oxia Planum showing layered geological units
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL-Caltech/ESA</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Oxia Planum represents one of Mars' most promising locations for discovering evidence of ancient life. This 200-kilometer-wide, low-relief terrain at the southwest margin of Arabia Terra has been selected as the landing site for the European Space Agency's ExoMars "Rosalind Franklin" rover mission, scheduled for the late 2020s.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The region is characterized by extensive clay-bearing bedrock units formed during Mars' Noachian period, approximately 4 billion years ago. These iron-magnesium rich clays, primarily vermiculite-smectite types, were formed in wet conditions that may have been conducive to the emergence and preservation of life.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          What makes Oxia Planum particularly exciting is that these ancient clay deposits were protected by a dark overlying layer—possibly an ancient lava flow—that prevented the decay of potential biosignatures over billions of years. Erosion has since exposed these preserved materials, creating an ideal natural laboratory for astrobiology research.
+        </p>
+      </div>
+      <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-400">Formation Age:</span>
+            <span class="text-white">~4 billion years (Noachian)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Surface Area:</span>
+            <span class="text-white">200 km diameter</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Mission:</span>
+            <span class="text-white">ExoMars Rosalind Franklin</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Clay Coverage:</span>
+            <span class="text-white">Hundreds of square km</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Drilling Capability:</span>
+            <span class="text-white">Up to 2+ meters depth</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Mound Features:</span>
+            <span class="text-white">396 isolated landforms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Geological History -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Geological Features and Ancient Environments
+    </h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div>
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Clay Mineral Deposits
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          Oxia Planum's defining feature is its extensive deposits of iron-magnesium rich clay minerals, primarily vermiculite-smectite types. These clays formed when liquid water interacted with volcanic rocks during Mars' early Noachian period, creating ideal conditions for preserving organic compounds and potential biosignatures.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The clay deposits span hundreds of square kilometers and represent some of the most accessible ancient hydrated minerals on Mars. Their composition and distribution provide evidence of at least two distinct aqueous environments during the planet's early history.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">Protective Preservation</h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          A key advantage of Oxia Planum is that its ancient clay deposits were buried and protected by a dark overlying layer, possibly volcanic in origin. This protective cover prevented the degradation of organic compounds and biosignatures over billions of years.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Subsequent erosion has exposed these preserved materials while maintaining their scientific integrity, creating natural outcrops where the ExoMars rover can access pristine samples from Mars' most habitable period.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ExoMars Mission -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      ExoMars Mission and Scientific Goals
+    </h2>
+    <div class="space-y-8">
+      <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Rosalind Franklin Rover Capabilities
+        </h3>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          The ExoMars Rosalind Franklin rover, scheduled to land at Oxia Planum, will be equipped with unprecedented capabilities for searching for signs of past or present life on Mars. Its advanced drill system can penetrate up to 2 meters below the surface—deeper than any previous Mars rover.
+        </p>
+        <ul class="list-disc list-inside text-gray-300 space-y-2">
+          <li>Advanced drilling capability to access subsurface samples</li>
+          <li>Sophisticated life-detection instrumentation suite</li>
+          <li>High-resolution imaging and spectroscopy systems</li>
+          <li>Mobile laboratory for comprehensive sample analysis</li>
+        </ul>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+          <h3 class="text-xl font-semibold text-mars-orange mb-3">
+            Astrobiology Focus
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            Oxia Planum's selection was based on its exceptional potential for preserving biosignatures. The combination of clay minerals, protective burial, and subsequent exposure creates ideal conditions for finding evidence of ancient Martian life, if it ever existed.
+          </p>
+        </div>
+        <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700">
+          <h3 class="text-xl font-semibold text-mars-orange mb-3">
+            Global Significance
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            The clay minerals at Oxia Planum are representative of deposits found across a wide area of Mars, meaning discoveries here could provide insights into habitability conditions that existed across much of the planet during its early history.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Potential -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Settlement and Resource Potential
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          With a terraforming rating of 9/10, Oxia Planum represents one of Mars' most promising locations for future human settlement. Its abundant clay minerals, evidence of past habitability, and potential for deep subsurface access make it invaluable for both scientific research and resource utilization.
+        </p>
+
+        <h3 class="text-xl font-semibold text-mars-orange mb-4">
+          Strategic Advantages
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4 mb-6">
+          <div>
+            <h4 class="font-semibold text-white mb-2">Scientific Value</h4>
+            <ul class="text-gray-300 text-sm space-y-1">
+              <li>• Exceptional biosignature preservation potential</li>
+              <li>• Deep drilling access to pristine samples</li>
+              <li>• Representative of global clay deposits</li>
+              <li>• Multiple ancient aqueous environments</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white mb-2">Resource Availability</h4>
+            <ul class="text-gray-300 text-sm space-y-1">
+              <li>• Extensive clay deposits for construction</li>
+              <li>• Evidence of ancient water systems</li>
+              <li>• Diverse mineral resources</li>
+              <li>• Potential subsurface water/ice</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="bg-mars-900/30 rounded-lg p-6 border border-mars-600">
+        <h3 class="text-lg font-semibold text-mars-orange mb-4">
+          Settlement Challenges
+        </h3>
+        <ul class="text-gray-300 text-sm space-y-2">
+          <li>• Limited current surface water access</li>
+          <li>• Dust accumulation during storms</li>
+          <li>• High radiation exposure levels</li>
+          <li>• Temperature extremes (-75°C to -5°C)</li>
+          <li>• Need for subsurface resource extraction</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration and Research
+    </h2>
+    <div
+      class="bg-gradient-to-r from-mars-900/40 to-gray-800/40 rounded-lg p-8 border border-mars-600"
+    >
+      <h3 class="text-xl font-semibold text-mars-orange mb-4">
+        Astrobiology Research Center
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        If the ExoMars mission successfully demonstrates that Oxia Planum contains well-preserved biosignatures or organic compounds, the site could become the focal point for Mars astrobiology research. The location offers unparalleled opportunities to study the conditions that may have supported life on early Mars.
+      </p>
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The site's combination of scientific importance and resource potential makes it an ideal candidate for one of Mars' first permanent human research stations, where scientists could conduct detailed investigations impossible with robotic missions alone.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold text-white mb-2">Research Priorities</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Biosignature detection and analysis</li>
+            <li>• Ancient climate reconstruction</li>
+            <li>• Habitability assessment studies</li>
+            <li>• Clay mineral resource evaluation</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-2">Settlement Potential</h4>
+          <ul class="text-gray-300 text-sm space-y-1">
+            <li>• Astrobiology research station</li>
+            <li>• Sample return mission hub</li>
+            <li>• Resource utilization testing site</li>
+            <li>• Deep drilling technology center</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources -->
+  <section>
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <a
+          href="https://www.esa.int/Science_Exploration/Human_and_Robotic_Exploration/Exploration/ExoMars/Oxia_Planum_favoured_for_ExoMars_surface_mission"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            ESA - Oxia Planum Landing Site
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Official ESA overview of the ExoMars landing site selection
+          </p>
+        </a>
+
+        <a
+          href="https://www.liebertpub.com/doi/10.1089/ast.2019.2191"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Astrobiology Journal - Scientific Study
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Comprehensive geological context and scientific interpretation
+          </p>
+        </a>
+      </div>
+
+      <div class="space-y-4">
+        <a
+          href="https://www.tandfonline.com/doi/full/10.1080/17445647.2024.2302361"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            High-Resolution Geological Map
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Detailed geological mapping of the ExoMars landing site
+          </p>
+        </a>
+
+        <a
+          href="https://en.wikipedia.org/wiki/Oxia_Planum"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-mars-500 transition-colors group"
+        >
+          <h3
+            class="font-semibold text-white group-hover:text-mars-orange transition-colors mb-2"
+          >
+            Oxia Planum - Wikipedia
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Comprehensive overview of geology and mission planning
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

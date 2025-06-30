@@ -20,14 +20,23 @@ import marsLocations from '../data/marsLocations';
       <div
         class="bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-lg p-6 shadow-2xl"
       >
-        <h1 class="text-white font-display text-2xl font-bold mb-2">
+        <h1 class="text-white font-display text-2xl font-bold mb-3">
           Mars Population
         </h1>
-        <p class="text-gray-300 text-sm leading-relaxed mb-4">
-          Explore 27 key Mars locations with interactive markers. Hover over
-          markers to see detailed information about each site's terraforming
-          potential.
-        </p>
+
+        <!-- Current Date/Time and Population Counter -->
+        <div class="mb-4 space-y-2">
+          <div class="text-gray-300 text-sm" id="current-datetime">
+            <!-- Date/time will be populated by client-side script -->
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="text-gray-400 text-sm">Current Population:</span>
+            <span class="text-mars-orange font-display text-lg font-bold"
+              >0</span
+            >
+          </div>
+        </div>
+
         <div class="flex items-center space-x-4 text-xs text-gray-400">
           <div class="flex items-center space-x-1">
             <div class="w-2 h-2 bg-green-400 rounded-full"></div>
@@ -44,23 +53,31 @@ import marsLocations from '../data/marsLocations';
         </div>
       </div>
     </div>
-
-    <!-- Instructions -->
-    <div class="absolute bottom-8 right-8 z-40 max-w-sm">
-      <div
-        class="bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-lg p-4 shadow-2xl"
-      >
-        <h3 class="text-white font-display text-sm font-semibold mb-2">
-          How to Explore
-        </h3>
-        <ul class="text-gray-300 text-xs space-y-1">
-          <li>• Hover over markers to see location details</li>
-          <li>• Click markers to select and view full info</li>
-          <li>• Drag to rotate the globe</li>
-          <li>• Scroll to zoom in/out</li>
-          <li>• Use sidebar to explore categories</li>
-        </ul>
-      </div>
-    </div>
   </div>
 </BaseLayout>
+
+<script>
+  function updateDateTime() {
+    const now = new Date();
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      timeZone: 'UTC',
+      timeZoneName: 'short',
+    };
+
+    const dateTimeElement = document.getElementById('current-datetime');
+    if (dateTimeElement) {
+      dateTimeElement.textContent = now.toLocaleDateString('en-US', options);
+    }
+  }
+
+  // Update immediately and then every second
+  updateDateTime();
+  setInterval(updateDateTime, 1000);
+</script>

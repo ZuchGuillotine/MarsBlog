@@ -1,0 +1,580 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'ares-vallis');
+if (!location) {
+  throw new Error('Ares Vallis location not found');
+}
+---
+
+<LocationLayout title="Ares Vallis - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-red-900 to-orange-700 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Mars Pathfinder lander and Sojourner rover in the Ares Vallis flood plains
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Ares Vallis stands as a monument to Mars' catastrophically violent
+          water-dominated past, serving as the historic landing site for NASA's
+          groundbreaking Mars Pathfinder mission and humanity's first successful
+          Mars rover, Sojourner. This massive ancient flood channel, named after
+          Ares, the Greek god of war, stretches over 1,757 kilometers across the
+          Martian landscape, carved by some of the largest floods ever recorded
+          in the solar system.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The flood plains of Ares Vallis tell the story of catastrophic water
+          release events that occurred billions of years ago when Mars had a
+          thicker atmosphere and warmer climate. These massive floods transported
+          rocks from diverse regions across Mars, creating a natural rock
+          collection that provided scientists with their first detailed analysis
+          of Martian geology from the surface.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          The successful Pathfinder mission in 1997 not only marked humanity's
+          return to the Martian surface after the Viking missions but also
+          demonstrated innovative landing technologies and proved that relatively
+          low-cost missions could achieve groundbreaking scientific discoveries,
+          paving the way for all subsequent Mars exploration.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Channel Length:</span>
+            <span class="text-white block">1,757 km</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Formation:</span>
+            <span class="text-white block">Catastrophic flooding</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Historic Mission:</span>
+            <span class="text-white block">Mars Pathfinder (1997)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">First Rover:</span>
+            <span class="text-white block">Sojourner (12 weeks)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Key Discovery:</span>
+            <span class="text-white block">Andesitic rocks and water evidence</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pathfinder Mission Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Mars Pathfinder: Pioneering Modern Mars Exploration
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Launched on December 4, 1996, Mars Pathfinder revolutionized Mars
+        exploration by demonstrating that innovative, cost-effective missions
+        could achieve remarkable scientific results. The mission landed in Ares
+        Vallis on July 4, 1997, using a pioneering airbag landing system that
+        allowed the spacecraft to bounce to a safe landing on the rocky terrain.
+      </p>
+      
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Mission Innovations</h4>
+          <ul class="text-gray-300 text-sm space-y-2">
+            <li>• First airbag landing system on Mars</li>
+            <li>• Cost-effective "faster, better, cheaper" approach</li>
+            <li>• Real-time internet coverage of landing</li>
+            <li>• Deployed first successful Mars rover</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Scientific Objectives</h4>
+          <ul class="text-gray-300 text-sm space-y-2">
+            <li>• Characterize Martian rocks and soil</li>
+            <li>• Study atmospheric conditions</li>
+            <li>• Test mobile rover technology</li>
+            <li>• Analyze flood deposit geology</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/30 p-6 rounded-lg border border-blue-700/50">
+        <h4 class="text-lg font-semibold text-white mb-3">Sojourner Rover Achievements</h4>
+        <p class="text-gray-300 text-sm mb-4">
+          The 23-pound Sojourner rover, originally designed for a 7-day mission,
+          operated successfully for 12 weeks, far exceeding expectations. This
+          pioneering rover analyzed 16 different rocks using its Alpha Proton
+          X-ray Spectrometer (APXS) and took over 550 images of the Martian
+          landscape.
+        </p>
+        <p class="text-gray-300 text-sm">
+          Sojourner's success proved that robotic exploration could provide
+          detailed scientific analysis while being mobile enough to investigate
+          multiple targets, establishing the foundation for all future Mars
+          rover missions including Spirit, Opportunity, Curiosity, and
+          Perseverance.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flood Channel Geology Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Catastrophic Flood Channel: Ancient Water's Violent Past
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Formation by Megafloods
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Ares Vallis was carved by catastrophic floods that rivaled or exceeded
+          the largest floods known on Earth. These massive water releases
+          occurred when underground aquifers burst forth, creating flood
+          volumes that could have filled the Mediterranean Sea in a matter
+          of days.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The floods originated from chaotic terrain regions far to the south,
+          where massive groundwater release events carved the distinctive
+          channels that flow through Xanthe Terra highlands before ending
+          in the Chryse Planitia delta region.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-orange-900/50 to-orange-800/30 p-6 rounded-lg border border-orange-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Rock Transport and Deposition
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The catastrophic floods transported rocks from diverse geological
+          regions across hundreds of kilometers, creating a natural
+          "rock collection" in the Ares Vallis flood plains. This transport
+          process deposited rocks with different compositions and histories
+          in a single location.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The flood deposits include everything from ancient crater materials
+          to volcanic rocks, providing a unique opportunity to study Mars'
+          geological diversity without traveling vast distances across the
+          planet's surface.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Scale and Timing of Ancient Floods
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        The floods that carved Ares Vallis occurred during Mars' early history
+        when the planet had a thicker atmosphere and warmer climate conditions.
+        These events represent some of the most dramatic water-related geological
+        processes ever documented in the solar system, with flow rates that
+        may have exceeded 10 million cubic meters per second.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        The timing of these floods corresponds to a period when Mars was
+        transitioning from its early, more Earth-like conditions to the cold,
+        arid planet we observe today, making Ares Vallis a crucial record of
+        this dramatic climate change.
+      </p>
+    </div>
+  </section>
+
+  <!-- Rock Analysis and Discoveries Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Groundbreaking Rock Analysis and Water Evidence
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-green-900/50 to-green-800/30 p-6 rounded-lg border border-green-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          "Barnacle Bill" and Andesitic Composition
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Sojourner's analysis of "Barnacle Bill," the first rock studied on
+          Mars, revealed an andesitic composition with higher silica content
+          than expected. This discovery was significant because andesites
+          typically form through complex geological processes involving
+          crust-mantle interactions.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The presence of andesitic rocks suggested that early Mars had more
+          complex geological processes than previously thought, including
+          potentially active plate tectonics or extensive crustal recycling
+          processes that concentrated silica-rich materials.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-purple-900/50 to-purple-800/30 p-6 rounded-lg border border-purple-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Water-Worked Conglomerates
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The most exciting discoveries were rounded pebbles and conglomerate
+          rocks that clearly showed evidence of water transport and deposition.
+          These features indicated that liquid water had flowed through the
+          region, rounding and cementing different rock types together.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The presence of these water-worked features provided direct evidence
+          for Mars' wetter past and supported theories about catastrophic
+          flooding events. The conglomerates showed that water persisted
+          long enough to perform significant geological work.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Diverse Rock Collection Analysis
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        Sojourner analyzed 16 different rocks during its extended mission,
+        revealing a remarkable diversity of compositions that told the story
+        of Mars' geological evolution. The rocks ranged from basaltic volcanic
+        materials to more evolved silica-rich compositions, indicating complex
+        magmatic processes.
+      </p>
+      <div class="grid md:grid-cols-3 gap-4 mt-4">
+        <div class="text-center">
+          <h5 class="text-white font-semibold mb-2">Volcanic Rocks</h5>
+          <p class="text-gray-300 text-sm">Basaltic to andesitic compositions indicating diverse magmatic processes</p>
+        </div>
+        <div class="text-center">
+          <h5 class="text-white font-semibold mb-2">Sedimentary Features</h5>
+          <p class="text-gray-300 text-sm">Rounded pebbles and conglomerate rocks from water transport</p>
+        </div>
+        <div class="text-center">
+          <h5 class="text-white font-semibold mb-2">Impact Materials</h5>
+          <p class="text-gray-300 text-sm">Rocks likely derived from ancient impact crater formations</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modern Understanding Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Modern Understanding and Recent Insights
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-red-900/50 to-red-800/30 p-6 rounded-lg border border-red-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Enhanced Orbital Perspectives (2024)
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Recent high-resolution imagery and analysis continue to reveal new
+          details about the ancient flood processes that shaped Ares Vallis.
+          ESA's Mars Express mission has provided detailed fly-around
+          perspectives showing the dramatic scale of the ancient flooding.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The 2024 imagery reveals that the flood channels extend even further
+          than originally mapped, with evidence for multiple flood episodes
+          that occurred over extended periods, suggesting that water activity
+          in this region was more sustained than initially thought.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-teal-900/50 to-teal-800/30 p-6 rounded-lg border border-teal-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Comparative Planetary Geology
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Studies of Ares Vallis have become crucial for understanding
+          catastrophic flooding processes throughout the solar system. The
+          channel's features are now used as analogs for similar processes
+          on other planets and moons where water or other fluids may have
+          carved surface features.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The geological processes documented at Ares Vallis help scientists
+          understand how catastrophic fluid release events can rapidly reshape
+          planetary surfaces, providing insights relevant to astrobiology
+          and planetary evolution studies.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Climate Evolution Implications
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        Modern analysis of Pathfinder data, combined with results from
+        subsequent missions, has refined our understanding of Mars' climate
+        evolution. The evidence from Ares Vallis supports models suggesting
+        that early Mars experienced episodic warm periods when large volumes
+        of liquid water could flow across the surface.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        The geological record preserved in Ares Vallis indicates that these
+        warm, wet periods may have been relatively brief in geological terms
+        but intense enough to carve massive channel systems and transport
+        enormous volumes of rock and sediment across the planet.
+      </p>
+    </div>
+  </section>
+
+  <!-- Terraforming Potential Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-orange-900/30 to-orange-800/20 p-8 rounded-lg border border-orange-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">6</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Moderate Terraforming Potential
+          </h3>
+          <p class="text-orange-300">
+            Diverse geological resources and historical significance
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Diverse rock samples from across Mars</li>
+            <li>• Proven ancient water flow evidence</li>
+            <li>• Relatively flat terrain for construction</li>
+            <li>• Extensive geological diversity</li>
+            <li>• Historical significance for Mars exploration</li>
+            <li>• Well-characterized landing site</li>
+            <li>• Access to flood channel deposits</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Limited current water resources</li>
+            <li>• Ancient age of water activity</li>
+            <li>• Dust accumulation issues</li>
+            <li>• Radiation exposure on open plains</li>
+            <li>• Distance from polar ice caps</li>
+            <li>• Moderate elevation with temperature extremes</li>
+            <li>• Limited subsurface resource data</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scientific Legacy Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Scientific Legacy and Impact
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Foundation of Modern Mars Exploration
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          The Mars Pathfinder mission at Ares Vallis established the template
+          for all subsequent Mars exploration. Its innovative landing system,
+          cost-effective approach, and successful rover deployment proved that
+          ambitious scientific objectives could be achieved with relatively
+          modest budgets, leading to the golden age of Mars exploration.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Water Activity Evidence
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          Ares Vallis provided some of the first definitive surface evidence
+          for ancient water activity on Mars through analysis of rounded
+          pebbles and conglomerate rocks. This evidence helped establish the
+          scientific foundation for understanding Mars as a planet that once
+          had conditions potentially suitable for life.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Geological Diversity Insights
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          The diverse collection of rocks deposited by ancient floods in Ares
+          Vallis provided scientists with insights into Mars' geological
+          complexity that would have required multiple landing sites to obtain
+          otherwise. This "natural rock collection" revealed the planet's
+          varied geological processes and compositional evolution.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Research Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Research Opportunities
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        While Ares Vallis has been extensively studied since the Pathfinder
+        mission, modern analytical techniques and advanced rover capabilities
+        could reveal new insights about this historically significant location.
+        The channel system continues to be an important target for understanding
+        Mars' hydrological history and climate evolution.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Advanced Analysis Opportunities
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• High-resolution mineralogical mapping</li>
+            <li>• Subsurface water/ice resource assessment</li>
+            <li>• Advanced organic compound detection</li>
+            <li>• Detailed flood chronology studies</li>
+            <li>• Comparative analysis with other flood channels</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Historical Preservation Value
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Pathfinder landing site preservation</li>
+            <li>• Educational and inspirational significance</li>
+            <li>• Comparison with modern rover capabilities</li>
+            <li>• Benchmark location for technological advancement</li>
+            <li>• Cultural heritage site for space exploration</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://science.nasa.gov/mission/mars-pathfinder/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mars Pathfinder Mission Overview
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://mars.nasa.gov/mars-exploration/missions/pathfinder/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mars Exploration: Pathfinder
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.space.com/17745-mars-pathfinder-sojourner-rover.html"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Sojourner: First Mars Rover
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.esa.int/ESA_Multimedia/Videos/2024/11/Fly_around_Ares_Vallis_on_Mars"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ESA: Ares Vallis Fly-Around (2024)
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://themis.asu.edu/feature/20"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              THEMIS: Geological Footprints
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://en.wikipedia.org/wiki/Ares_Vallis"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ares Vallis Overview
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>
