@@ -1,0 +1,491 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'eberswalde-crater');
+if (!location) {
+  throw new Error('Eberswalde Crater location not found');
+}
+---
+
+<LocationLayout title="Eberswalde Crater - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-blue-900 to-teal-800 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          The distinctive inverted channels of Eberswalde Crater delta system
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL/University of Arizona</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Eberswalde Crater stands as one of Mars' most compelling examples of 
+          ancient water activity, hosting the most well-preserved river delta 
+          system on the planet. This 65-kilometer-diameter crater in Margaritifer 
+          Terra contains what scientists call a "textbook" inverted-channel delta 
+          that provides unambiguous evidence of sustained water flow and lake 
+          environments on early Mars.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The crater's delta system, measuring 13 by 11 kilometers with six distinct 
+          lobes, represents the first clear "smoking gun" evidence that Mars 
+          experienced persistent liquid water flow over extended periods. The 
+          preserved distributary network, complete with meander cutoffs and 
+          inverted channels, tells the story of an ancient river system that 
+          flowed into a stable lake environment.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          What makes Eberswalde truly exceptional is its preservation state - 
+          erosion has inverted the original channels, creating ridges that allow 
+          scientists to study the three-dimensional structure of this ancient 
+          water system in unprecedented detail, making it a cornerstone site 
+          for understanding Mars' hydrological past.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Crater Diameter:</span>
+            <span class="text-white block">65.3 km</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Delta Size:</span>
+            <span class="text-white block">115 km² (13×11 km)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Formation Period:</span>
+            <span class="text-white block">2.0-3.5 billion years ago</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Delta Thickness:</span>
+            <span class="text-white block">~100 meters</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Key Feature:</span>
+            <span class="text-white block">Best-preserved Mars delta</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Delta System Formation Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      The Delta System: Ancient River Meets Lake
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The Eberswalde delta formed when an ancient river system flowed into 
+        a stable lake environment within the crater. As the river's velocity 
+        decreased upon entering the standing water, it deposited its sediment 
+        load, creating the distinctive fan-shaped delta with six separate lobes 
+        representing different phases of river activity.
+      </p>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Delta Characteristics</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Six distinct depositional lobes</li>
+            <li>• Preserved distributary channel network</li>
+            <li>• Meander cutoffs and oxbow features</li>
+            <li>• Inverted relief preservation</li>
+            <li>• Clay-rich sedimentary deposits</li>
+            <li>• Evidence of varying water levels</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Lake Environment</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Paleolake level: -1400 to -1350 m</li>
+            <li>• Surface area: 410-810 km²</li>
+            <li>• Neutral pH conditions</li>
+            <li>• Habitable environment indicators</li>
+            <li>• Long-term stability evidence</li>
+            <li>• Connection to regional water system</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Inverted Channel System Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Inverted Channels: Erosion Reveals Ancient Waterways
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-teal-900/50 to-teal-800/30 p-6 rounded-lg border border-teal-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Formation Process
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Channel inversion occurred when sediments deposited in the river 
+          channels became more resistant to erosion than the surrounding 
+          terrain. As the softer materials eroded away over millions of years, 
+          the former channel floors were left standing as ridges, creating 
+          an inverted topographic relief.
+        </p>
+        <p class="text-gray-300 text-sm">
+          This process preserved the three-dimensional structure of the ancient 
+          river system, allowing detailed analysis of flow patterns, channel 
+          migration, and depositional environments.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Scientific Value
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The inverted channels provide the first unambiguous evidence that 
+          some Martian sedimentary rocks were deposited in a liquid environment. 
+          The preserved morphology allows scientists to reconstruct ancient 
+          flow velocities, discharge rates, and seasonal variations.
+        </p>
+        <p class="text-gray-300 text-sm">
+          Channel measurements reveal straight and meandering paleochannels 
+          with evidence of cut-and-fill sequences typical of active river systems.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Paleohydrology Reconstruction
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        Detailed analysis of the channel geometry and delta structure has allowed 
+        scientists to reconstruct the ancient hydrology of the Eberswalde system. 
+        The river that formed this delta had channel-forming discharge rates of 
+        approximately 200-400 cubic meters per second, comparable to modern 
+        Earth rivers.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        The system shows evidence of both event-driven flows (possibly from 
+        storms or seasonal melting) and sustained base flow, indicating a 
+        complex hydrological cycle that operated over timescales of thousands 
+        to millions of years.
+      </p>
+    </div>
+  </section>
+
+  <!-- Clay Minerals and Habitability Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Clay Minerals and Ancient Habitability
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Mars Reconnaissance Orbiter has identified iron and magnesium smectite 
+          clays within the Eberswalde delta deposits - minerals that require 
+          water to form and are excellent preservers of organic materials. These 
+          clays likely formed in the wet subsurface conditions of early Mars, 
+          earlier than 3.5 billion years ago.
+        </p>
+
+        <div class="space-y-4 mb-6">
+          <div class="border-l-4 border-green-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Biopreservation Potential
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Clay minerals are exceptional at preserving organic compounds and 
+              potential biosignatures. The clay-rich sediments in Eberswalde 
+              represent some of the best targets for detecting evidence of 
+              ancient microbial life on Mars.
+            </p>
+          </div>
+          <div class="border-l-4 border-blue-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Neutral pH Environment
+            </h4>
+            <p class="text-gray-300 text-sm">
+              The presence of these specific clay minerals indicates the ancient 
+              lake environment had neutral pH conditions suitable for life, 
+              contrasting with the acidic conditions found at many other Martian 
+              locations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Mineral Composition
+        </h3>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Iron/Mg Smectites:</span>
+            <span class="text-white text-sm">Primary</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Formation Age:</span>
+            <span class="text-white text-sm">>3.5 Ga</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">pH Conditions:</span>
+            <span class="text-white text-sm">Neutral</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Preservation:</span>
+            <span class="text-white text-sm">Excellent</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission History Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Mission Selection History
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Eberswalde Crater's exceptional scientific value has made it a top 
+        candidate for multiple Mars exploration missions. Its well-preserved 
+        delta system and potential for biosignature preservation have repeatedly 
+        placed it on mission shortlists, though it has not yet been selected 
+        as a primary landing site.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="border-l-4 border-yellow-500 pl-4">
+          <h4 class="font-semibold text-white mb-2">Mars Science Laboratory</h4>
+          <p class="text-gray-300 text-sm">
+            Eberswalde was a finalist for Curiosity's landing site due to its 
+            preserved delta and potential for studying ancient habitability. 
+            Gale Crater was ultimately selected for its geological diversity.
+          </p>
+        </div>
+        <div class="border-l-4 border-red-500 pl-4">
+          <h4 class="font-semibold text-white mb-2">Mars 2020 Consideration</h4>
+          <p class="text-gray-300 text-sm">
+            The site was again considered for Perseverance due to its exceptional 
+            biosignature preservation potential, though Jezero Crater was chosen 
+            for its similar but more accessible delta system.
+          </p>
+        </div>
+        <div class="border-l-4 border-purple-500 pl-4">
+          <h4 class="font-semibold text-white mb-2">Future Missions</h4>
+          <p class="text-gray-300 text-sm">
+            Eberswalde remains a high-priority target for future sample return 
+            missions due to its unparalleled preservation of ancient aqueous 
+            environments and delta sediments.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Assessment Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-green-900/30 to-green-800/20 p-8 rounded-lg border border-green-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">7</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            High Terraforming Potential
+          </h3>
+          <p class="text-green-300">
+            Proven ancient habitability with excellent resource indicators
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Proven long-term water stability</li>
+            <li>• Clay-rich soils for agriculture</li>
+            <li>• Neutral pH environment history</li>
+            <li>• Protected crater environment</li>
+            <li>• Diverse geological resources</li>
+            <li>• Evidence of stable climate conditions</li>
+            <li>• Natural basin for water collection</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Limited current water access</li>
+            <li>• Dust accumulation in crater</li>
+            <li>• Radiation exposure concerns</li>
+            <li>• Temperature fluctuations</li>
+            <li>• Access to surrounding terrain</li>
+            <li>• Atmospheric pressure variations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scientific Significance Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Scientific and Astrobiological Significance
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Astrobiology Cornerstone
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          Eberswalde Crater represents one of the most compelling locations for 
+          the search for ancient life on Mars. The combination of preserved 
+          organic-friendly clay minerals, evidence of long-term water stability, 
+          and neutral pH conditions creates an ideal target for biosignature 
+          detection. The delta's layered sediments act as a natural archive 
+          of environmental conditions during Mars' potentially habitable period.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Planetary Hydrological Archive
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          The intact source-to-sink fluvial system at Eberswalde provides 
+          unparalleled insights into Mars' ancient water cycle. The preserved 
+          catchment-to-delta system allows scientists to study the complete 
+          hydrological process, from watershed erosion to sediment deposition, 
+          offering crucial data for understanding how water shaped the Martian 
+          landscape billions of years ago.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Opportunities
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Despite not being selected for recent missions, Eberswalde Crater 
+        remains one of Mars' highest-priority exploration targets. Its exceptional 
+        preservation of ancient aqueous environments makes it ideal for advanced 
+        sample return missions and detailed astrobiological investigations.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Priority Investigations
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Detailed organic compound analysis</li>
+            <li>• Clay mineral biosignature search</li>
+            <li>• Delta stratigraphy drilling</li>
+            <li>• Paleoclimate reconstruction</li>
+            <li>• Channel system chronology</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Sample Return Potential
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Clay-rich delta sediments</li>
+            <li>• Inverted channel deposits</li>
+            <li>• Organic-preserved samples</li>
+            <li>• Varied depositional environments</li>
+            <li>• Stratigraphic sequence samples</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://mars.nasa.gov/resources/7683/delta-structure-in-eberswalde-crater/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              NASA: Delta Structure in Eberswalde Crater
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.jpl.nasa.gov/images/pia04293-eberswalde-delta-in-high-resolution/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              JPL: High-Resolution Delta Images
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Papers</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.esa.int/Science_Exploration/Space_Science/Mars_Express/Rare_martian_lake_delta_spotted_by_Mars_Express"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ESA: Rare Martian Lake Delta Discovery
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2022JE007545"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Clay-Rich Sediment Biopreservation Study
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

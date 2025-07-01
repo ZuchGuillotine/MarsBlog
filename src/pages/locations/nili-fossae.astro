@@ -1,0 +1,571 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'nili-fossae');
+if (!location) {
+  throw new Error('Nili Fossae location not found');
+}
+---
+
+<LocationLayout title="Nili Fossae - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-purple-900 to-indigo-800 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Fractured terrain revealing carbonate and olivine bedrock from early Mars
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL/CRISM</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Nili Fossae represents one of Mars' most scientifically intriguing 
+          regions, where an extensive 500-mile fracture system has exposed 
+          some of the planet's most ancient and pristine bedrock. This remarkable 
+          location preserves carbonate and olivine minerals that tell the story 
+          of early Mars' less acidic, potentially more habitable environment.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The region has gained extraordinary attention as a potential source 
+          of Mars' mysterious seasonal methane emissions, with observations 
+          showing significant atmospheric methane enhancements over the area. 
+          This combination of ancient minerals, fracture-exposed geology, and 
+          possible ongoing geological activity makes Nili Fossae a cornerstone 
+          location for understanding both ancient and potentially current 
+          Martian processes.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Recent discoveries of serpentine minerals alongside olivine and 
+          carbonates suggest that serpentinization processes - which on Earth 
+          can support life without sunlight - may have been active in this 
+          region, making it one of the most promising locations for 
+          astrobiological investigations on Mars.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Fracture Length:</span>
+            <span class="text-white block">~800 km (500 miles)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Formation:</span>
+            <span class="text-white block">Isidis Basin impact-related</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Key Minerals:</span>
+            <span class="text-white block">Olivine, carbonate, serpentine</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Depth:</span>
+            <span class="text-white block">Up to 500 m (1,600 ft)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Special Feature:</span>
+            <span class="text-white block">Methane source region</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Geological Formation Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Ancient Fracture System: Window to Early Mars
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Nili Fossae formed as a complex of grabens and fractures created by 
+        the massive Isidis Basin impact event over 3.9 billion years ago. The 
+        subsequent sagging of the crust under the weight of lava flows filling 
+        the impact basin created the distinctive concentric fracture pattern 
+        that follows the outline of Isidis Planitia.
+      </p>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Fracture Characteristics</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Concentric graben system</li>
+            <li>• Depths up to 500 meters</li>
+            <li>• Post-impact crustal adjustment</li>
+            <li>• Exposed subsurface layers</li>
+            <li>• Linear arrangement patterns</li>
+            <li>• Ancient terrain preservation</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Exposed Geology</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Noachian-age bedrock</li>
+            <li>• Ultramafic rock compositions</li>
+            <li>• Primary igneous minerals</li>
+            <li>• Hydrothermal alteration products</li>
+            <li>• Pristine olivine exposures</li>
+            <li>• Carbonate precipitates</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Olivine and Carbonate Discovery Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Carbonate-Olivine Bedrock: Evidence of Less Acidic Mars
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-green-900/50 to-green-800/30 p-6 rounded-lg border border-green-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Olivine Discoveries
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Nili Fossae contains a 30,000-square-kilometer area rich in olivine, 
+          with surface exposures showing 30% olivine content ranging from 
+          Fo30 to Fo70 composition. The minimum grain size of 500 microns 
+          suggests these are fresh, unweathered exposures of primary igneous rock.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The preservation of olivine - a mineral that weathers rapidly in 
+          acidic conditions - indicates that this region experienced minimal 
+          exposure to the acidic environments that characterized much of 
+          Mars' later history.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Carbonate Formation
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The first successful identification of carbonate minerals on Mars 
+          was made here in 2008, with spectral modeling identifying magnesite 
+          deposits spatially associated with olivine outcrops. These carbonates 
+          formed in circum-neutral pH conditions, contrasting with the acidic 
+          environments found elsewhere.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The carbonate formation represents significant CO₂ sequestration, 
+          potentially locking away 0.03-0.06 atmospheres worth of ancient 
+          Martian CO₂ in solid mineral form.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Environmental Implications
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        The presence of carbonates alongside olivine provides crucial evidence 
+        that early Mars had regions with neutral to slightly alkaline conditions, 
+        very different from the acidic sulfate-rich environments that dominated 
+        later periods. This suggests that ancient Mars had diverse chemical 
+        environments, some of which could have been highly conducive to life.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        Research suggests these minerals may have formed from pyroclastic 
+        density currents in cataclysmic explosive volcanic eruptions, 
+        representing a style of volcanism more common in Mars' early history 
+        and potentially creating unique habitable microenvironments.
+      </p>
+    </div>
+  </section>
+
+  <!-- Methane Mystery Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      The Methane Mystery: Active Geology or Biology?
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          One of Mars' most tantalizing mysteries centers on Nili Fossae, 
+          where telescopic observations have detected significant seasonal 
+          enhancements of atmospheric methane. These observations, first 
+          published in 2009, suggest that methane may be actively produced 
+          in this region, though its source remains mysterious and could be 
+          geological, biological, or both.
+        </p>
+
+        <div class="space-y-4 mb-6">
+          <div class="border-l-4 border-orange-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Geological Sources
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Serpentinization of olivine-rich rocks could produce methane 
+              through water-rock interactions. The fractured terrain provides 
+              pathways for subsurface processes to release gases to the atmosphere.
+            </p>
+          </div>
+          <div class="border-l-4 border-green-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Biological Possibilities
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Methane can be produced by microorganisms, particularly 
+              methanogens that thrive in subsurface environments. The 
+              combination of water, energy sources, and protected habitats 
+              could theoretically support such processes.
+            </p>
+          </div>
+          <div class="border-l-4 border-purple-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Microseepage Model
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Slow release of methane through fractures and faults could 
+              occur through processes involving serpentinized rocks, creating 
+              hydrogen and methane at relatively low pressures.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Methane Observations
+        </h3>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">First Detection:</span>
+            <span class="text-white text-sm">2009</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Enhancement:</span>
+            <span class="text-white text-sm">Significant</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Seasonality:</span>
+            <span class="text-white text-sm">Variable</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Source Certainty:</span>
+            <span class="text-white text-sm">Unknown</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Serpentinization Process Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Serpentinization: Ancient Energy for Life
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-teal-900/50 to-teal-800/30 p-6 rounded-lg border border-teal-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Process Discovery
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          CRISM has detected serpentine minerals at Nili Fossae occurring 
+          alongside olivine and carbonate in the heavily fractured unit. 
+          This association is consistent with serpentinization processes, 
+          where water reacts with olivine-rich rocks to produce serpentine 
+          minerals, hydrogen, and potentially methane.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The detection represents evidence that serpentinization was once 
+          an active process, indicating that water and energy sources were 
+          available during Mars' early history.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-indigo-900/50 to-indigo-800/30 p-6 rounded-lg border border-indigo-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Astrobiological Significance
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Serpentinization provides a means for prebiotic chemistry and 
+          potentially life support during a time period when life was first 
+          emerging on Earth. This process can create habitable environments 
+          independent of surface conditions and photosynthesis.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The mineral assemblages at Nili Fossae, while not directly analogous 
+          to Earth's Lost City Hydrothermal Field, indicate related geochemical 
+          processes were active in Mars' subsurface.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Hydrothermal Environment Evidence
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        Research suggests that carbonate-bearing rocks in Nili Fossae are 
+        composed of hydrothermally altered ultramafic rocks. This hydrothermal 
+        activity would have provided sufficient energy for biological activity, 
+        creating environments where evidence of living organisms could have 
+        been preserved in the rock record.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        The combination of serpentinization processes, carbonate formation, 
+        and potential ongoing methane production makes Nili Fossae one of 
+        the most compelling locations for investigating both ancient and 
+        potentially current habitability on Mars.
+      </p>
+    </div>
+  </section>
+
+  <!-- Mission History Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Mission Considerations and Future Targets
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Nili Fossae's exceptional scientific value has placed it on the 
+        consideration list for multiple Mars missions. While landing site 
+        selection often favors locations with easier access and fewer hazards, 
+        the unique combination of ancient minerals, potential ongoing activity, 
+        and astrobiological significance continues to make this region a 
+        high-priority target.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="border-l-4 border-red-500 pl-4">
+          <h4 class="font-semibold text-white mb-2">Mars Science Laboratory</h4>
+          <p class="text-gray-300 text-sm">
+            Nili Fossae was on the initial list of potential landing sites 
+            for Curiosity but was removed before the final selection due to 
+            landing hazards associated with the fractured terrain.
+          </p>
+        </div>
+        <div class="border-l-4 border-blue-500 pl-4">
+          <h4 class="font-semibold text-white mb-2">Mars 2020 Evaluation</h4>
+          <p class="text-gray-300 text-sm">
+            The region was selected as a potential landing site for Perseverance 
+            in September 2015, recognizing its astrobiology potential, though 
+            Jezero Crater was ultimately chosen.
+          </p>
+        </div>
+        <div class="border-l-4 border-purple-500 pl-4">
+          <h4 class="font-semibold text-white mb-2">Future Mission Priority</h4>
+          <p class="text-gray-300 text-sm">
+            Advanced landing technologies and the region's unique scientific 
+            value make it a prime candidate for future sample return and 
+            life detection missions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Assessment Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-green-900/30 to-green-800/20 p-8 rounded-lg border border-green-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">8</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            High Terraforming Potential
+          </h3>
+          <p class="text-green-300">
+            Unique mineral resources and potential ongoing geological activity
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Less acidic environment history</li>
+            <li>• Rich carbonate and olivine resources</li>
+            <li>• Potential ongoing geological activity</li>
+            <li>• Evidence of past hydrothermal systems</li>
+            <li>• Diverse mineral composition</li>
+            <li>• Possible subsurface energy sources</li>
+            <li>• Natural CO₂ sequestration evidence</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Fractured, hazardous terrain</li>
+            <li>• Limited current water access</li>
+            <li>• Potential seismic instability</li>
+            <li>• Dust accumulation in fractures</li>
+            <li>• Radiation exposure concerns</li>
+            <li>• Access and mobility difficulties</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scientific Significance Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Scientific and Astrobiological Significance
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Window to Early Mars Habitability
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          Nili Fossae provides unique access to Mars' most ancient preserved 
+          environments, offering insights into the planet's early, potentially 
+          habitable conditions. The combination of neutral pH indicators, 
+          hydrothermal alteration, and serpentinization evidence suggests 
+          this region hosted some of the most favorable conditions for life 
+          in Mars' history.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Active Mars Processes
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          The potential ongoing methane production at Nili Fossae represents 
+          one of the few indicators of current geological or biological activity 
+          on Mars. Whether the source is geological serpentinization or 
+          biological processes, the region offers a unique opportunity to 
+          study active Martian processes and their relationship to habitability.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Opportunities
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Despite landing challenges, Nili Fossae remains one of Mars' most 
+        scientifically compelling exploration targets. Advanced landing 
+        technologies and the region's unique combination of ancient minerals 
+        and potential ongoing activity make it a priority for future missions 
+        focused on astrobiology and understanding Mars' evolution.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Research Priorities
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Methane source identification</li>
+            <li>• Serpentinization process study</li>
+            <li>• Carbonate formation analysis</li>
+            <li>• Subsurface habitability assessment</li>
+            <li>• Ancient hydrothermal system mapping</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Technology Requirements
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Precision landing systems</li>
+            <li>• Gas detection instruments</li>
+            <li>• Deep drilling capabilities</li>
+            <li>• Advanced mobility platforms</li>
+            <li>• Real-time atmospheric monitoring</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA/ESA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://mars.nasa.gov/resources/24983/nili-fossae/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              NASA Mars Exploration: Nili Fossae
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.esa.int/Science_Exploration/Space_Science/Mars_Express/Mysteries_in_Nili_Fossae"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ESA: Mysteries in Nili Fossae
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Papers</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.scientificamerican.com/article/stressed-out-mars-express-reveals-methane-over-tortured-martian-terrain/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Scientific American: Methane Detection
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2020JE006698"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Carbonate-Phyllosilicate Study (2021)
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

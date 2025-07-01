@@ -1,0 +1,437 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'athabasca-valles');
+if (!location) {
+  throw new Error('Athabasca Valles location not found');
+}
+---
+
+<LocationLayout title="Athabasca Valles - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-orange-900 to-red-800 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Thermal emission data revealing the lava-draped channels of Athabasca Valles
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL/ASU</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Athabasca Valles represents one of Mars' most geologically young and 
+          extraordinary features - a flood-lava channel system that may have formed 
+          as recently as 20 million years ago. This remarkable outflow channel, 
+          stretching over 300 kilometers southeast of Elysium Mons, provides unique 
+          insights into Mars' recent geological activity and potential water-lava 
+          interactions.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          What makes Athabasca Valles truly exceptional is its dual nature: originally 
+          carved by catastrophic water floods bursting from the Cerberus Fossae 
+          fractures, the channels were later completely draped by a massive lava flow. 
+          This lava unit is as large as Oregon and represents one of the largest flood 
+          lava provinces ever identified on Mars.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Recent 2024 research has revealed new evidence suggesting either more massive 
+          flooding events than previously thought, or climate conditions that allowed 
+          equatorial ice preservation - findings that revolutionize our understanding 
+          of Mars' recent geological and climate history.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Length:</span>
+            <span class="text-white block">~300 km</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Formation Age:</span>
+            <span class="text-white block">~20 million years ago</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Origin:</span>
+            <span class="text-white block">Cerberus Fossae fractures</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Lava Unit Size:</span>
+            <span class="text-white block">~250,000 km² (Oregon-sized)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Key Feature:</span>
+            <span class="text-white block">Youngest outflow channel on Mars</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Geological Formation Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Dual Formation Process: Water Then Lava
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Athabasca Valles tells a complex geological story involving two distinct 
+        catastrophic events separated by potentially millions of years. The channel 
+        system records both the most recent major flood event on Mars and one of 
+        its youngest volcanic eruptions.
+      </p>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Phase 1: Catastrophic Flooding</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Water burst from Cerberus Fossae fractures</li>
+            <li>• Groundwater trapped under ice layer released</li>
+            <li>• Flow rates: 10,000-10 million m³/second</li>
+            <li>• Carved distinctive channel morphology</li>
+            <li>• Evidence of turbulent water flow patterns</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Phase 2: Lava Inundation</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Massive lava flow from same fissure system</li>
+            <li>• Completely draped existing channels</li>
+            <li>• Created Oregon-sized lava province</li>
+            <li>• Preserved underlying flood morphology</li>
+            <li>• Evidence of lava-ice interactions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Discoveries Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Groundbreaking 2024 Research Findings
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Climate vs. Flood Volume Paradox
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          New 2024 USGS research reveals that floods with previously estimated 
+          volumes cannot reach the distal rootless cones or Lethe Vallis. This 
+          finding suggests either Mars had a climate allowing equatorial ice 
+          preservation, or flood events were orders of magnitude larger than 
+          previously calculated.
+        </p>
+        <p class="text-gray-300 text-sm">
+          This discovery challenges our understanding of both Mars' recent climate 
+          history and the scale of its most recent geological catastrophes.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-red-900/50 to-red-800/30 p-6 rounded-lg border border-red-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Volcanic Rootless Cones Evidence
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Rootless cones scattered across the lava flow indicate water was present 
+          in the shallow subsurface when volcanic activity occurred. These 
+          formations provide direct evidence of lava-water interactions and suggest 
+          water persisted in the region between the flood and volcanic events.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The distribution pattern of these cones helps scientists understand the 
+          extent and timing of subsurface water availability.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Turbulent Lava Flow Analysis
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        High-resolution imaging has revealed that the Athabasca Valles flood lava 
+        displays unique morphological evidence of turbulent flow - the only confirmed 
+        instance of such behavior in Martian lava flows. This turbulent signature 
+        suggests extremely high effusion rates and provides insights into the 
+        volcanic processes that created this massive lava province.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        The preserved flow patterns indicate this was not a typical basaltic 
+        eruption but rather a catastrophic volcanic event comparable to Earth's 
+        largest flood basalt provinces.
+      </p>
+    </div>
+  </section>
+
+  <!-- Water-Lava Interactions Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Lava-Ice Interactions and Implications
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The interaction between lava flows and subsurface ice at Athabasca Valles 
+          provides crucial insights into Mars' hydrological processes and recent 
+          climate conditions. Recent studies suggest that large-scale lava-ice 
+          interactions may have been responsible for both the formation of the 
+          outflow channels and subsequent volcanic features.
+        </p>
+
+        <div class="space-y-4 mb-6">
+          <div class="border-l-4 border-blue-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Meltwater Confinement Model
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Alternative formation theories propose that lava-ice interactions 
+              created confined meltwater systems that accumulated and catastrophically 
+              released, potentially explaining the channel formation without requiring 
+              deep groundwater sources.
+            </p>
+          </div>
+          <div class="border-l-4 border-red-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Subsurface Ice Evidence
+            </h4>
+            <p class="text-gray-300 text-sm">
+              The presence of rootless cones indicates substantial subsurface ice 
+              was available during lava emplacement, supporting theories of recent 
+              ice preservation near Mars' equator.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Formation Timeline
+        </h3>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Initial Flooding:</span>
+            <span class="text-white text-sm">~20 Ma ago</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Lava Emplacement:</span>
+            <span class="text-white text-sm">~2-5 Ma ago</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Total Duration:</span>
+            <span class="text-white text-sm">~15-18 Ma</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Preservation State:</span>
+            <span class="text-white text-sm">Excellent</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terraforming Assessment Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-yellow-900/30 to-yellow-800/20 p-8 rounded-lg border border-yellow-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">6</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            Moderate Terraforming Potential
+          </h3>
+          <p class="text-yellow-300">
+            Recent geological activity with water-lava interactions
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Evidence of recent subsurface water</li>
+            <li>• Young, geologically active terrain</li>
+            <li>• Volcanic resources and energy potential</li>
+            <li>• Large, flat lava plains for construction</li>
+            <li>• Potential geothermal activity</li>
+            <li>• Well-preserved geological record</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Ongoing volcanic hazard potential</li>
+            <li>• Limited current surface water access</li>
+            <li>• Extreme flood risk from future events</li>
+            <li>• Dust accumulation issues</li>
+            <li>• Radiation exposure on open plains</li>
+            <li>• Seismic instability from Cerberus Fossae</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scientific Significance Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Scientific Significance
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Mars Climate Evolution
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          Athabasca Valles provides the youngest and most complete record of major 
+          geological activity on Mars. The evidence of recent water-lava interactions 
+          challenges conventional models of Mars' transition to its current cold, 
+          dry state and suggests more complex climate evolution than previously thought.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Comparative Planetology
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          As the only confirmed example of turbulent flood lava on Mars, Athabasca 
+          Valles provides crucial data for understanding volcanic processes on other 
+          planets. The scale and characteristics of this lava province exceed many 
+          comparable features on Earth, offering insights into planetary-scale 
+          volcanic processes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Potential
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        As Mars' youngest major geological feature, Athabasca Valles represents 
+        a unique opportunity to study recent planetary processes and potential 
+        ongoing activity. The region's geological youth and preserved features 
+        make it an ideal target for understanding Mars' transition from ancient 
+        water activity to its current state.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Research Priorities
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Subsurface ice detection and mapping</li>
+            <li>• Volcanic hazard assessment</li>
+            <li>• Detailed chronology of water-lava events</li>
+            <li>• Rootless cone formation mechanisms</li>
+            <li>• Climate modeling validation</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Exploration Methods
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Ground-penetrating radar surveys</li>
+            <li>• Seismic monitoring networks</li>
+            <li>• Sample collection from lava flows</li>
+            <li>• Thermal imaging of fracture systems</li>
+            <li>• Long-term geological monitoring</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://mars.nasa.gov/resources/26922/athabasca-valles/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              NASA Mars Exploration: Athabasca Valles
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.jpl.nasa.gov/images/pia12488-turbulent-lava-flow-in-mars-athabasca-valles/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              JPL: Turbulent Lava Flow Images
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Papers</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://www.usgs.gov/publications/late-amazonian-ice-near-athabasca-valles-mars-recent-megaflood-or-climate-change"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              USGS: Late Amazonian Ice Study (2024)
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.science.org/doi/abs/10.1126/science.1143315"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Science: Lava-Draped Channel System
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

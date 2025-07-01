@@ -84,25 +84,27 @@ const socialImage = ogImage || `${Astro.url.origin}/mars-og-image.jpg`;
     <header class="sticky top-0 z-40 bg-gray-700 backdrop-blur-sm border-b border-gray-600">
       <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
-          <!-- Logo -->
-          <div class="flex items-center">
-            <a href="/" class="flex items-center space-x-3 group">
-              <div class="w-8 h-8 bg-mars-gradient rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"></path>
-                </svg>
+          <!-- Mars Population Info (replacing logo) -->
+          <div class="flex items-center space-x-6">
+            <div class="flex items-center space-x-4">
+              <h1 class="text-white font-display text-lg font-bold">
+                Mars Population
+              </h1>
+              <div class="text-gray-300 text-sm" id="current-datetime">
+                <!-- Date/time will be populated by client-side script -->
               </div>
-              <span class="font-display font-semibold text-lg text-gwern-text dark:text-gwern-text-dark">
-                Mars Explorer
-              </span>
-            </a>
+              <div class="flex items-center space-x-2">
+                <span class="text-gray-400 text-sm">Population:</span>
+                <span class="text-mars-orange font-display text-lg font-bold">0</span>
+              </div>
+            </div>
           </div>
           
           <!-- Desktop Navigation -->
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
               <a href="/orbit" class="nav-link-dark">Orbit</a>
-              <a href="/construction" class="nav-link-dark">Construction</a>
+              <a href="/construction" class="nav-link-dark">Infrastructure</a>
               <a href="/terraforming" class="nav-link-dark">Terraforming</a>
               {showDonationCTA && (
                 <a href="/support" class="btn-primary ml-6">
@@ -133,7 +135,7 @@ const socialImage = ogImage || `${Astro.url.origin}/mars-og-image.jpg`;
         <div class="md:hidden hidden" id="mobile-menu">
           <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gwern-border dark:border-gwern-border-dark">
             <a href="/orbit" class="block nav-link-dark">Orbit</a>
-            <a href="/construction" class="block nav-link-dark">Construction</a>
+            <a href="/construction" class="block nav-link-dark">Infrastructure</a>
             <a href="/terraforming" class="block nav-link-dark">Terraforming</a>
             {showDonationCTA && (
               <a href="/support" class="block btn-primary mt-4">
@@ -220,6 +222,33 @@ const socialImage = ogImage || `${Astro.url.origin}/mars-og-image.jpg`;
           mobileMenu.classList.toggle('hidden');
         });
       }
+    </script>
+    
+    <!-- DateTime update script -->
+    <script>
+      function updateDateTime() {
+        const now = new Date();
+        const options: Intl.DateTimeFormatOptions = {
+          weekday: 'short',
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          timeZone: 'UTC',
+          timeZoneName: 'short',
+        };
+
+        const dateTimeElement = document.getElementById('current-datetime');
+        if (dateTimeElement) {
+          dateTimeElement.textContent = now.toLocaleString('en-US', options);
+        }
+      }
+
+      // Update immediately and then every second
+      updateDateTime();
+      setInterval(updateDateTime, 1000);
     </script>
   </body>
 </html>

@@ -146,7 +146,7 @@ function LocationMarker({
         onDoubleClick={handleDoubleClick}
       >
         <sphereGeometry args={[0.012, 12, 12]} />
-        <meshBasicMaterial color={markerColor} transparent opacity={1} />
+        <meshBasicMaterial color={markerColor} transparent opacity={0.7} />
       </mesh>
 
       {/* Interactive Card - Show on hover, persist until dismissed */}

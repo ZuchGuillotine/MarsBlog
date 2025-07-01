@@ -1,0 +1,565 @@
+---
+import LocationLayout from '../../layouts/LocationLayout.astro';
+import { marsLocations } from '../../data/marsLocations';
+
+const location = marsLocations.find(loc => loc.id === 'mawrth-vallis');
+if (!location) {
+  throw new Error('Mawrth Vallis location not found');
+}
+---
+
+<LocationLayout title="Mawrth Vallis - Mars Location" location={location}>
+  <!-- Hero Image Section -->
+  <div class="mb-8">
+    <div
+      class="relative h-96 bg-gradient-to-r from-green-900 to-emerald-800 rounded-lg overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="text-sm opacity-80">
+          Layered phyllosilicate deposits revealing Mars' ancient water history
+        </p>
+        <p class="text-xs opacity-60">NASA/JPL/CRISM</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Overview</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Mawrth Vallis represents one of Mars' most extraordinary repositories 
+          of clay minerals, containing the highest abundance and diversity of 
+          phyllosilicates discovered on the planet. This ancient valley system 
+          preserves a thick, complex profile of clay minerals that tell the story 
+          of extensive, long-term water activity during Mars' early history.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          The region harbors some of the largest phyllosilicate outcrops on Mars, 
+          with up to 65% smectite clay content by volume in certain areas. These 
+          layered deposits, formed through billions of years of water-rock 
+          interactions, provide unparalleled insights into the environmental 
+          conditions that may have supported life during Mars' Noachian period.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Recent research has identified Mawrth Vallis as showcasing the highest 
+          degree of aqueous alteration identified on Mars from orbit, making it 
+          a unique window into the planet's ancient hydrogeologic history and 
+          a compelling target for astrobiological investigations.
+        </p>
+      </div>
+
+      <!-- Quick Facts Sidebar -->
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400 text-sm">Location:</span>
+            <span class="text-white block">Arabia Terra region</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Clay Content:</span>
+            <span class="text-white block">Up to 65% smectites</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Formation Age:</span>
+            <span class="text-white block">Noachian (>3.5 Ga)</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Mission Status:</span>
+            <span class="text-white block">ExoMars backup landing site</span>
+          </div>
+          <div>
+            <span class="text-gray-400 text-sm">Key Feature:</span>
+            <span class="text-white block">Highest Mars phyllosilicate abundance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Phyllosilicate Deposits Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Phyllosilicate Treasure Trove: Mars' Clay Mineral Capital
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        The phyllosilicate deposits at Mawrth Vallis exhibit a specific and 
+        scientifically significant stratigraphic sequence that records changing 
+        aqueous environments over geological time. This layered arrangement 
+        provides crucial evidence for understanding how Mars' early climate 
+        evolved and what conditions may have supported habitability.
+      </p>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Lower Sequence</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Fe/Mg-smectite clay minerals</li>
+            <li>• Formed via basalt alteration</li>
+            <li>• Neutral pH water conditions</li>
+            <li>• Extensive aqueous activity evidence</li>
+            <li>• Ancient cratered terrain origin</li>
+            <li>• Primary alteration products</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Upper Sequence</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Hydrated silica deposits</li>
+            <li>• Montmorillonite and kaolinite</li>
+            <li>• Fe and Mg leaching evidence</li>
+            <li>• Extended aqueous events</li>
+            <li>• Chemical weathering products</li>
+            <li>• Environmental transition markers</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ancient Water Activity Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Evidence for Long-Lived Surface Water
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-lg border border-blue-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Aqueous Alteration Timeline
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          The thick stacks of clay minerals at Mawrth Vallis indicate chemical 
+          alteration of massive rock sequences through interaction with liquid 
+          water. This process required sustained water activity over periods 
+          ranging from tens of thousands to millions of years, far exceeding 
+          brief episodes of water activity.
+        </p>
+        <p class="text-gray-300 text-sm">
+          Multiple mineral horizons in the layered outcrops signify changing 
+          geochemical environments, suggesting Mars experienced complex, 
+          evolving water chemistry during its early history.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-green-900/50 to-green-800/30 p-6 rounded-lg border border-green-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Environmental Conditions
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Research suggests the Fe³⁺-rich smectites formed in warm surface 
+          environments with mean annual temperatures of 5-10°C and seasonal 
+          highs reaching 20-30°C. These conditions, combined with rainfall 
+          and surface leaching, created ideal environments for clay formation.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The formation timescale of tens to hundreds of thousands of years 
+          indicates Mars maintained favorable conditions for extended periods 
+          during the Noachian era.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Mineral Diversity and Significance
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        CRISM spectral analysis has revealed an extraordinary diversity of 
+        hydrated minerals at Mawrth Vallis, including aluminum smectite, 
+        iron/magnesium smectite, hydrated silica, kaolinite group minerals, 
+        and various iron oxides. This assemblage represents the most complete 
+        record of aqueous mineral formation processes discovered on Mars.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        The presence of alunite, recently discovered in the region, provides 
+        evidence for localized evaporative environments, adding another layer 
+        of complexity to the area's aqueous history and suggesting diverse 
+        microenvironments existed within the broader water-rich setting.
+      </p>
+    </div>
+  </section>
+
+  <!-- Astrobiological Potential Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Exceptional Astrobiological Potential
+    </h2>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Phyllosilicate deposits represent some of the most promising 
+          environments for the preservation of ancient life signatures. The 
+          clay minerals at Mawrth Vallis have exceptional capability to preserve 
+          organic compounds and potential biosignatures over geological 
+          timescales, making them ideal targets for astrobiological investigations.
+        </p>
+
+        <div class="space-y-4 mb-6">
+          <div class="border-l-4 border-green-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Organic Preservation Potential
+            </h4>
+            <p class="text-gray-300 text-sm">
+              Clay minerals easily preserve microscopic life on Earth, and 
+              laboratory experiments suggest phyllosilicates could have served 
+              as reaction centers for organic molecules, potentially playing 
+              a role in the origin of life processes.
+            </p>
+          </div>
+          <div class="border-l-4 border-blue-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Habitable Environment Indicators
+            </h4>
+            <p class="text-gray-300 text-sm">
+              The layered phyllosilicate-rich outcrops record ancient active 
+              chemical environments that could have supported habitable 
+              conditions. The neutral pH conditions inferred from the mineral 
+              assemblages would have been conducive to life processes.
+            </p>
+          </div>
+          <div class="border-l-4 border-purple-500 pl-4">
+            <h4 class="font-semibold text-white mb-2">
+              Biosignature Detection Target
+            </h4>
+            <p class="text-gray-300 text-sm">
+              The ancient phyllosilicates could preserve evidence of ecosystems 
+              over geologic timescales if life was present on ancient Mars. 
+              The diverse mineral assemblages provide multiple targets for 
+              biosignature detection strategies.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800/50 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Habitability Factors
+        </h3>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Water Activity:</span>
+            <span class="text-white text-sm">Extended</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">pH Conditions:</span>
+            <span class="text-white text-sm">Neutral</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Temperature:</span>
+            <span class="text-white text-sm">5-30°C range</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400 text-sm">Preservation:</span>
+            <span class="text-white text-sm">Exceptional</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ExoMars Mission Connection Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      ExoMars Mission and Future Exploration
+    </h2>
+    <div class="bg-gray-800/30 p-8 rounded-lg border border-gray-700">
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Mawrth Vallis has been extensively evaluated as a prime landing site 
+        for the European Space Agency's ExoMars mission. While Oxia Planum was 
+        ultimately selected as the primary landing site, Mawrth Vallis remains 
+        designated as a backup site and continues to be recognized as one of 
+        Mars' most scientifically compelling exploration targets.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="border-l-4 border-yellow-500 pl-4">
+          <h4 class="font-semibold text-white mb-2">Mission Evaluation</h4>
+          <p class="text-gray-300 text-sm">
+            Mawrth Vallis was evaluated through multiple landing site selection 
+            meetings, with two ellipses in the region proposed for both Mars2020 
+            and ExoMars missions due to its exceptional scientific value.
+          </p>
+        </div>
+        <div class="border-l-4 border-blue-500 pl-4">
+          <h4 class="font-semibold text-white mb-2">Scientific Objectives</h4>
+          <p class="text-gray-300 text-sm">
+            The region's rich geological record from Mars' wetter past makes 
+            it ideal for ExoMars' goals of searching for signs of past life 
+            and investigating ancient environmental conditions.
+          </p>
+        </div>
+        <div class="border-l-4 border-purple-500 pl-4">
+          <h4 class="font-semibold text-white mb-2">2028 Mission Plans</h4>
+          <p class="text-gray-300 text-sm">
+            With ExoMars receiving additional funding and targeting a 2028 
+            launch, Mawrth Vallis remains a high-priority backup target for 
+            the mission's subsurface drilling and organic analysis capabilities.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Research Discoveries Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      2024 Research Developments
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div
+        class="bg-gradient-to-br from-emerald-900/50 to-emerald-800/30 p-6 rounded-lg border border-emerald-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Future In Situ Exploration Study
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          A comprehensive 2024 study published in Astrobiology magazine has 
+          reinforced Mawrth Vallis as "A Fascinating Place for Future In Situ 
+          Exploration." The research highlights key science targets and their 
+          astrobiological interests within the proposed landing ellipses.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The study describes opportunities for human exploration in terms of 
+          both scientific discoveries and resource utilization, positioning 
+          Mawrth Vallis as a cornerstone location for Mars exploration.
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-teal-900/50 to-teal-800/30 p-6 rounded-lg border border-teal-700/50"
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Alunite Discovery
+        </h3>
+        <p class="text-gray-300 text-sm mb-4">
+          Recent discovery of alunite minerals in the candidate ExoMars landing 
+          site provides evidence for localized evaporative environments. This 
+          finding adds complexity to our understanding of the region's aqueous 
+          history and suggests diverse water chemistry conditions existed.
+        </p>
+        <p class="text-gray-300 text-sm">
+          The presence of alunite indicates periods of concentrated brine 
+          formation, potentially creating unique microenvironments for 
+          extremophile-type organisms.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+      <h3 class="text-xl font-semibold text-white mb-4">
+        Advanced Spectral Analysis
+      </h3>
+      <p class="text-gray-300 leading-relaxed mb-4">
+        Continued analysis using Mars Reconnaissance Orbiter's CRISM instrument 
+        has revealed increasingly detailed views of the phyllosilicate 
+        stratigraphy. These observations show that the complexity of mineral 
+        layering exceeds initial estimates, suggesting even more extensive 
+        and varied aqueous processes than previously recognized.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        The detailed mapping has identified specific targets within the region 
+        that show the highest potential for organic preservation, guiding 
+        future mission planning and landing site refinement.
+      </p>
+    </div>
+  </section>
+
+  <!-- Terraforming Assessment Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Terraforming Assessment
+    </h2>
+    <div
+      class="bg-gradient-to-br from-green-900/30 to-green-800/20 p-8 rounded-lg border border-green-700/50"
+    >
+      <div class="flex items-center mb-6">
+        <div
+          class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mr-4"
+        >
+          <span class="text-white font-bold text-xl">8</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold text-white">
+            High Terraforming Potential
+          </h3>
+          <p class="text-green-300">
+            Exceptional clay resources and proven long-term water history
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Advantages</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Highest clay mineral abundance on Mars</li>
+            <li>• Proven extended water activity history</li>
+            <li>• Neutral pH soil conditions</li>
+            <li>• Excellent agricultural potential</li>
+            <li>• Natural water retention capabilities</li>
+            <li>• Diverse mineral resources</li>
+            <li>• Potential subsurface water access</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">Challenges</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Limited current surface water</li>
+            <li>• Dust accumulation concerns</li>
+            <li>• Radiation exposure issues</li>
+            <li>• Temperature extremes</li>
+            <li>• Atmospheric pressure variations</li>
+            <li>• Access to surrounding regions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scientific Significance Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Scientific Significance
+    </h2>
+    <div class="space-y-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Mars Hydrogeologic Archive
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          Mawrth Vallis provides the most complete and accessible record of 
+          Mars' ancient water activity available for study. The thick, layered 
+          phyllosilicate deposits preserve a detailed archive of changing 
+          environmental conditions during the planet's most habitable period, 
+          offering insights crucial for understanding planetary climate evolution 
+          and the potential for life beyond Earth.
+        </p>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-xl font-semibold text-white mb-4">
+          Astrobiology Laboratory
+        </h3>
+        <p class="text-gray-300 leading-relaxed">
+          The region serves as a natural laboratory for studying how life might 
+          have originated and been preserved on Mars. The combination of 
+          extended aqueous activity, diverse chemical environments, and 
+          exceptional preservation potential makes Mawrth Vallis arguably the 
+          most promising location for detecting evidence of ancient Martian life.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Exploration Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">
+      Future Exploration Roadmap
+    </h2>
+    <div
+      class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-8 rounded-lg border border-purple-700/50"
+    >
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Despite not being selected for the primary ExoMars landing site, 
+        Mawrth Vallis remains one of the highest-priority targets for future 
+        Mars exploration. Its unparalleled clay mineral deposits and 
+        astrobiological potential ensure it will continue to be a cornerstone 
+        location for understanding Mars' past and potential for life.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Exploration Priorities
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Subsurface drilling to 2+ meters depth</li>
+            <li>• Comprehensive organic compound analysis</li>
+            <li>• Detailed phyllosilicate stratigraphy</li>
+            <li>• Biosignature detection surveys</li>
+            <li>• Ancient climate reconstruction</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-3">
+            Technology Requirements
+          </h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li>• Advanced drilling capabilities</li>
+            <li>• High-resolution spectroscopy</li>
+            <li>• Sample caching systems</li>
+            <li>• Long-range mobility platforms</li>
+            <li>• Environmental monitoring suites</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-white mb-6 font-display">Learn More</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">NASA/ESA Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://mars.nasa.gov/resources/636/clay-minerals-in-mawrth-vallis-region-of-mars/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              NASA: Clay Minerals in Mawrth Vallis
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://science.nasa.gov/resource/chemical-alteration-by-water-mawrth-vallis/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              NASA Science: Chemical Alteration Evidence
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/30 p-6 rounded-lg border border-gray-700">
+        <h3 class="text-lg font-semibold text-white mb-4">Scientific Papers</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://astrobiology.com/2024/11/mawrth-vallis-mars-a-fascinating-place-for-future-in-situ-exploration.html"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              2024 Astrobiology Study: Future Exploration
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7007808/"
+              class="text-blue-400 hover:text-blue-300 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Phyllosilicate Diversity and Aqueous Activity
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</LocationLayout>

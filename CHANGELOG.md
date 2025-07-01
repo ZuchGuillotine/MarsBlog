@@ -1,5 +1,20 @@
 # Changelog - Mars Location Interactive Cards & Detail Pages
 
+## 🛠️ 2024-06-30: UI Layering & Mobile Bug Fixes
+
+- **Sticky Mars Population Card**: Card is now pinned to the top-left under the header with no extra sidebar spacing, ensuring a clean layout on all devices.
+- **Location Cards Always On Top**: Location hover/selected cards now have the highest z-index (`z-1000`), guaranteeing they always appear above the Mars Population card, "Selected:" info, and all other UI elements.
+- **Z-Index Hierarchy Improvements**: Refactored z-index values for all overlay elements:
+  - Location cards: `z-1000`
+  - Mars Population card: `z-30`
+  - Info panels: `z-10`/`z-20`
+  - Sidebar: `z-50`
+- **Mobile Bug Fix**: Removed problematic left-side black spacing that was obscuring the globe and content on mobile. Layout is now fully responsive and unobtrusive.
+- **Box Shadow Enhancement**: Location cards now have a stronger shadow for better visibility and separation.
+- **Result**: Users can always see and interact with location cards, regardless of what else is on the screen. No more obscured or inaccessible information!
+
+---
+
 ## 🚀 Session Summary (Latest Update)
 
 This session focused on transforming the Mars globe from a static visualization into an interactive exploration tool with clickable location cards and detailed individual pages for each Mars location.
