@@ -242,6 +242,35 @@
   }
 }
 
+/* Location card positioning to avoid UI conflicts */
+.location-card {
+  /* Ensure cards appear above all other UI elements */
+  z-index: 1000 !important;
+  /* Improve box shadow for better visibility */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Mobile responsive positioning for location cards */
+@media (max-width: 768px) {
+  .location-card {
+    /* On mobile, ensure cards fit within screen bounds */
+    max-width: calc(100vw - 2rem) !important;
+    width: 200px !important;
+    /* Position cards away from Mars Population card */
+    transform: translateX(clamp(-150px, -25vw, 0px));
+  }
+}
+
+/* Tablet and desktop positioning */
+@media (min-width: 769px) {
+  .location-card {
+    /* On larger screens, ensure cards don't conflict with sidebar */
+    max-width: 220px !important;
+    /* Slight adjustment to avoid sidebar overlap */
+    transform: translateX(clamp(-100px, -10vw, 10px));
+  }
+}
+
 /* Dark mode styles */
 @media (prefers-color-scheme: dark) {
   :root {

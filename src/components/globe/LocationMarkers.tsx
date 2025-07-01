@@ -161,17 +161,18 @@ function LocationMarker({
             transform: 'scale(0.8)',
             transformOrigin: 'center',
             fontSize: '14px',
-            zIndex: 100,
+            zIndex: 1000,
           }}
         >
           <div
-            className="bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded p-3 shadow-xl transition-all duration-200 relative"
+            className="bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded p-3 shadow-xl transition-all duration-200 relative location-card"
             style={{
               minWidth: '180px',
               maxWidth: '220px',
               fontSize: '13px',
-              zIndex: 100,
+              zIndex: 1000,
               position: 'relative',
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.8)',
             }}
           >
             {/* Close Button */}
