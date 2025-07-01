@@ -1,0 +1,294 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Mars Orbital Network | Mars Explorer"
+  description="Explore Mars' orbital environment, satellites, and the critical relay network that enables communication with the Red Planet."
+>
+  <div class="bg-gwern-bg dark:bg-gwern-bg-dark">
+    <!-- Hero Section -->
+    <section class="relative py-16 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center">
+          <h1 class="text-4xl md:text-6xl font-display font-bold text-gwern-text dark:text-gwern-text-dark mb-6">
+            Mars <span class="text-mars-red">Orbital Network</span>
+          </h1>
+          <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">
+            The complex dance of satellites, orbiters, and relay networks that keep Mars connected to Earth and enable our exploration of the Red Planet.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mars Relay Network Visualization -->
+    <section class="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-display font-bold text-gwern-text dark:text-gwern-text-dark mb-4">
+            NASA Mars Relay Network
+          </h2>
+          <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Real-time visualization of Mars orbital assets and their communication capabilities. This interactive model shows current satellite positions and communication windows.
+          </p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 overflow-hidden">
+          <iframe 
+            src="https://eyes.nasa.gov/apps/mrn/" 
+            width="100%" 
+            height="600" 
+            class="rounded border-0"
+            allowfullscreen
+            title="NASA Mars Relay Network Visualization"
+            loading="lazy">
+          </iframe>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">
+            Interactive visualization provided by NASA's Eyes on the Solar System
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Martian Satellites Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-display font-bold text-gwern-text dark:text-gwern-text-dark mb-4">
+            Mars' Natural Satellites
+          </h2>
+          <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Unlike Earth's single large moon, Mars has two small, irregularly shaped moons that orbit close to the planet.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Phobos -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+            <h3 class="text-2xl font-display font-bold text-mars-red mb-4">Phobos</h3>
+            <div class="space-y-4">
+              <div class="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span class="font-semibold text-gray-700 dark:text-gray-300">Diameter:</span>
+                  <span class="text-gray-600 dark:text-gray-400 ml-1">22.2 km</span>
+                </div>
+                <div>
+                  <span class="font-semibold text-gray-700 dark:text-gray-300">Orbital Period:</span>
+                  <span class="text-gray-600 dark:text-gray-400 ml-1">7.6 hours</span>
+                </div>
+                <div>
+                  <span class="font-semibold text-gray-700 dark:text-gray-300">Distance:</span>
+                  <span class="text-gray-600 dark:text-gray-400 ml-1">9,376 km</span>
+                </div>
+                <div>
+                  <span class="font-semibold text-gray-700 dark:text-gray-300">Shape:</span>
+                  <span class="text-gray-600 dark:text-gray-400 ml-1">Potato-like</span>
+                </div>
+              </div>
+              <p class="text-gray-600 dark:text-gray-400">
+                The larger and inner moon of Mars, Phobos orbits so close that it completes three orbits per Martian day. Its orbit is gradually decaying, and it will either crash into Mars or break apart within 50 million years.
+              </p>
+              <div class="bg-mars-red bg-opacity-10 dark:bg-mars-orange dark:bg-opacity-10 p-4 rounded">
+                <h4 class="font-semibold text-mars-red dark:text-mars-orange mb-2">Unique Features:</h4>
+                <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                  <li>• Rises in the west and sets in the east</li>
+                  <li>• Visible from Mars surface for only 4.5 hours at a time</li>
+                  <li>• Heavily cratered with the large Stickney crater</li>
+                  <li>• Possible captured asteroid or impact debris</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deimos -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+            <h3 class="text-2xl font-display font-bold text-mars-red mb-4">Deimos</h3>
+            <div class="space-y-4">
+              <div class="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span class="font-semibold text-gray-700 dark:text-gray-300">Diameter:</span>
+                  <span class="text-gray-600 dark:text-gray-400 ml-1">12.6 km</span>
+                </div>
+                <div>
+                  <span class="font-semibold text-gray-700 dark:text-gray-300">Orbital Period:</span>
+                  <span class="text-gray-600 dark:text-gray-400 ml-1">30.3 hours</span>
+                </div>
+                <div>
+                  <span class="font-semibold text-gray-700 dark:text-gray-300">Distance:</span>
+                  <span class="text-gray-600 dark:text-gray-400 ml-1">23,463 km</span>
+                </div>
+                <div>
+                  <span class="font-semibold text-gray-700 dark:text-gray-300">Shape:</span>
+                  <span class="text-gray-600 dark:text-gray-400 ml-1">Lumpy oval</span>
+                </div>
+              </div>
+              <p class="text-gray-600 dark:text-gray-400">
+                The smaller and more distant moon of Mars, Deimos has a more stable orbit and appears as a bright star from the Martian surface. Its orbit is slowly expanding, moving away from Mars over time.
+              </p>
+              <div class="bg-mars-red bg-opacity-10 dark:bg-mars-orange dark:bg-opacity-10 p-4 rounded">
+                <h4 class="font-semibold text-mars-red dark:text-mars-orange mb-2">Unique Features:</h4>
+                <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                  <li>• Remains above horizon for 2.7 sols (Martian days)</li>
+                  <li>• Appears star-like from Mars surface</li>
+                  <li>• Smoother surface than Phobos</li>
+                  <li>• Named after the Greek god of dread</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Orbital Infrastructure Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-display font-bold text-gwern-text dark:text-gwern-text-dark mb-4">
+            Mars Orbital Infrastructure
+          </h2>
+          <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            The network of spacecraft that enables Mars exploration and communication with Earth.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Orbiters -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-display font-bold text-mars-red mb-4">Active Orbiters</h3>
+            <div class="space-y-4">
+              <div class="border-l-4 border-mars-red pl-4">
+                <h4 class="font-semibold text-gray-700 dark:text-gray-300">Mars Reconnaissance Orbiter</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">High-resolution imaging and communication relay</p>
+              </div>
+              <div class="border-l-4 border-mars-red pl-4">
+                <h4 class="font-semibold text-gray-700 dark:text-gray-300">MAVEN</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Atmospheric and ionospheric studies</p>
+              </div>
+              <div class="border-l-4 border-mars-red pl-4">
+                <h4 class="font-semibold text-gray-700 dark:text-gray-300">Mars Express</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">ESA orbiter for surface and subsurface analysis</p>
+              </div>
+              <div class="border-l-4 border-mars-red pl-4">
+                <h4 class="font-semibold text-gray-700 dark:text-gray-300">Trace Gas Orbiter</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Atmospheric composition and relay services</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Communication Windows -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-display font-bold text-mars-red mb-4">Communication Challenges</h3>
+            <div class="space-y-4">
+              <div>
+                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Signal Delay</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">4-24 minutes one-way, varying with planetary positions</p>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Solar Conjunction</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Communication blackouts when Mars is behind the Sun</p>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Relay Dependencies</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Surface missions rely on orbiters for efficient data transmission</p>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Orbital Mechanics</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Complex planning required for optimal communication windows</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Future Plans -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-display font-bold text-mars-red mb-4">Future Orbital Assets</h3>
+            <div class="space-y-4">
+              <div>
+                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Mars Relay Network</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Dedicated constellation for enhanced communications</p>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Navigation Satellites</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">GPS-like system for precise surface navigation</p>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Weather Monitoring</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Comprehensive atmospheric observation network</p>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Resource Mapping</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Advanced sensors for mineral and water detection</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Orbital Mechanics Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-display font-bold text-gwern-text dark:text-gwern-text-dark mb-4">
+            Mars Orbital Mechanics
+          </h2>
+          <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Understanding the unique challenges and opportunities of Mars orbital dynamics.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-display font-bold text-mars-red mb-4">Key Orbital Parameters</h3>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-2">
+                <span class="font-semibold text-gray-700 dark:text-gray-300">Mars Sol Length</span>
+                <span class="text-gray-600 dark:text-gray-400">24h 37m 22s</span>
+              </div>
+              <div class="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-2">
+                <span class="font-semibold text-gray-700 dark:text-gray-300">Surface Gravity</span>
+                <span class="text-gray-600 dark:text-gray-400">3.71 m/s² (38% of Earth)</span>
+              </div>
+              <div class="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-2">
+                <span class="font-semibold text-gray-700 dark:text-gray-300">Escape Velocity</span>
+                <span class="text-gray-600 dark:text-gray-400">5.03 km/s</span>
+              </div>
+              <div class="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-2">
+                <span class="font-semibold text-gray-700 dark:text-gray-300">Synchronous Orbit</span>
+                <span class="text-gray-600 dark:text-gray-400">20,428 km altitude</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="font-semibold text-gray-700 dark:text-gray-300">Hill Sphere Radius</span>
+                <span class="text-gray-600 dark:text-gray-400">982,000 km</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-display font-bold text-mars-red mb-4">Orbital Advantages</h3>
+            <div class="space-y-4">
+              <div class="bg-green-50 dark:bg-green-900 dark:bg-opacity-20 p-4 rounded">
+                <h4 class="font-semibold text-green-800 dark:text-green-400 mb-2">Lower Energy Requirements</h4>
+                <p class="text-sm text-green-700 dark:text-green-300">
+                  Mars' lower gravity makes orbital insertion and maintenance less energy-intensive than Earth operations.
+                </p>
+              </div>
+              <div class="bg-blue-50 dark:bg-blue-900 dark:bg-opacity-20 p-4 rounded">
+                <h4 class="font-semibold text-blue-800 dark:text-blue-400 mb-2">Stable Orbits</h4>
+                <p class="text-sm text-blue-700 dark:text-blue-300">
+                  Less atmospheric drag and fewer gravitational perturbations allow for more stable long-term orbits.
+                </p>
+              </div>
+              <div class="bg-purple-50 dark:bg-purple-900 dark:bg-opacity-20 p-4 rounded">
+                <h4 class="font-semibold text-purple-800 dark:text-purple-400 mb-2">Closer Surface Access</h4>
+                <p class="text-sm text-purple-700 dark:text-purple-300">
+                  Low orbits can get closer to the surface, enabling better imaging and communication with surface assets.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
