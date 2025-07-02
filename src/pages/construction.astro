@@ -1,0 +1,663 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Mars Infrastructure Blueprint | Mars Explorer"
+  description="Comprehensive technical analysis of critical infrastructure systems for Mars surface operations, organized by Earth-shipped components vs. in-situ resource utilization."
+>
+  <div class="min-h-screen text-white" style="font-family: 'JetBrains Mono', monospace; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 25%, #1d4ed8 75%, #2563eb 100%);">
+    <!-- Technical Header -->
+    <section class="relative py-8 px-4 sm:px-6 lg:px-8 border-b border-white/30">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 border-2 border-white bg-white/10 flex items-center justify-center">
+              <span class="text-white font-bold text-xl">⚙</span>
+            </div>
+            <div>
+              <h1 class="text-4xl font-bold text-white tracking-tight">MARS_INFRASTRUCTURE.blueprint</h1>
+              <p class="text-blue-200 text-sm">TECHNICAL_SPECIFICATION_v2.1 | CLASSIFICATION: UNCLASSIFIED</p>
+            </div>
+          </div>
+          <div class="text-right text-xs text-blue-200">
+            <div>LAST_UPDATED: 2025.07.02</div>
+            <div>STATUS: MISSION_CRITICAL</div>
+            <div>POWER_REQ: 100kW+ BASE_LOAD</div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="bg-white/10 border border-white/30 p-4">
+            <div class="text-white font-bold mb-2">SHIP_MASS_BUDGET</div>
+            <div class="text-2xl text-red-200">~500 TONNES</div>
+            <div class="text-xs text-blue-200">Critical Earth-manufactured components</div>
+          </div>
+          <div class="bg-white/10 border border-white/30 p-4">
+            <div class="text-white font-bold mb-2">ISRU_POTENTIAL</div>
+            <div class="text-2xl text-cyan-300">~2000 TONNES</div>
+            <div class="text-xs text-blue-200">Local fabrication capacity</div>
+          </div>
+          <div class="bg-white/10 border border-white/30 p-4">
+            <div class="text-white font-bold mb-2">POWER_BOTTLENECK</div>
+            <div class="text-2xl text-yellow-200">CRITICAL</div>
+            <div class="text-xs text-blue-200">SMR + Solar hybrid required</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Navigation Matrix -->
+    <section class="py-8 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto mb-8">
+        <h2 class="text-2xl font-bold text-white mb-4">SYSTEM_NAVIGATION_MATRIX</h2>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs">
+          <div class="bg-white/10 border border-white/30 p-3 cursor-pointer hover:bg-white/20 transition-colors" onclick="scrollToSection('habitats')">
+            <div class="text-white font-bold">01_HABITATS</div>
+            <div class="text-blue-200">Life support systems</div>
+          </div>
+          <div class="bg-white/10 border border-white/30 p-3 cursor-pointer hover:bg-white/20 transition-colors" onclick="scrollToSection('water')">
+            <div class="text-white font-bold">02_WATER</div>
+            <div class="text-blue-200">H2O extraction & purification</div>
+          </div>
+          <div class="bg-white/10 border border-white/30 p-3 cursor-pointer hover:bg-white/20 transition-colors" onclick="scrollToSection('pads')">
+            <div class="text-white font-bold">03_LANDING</div>
+            <div class="text-blue-200">Pad & plume mitigation</div>
+          </div>
+          <div class="bg-white/10 border border-white/30 p-3 cursor-pointer hover:bg-white/20 transition-colors" onclick="scrollToSection('power')">
+            <div class="text-white font-bold">04_POWER</div>
+            <div class="text-blue-200">SMR + Solar hybrid</div>
+          </div>
+          <div class="bg-white/10 border border-white/30 p-3 cursor-pointer hover:bg-white/20 transition-colors" onclick="scrollToSection('thermal')">
+            <div class="text-white font-bold">05_THERMAL</div>
+            <div class="text-blue-200">Heat management network</div>
+          </div>
+          <div class="bg-white/10 border border-white/30 p-3 cursor-pointer hover:bg-white/20 transition-colors" onclick="scrollToSection('isru')">
+            <div class="text-white font-bold">06_MAKERS</div>
+            <div class="text-blue-200">ISRU production plant</div>
+          </div>
+          <div class="bg-white/10 border border-white/30 p-3 cursor-pointer hover:bg-white/20 transition-colors" onclick="scrollToSection('agriculture')">
+            <div class="text-white font-bold">07_AGRICULTURE</div>
+            <div class="text-blue-200">Food production systems</div>
+          </div>
+          <div class="bg-white/10 border border-white/30 p-3 cursor-pointer hover:bg-white/20 transition-colors" onclick="scrollToSection('shelter')">
+            <div class="text-white font-bold">08_SHELTER</div>
+            <div class="text-blue-200">Radiation & storm protection</div>
+          </div>
+          <div class="bg-white/10 border border-white/30 p-3 cursor-pointer hover:bg-white/20 transition-colors" onclick="scrollToSection('mobility')">
+            <div class="text-white font-bold">09_MOBILITY</div>
+            <div class="text-blue-200">Maintenance & transport</div>
+          </div>
+          <div class="bg-white/10 border border-white/30 p-3 cursor-pointer hover:bg-white/20 transition-colors" onclick="scrollToSection('comms')">
+            <div class="text-white font-bold">10_COMMS</div>
+            <div class="text-blue-200">Surface communications</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- System Specifications -->
+    <section class="px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto space-y-12">
+        
+        <!-- 01 Habitats -->
+        <div id="habitats" class="bg-white/10 border border-white/30 p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-white">01_SEALED_HABITATS_&_ATMOSPHERE_MGMT</h3>
+            <div class="text-xs text-blue-200">PRIORITY: CRITICAL | MASS: 45T</div>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <div>
+              <div class="text-white font-bold mb-2 text-sm">CORE_FUNCTION:</div>
+              <div class="text-blue-100 text-sm mb-4">Pressure vessel for crew + active control of O₂, CO₂, humidity, trace contaminants</div>
+            </div>
+            
+            <div class="bg-red-500/20 border border-red-300/50 p-4">
+              <div class="text-red-200 font-bold mb-2 text-sm">SHIP_FROM_EARTH:</div>
+              <ul class="text-red-100 text-xs space-y-1">
+                <li>• Lightweight pressure shells (Vectran®, Kevlar®)</li>
+                <li>• Precision airlocks & pressure-rated windows</li>
+                <li>• All valves/sensors/control systems</li>
+                <li>• LiOH/solid-amine CO₂ sorbent cartridges</li>
+                <li>• Platinum-group catalysts for Sabatier reactors</li>
+              </ul>
+            </div>
+            
+            <div class="bg-cyan-500/20 border border-cyan-300/50 p-4">
+              <div class="text-cyan-200 font-bold mb-2 text-sm">ISRU_FABRICATION:</div>
+              <ul class="text-cyan-100 text-xs space-y-1">
+                <li>• Sintered-regolith bricks for bulk structure</li>
+                <li>• Basalt-fiber reinforced sulfur-concrete</li>
+                <li>• Regolith berms for radiation shielding</li>
+                <li>• O₂ makeup via solid-oxide electrolysis (MOXIE)</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="mt-4 bg-yellow-500/20 border border-yellow-300/50 p-3">
+            <div class="text-yellow-200 font-bold text-xs mb-1">CRITICAL_LIMITATIONS:</div>
+            <div class="text-yellow-100 text-xs">Polymer sealants & elastomers degrade in radiation/temperature swings. Cannot yet be produced from Martian feedstocks. Precision pumps & sensors depend on Earth-made electronics.</div>
+          </div>
+        </div>
+
+        <!-- 02 Water -->
+        <div id="water" class="bg-white/10 border border-white/30 p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-white">02_WATER_EXTRACTION_&_PURIFICATION</h3>
+            <div class="text-xs text-blue-200">PRIORITY: CRITICAL | MASS: 25T</div>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <div>
+              <div class="text-white font-bold mb-2 text-sm">CORE_FUNCTION:</div>
+              <div class="text-blue-100 text-sm mb-4">Melt subsurface ice, de-salt/de-perchlorate, store in food-grade tanks</div>
+            </div>
+            
+            <div class="bg-red-500/20 border border-red-300/50 p-4">
+              <div class="text-red-200 font-bold mb-2 text-sm">SHIP_FROM_EARTH:</div>
+              <ul class="text-red-100 text-xs space-y-1">
+                <li>• Reverse-osmosis membranes</li>
+                <li>• Ion-exchange resins</li>
+                <li>• Catalytic perchlorate reducers</li>
+                <li>• Cryo-coolers for ice drill heads</li>
+                <li>• UV-C LEDs for disinfection</li>
+              </ul>
+            </div>
+            
+            <div class="bg-cyan-500/20 border border-cyan-300/50 p-4">
+              <div class="text-cyan-200 font-bold mb-2 text-sm">ISRU_FABRICATION:</div>
+              <ul class="text-cyan-100 text-xs space-y-1">
+                <li>• Stainless/aluminum tanks from roll stock</li>
+                <li>• Sand and basalt-grain filters</li>
+                <li>• Ice trenching equipment</li>
+                <li>• Solar concentrator mirrors</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="mt-4 bg-yellow-500/20 border border-yellow-300/50 p-3">
+            <div class="text-yellow-200 font-bold text-xs mb-1">CRITICAL_LIMITATIONS:</div>
+            <div class="text-yellow-100 text-xs">Perchlorate removal is chemistry-intensive; catalysts need periodic resupply. Ice may be lens-shaped and non-uniform → high energy cost to mine.</div>
+          </div>
+        </div>
+
+        <!-- 03 Landing Pads -->
+        <div id="pads" class="bg-white/10 border border-white/30 p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-white">03_PAD_&_PLUME_MITIGATION</h3>
+            <div class="text-xs text-blue-200">PRIORITY: HIGH | MASS: 15T</div>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <div>
+              <div class="text-white font-bold mb-2 text-sm">CORE_FUNCTION:</div>
+              <div class="text-blue-100 text-sm mb-4">Hardened landing/launch pads to prevent exhaust erosion</div>
+            </div>
+            
+            <div class="bg-red-500/20 border border-red-300/50 p-4">
+              <div class="text-red-200 font-bold mb-2 text-sm">SHIP_FROM_EARTH:</div>
+              <ul class="text-red-100 text-xs space-y-1">
+                <li>• Mobile microwave/laser sintering heads</li>
+                <li>• Quick-setting geopolymer additives</li>
+                <li>• Basalt fibers for regolith concrete tests</li>
+              </ul>
+            </div>
+            
+            <div class="bg-cyan-500/20 border border-cyan-300/50 p-4">
+              <div class="text-cyan-200 font-bold mb-2 text-sm">ISRU_FABRICATION:</div>
+              <ul class="text-cyan-100 text-xs space-y-1">
+                <li>• Graded regolith sub-base</li>
+                <li>• Hexagonal sintered-regolith tiles</li>
+                <li>• Sulfur-concrete poured by robots</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="mt-4 bg-yellow-500/20 border border-yellow-300/50 p-3">
+            <div class="text-yellow-200 font-bold text-xs mb-1">CRITICAL_LIMITATIONS:</div>
+            <div class="text-yellow-100 text-xs">Sintering requires megawatts of power for hours; must coincide with power ramp-up.</div>
+          </div>
+        </div>
+
+        <!-- 04 Power Plant -->
+        <div id="power" class="bg-white/10 border border-white/30 p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-white">04_SURFACE_POWER_PLANT_HYBRID</h3>
+            <div class="text-xs text-blue-200">PRIORITY: CRITICAL | MASS: 85T</div>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <div>
+              <div class="text-white font-bold mb-2 text-sm">CORE_FUNCTION:</div>
+              <div class="text-blue-100 text-sm mb-4">Continuous ≥100kW electrical base-load plus daytime surges</div>
+            </div>
+            
+            <div class="bg-red-500/20 border border-red-300/50 p-4">
+              <div class="text-red-200 font-bold mb-2 text-sm">SHIP_FROM_EARTH:</div>
+              <ul class="text-red-100 text-xs space-y-1">
+                <li>• Encapsulated fast-spectrum SMR core (~10t)</li>
+                <li>• Thermoelectric/Brayton converters</li>
+                <li>• Heat-pipe radiators</li>
+                <li>• Ultralight PV blankets & GaAs panels</li>
+                <li>• First tranche lithium-ion cells</li>
+              </ul>
+            </div>
+            
+            <div class="bg-cyan-500/20 border border-cyan-300/50 p-4">
+              <div class="text-cyan-200 font-bold mb-2 text-sm">ISRU_FABRICATION:</div>
+              <ul class="text-cyan-100 text-xs space-y-1">
+                <li>• Regolith berms for reactor shielding</li>
+                <li>• Aluminum radiator fins (if bauxite present)</li>
+                <li>• Basalt-fiber support masts for solar</li>
+                <li>• Na-S or Fe-air batteries from local materials</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="mt-4 bg-yellow-500/20 border border-yellow-300/50 p-3">
+            <div class="text-yellow-200 font-bold text-xs mb-1">CRITICAL_LIMITATIONS:</div>
+            <div class="text-yellow-100 text-xs">Rare-earth dopants & high-purity silicon for PV cannot yet be produced in-situ. Battery anodes/cathodes need high-grade processing.</div>
+          </div>
+        </div>
+
+        <!-- 05 Thermal -->
+        <div id="thermal" class="bg-white/10 border border-white/30 p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-white">05_THERMAL_CONTROL_NETWORK</h3>
+            <div class="text-xs text-blue-200">PRIORITY: HIGH | MASS: 20T</div>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <div>
+              <div class="text-white font-bold mb-2 text-sm">CORE_FUNCTION:</div>
+              <div class="text-blue-100 text-sm mb-4">Keep habitat & life-support above freezing, reject waste heat</div>
+            </div>
+            
+            <div class="bg-red-500/20 border border-red-300/50 p-4">
+              <div class="text-red-200 font-bold mb-2 text-sm">SHIP_FROM_EARTH:</div>
+              <ul class="text-red-100 text-xs space-y-1">
+                <li>• Glycol/ammonia heat-pipes</li>
+                <li>• Variable-conductance radiators</li>
+                <li>• Aerogel blanket insulation</li>
+              </ul>
+            </div>
+            
+            <div class="bg-cyan-500/20 border border-cyan-300/50 p-4">
+              <div class="text-cyan-200 font-bold mb-2 text-sm">ISRU_FABRICATION:</div>
+              <ul class="text-cyan-100 text-xs space-y-1">
+                <li>• Regolith berms for thermal mass</li>
+                <li>• Ice-water seasonal heat sinks</li>
+                <li>• Simple rock-bed heat exchangers</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="mt-4 bg-yellow-500/20 border border-yellow-300/50 p-3">
+            <div class="text-yellow-200 font-bold text-xs mb-1">CRITICAL_LIMITATIONS:</div>
+            <div class="text-yellow-100 text-xs">Long-term degradation of heat-pipe wicks. Aerogel production in-situ is chemically demanding (supercritical CO₂).</div>
+          </div>
+        </div>
+
+        <!-- 06 ISRU Plant -->
+        <div id="isru" class="bg-white/10 border border-white/30 p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-white">06_ISRU_PLANT_"MAKERS_ROW"</h3>
+            <div class="text-xs text-blue-200">PRIORITY: CRITICAL | MASS: 55T</div>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <div>
+              <div class="text-white font-bold mb-2 text-sm">CORE_FUNCTION:</div>
+              <div class="text-blue-100 text-sm mb-4">Produces O₂, CH₄, polyethylene, sulfur-concrete, sintered parts, metallic iron</div>
+            </div>
+            
+            <div class="bg-red-500/20 border border-red-300/50 p-4">
+              <div class="text-red-200 font-bold mb-2 text-sm">SHIP_FROM_EARTH:</div>
+              <ul class="text-red-100 text-xs space-y-1">
+                <li>• Electrolysis stacks</li>
+                <li>• Sabatier reactors</li>
+                <li>• Fischer-Tropsch catalysts</li>
+                <li>• High-temp induction furnaces</li>
+                <li>• Robotic 3D printers</li>
+                <li>• Spare refractory crucibles</li>
+              </ul>
+            </div>
+            
+            <div class="bg-cyan-500/20 border border-cyan-300/50 p-4">
+              <div class="text-cyan-200 font-bold mb-2 text-sm">ISRU_FABRICATION:</div>
+              <ul class="text-cyan-100 text-xs space-y-1">
+                <li>• CO₂ + H₂O → CH₄/O₂ propellant</li>
+                <li>• Regolith → glass fibers</li>
+                <li>• Iron smelting via hydrogen reduction</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="mt-4 bg-yellow-500/20 border border-yellow-300/50 p-3">
+            <div class="text-yellow-200 font-bold text-xs mb-1">CRITICAL_LIMITATIONS:</div>
+            <div class="text-yellow-100 text-xs">Catalyst poisoning by dust & perchlorates. Early hydrogen must be imported or electrolyzed at high power cost.</div>
+          </div>
+        </div>
+
+        <!-- 07 Agriculture -->
+        <div id="agriculture" class="bg-white/10 border border-white/30 p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-white">07_AGRICULTURAL_MODULES</h3>
+            <div class="text-xs text-blue-200">PRIORITY: HIGH | MASS: 30T</div>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <div>
+              <div class="text-white font-bold mb-2 text-sm">CORE_FUNCTION:</div>
+              <div class="text-blue-100 text-sm mb-4">Leafy greens, micro-tubers, mycoprotein reactors; closes water loop</div>
+            </div>
+            
+            <div class="bg-red-500/20 border border-red-300/50 p-4">
+              <div class="text-red-200 font-bold mb-2 text-sm">SHIP_FROM_EARTH:</div>
+              <ul class="text-red-100 text-xs space-y-1">
+                <li>• High-efficiency LED grow lights</li>
+                <li>• Nutrient salts</li>
+                <li>• Initial seed stock</li>
+                <li>• HEPA-filtered ducting</li>
+                <li>• Stainless bioreactor vessels</li>
+              </ul>
+            </div>
+            
+            <div class="bg-cyan-500/20 border border-cyan-300/50 p-4">
+              <div class="text-cyan-200 font-bold mb-2 text-sm">ISRU_FABRICATION:</div>
+              <ul class="text-cyan-100 text-xs space-y-1">
+                <li>• ETFE-panel greenhouses + regolith cover</li>
+                <li>• Compost from plant waste + human solids</li>
+                <li>• (after pathogen kill)</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="mt-4 bg-yellow-500/20 border border-yellow-300/50 p-3">
+            <div class="text-yellow-200 font-bold text-xs mb-1">CRITICAL_LIMITATIONS:</div>
+            <div class="text-yellow-100 text-xs">Nitrate and phosphate ores sparse on Mars. Must import or recover from waste streams with near-perfect efficiency.</div>
+          </div>
+        </div>
+
+        <!-- 08 Radiation Shelter -->
+        <div id="shelter" class="bg-white/10 border border-white/30 p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-white">08_RADIATION_&_STORM_SHELTERS</h3>
+            <div class="text-xs text-blue-200">PRIORITY: CRITICAL | MASS: 12T</div>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <div>
+              <div class="text-white font-bold mb-2 text-sm">CORE_FUNCTION:</div>
+              <div class="text-blue-100 text-sm mb-4">Shield crew during SPEs and dust storms</div>
+            </div>
+            
+            <div class="bg-red-500/20 border border-red-300/50 p-4">
+              <div class="text-red-200 font-bold mb-2 text-sm">SHIP_FROM_EARTH:</div>
+              <ul class="text-red-100 text-xs space-y-1">
+                <li>• Dosimetry sensors</li>
+                <li>• Inflatable water jackets (dual-use storage)</li>
+                <li>• Neutron-absorbing polymers (borated HDPE)</li>
+              </ul>
+            </div>
+            
+            <div class="bg-cyan-500/20 border border-cyan-300/50 p-4">
+              <div class="text-cyan-200 font-bold mb-2 text-sm">ISRU_FABRICATION:</div>
+              <ul class="text-cyan-100 text-xs space-y-1">
+                <li>• Tunnels in lava tubes</li>
+                <li>• 3D-printed regolith domes ≥2m thick</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="mt-4 bg-yellow-500/20 border border-yellow-300/50 p-3">
+            <div class="text-yellow-200 font-bold text-xs mb-1">CRITICAL_LIMITATIONS:</div>
+            <div class="text-yellow-100 text-xs">Locating structurally sound tubes near base site. Excavation robots must tolerate perchlorate dust.</div>
+          </div>
+        </div>
+
+        <!-- 09 Mobility -->
+        <div id="mobility" class="bg-white/10 border border-white/30 p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-white">09_MOBILITY_&_MAINTENANCE_HUB</h3>
+            <div class="text-xs text-blue-200">PRIORITY: HIGH | MASS: 35T</div>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <div>
+              <div class="text-white font-bold mb-2 text-sm">CORE_FUNCTION:</div>
+              <div class="text-blue-100 text-sm mb-4">Garages, machine shop, parts depot for rovers, drones, suits</div>
+            </div>
+            
+            <div class="bg-red-500/20 border border-red-300/50 p-4">
+              <div class="text-red-200 font-bold mb-2 text-sm">SHIP_FROM_EARTH:</div>
+              <ul class="text-red-100 text-xs space-y-1">
+                <li>• CNC mills/lathes</li>
+                <li>• Spare electronic boards</li>
+                <li>• Precision bearings</li>
+                <li>• Lubricants stable at -80°C</li>
+              </ul>
+            </div>
+            
+            <div class="bg-cyan-500/20 border border-cyan-300/50 p-4">
+              <div class="text-cyan-200 font-bold mb-2 text-sm">ISRU_FABRICATION:</div>
+              <ul class="text-cyan-100 text-xs space-y-1">
+                <li>• Building shells from regolith brick</li>
+                <li>• Basalt-fiber overhead cranes</li>
+                <li>• Sulfur-concrete floors</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="mt-4 bg-yellow-500/20 border border-yellow-300/50 p-3">
+            <div class="text-yellow-200 font-bold text-xs mb-1">CRITICAL_LIMITATIONS:</div>
+            <div class="text-yellow-100 text-xs">Fine machine-tool tolerances depend on Earth-grade steel. Local steel quality will lag for years.</div>
+          </div>
+        </div>
+
+        <!-- 10 Communications -->
+        <div id="comms" class="bg-white/10 border border-white/30 p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-white">10_SURFACE_COMMUNICATIONS</h3>
+            <div class="text-xs text-blue-200">PRIORITY: HIGH | MASS: 18T</div>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <div>
+              <div class="text-white font-bold mb-2 text-sm">CORE_FUNCTION:</div>
+              <div class="text-blue-100 text-sm mb-4">Local Wi-Fi/Li-Fi mesh, UHF relay to orbiters, precision landing beacons</div>
+            </div>
+            
+            <div class="bg-red-500/20 border border-red-300/50 p-4">
+              <div class="text-red-200 font-bold mb-2 text-sm">SHIP_FROM_EARTH:</div>
+              <ul class="text-red-100 text-xs space-y-1">
+                <li>• Antennas & phased-array basebands</li>
+                <li>• Atomic clock</li>
+                <li>• Star-tracker kits</li>
+              </ul>
+            </div>
+            
+            <div class="bg-cyan-500/20 border border-cyan-300/50 p-4">
+              <div class="text-cyan-200 font-bold mb-2 text-sm">ISRU_FABRICATION:</div>
+              <ul class="text-cyan-100 text-xs space-y-1">
+                <li>• Regolith-anchored mast poles</li>
+                <li>• Parabolic dishes cast from molten basalt</li>
+                <li>• Metal-sprayed surfaces</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="mt-4 bg-yellow-500/20 border border-yellow-300/50 p-3">
+            <div class="text-yellow-200 font-bold text-xs mb-1">CRITICAL_LIMITATIONS:</div>
+            <div class="text-yellow-100 text-xs">Semiconductor fabs are decades away in-situ.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Materials Matrix -->
+    <section class="py-12 px-4 sm:px-6 lg:px-8 border-t border-white/30">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-2xl font-bold text-white mb-6">MATERIALS_AVAILABILITY_MATRIX</h2>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs border border-white/30">
+            <thead>
+              <tr class="bg-white/20">
+                <th class="text-left p-3 text-white font-bold border border-white/30">MATERIAL</th>
+                <th class="text-left p-3 text-white font-bold border border-white/30">MARS_AVAILABILITY</th>
+                <th class="text-left p-3 text-white font-bold border border-white/30">EARLY_USE_CASE</th>
+                <th class="text-left p-3 text-white font-bold border border-white/30">LONG_TERM_LOCAL_PATH</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border border-white/30">
+                <td class="p-3 text-white font-bold">REGOLITH (basaltic)</td>
+                <td class="p-3 text-cyan-200">ABUNDANT</td>
+                <td class="p-3 text-blue-100">Sintered bricks, landing-pad tiles</td>
+                <td class="p-3 text-blue-100">Basalt fiber composites, glass, ceramics</td>
+              </tr>
+              <tr class="bg-white/5 border border-white/30">
+                <td class="p-3 text-white font-bold">WATER_ICE</td>
+                <td class="p-3 text-cyan-200">POLAR & MID-LATITUDE</td>
+                <td class="p-3 text-blue-100">Drinkable water, electrolysis H₂/O₂</td>
+                <td class="p-3 text-blue-100">Hydrogen for steel reduction, radiation shielding</td>
+              </tr>
+              <tr class="border border-white/30">
+                <td class="p-3 text-white font-bold">SULFUR</td>
+                <td class="p-3 text-cyan-200">HIGH_IN_REGOLITH</td>
+                <td class="p-3 text-blue-100">Sulfur-concrete (sets at -10°C)</td>
+                <td class="p-3 text-blue-100">Batteries (Na-S)</td>
+              </tr>
+              <tr class="bg-white/5 border border-white/30">
+                <td class="p-3 text-white font-bold">IRON_OXIDES</td>
+                <td class="p-3 text-cyan-200">VERY_ABUNDANT</td>
+                <td class="p-3 text-blue-100">Radiation shielding backfill</td>
+                <td class="p-3 text-blue-100">Direct-reduced iron, structural steel</td>
+              </tr>
+              <tr class="border border-white/30">
+                <td class="p-3 text-white font-bold">PERCHLORATES</td>
+                <td class="p-3 text-red-200">WIDESPREAD_CONTAMINANT</td>
+                <td class="p-3 text-red-100">— (HAZARD)</td>
+                <td class="p-3 text-blue-100">O₂ source after catalytic reduction</td>
+              </tr>
+              <tr class="bg-white/5 border border-white/30">
+                <td class="p-3 text-white font-bold">Si/Al_OXIDES</td>
+                <td class="p-3 text-yellow-200">ABUNDANT_BUT_IMPURE</td>
+                <td class="p-3 text-blue-100">Glass fibers, Al₂O₃ ceramics</td>
+                <td class="p-3 text-blue-100">Solar-grade Si via carbothermal reduction</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Strategic Analysis -->
+    <section class="py-12 px-4 sm:px-6 lg:px-8 border-t border-white/30">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-2xl font-bold text-white mb-6">STRATEGIC_ANALYSIS</h2>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="space-y-6">
+            <div class="bg-red-500/20 border border-red-300/50 p-6">
+              <h3 class="text-red-200 font-bold mb-3">CRITICAL_EARTH_DEPENDENCIES</h3>
+              <ul class="text-red-100 text-sm space-y-2">
+                <li>• Precision, life-critical components (pressure seals, electronics)</li>
+                <li>• Chemistry-intensive systems (catalysts, membranes)</li>
+                <li>• SMR core and advanced power electronics</li>
+                <li>• Specialized manufacturing tools and machinery</li>
+              </ul>
+            </div>
+            
+            <div class="bg-cyan-500/20 border border-cyan-300/50 p-6">
+              <h3 class="text-cyan-200 font-bold mb-3">IMMEDIATE_ISRU_OPPORTUNITIES</h3>
+              <ul class="text-cyan-100 text-sm space-y-2">
+                <li>• Regolith-based construction materials</li>
+                <li>• Water extraction and storage systems</li>
+                <li>• Sulfur-concrete for basic infrastructure</li>
+                <li>• Simple metal reduction and casting</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="space-y-6">
+            <div class="bg-yellow-500/20 border border-yellow-300/50 p-6">
+              <h3 class="text-yellow-200 font-bold mb-3">POWER_BOTTLENECK_ANALYSIS</h3>
+              <ul class="text-yellow-100 text-sm space-y-2">
+                <li>• 100kW+ continuous power required for most ISRU</li>
+                <li>• SMR jump-starts everything, buffers dust-storm loss</li>
+                <li>• Power scaling determines infrastructure development rate</li>
+                <li>• Energy-intensive processes (sintering, smelting) must be coordinated</li>
+              </ul>
+            </div>
+            
+            <div class="bg-green-500/20 border border-green-300/50 p-6">
+              <h3 class="text-green-200 font-bold mb-3">DUAL_USE_DESIGN_PRINCIPLES</h3>
+              <ul class="text-green-100 text-sm space-y-2">
+                <li>• Water tanks → radiation shelter</li>
+                <li>• Sabatier CH₄ plant → emergency CO₂ scrubber</li>
+                <li>• Manufacturing tools → repair/maintenance systems</li>
+                <li>• Maximize utility per shipped kilogram</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-8 bg-white/10 border border-white/30 p-6">
+          <h3 class="text-white font-bold mb-3 text-lg">RESUPPLY_CADENCE_PROJECTION</h3>
+          <div class="grid md:grid-cols-3 gap-6 text-sm">
+            <div>
+              <div class="text-white font-bold mb-2">YEAR_1-2:</div>
+              <div class="text-blue-100">Annual catalyst/membrane resupply. Critical spare parts. Emergency consumables.</div>
+            </div>
+            <div>
+              <div class="text-white font-bold mb-2">YEAR_3-5:</div>
+              <div class="text-blue-100">Reduced frequency as local recycling improves. Specialized electronics and sensors.</div>
+            </div>
+            <div>
+              <div class="text-white font-bold mb-2">YEAR_5+:</div>
+              <div class="text-blue-100">Minimal resupply once Martian chemical industry matures. Focus on rare elements.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Navigation -->
+    <section class="py-8 px-4 sm:px-6 lg:px-8 border-t border-white/30 bg-white/5">
+      <div class="max-w-7xl mx-auto text-center">
+        <div class="text-white font-bold mb-4">DIVE_DEEPER_INTO_INFRASTRUCTURE</div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+          <a href="/construction/power" class="bg-white/15 border border-white/30 p-3 hover:bg-white/25 transition-colors">
+            <div class="text-white font-bold">POWER_SYSTEMS</div>
+            <div class="text-blue-200">SMR & Solar Details</div>
+          </a>
+          <a href="/construction/isru" class="bg-white/15 border border-white/30 p-3 hover:bg-white/25 transition-colors">
+            <div class="text-white font-bold">ISRU_PROCESSES</div>
+            <div class="text-blue-200">Local Manufacturing</div>
+          </a>
+          <a href="/construction/materials" class="bg-white/15 border border-white/30 p-3 hover:bg-white/25 transition-colors">
+            <div class="text-white font-bold">MATERIALS_SCIENCE</div>
+            <div class="text-blue-200">Resource Utilization</div>
+          </a>
+          <a href="/construction/timeline" class="bg-white/15 border border-white/30 p-3 hover:bg-white/25 transition-colors">
+            <div class="text-white font-bold">DEPLOYMENT_TIMELINE</div>
+            <div class="text-blue-200">Phase Implementation</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    function scrollToSection(sectionId) {
+      document.getElementById(sectionId).scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  </script>
+</BaseLayout>
