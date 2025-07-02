@@ -165,7 +165,8 @@ function LocationMarker({
           }}
         >
           <div
-            className="bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded p-3 shadow-xl transition-all duration-200 relative location-card"
+            className="bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded p-3 shadow-xl transition-all duration-200 relative location-card cursor-pointer hover:bg-gray-800/95"
+            onClick={handleLocationClick}
             style={{
               minWidth: '180px',
               maxWidth: '220px',
@@ -221,15 +222,6 @@ function LocationMarker({
                 : location.description}
             </p>
 
-            {/* Action buttons */}
-            <div className="flex items-center gap-2 pt-1 border-t border-gray-700">
-              <button
-                onClick={handleLocationClick}
-                className="flex-1 text-sm text-blue-400 hover:text-blue-300 font-medium py-1 px-2 rounded hover:bg-blue-400/10 transition-colors duration-200"
-              >
-                Explore Details
-              </button>
-            </div>
           </div>
         </Html>
       )}
