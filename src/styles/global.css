@@ -108,6 +108,14 @@
     @apply shadow-md border-gray-400 dark:border-gray-300;
   }
 
+  /* Mars-themed prose */
+  .prose-mars {
+    @apply prose prose-lg max-w-none;
+    @apply prose-headings:text-mars-red prose-headings:font-display;
+    @apply prose-a:text-mars-red hover:prose-a:text-mars-rust;
+    @apply prose-blockquote:border-l-mars-red;
+  }
+
   /* Collapsible sections */
   .collapsible-section {
     @apply border border-gwern-border dark:border-gwern-border-dark rounded-lg overflow-hidden;

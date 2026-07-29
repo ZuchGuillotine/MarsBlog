@@ -67,7 +67,31 @@ const locationCollection = defineCollection({
   }),
 });
 
+const projectCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.date(),
+    project: z.string(), // e.g. 'sintering-bricks' — groups log entries by project
+    author: z.string().default('Benjamin Cox'),
+    tags: z.array(z.string()).default([]),
+    videos: z.array(z.object({
+      src: z.string(), // path under public/, e.g. /videos/sintering/first-melt.mp4
+      caption: z.string().optional(),
+      poster: z.string().optional(),
+    })).default([]),
+    images: z.array(z.object({
+      src: z.string(),
+      alt: z.string(),
+      caption: z.string().optional(),
+    })).default([]),
+    draft: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   'blog': blogCollection,
   'locations': locationCollection,
+  'projects': projectCollection,
 };

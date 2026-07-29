@@ -1,0 +1,216 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allEntries = await getCollection(
+  'projects',
+  entry => entry.data.project === 'sintering-bricks' && !entry.data.draft
+);
+const logEntries = allEntries.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const renderedEntries = await Promise.all(
+  logEntries.map(async entry => ({
+    entry,
+    Content: (await entry.render()).Content,
+  }))
+);
+
+const dateFormat = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+---
+
+<BaseLayout
+  title="Sintering Bricks with MGS-1 | Mars Explorer"
+  description="Ongoing research project: sintering bricks from MGS-1 Martian regolith simulant using parabolic mirrors, building structures from the bricks, and using those structures as regolith thermal batteries."
+>
+  <div class="min-h-screen text-white" style="font-family: 'JetBrains Mono', monospace; background: linear-gradient(135deg, #7f1d1d 0%, #9a3412 30%, #b45309 70%, #92400e 100%);">
+    <!-- Technical Header -->
+    <section class="relative py-8 px-4 sm:px-6 lg:px-8 border-b border-white/30">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 border-2 border-white bg-white/10 flex items-center justify-center flex-shrink-0">
+              <span class="text-white font-bold text-xl">▣</span>
+            </div>
+            <div>
+              <h1 class="text-xl sm:text-4xl font-bold text-white tracking-tight break-words">MGS1_SINTERING.project</h1>
+              <p class="text-orange-200 text-sm">REGOLITH_BRICK_RESEARCH | STATUS: ACTIVE</p>
+            </div>
+          </div>
+          <div class="text-left sm:text-right text-xs text-orange-200">
+            <div>FEEDSTOCK: MGS-1 MARS GLOBAL SIMULANT</div>
+            <div>ENERGY_SOURCE: CONCENTRATED SOLAR</div>
+            <div>LOG_ENTRIES: {logEntries.length}</div>
+          </div>
+        </div>
+
+        <div class="bg-white/10 border border-white/30 p-4 sm:p-6">
+          <div class="text-white font-bold mb-2">PROJECT_OVERVIEW</div>
+          <p class="text-orange-100 text-sm leading-relaxed">
+            This is a hands-on research project working with MGS-1 (Mars Global Simulant), a mineralogically
+            accurate stand-in for the basaltic regolith that covers most of Mars. The goal is a complete,
+            documented pipeline that could run on the Martian surface with almost no Earth-shipped mass:
+            concentrate sunlight with parabolic mirrors to sinter loose regolith into structural bricks,
+            assemble those bricks into simple structures, and then use the structures — filled with loose
+            regolith — as thermal batteries that store daytime solar heat for the brutally cold nights.
+            Videos, data, and write-ups are added to the research log below as the work progresses.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phase Cards -->
+    <section class="py-8 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-2xl font-bold text-white mb-4">RESEARCH_PHASES</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <div class="bg-white/10 border border-white/30 p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-white">01_SOLAR_SINTERING</h3>
+              <div class="text-xs text-orange-200">PARABOLIC_MIRRORS</div>
+            </div>
+            <p class="text-orange-100 text-sm mb-4">
+              Sinter MGS-1 into bricks using nothing but concentrated sunlight. A parabolic mirror
+              focuses solar flux onto a packed regolith mold, fusing mineral grains into a solid
+              ceramic body without any binder or imported fuel.
+            </p>
+            <ul class="text-orange-100 text-xs space-y-1">
+              <li>• Target temperature: ~1000–1200°C at the focal zone</li>
+              <li>• Variables: particle size, compaction, dwell time, ramp rate</li>
+              <li>• Measure: compressive strength, density, thermal cycling durability</li>
+              <li>• Mars relevance: mirrors are lightweight to ship and dust can be brushed off</li>
+            </ul>
+          </div>
+
+          <div class="bg-white/10 border border-white/30 p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-white">02_BRICK_STRUCTURES</h3>
+              <div class="text-xs text-orange-200">CONSTRUCTION</div>
+            </div>
+            <p class="text-orange-100 text-sm mb-4">
+              Use the sintered bricks to build small test structures. Compression-dominant forms —
+              walls, arches, vaults — suit brittle ceramic bricks and Mars's 0.38g, where masonry
+              can span farther than on Earth.
+            </p>
+            <ul class="text-orange-100 text-xs space-y-1">
+              <li>• Interlocking brick geometries vs. mortared joints</li>
+              <li>• Candidate mortars: sulfur concrete, sintered-in-place seams</li>
+              <li>• Test: load capacity, thermal expansion at the joints</li>
+              <li>• Mars relevance: habitat shells, wind breaks, radiation mass</li>
+            </ul>
+          </div>
+
+          <div class="bg-white/10 border border-white/30 p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-white">03_THERMAL_BATTERY</h3>
+              <div class="text-xs text-orange-200">HEAT_STORAGE</div>
+            </div>
+            <p class="text-orange-100 text-sm mb-4">
+              Fill the brick structures with loose regolith and charge them with the same parabolic
+              mirrors. The high thermal mass stores daytime heat and releases it slowly overnight —
+              a battery with no moving parts, made almost entirely of dirt.
+            </p>
+            <ul class="text-orange-100 text-xs space-y-1">
+              <li>• Charge cycle: concentrated solar → regolith core by day</li>
+              <li>• Measure: heat retention curves, insulation configurations</li>
+              <li>• Explore: embedded heat exchange loops for habitat heating</li>
+              <li>• Mars relevance: nights hit −80°C; stored heat cuts electrical load</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Research Log -->
+    <section class="py-8 px-4 sm:px-6 lg:px-8 border-t border-white/30">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold text-white mb-6">RESEARCH_LOG</h2>
+
+        {renderedEntries.length === 0 && (
+          <div class="bg-white/10 border border-white/30 p-6 text-orange-100 text-sm">
+            No log entries yet — first field results coming soon.
+          </div>
+        )}
+
+        <div class="space-y-8">
+          {renderedEntries.map(({ entry, Content }) => (
+            <article class="bg-white/10 border border-white/30 p-4 sm:p-6">
+              <header class="mb-4 border-b border-white/20 pb-4">
+                <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
+                  <h3 class="text-lg font-bold text-white">{entry.data.title}</h3>
+                  <time
+                    datetime={entry.data.pubDate.toISOString()}
+                    class="text-xs text-orange-200 whitespace-nowrap"
+                  >
+                    {dateFormat.format(entry.data.pubDate)}
+                  </time>
+                </div>
+                <p class="text-orange-200 text-sm mt-1">{entry.data.description}</p>
+              </header>
+
+              {entry.data.videos.length > 0 && (
+                <div class="grid grid-cols-1 gap-4 mb-4">
+                  {entry.data.videos.map(video => (
+                    <figure>
+                      <video
+                        controls
+                        preload="metadata"
+                        class="w-full border border-white/30 bg-black"
+                        src={video.src}
+                        poster={video.poster}
+                      >
+                        Your browser does not support embedded video.
+                        <a href={video.src} class="underline">Download the video</a> instead.
+                      </video>
+                      {video.caption && (
+                        <figcaption class="text-xs text-orange-200 mt-2">{video.caption}</figcaption>
+                      )}
+                    </figure>
+                  ))}
+                </div>
+              )}
+
+              {entry.data.images.length > 0 && (
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                  {entry.data.images.map(image => (
+                    <figure>
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        loading="lazy"
+                        class="w-full border border-white/30"
+                      />
+                      {image.caption && (
+                        <figcaption class="text-xs text-orange-200 mt-2">{image.caption}</figcaption>
+                      )}
+                    </figure>
+                  ))}
+                </div>
+              )}
+
+              <div class="prose prose-invert prose-sm max-w-none text-orange-50">
+                <Content />
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Back Navigation -->
+    <section class="py-8 px-4 sm:px-6 lg:px-8 border-t border-white/30 bg-white/5">
+      <div class="max-w-7xl mx-auto text-center">
+        <a href="/construction" class="inline-block bg-white/15 border border-white/30 px-6 py-3 text-xs hover:bg-white/25 transition-colors">
+          <span class="text-white font-bold">← BACK_TO_INFRASTRUCTURE.blueprint</span>
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
