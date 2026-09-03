@@ -5,8 +5,15 @@ import ExpandableSidebar from '../components/ExpandableSidebar';
 import marsLocations from '../data/marsLocations';
 ---
 
-<BaseLayout title="Mars Population - Interactive Globe">
+<BaseLayout
+  title="Mars Population - Interactive Globe"
+  description="Interactive 3D globe of Mars settlement candidate sites, rated by terraforming potential, with detailed pages for each location."
+  preloadGlobeTexture={true}
+>
   <div class="relative w-full h-screen bg-black overflow-hidden">
+    <h1 class="sr-only">
+      Mars Population — Interactive 3D Globe of Mars Settlement Locations
+    </h1>
     <!-- Mars Globe - Full Screen -->
     <div class="w-full h-full">
       <MarsGlobeWrapper client:load locations={marsLocations} />

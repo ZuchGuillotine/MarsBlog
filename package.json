@@ -16,7 +16,9 @@
     "analyze": "npm run build && npx webpack-bundle-analyzer dist/chunks/*.js"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.3.14",
     "@astrojs/react": "^4.3.0",
+    "@astrojs/sitemap": "^3.7.3",
     "@astrojs/tailwind": "^6.0.2",
     "@react-three/drei": "^10.3.0",
     "@react-three/fiber": "^9.1.2",
