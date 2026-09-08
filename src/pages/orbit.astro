@@ -8,48 +8,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 >
   <div class="bg-gwern-bg dark:bg-gwern-bg-dark">
     <!-- Hero Section -->
-    <section class="relative py-16 px-4 sm:px-6 lg:px-8">
+    <section class="relative pt-10 pb-6 sm:pt-12 sm:pb-8 px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto">
         <div class="text-center">
-          <h1 class="text-4xl md:text-6xl font-display font-bold text-gwern-text dark:text-gwern-text-dark mb-6">
+          <h1 class="text-4xl md:text-6xl font-display font-bold text-gwern-text dark:text-gwern-text-dark mb-4">
             Mars <span class="text-mars-red">Orbital Network</span>
           </h1>
-          <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">
-            The complex dance of satellites, orbiters, and relay networks that keep Mars connected to Earth and enable our exploration of the Red Planet.
+          <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+            Explore the spacecraft that connect Mars to Earth through NASA’s interactive relay network visualization.
           </p>
         </div>
       </div>
     </section>
 
     <!-- Mars Relay Network Visualization -->
-    <section class="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
+    <section aria-label="Interactive Mars relay visualization" class="pt-0 pb-12 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
       <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-8">
-          <h2 class="text-3xl font-display font-bold text-gwern-text dark:text-gwern-text-dark mb-4">
-            NASA Mars Relay Network
-          </h2>
-          <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Real-time visualization of Mars orbital assets and their communication capabilities. This interactive model shows current satellite positions and communication windows.
-          </p>
-        </div>
-        
-        <div class="mb-6 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 text-center">
-          <a
-            href="https://orbitfleet.populationmars.com/"
-            class="text-xl font-display font-bold text-mars-red underline underline-offset-4 hover:opacity-80"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Explore the interactive Earth satellite fleet simulator ↗
-          </a>
-          <p class="mt-3 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            See how simulated faults affect satellite operations, approve a response, and inspect
-            the resulting telemetry and orbital changes in OrbitFleet. This Earth-based demo opens
-            in a new tab and offers a hands-on introduction to the challenges of managing a fleet
-            around another planet.
-          </p>
-        </div>
-
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 overflow-hidden">
           <iframe 
             src="https://eyes.nasa.gov/apps/mrn/" 
@@ -61,9 +35,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             loading="lazy">
           </iframe>
           <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">
-            Interactive visualization provided by NASA's Eyes on the Solar System
+            NASA Mars Relay Network · Powered by NASA’s Eyes on the Solar System
           </p>
         </div>
+
+        <aside class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-8">
+          <div class="max-w-2xl">
+            <h2 class="text-lg font-display font-bold text-gwern-text dark:text-gwern-text-dark">
+              Try managing a satellite fleet
+            </h2>
+            <p class="mt-2 text-gray-600 dark:text-gray-400">
+              Simulate faults, approve responses, and inspect the results in OrbitFleet,
+              our interactive Earth satellite demo.
+            </p>
+          </div>
+          <a
+            href="https://orbitfleet.populationmars.com/"
+            class="shrink-0 self-start sm:self-center font-display font-bold text-mars-red underline underline-offset-4 hover:opacity-80"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Explore OrbitFleet ↗<span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        </aside>
       </div>
     </section>
 
