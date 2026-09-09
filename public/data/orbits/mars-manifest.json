@@ -1,0 +1,25 @@
+{
+  "epochUtc": "2025-01-01T00:00:00Z",
+  "spiceypy": "8.2.0",
+  "inputSha256": {
+    "Gravity.tpc": "06feb69a692f69a111421f851aab2d995a9037355c4f87b7898f7a38bacec89c",
+    "gm_de440.tpc": "924ddf4fb9ead9fe8a1aa55780bcabde40b09d00065d58226e24b68d8092f140",
+    "mars-express-20250101.json": "5140890c593f64a4718e1f64ebbb4d8bcd1e6650ecb075f9edd914d6ab5ee64f",
+    "mro-20250101.json": "4c225c6b6fd1f55bec53ca2b2c0b88c2bd53255292eb81d18502dca090d25bf8",
+    "naif0012.tls.pc": "f15293b0747e5fb01a865596281cb0534f7c77274e78184bd64260cc92be3706",
+    "odyssey-20250101.json": "2324c029a1d1cf266c03fa1303dcb8a411c60d7fc01c14d4d4ab6e8f679054cd",
+    "pck00011.tpc": "3dff7b1dbeceaa01f25467767d3fa25816051c85d162d1edf04acb310ee28bb1",
+    "sun-20250101.json": "dfe46b00fec01c7ee4b8dcac3030ef2f17877ad7ff216b0b6040521a6cd735b5",
+    "tgo-20250101.json": "a11c74964a2554af4efa2cd76ab617a4e9021f2d29ebada2a1f13ebb73f5c5f8"
+  },
+  "outputSha256": "e52b4e9b796a82797ce571a28894a92a3cd1e6ee0e97b8d2d04b2da49a2436cd",
+  "constants": {
+    "marsPlanetMuKm3S2": 42828.37362069909,
+    "radiiKm": [
+      3396.19,
+      3396.19,
+      3376.2
+    ],
+    "approximateJ2": 0.001964
+  }
+}

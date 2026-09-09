@@ -1,305 +1,78 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import OrbitalSample from '../components/OrbitalSample';
 ---
 
-<BaseLayout 
-  title="Mars Orbital Network | Mars Explorer"
-  description="Explore Mars' orbital environment, satellites, and the critical relay network that enables communication with the Red Planet."
->
-  <div class="bg-gwern-bg dark:bg-gwern-bg-dark">
-    <!-- Hero Section -->
-    <section class="relative pt-10 pb-6 sm:pt-12 sm:pb-8 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center">
-          <h1 class="text-4xl md:text-6xl font-display font-bold text-gwern-text dark:text-gwern-text-dark mb-4">
-            Mars <span class="text-mars-red">Orbital Network</span>
-          </h1>
-          <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Explore the spacecraft that connect Mars to Earth through NASA’s interactive relay network visualization.
-          </p>
+<BaseLayout title="Orbital Observatory | Mars Explorer" description="Compare NASA's Mars Relay Network visualization with fixed-epoch Mars and Earth orbital samples and an operational fleet demonstration.">
+  <main class="observatory">
+    <header class="orbit-hero">
+      <div class="orbit-kicker"><span></span> Orbital observatory</div>
+      <h1>Two planets, four views<br /><em>of orbital operations.</em></h1>
+      <p>Explore NASA’s Mars relay visualization, compare Mars and Earth orbital paths, and open an interactive Earth fleet simulation. Each view identifies whether its spacecraft are historical, proposed, or hypothetical.</p>
+      <div class="hero-legend" aria-label="Evidence categories"><span><i class="historical"></i> Historical</span><span><i class="proposed"></i> Proposed</span><span><i class="configured-dot"></i> Simulation sample</span><span><i class="active-dot"></i> Active demo</span></div>
+    </header>
+
+    <section class="observatory-grid" aria-label="Orbital observatory panels">
+      <article class="orbit-panel nasa-panel">
+        <header class="panel-header"><div><span class="panel-number">01</span><p class="eyebrow">NASA interactive</p><h2>Mars Relay Network</h2></div><span class="status-badge external">NASA hosted</span></header>
+        <p class="panel-intro">NASA’s separate interactive experience presents the Mars relay network in its own visualization and context.</p>
+        <div class="iframe-shell"><iframe src="https://eyes.nasa.gov/apps/mrn/" title="NASA Mars Relay Network visualization" loading="lazy" allowfullscreen></iframe></div>
+        <footer class="panel-note"><span>Source</span><p>NASA Eyes on the Solar System. This embed is separate from the samples below.</p></footer>
+      </article>
+
+      <article class="orbit-panel sample-panel mars-panel">
+        <header class="panel-header"><div><span class="panel-number">02</span><p class="eyebrow">Mars system sample</p><h2>Orbiters, relays & proposals</h2></div><span class="status-badge historical-badge">Fixed epoch</span></header>
+        <p class="panel-intro">Four historical Mars orbiters as of 1 January 2025, alongside six proposed telecommunications relays and three proposed imaging spacecraft.</p>
+        <div class="sample-shell"><OrbitalSample src="/data/orbits/mars-scene.json" client:visible /></div>
+        <footer class="panel-note"><span>Reading</span><p>The trails follow six hours of orbital motion from the stated date. Historical and proposed spacecraft are labeled separately.</p></footer>
+      </article>
+
+      <article class="orbit-panel sample-panel earth-panel">
+        <header class="panel-header"><div><span class="panel-number">03</span><p class="eyebrow">Earth system sample</p><h2>OrbitFleet around Earth</h2></div><span class="status-badge configured">Simulation</span></header>
+        <p class="panel-intro">Twenty-four hypothetical spacecraft selected from OrbitFleet’s 200-object Earth simulation, shown over a two-hour playback.</p>
+        <div class="sample-shell"><OrbitalSample src="/data/orbits/earth-scene.json" client:visible /></div>
+        <footer class="panel-note"><span>Reading</span><p>This sample begins on 1 January 2025 and contains no active faults. It does not show real spacecraft or live telemetry.</p></footer>
+      </article>
+
+      <article class="orbit-panel operations-panel">
+        <header class="panel-header"><div><span class="panel-number">04</span><p class="eyebrow">Operations</p><h2>Mission control</h2></div><span class="status-badge active">Earth active</span></header>
+        <p class="panel-intro">Try the working Earth demo: introduce a fault, approve a response, and watch how spacecraft health and customer service change.</p>
+        <div class="operations-list">
+          <a class="operation active-operation" href="https://orbitfleet.populationmars.com/" target="_blank" rel="noopener noreferrer"><span class="operation-index">EARTH / 01</span><strong>Open OrbitFleet</strong><p>Inject simulated faults, approve responses, and inspect service changes alongside the telemetry used to assess them.</p><span class="operation-action">Launch console <i aria-hidden="true">↗</i></span></a>
+          <div class="operation disabled-operation" aria-disabled="true"><span class="operation-index">MARS / 02</span><strong>Mars mission control</strong><p>Explore and respond to Mars relay anomalies in a future mission-control experience.</p><span class="operation-action">Coming soon</span></div>
         </div>
-      </div>
+        <footer class="panel-note"><span>Availability</span><p>The Earth demonstration is open now. Mars mission control is still in development.</p></footer>
+      </article>
     </section>
 
-    <!-- Mars Relay Network Visualization -->
-    <section aria-label="Interactive Mars relay visualization" class="pt-0 pb-12 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
-      <div class="max-w-7xl mx-auto">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 overflow-hidden">
-          <iframe 
-            src="https://eyes.nasa.gov/apps/mrn/" 
-            width="100%" 
-            height="600" 
-            class="rounded border-0"
-            allowfullscreen
-            title="NASA Mars Relay Network Visualization"
-            loading="lazy">
-          </iframe>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">
-            NASA Mars Relay Network · Powered by NASA’s Eyes on the Solar System
-          </p>
-        </div>
-
-        <aside class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-8">
-          <div class="max-w-2xl">
-            <h2 class="text-lg font-display font-bold text-gwern-text dark:text-gwern-text-dark">
-              Try managing a satellite fleet
-            </h2>
-            <p class="mt-2 text-gray-600 dark:text-gray-400">
-              Simulate faults, approve responses, and inspect the results in OrbitFleet,
-              our interactive Earth satellite demo.
-            </p>
-          </div>
-          <a
-            href="https://orbitfleet.populationmars.com/"
-            class="shrink-0 self-start sm:self-center font-display font-bold text-mars-red underline underline-offset-4 hover:opacity-80"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Explore OrbitFleet ↗<span class="sr-only"> (opens in a new tab)</span>
-          </a>
-        </aside>
-      </div>
-    </section>
-
-    <!-- Martian Satellites Section -->
-    <section class="py-16 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-display font-bold text-gwern-text dark:text-gwern-text-dark mb-4">
-            Mars' Natural Satellites
-          </h2>
-          <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Unlike Earth's single large moon, Mars has two small, irregularly shaped moons that orbit close to the planet.
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-8">
-          <!-- Phobos -->
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-            <h3 class="text-2xl font-display font-bold text-mars-red mb-4">Phobos</h3>
-            <div class="space-y-4">
-              <div class="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span class="font-semibold text-gray-700 dark:text-gray-300">Diameter:</span>
-                  <span class="text-gray-600 dark:text-gray-400 ml-1">22.2 km</span>
-                </div>
-                <div>
-                  <span class="font-semibold text-gray-700 dark:text-gray-300">Orbital Period:</span>
-                  <span class="text-gray-600 dark:text-gray-400 ml-1">7.6 hours</span>
-                </div>
-                <div>
-                  <span class="font-semibold text-gray-700 dark:text-gray-300">Distance:</span>
-                  <span class="text-gray-600 dark:text-gray-400 ml-1">9,376 km</span>
-                </div>
-                <div>
-                  <span class="font-semibold text-gray-700 dark:text-gray-300">Shape:</span>
-                  <span class="text-gray-600 dark:text-gray-400 ml-1">Potato-like</span>
-                </div>
-              </div>
-              <p class="text-gray-600 dark:text-gray-400">
-                The larger and inner moon of Mars, Phobos orbits so close that it completes three orbits per Martian day. Its orbit is gradually decaying, and it will either crash into Mars or break apart within 50 million years.
-              </p>
-              <div class="bg-mars-red bg-opacity-10 dark:bg-mars-orange dark:bg-opacity-10 p-4 rounded">
-                <h4 class="font-semibold text-mars-red dark:text-mars-orange mb-2">Unique Features:</h4>
-                <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
-                  <li>• Rises in the west and sets in the east</li>
-                  <li>• Visible from Mars surface for only 4.5 hours at a time</li>
-                  <li>• Heavily cratered with the large Stickney crater</li>
-                  <li>• Possible captured asteroid or impact debris</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- Deimos -->
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-            <h3 class="text-2xl font-display font-bold text-mars-red mb-4">Deimos</h3>
-            <div class="space-y-4">
-              <div class="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span class="font-semibold text-gray-700 dark:text-gray-300">Diameter:</span>
-                  <span class="text-gray-600 dark:text-gray-400 ml-1">12.6 km</span>
-                </div>
-                <div>
-                  <span class="font-semibold text-gray-700 dark:text-gray-300">Orbital Period:</span>
-                  <span class="text-gray-600 dark:text-gray-400 ml-1">30.3 hours</span>
-                </div>
-                <div>
-                  <span class="font-semibold text-gray-700 dark:text-gray-300">Distance:</span>
-                  <span class="text-gray-600 dark:text-gray-400 ml-1">23,463 km</span>
-                </div>
-                <div>
-                  <span class="font-semibold text-gray-700 dark:text-gray-300">Shape:</span>
-                  <span class="text-gray-600 dark:text-gray-400 ml-1">Lumpy oval</span>
-                </div>
-              </div>
-              <p class="text-gray-600 dark:text-gray-400">
-                The smaller and more distant moon of Mars, Deimos has a more stable orbit and appears as a bright star from the Martian surface. Its orbit is slowly expanding, moving away from Mars over time.
-              </p>
-              <div class="bg-mars-red bg-opacity-10 dark:bg-mars-orange dark:bg-opacity-10 p-4 rounded">
-                <h4 class="font-semibold text-mars-red dark:text-mars-orange mb-2">Unique Features:</h4>
-                <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
-                  <li>• Remains above horizon for 2.7 sols (Martian days)</li>
-                  <li>• Appears star-like from Mars surface</li>
-                  <li>• Smoother surface than Phobos</li>
-                  <li>• Named after the Greek god of dread</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Orbital Infrastructure Section -->
-    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-display font-bold text-gwern-text dark:text-gwern-text-dark mb-4">
-            Mars Orbital Infrastructure
-          </h2>
-          <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            The network of spacecraft that enables Mars exploration and communication with Earth.
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-8">
-          <!-- Orbiters -->
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-            <h3 class="text-xl font-display font-bold text-mars-red mb-4">Active Orbiters</h3>
-            <div class="space-y-4">
-              <div class="border-l-4 border-mars-red pl-4">
-                <h4 class="font-semibold text-gray-700 dark:text-gray-300">Mars Reconnaissance Orbiter</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400">High-resolution imaging and communication relay</p>
-              </div>
-              <div class="border-l-4 border-mars-red pl-4">
-                <h4 class="font-semibold text-gray-700 dark:text-gray-300">MAVEN</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Atmospheric and ionospheric studies</p>
-              </div>
-              <div class="border-l-4 border-mars-red pl-4">
-                <h4 class="font-semibold text-gray-700 dark:text-gray-300">Mars Express</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400">ESA orbiter for surface and subsurface analysis</p>
-              </div>
-              <div class="border-l-4 border-mars-red pl-4">
-                <h4 class="font-semibold text-gray-700 dark:text-gray-300">Trace Gas Orbiter</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Atmospheric composition and relay services</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Communication Windows -->
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-            <h3 class="text-xl font-display font-bold text-mars-red mb-4">Communication Challenges</h3>
-            <div class="space-y-4">
-              <div>
-                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Signal Delay</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400">4-24 minutes one-way, varying with planetary positions</p>
-              </div>
-              <div>
-                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Solar Conjunction</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Communication blackouts when Mars is behind the Sun</p>
-              </div>
-              <div>
-                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Relay Dependencies</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Surface missions rely on orbiters for efficient data transmission</p>
-              </div>
-              <div>
-                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Orbital Mechanics</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Complex planning required for optimal communication windows</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Future Plans -->
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-            <h3 class="text-xl font-display font-bold text-mars-red mb-4">Future Orbital Assets</h3>
-            <div class="space-y-4">
-              <div>
-                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Mars Relay Network</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Dedicated constellation for enhanced communications</p>
-              </div>
-              <div>
-                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Navigation Satellites</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400">GPS-like system for precise surface navigation</p>
-              </div>
-              <div>
-                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Weather Monitoring</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Comprehensive atmospheric observation network</p>
-              </div>
-              <div>
-                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Resource Mapping</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Advanced sensors for mineral and water detection</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Orbital Mechanics Section -->
-    <section class="py-16 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-display font-bold text-gwern-text dark:text-gwern-text-dark mb-4">
-            Mars Orbital Mechanics
-          </h2>
-          <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Understanding the unique challenges and opportunities of Mars orbital dynamics.
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-8">
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-            <h3 class="text-xl font-display font-bold text-mars-red mb-4">Key Orbital Parameters</h3>
-            <div class="space-y-4">
-              <div class="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-2">
-                <span class="font-semibold text-gray-700 dark:text-gray-300">Mars Sol Length</span>
-                <span class="text-gray-600 dark:text-gray-400">24h 37m 22s</span>
-              </div>
-              <div class="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-2">
-                <span class="font-semibold text-gray-700 dark:text-gray-300">Surface Gravity</span>
-                <span class="text-gray-600 dark:text-gray-400">3.71 m/s² (38% of Earth)</span>
-              </div>
-              <div class="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-2">
-                <span class="font-semibold text-gray-700 dark:text-gray-300">Escape Velocity</span>
-                <span class="text-gray-600 dark:text-gray-400">5.03 km/s</span>
-              </div>
-              <div class="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-2">
-                <span class="font-semibold text-gray-700 dark:text-gray-300">Synchronous Orbit</span>
-                <span class="text-gray-600 dark:text-gray-400">20,428 km altitude</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="font-semibold text-gray-700 dark:text-gray-300">Hill Sphere Radius</span>
-                <span class="text-gray-600 dark:text-gray-400">982,000 km</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-            <h3 class="text-xl font-display font-bold text-mars-red mb-4">Orbital Advantages</h3>
-            <div class="space-y-4">
-              <div class="bg-green-50 dark:bg-green-900 dark:bg-opacity-20 p-4 rounded">
-                <h4 class="font-semibold text-green-800 dark:text-green-400 mb-2">Lower Energy Requirements</h4>
-                <p class="text-sm text-green-700 dark:text-green-300">
-                  Mars' lower gravity makes orbital insertion and maintenance less energy-intensive than Earth operations.
-                </p>
-              </div>
-              <div class="bg-blue-50 dark:bg-blue-900 dark:bg-opacity-20 p-4 rounded">
-                <h4 class="font-semibold text-blue-800 dark:text-blue-400 mb-2">Stable Orbits</h4>
-                <p class="text-sm text-blue-700 dark:text-blue-300">
-                  Less atmospheric drag and fewer gravitational perturbations allow for more stable long-term orbits.
-                </p>
-              </div>
-              <div class="bg-purple-50 dark:bg-purple-900 dark:bg-opacity-20 p-4 rounded">
-                <h4 class="font-semibold text-purple-800 dark:text-purple-400 mb-2">Closer Surface Access</h4>
-                <p class="text-sm text-purple-700 dark:text-purple-300">
-                  Low orbits can get closer to the surface, enabling better imaging and communication with surface assets.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+    <aside class="moon-context" aria-labelledby="moon-context-title">
+      <div><p class="eyebrow">Natural orbital context</p><h2 id="moon-context-title">Phobos & Deimos</h2></div>
+      <p>Mars’ two small moons occupy very different rhythms: Phobos circles Mars in about 7.7 hours, while Deimos takes about 30.3 hours. They provide natural scale markers for thinking about the planet’s near-space environment.</p>
+      <dl><div><dt>Phobos</dt><dd>~9,376 km from Mars’ center</dd></div><div><dt>Deimos</dt><dd>~23,463 km from Mars’ center</dd></div></dl>
+    </aside>
+  </main>
 </BaseLayout>
+
+<style>
+  :global(body) { background: #070809; }
+  .observatory { --ink:#f3efe8;--muted:#a5a19b;--line:rgba(255,255,255,.12);--mars:#df6b45;--cyan:#75c9d2; min-height:100vh;color:var(--ink);background:radial-gradient(circle at 9% 5%,rgba(166,61,36,.17),transparent 30rem),radial-gradient(circle at 90% 36%,rgba(44,105,117,.12),transparent 34rem),#070809;padding:clamp(3.5rem,6vw,5.5rem) clamp(1rem,3vw,2.5rem) 5rem; }
+  .orbit-hero,.observatory-grid,.moon-context { width:min(1480px,100%);margin-inline:auto; }
+  .orbit-hero { display:grid;grid-template-columns:minmax(0,1.25fr) minmax(18rem,.75fr);gap:1.4rem 4rem;align-items:end;padding-bottom:clamp(2rem,3.5vw,3.25rem); }
+  .orbit-kicker { grid-column:1/-1;color:#c7aaa0;font:600 .7rem/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.2em; }
+  .orbit-kicker span { display:inline-block;width:2.75rem;height:1px;margin:0 .8rem .25rem 0;background:var(--mars); }
+  .orbit-hero h1 { margin:0;max-width:18ch;font:500 clamp(2.8rem,5vw,4.6rem)/.95 Georgia,'Times New Roman',serif;letter-spacing:-.045em; }.orbit-hero h1 em { color:var(--mars);font-weight:400; }
+  .orbit-hero>p { margin:0;max-width:38rem;color:#b8b3ac;font-size:clamp(1rem,1.4vw,1.2rem);line-height:1.7; }
+  .hero-legend { grid-column:1/-1;display:flex;flex-wrap:wrap;gap:.65rem 1.5rem;padding-top:1.1rem;border-top:1px solid var(--line);color:#8f8c87;font:600 .66rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.11em; }
+  .hero-legend span { display:inline-flex;align-items:center;gap:.5rem; }.hero-legend i { width:.48rem;height:.48rem;border-radius:50%; }.historical{background:#d2b27a}.proposed{border:1px solid #bb86d9}.configured-dot{background:var(--cyan)}.active-dot{background:#72d19d;box-shadow:0 0 10px rgba(114,209,157,.6)}
+  .observatory-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1rem,2vw,1.75rem); }
+  .orbit-panel { min-width:0;overflow:hidden;border:1px solid var(--line);background:linear-gradient(145deg,rgba(24,25,27,.95),rgba(12,13,14,.98));box-shadow:0 22px 70px rgba(0,0,0,.24); }
+  .panel-header { min-height:8.75rem;padding:clamp(1.25rem,2vw,2rem);display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;border-bottom:1px solid var(--line); }.panel-header>div{display:grid;grid-template-columns:auto 1fr;gap:.1rem .85rem}.panel-number{grid-row:1/span 2;color:#605e5b;font:400 .7rem ui-monospace,SFMono-Regular,Menlo,monospace}.eyebrow{margin:0;color:#8d8984;font:600 .65rem/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.16em}.panel-header h2{margin:.42rem 0 0;font:500 clamp(1.55rem,2.6vw,2.5rem)/1.05 Georgia,'Times New Roman',serif;letter-spacing:-.025em}
+  .status-badge { flex:0 0 auto;padding:.42rem .55rem;border:1px solid currentColor;color:#aaa29a;font:600 .58rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em }.status-badge.active{color:#72d19d}.status-badge.historical-badge{color:#d2b27a}.status-badge.configured{color:var(--cyan)}
+  .panel-intro { min-height:5.8rem;margin:0;padding:1.15rem clamp(1.25rem,2vw,2rem);color:var(--muted);font-size:.9rem;line-height:1.65; }
+  .iframe-shell,.sample-shell { margin:0 clamp(.7rem,1.2vw,1rem);overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#020303 }.iframe-shell iframe{display:block;width:100%;min-height:500px;height:min(58vw,620px);border:0}.sample-shell{min-height:500px}.sample-shell>:global(*){width:100%;min-height:500px}
+  .panel-note { display:grid;grid-template-columns:5.4rem 1fr;gap:1rem;margin:0 clamp(1.25rem,2vw,2rem);padding:1.1rem 0 1.3rem;border-top:1px solid var(--line) }.panel-note span{color:#6f6b66;font:600 .6rem/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.12em}.panel-note p{margin:0;color:#8d8984;font-size:.75rem;line-height:1.5}
+  .operations-panel { display:flex;flex-direction:column }.operations-list{flex:1;display:grid;gap:1rem;align-content:center;padding:1rem clamp(1.25rem,2vw,2rem) 2rem}.operation{display:grid;min-height:13rem;padding:1.35rem;border:1px solid var(--line);color:inherit;text-decoration:none;background:rgba(255,255,255,.025);transition:transform .2s ease,border-color .2s ease,background .2s ease}.active-operation:hover,.active-operation:focus-visible{transform:translateY(-2px);border-color:rgba(114,209,157,.55);background:rgba(114,209,157,.06);outline:none}.operation-index{color:#6f6b66;font:600 .6rem ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.13em}.operation strong{align-self:end;font:500 clamp(1.45rem,2.3vw,2.15rem) Georgia,'Times New Roman',serif}.operation p{margin:.55rem 0 1.2rem;max-width:35rem;color:#9d9993;font-size:.82rem;line-height:1.55}.operation-action{align-self:end;color:#79d7aa;font:600 .68rem ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em}.operation-action i{margin-left:.3rem;font-style:normal}.disabled-operation{opacity:.54;cursor:not-allowed}.disabled-operation .operation-action{color:#88837d}
+  .moon-context { display:grid;grid-template-columns:.55fr 1fr .8fr;gap:2rem clamp(2rem,5vw,6rem);align-items:start;margin-top:clamp(3rem,7vw,7rem);padding:clamp(2rem,4vw,3.5rem) 0;border-block:1px solid var(--line) }.moon-context h2{margin:.5rem 0 0;font:500 clamp(2rem,3vw,3.5rem) Georgia,'Times New Roman',serif}.moon-context>p{margin:0;color:#aaa69f;line-height:1.75}.moon-context dl{margin:0}.moon-context dl div{padding:.8rem 0;border-bottom:1px solid var(--line)}.moon-context dt{color:var(--mars);font:600 .68rem ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.1em}.moon-context dd{margin:.35rem 0 0;color:#a7a39d;font-size:.8rem}
+  @media(max-width:900px){.orbit-hero{grid-template-columns:1fr;gap:1.5rem}.observatory-grid{grid-template-columns:1fr}.iframe-shell iframe{height:560px}.moon-context{grid-template-columns:1fr 1fr}.moon-context dl{grid-column:1/-1}}
+  @media(max-width:560px){.observatory{padding-inline:.75rem}.orbit-hero h1{font-size:clamp(2.65rem,15vw,4.6rem)}.panel-header{min-height:0}.panel-header h2{font-size:1.55rem}.status-badge{display:none}.panel-intro{min-height:0}.iframe-shell iframe{min-height:500px;height:500px}.sample-shell,.sample-shell>:global(*){min-height:500px}.panel-note{grid-template-columns:1fr;gap:.35rem}.operation{min-height:11rem}.moon-context{grid-template-columns:1fr}.moon-context dl{grid-column:auto}}
+</style>

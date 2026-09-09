@@ -1,0 +1,163 @@
+{
+  "j2AccelerationGradientErrorKmS2": 1.7416075203916928e-13,
+  "j2StepHalvingMaxPositionErrorM": 0.010121590983356691,
+  "j2MaxRelativeEnergyDrift": 2.5160089098958046e-11,
+  "pointMassAnalyticMaxPositionErrorM": 0.010820013464519511,
+  "historicalHermite60sHeldoutMaxErrorM": {
+    "mro": 0.10703196301264245,
+    "odyssey": 0.08248209143320773,
+    "mars-express": 0.20707900364737966,
+    "tgo": 0.08358357689665206
+  },
+  "maxRenderBasisMatrixError": 5.551115123125783e-16,
+  "altitudeRangesAboveEquatorialRadiusKm": {
+    "mars/mro": [
+      231.183,
+      296.716
+    ],
+    "mars/odyssey": [
+      370.837,
+      433.677
+    ],
+    "mars/mars-express": [
+      401.606,
+      10421.844
+    ],
+    "mars/tgo": [
+      360.089,
+      417.758
+    ],
+    "mars/proposed-relay-1": [
+      1993.707,
+      2000.0
+    ],
+    "mars/proposed-relay-2": [
+      2000.0,
+      2006.749
+    ],
+    "mars/proposed-relay-3": [
+      1999.999,
+      2006.747
+    ],
+    "mars/proposed-relay-4": [
+      1993.707,
+      2000.0
+    ],
+    "mars/proposed-relay-5": [
+      2000.0,
+      2006.749
+    ],
+    "mars/proposed-relay-6": [
+      1999.999,
+      2006.747
+    ],
+    "mars/proposed-imager-1": [
+      447.995,
+      456.067
+    ],
+    "mars/proposed-imager-2": [
+      445.057,
+      451.266
+    ],
+    "mars/proposed-imager-3": [
+      449.993,
+      473.436
+    ],
+    "earth/SAT-001": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-002": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-003": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-004": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-005": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-006": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-007": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-018": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-030": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-041": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-052": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-064": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-075": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-086": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-098": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-109": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-121": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-132": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-143": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-155": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-166": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-177": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-189": [
+      542.863,
+      542.863
+    ],
+    "earth/SAT-200": [
+      542.863,
+      542.863
+    ]
+  }
+}

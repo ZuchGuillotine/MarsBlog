@@ -150,3 +150,27 @@ Still pending for the Earth/Mars operational pipeline: periodic detections curre
 Evidence: 44 backend tests, strict type checks, the prior independent Kepler audit, 6,000 analytic geometry comparisons, non-Earth projection/routing tests, and 60 healthy detector scans on 20 held-out seeds. Browser review covers paused start, observed radio failure, immediate reroute delivery, later failed verification, sampled trajectories and authenticated refresh. Detailed model limits and cost results are in OrbitFleet `docs/causal-engine-and-mars-gate.md`. The final 200-asset sample measured 10.73 CPU seconds across a 20-minute session, ~28.7 MB peak memory growth and an 8.51 MB ZIP; traffic has increased, but no added infrastructure or paid API is introduced.
 
 **Stop here for user review.** Next agree on Mars reference epoch and kernel coverage, existing spacecraft availability, proposed fleet scope, and surface demand before constructing the Mars scene. Shared foundations can support that work in tandem with remaining Earth refinements.
+
+### Review accepted: orbital observatory v1 — September 9, 2026
+
+The user authorized the fixed historical Mars scene, proposed Mars fleet sample,
+Earth sample, four-panel orbit-page integration and deployment. This supersedes the
+reference-scene stop above. The full Mars anomaly simulator remains the next review
+boundary and is not part of this release.
+
+- NASA's existing Mars Relay Network embed remains panel 1.
+- Panel 2 uses JPL Horizons states for MRO, Odyssey, Mars Express and TGO over
+  1 January 2025, 00:00–06:00 UTC. Six proposed 2,000 km relays and three proposed
+  450 km imagers use Mars gravity plus a low-order J2 approximation. Mars radii,
+  orientation and Sun direction have independent sources and numerical checks.
+- Panel 3 samples 24 hypothetical spacecraft from the actual 200-object OrbitFleet
+  designed adapter over two hours. Both samples have explicit 60× playback,
+  pause/reset, object selection and source/fidelity notes.
+- Panel 4 links to the Earth anomaly simulator and presents Mars mission control
+  as coming soon, without a broken or simulated active link.
+
+The source cache, reproducible builders and numeric results are in
+`scripts/orbits/` and `docs/orbital-observatory-validation.md`. Samples are static
+assets and introduce no backend session or AI calls. Continue Earth refinements in
+tandem with the next Mars planning review; agree surface sites, demand, communications
+delay and environmental fidelity before implementing Mars anomaly response.
