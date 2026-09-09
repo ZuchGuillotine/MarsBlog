@@ -174,3 +174,9 @@ The source cache, reproducible builders and numeric results are in
 assets and introduce no backend session or AI calls. Continue Earth refinements in
 tandem with the next Mars planning review; agree surface sites, demand, communications
 delay and environmental fidelity before implementing Mars anomaly response.
+
+**Deployed September 9, 2026:** observatory UI and samples at Population Mars
+(`faafafb`); audited Earth causal foundations 2B–2D at OrbitFleet (`138eb25`,
+container tag `observatory-20260909`, successful deployment run `34324001104`).
+Production sample hashes and a paused 200-object Earth session were verified.
+Next stop: review the full Mars operations model with the user before implementation.

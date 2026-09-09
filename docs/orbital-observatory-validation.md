@@ -214,4 +214,19 @@ apply, especially with the separate NASA embed and two WebGL views.
 
 OrbitFleet release `138eb25`, tag `observatory-20260909`: CI run `34323685633`
 and container publication run `34323685492` both passed. Deployment and public
-asset verification follow the release push; see the release confirmation below.
+asset verification followed the release push.
+
+### Release confirmation — 9 September 2026
+
+- Population Mars commit `faafafb` is live at https://populationmars.com/orbit/.
+  Both JSON scenes, the Mars source manifest and the Earth texture match local
+  SHA-256 hashes byte-for-byte. Netlify serves correct JSON/PNG media types with
+  ETags and `public,max-age=0,must-revalidate` caching.
+- OrbitFleet deployment run `34324001104` completed successfully using tag
+  `observatory-20260909`. The public readiness response reports ready and NATS
+  connected. A production designed session initialized 200 assets, paused at MET 0
+  with time scale 60, returned initial telemetry and a supported trajectory, then
+  was removed. No scenario or paid AI request was submitted for that check.
+- Live browser review confirms the NASA embed, textured Mars and Earth samples,
+  active Earth console destination and non-interactive Mars coming-soon panel.
+- The full Mars operations simulator is intentionally the next user review gate.
