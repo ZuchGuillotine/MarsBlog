@@ -1,15 +1,21 @@
 import { Canvas, useLoader, useThree } from '@react-three/fiber';
-import { Billboard, Line, OrbitControls } from '@react-three/drei';
+import { Billboard, Html, Line, OrbitControls } from '@react-three/drei';
 import {
   Component,
   Suspense,
   useEffect,
+  useId,
   useMemo,
   useRef,
   useState,
 } from 'react';
 import * as THREE from 'three';
 import styles from './OrbitalSample.module.css';
+import {
+  samplePosition,
+  sampleBodyQuaternion,
+  orbitalTelemetry,
+} from '../lib/orbitalTelemetry';
 
 export type OrbitObjectKind = 'reference' | 'relay' | 'imager' | 'earth';
 type Vector3Tuple = [number, number, number];
@@ -62,37 +68,6 @@ function mapPoint(point: Vector3Tuple, scale: number): Vector3Tuple {
   return [point[0] / scale, point[2] / scale, -point[1] / scale];
 }
 
-function samplePosition(
-  points: Vector3Tuple[],
-  velocities: Vector3Tuple[] | undefined,
-  time: number,
-  step: number
-): Vector3Tuple {
-  if (points.length === 0) return [0, 0, 0];
-  const cursor = Math.max(0, Math.min(points.length - 1, time / step));
-  const lower = Math.floor(cursor);
-  const upper = Math.min(points.length - 1, lower + 1);
-  const blend = cursor - lower;
-  if (!velocities?.[lower] || !velocities[upper] || lower === upper) {
-    return points[lower].map((value, axis) =>
-      THREE.MathUtils.lerp(value, points[upper][axis], blend)
-    ) as Vector3Tuple;
-  }
-  const t2 = blend * blend;
-  const t3 = t2 * blend;
-  const h00 = 2 * t3 - 3 * t2 + 1;
-  const h10 = t3 - 2 * t2 + blend;
-  const h01 = -2 * t3 + 3 * t2;
-  const h11 = t3 - t2;
-  return points[lower].map(
-    (value, axis) =>
-      h00 * value +
-      h10 * step * velocities[lower][axis] +
-      h01 * points[upper][axis] +
-      h11 * step * velocities[upper][axis]
-  ) as Vector3Tuple;
-}
-
 function TexturedBody({
   scene,
   scale,
@@ -106,22 +81,10 @@ function TexturedBody({
     THREE.TextureLoader,
     scene.body.textureUrl || '/images/mars-texture.jpg'
   );
-  const quaternion = useMemo(() => {
-    const samples = scene.samples;
-    if (!samples?.length) return null;
-    const cursor = Math.max(
-      0,
-      Math.min(samples.length - 1, time / scene.stepSeconds)
-    );
-    const lower = Math.floor(cursor);
-    const upper = Math.min(samples.length - 1, lower + 1);
-    return new THREE.Quaternion()
-      .fromArray(samples[lower].renderBodyQuaternion)
-      .slerp(
-        new THREE.Quaternion().fromArray(samples[upper].renderBodyQuaternion),
-        cursor - lower
-      );
-  }, [scene.samples, scene.stepSeconds, time]);
+  const quaternion = useMemo(
+    () => sampleBodyQuaternion(scene, time),
+    [scene, time]
+  );
   useEffect(() => {
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.anisotropy = 8;
@@ -188,6 +151,11 @@ function OrbitalWorld({
   onSelect: (id: string) => void;
   fitAll: boolean;
 }) {
+  const [hovered, setHovered] = useState<string | null>(null);
+  const { events } = useThree();
+  useEffect(() => {
+    events.update?.();
+  }, [time, events]);
   const scale = scene.body.radiusKm;
   const { maxRadius, paths } = useMemo(() => {
     let maximum = scene.body.radiusKm;
@@ -249,7 +217,16 @@ function OrbitalWorld({
         );
         const active = selected === object.id;
         return (
-          <group key={object.id}>
+          <group
+            key={object.id}
+            onPointerOver={event => {
+              event.stopPropagation();
+              setHovered(object.id);
+            }}
+            onPointerOut={() =>
+              setHovered(current => (current === object.id ? null : current))
+            }
+          >
             {points.length > 1 && (
               <Line
                 points={points}
@@ -258,6 +235,19 @@ function OrbitalWorld({
                 transparent
                 opacity={active ? 0.95 : 0.52}
               />
+            )}
+            {hovered === object.id && (
+              <Html
+                position={position}
+                center
+                style={{ pointerEvents: 'none' }}
+                zIndexRange={[10, 0]}
+              >
+                <div className={styles.hoverLabel} role="tooltip">
+                  {object.name}
+                  <small>{object.id}</small>
+                </div>
+              </Html>
             )}
             <Billboard position={position}>
               <mesh
@@ -291,6 +281,95 @@ class CanvasBoundary extends Component<
   }
 }
 
+function TelemetryPanel({
+  id,
+  scene,
+  object,
+  time,
+  currentUtc,
+  onClose,
+}: {
+  id: string;
+  scene: OrbitalScene;
+  object: OrbitalScene['objects'][number];
+  time: number;
+  currentUtc: string;
+  onClose: () => void;
+}) {
+  const panel = useRef<HTMLElement>(null);
+  useEffect(() => {
+    panel.current?.focus({ preventScroll: true });
+  }, [object.id]);
+  const state = orbitalTelemetry(scene, object, time);
+  const number = (value: number, digits = 3) =>
+    value.toLocaleString('en-US', {
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits,
+    });
+  const vector = (values: Vector3Tuple, digits = 3) =>
+    values.map(value => number(value, digits)).join(' / ');
+  const rows = [
+    ['Sample UTC', currentUtc],
+    ['Elapsed time', `${number(time, 1)} s`],
+    ['Center distance', `${number(state.radius)} km`],
+    ['Altitude above equatorial radius', `${number(state.altitude)} km`],
+    ['Inertial speed', `${number(state.speed, 5)} km/s`],
+    ['Radial speed (+ outward)', `${number(state.radialSpeed, 5)} km/s`],
+    ['Inertial X / Y / Z (km)', vector(state.position)],
+    ['Inertial VX / VY / VZ (km/s)', vector(state.velocity, 5)],
+    ...(state.bodyFixed
+      ? [
+          ['Body-fixed X / Y / Z (km)', vector(state.bodyFixed)],
+          ['Planetocentric latitude', `${number(state.latitude!, 4)}°`],
+          ['Longitude (east positive)', `${number(state.longitude!, 4)}°`],
+        ]
+      : []),
+  ];
+  return (
+    <section
+      id={id}
+      ref={panel}
+      tabIndex={-1}
+      className={styles.telemetry}
+      aria-label={`${object.name} telemetry`}
+      onKeyDown={event => {
+        if (event.key === 'Escape') {
+          event.stopPropagation();
+          onClose();
+        }
+      }}
+    >
+      <header>
+        <div>
+          <small>Sample telemetry · {object.id}</small>
+          <h3>{object.name}</h3>
+        </div>
+        <button type="button" onClick={onClose} aria-label="Close telemetry">
+          ×
+        </button>
+      </header>
+      <table>
+        <caption>Orbital state at the displayed simulation time</caption>
+        <tbody>
+          {rows.map(([label, value]) => (
+            <tr key={label}>
+              <th scope="row">{label}</th>
+              <td>{value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p>
+        Interpolated sample data, not live spacecraft telemetry. Frame:{' '}
+        {scene.frame.name}.
+        {state.bodyFixed &&
+          ` Body-fixed coordinates follow the displayed ${scene.body.name} rotation.`}{' '}
+        Altitude uses the equatorial reference radius, not terrain elevation.
+      </p>
+    </section>
+  );
+}
+
 function LoadedOrbitalSample({
   scene,
   className = '',
@@ -303,6 +382,19 @@ function LoadedOrbitalSample({
   const [selected, setSelected] = useState<string | null>(
     scene.objects[0]?.id ?? null
   );
+  const [telemetryOpen, setTelemetryOpen] = useState(false);
+  const telemetryId = useId();
+  const selectionTrigger = useRef<HTMLElement | null>(null);
+  const closeTelemetry = () => {
+    setTelemetryOpen(false);
+    selectionTrigger.current?.focus({ preventScroll: true });
+  };
+  const selectObject = (id: string) => {
+    if (document.activeElement instanceof HTMLElement)
+      selectionTrigger.current = document.activeElement;
+    setSelected(id);
+    setTelemetryOpen(true);
+  };
   const [fitAll, setFitAll] = useState(false);
   const [visible, setVisible] = useState(true);
   const host = useRef<HTMLElement>(null);
@@ -398,7 +490,7 @@ function LoadedOrbitalSample({
               scene={scene}
               time={time}
               selected={selected}
-              onSelect={setSelected}
+              onSelect={selectObject}
               fitAll={fitAll}
             />
           </Canvas>
@@ -457,6 +549,16 @@ function LoadedOrbitalSample({
           </span>
         ))}
       </div>
+      {telemetryOpen && selectedObject && (
+        <TelemetryPanel
+          id={telemetryId}
+          scene={scene}
+          object={selectedObject}
+          time={time}
+          currentUtc={currentUtc}
+          onClose={closeTelemetry}
+        />
+      )}
       <details className={styles.details}>
         <summary>Objects &amp; source notes</summary>
         <div className={styles.legend}>
@@ -465,7 +567,9 @@ function LoadedOrbitalSample({
               key={object.id}
               type="button"
               className={selected === object.id ? styles.selected : ''}
-              onClick={() => setSelected(object.id)}
+              onClick={() => selectObject(object.id)}
+              aria-controls={telemetryId}
+              aria-expanded={selected === object.id && telemetryOpen}
               aria-pressed={selected === object.id}
             >
               <i style={{ background: object.color }} />{' '}

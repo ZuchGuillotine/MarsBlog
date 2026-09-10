@@ -230,3 +230,27 @@ asset verification followed the release push.
 - Live browser review confirms the NASA embed, textured Mars and Earth samples,
   active Earth console destination and non-interactive Mars coming-soon panel.
 - The full Mars operations simulator is intentionally the next user review gate.
+
+### Interactive sample telemetry — 10 September 2026
+
+Both samples now identify hovered markers and paths by object name and ID. Selecting
+an object opens a dismissible telemetry table below the canvas, outside its bounds
+on desktop and narrow screens. Keyboard selection focuses the telemetry region;
+Escape closes it and restores focus to the selection control.
+
+The telemetry position uses the same Hermite interpolation as the rendered marker.
+Velocity is the analytic derivative of that curve. Body-fixed coordinates invert
+the same interpolated body quaternion used by the globe, with the render-axis
+mapping reversed. Latitude is planetocentric and longitude is east-positive;
+altitude is center distance minus the equatorial reference radius. These are
+sample-derived values, not received telemetry or terrain-relative altitude.
+
+`node --experimental-strip-types --test scripts/orbits/test-telemetry.mjs` checks
+all 37 objects at sample endpoints and between samples, including numerical velocity
+derivatives, rotation invariance, a known quarter-turn orientation, and the
+position-only fallback. Browser checks cover canvas identification, object
+selection, playback, reset, keyboard scrubbing, Earth end-of-period state, Escape
+and focus restoration, and a 375 px viewport with no horizontal overflow or table /
+canvas overlap. The production build passes. Repository-wide TypeScript checking
+still reports existing errors in unrelated components; no errors reference the
+orbital sample or telemetry module.
