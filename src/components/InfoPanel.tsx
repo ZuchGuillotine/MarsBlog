@@ -1,3 +1,15 @@
+/**
+    * @description      : 
+    * @author           : 
+    * @group            : 
+    * @created          : 28/06/2025 - 23:18:36
+    * 
+    * MODIFICATION LOG
+    * - Version         : 1.0.0
+    * - Date            : 28/06/2025
+    * - Author          : 
+    * - Modification    : 
+**/
 import React, { useEffect, useRef } from 'react';
 import type { InfoPanelProps } from '@/types';
 
