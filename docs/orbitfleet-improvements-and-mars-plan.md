@@ -247,7 +247,7 @@ environment before deployment; no runtime network fetch is required.
 ### 14 September 2026 — standalone Mars release
 
 Mars mission control is deployed at https://orbitfleet.populationmars.com/mars
-(release `mars-v1-route-fix`, application commit `e9c2589`). The orbit page now
+(release `mars-v1-startup-fix`, application commit `e2b94df`). The orbit page now
 provides separate active Earth and Mars console links. Production API launch,
 fault injection, source-manifest exports, readiness, and the standalone browser
 route were checked. Existing hosting is reused; no new paid service was added.
