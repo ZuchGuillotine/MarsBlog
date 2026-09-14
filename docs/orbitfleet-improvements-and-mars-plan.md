@@ -243,3 +243,11 @@ OrbitFleet now also carries the offline `scripts/build_mars_environment.py` buil
 preserved raw Earth and Sun source responses, and an environment manifest with
 SHA-256 hashes. Release review must confirm those hashes and reproduce the bounded
 environment before deployment; no runtime network fetch is required.
+
+### 14 September 2026 — standalone Mars release
+
+Mars mission control is deployed at https://orbitfleet.populationmars.com/mars
+(release `mars-v1-route-fix`, application commit `e9c2589`). The orbit page now
+provides separate active Earth and Mars console links. Production API launch,
+fault injection, source-manifest exports, readiness, and the standalone browser
+route were checked. Existing hosting is reused; no new paid service was added.
