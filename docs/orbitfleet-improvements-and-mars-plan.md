@@ -180,3 +180,66 @@ delay and environmental fidelity before implementing Mars anomaly response.
 container tag `observatory-20260909`, successful deployment run `34324001104`).
 Production sample hashes and a paused 200-object Earth session were verified.
 Next stop: review the full Mars operations model with the user before implementation.
+
+### Mars operations v1 built locally — September 13, 2026
+
+The first Mars operations slice is implemented locally and awaits review. It is not a
+deployment claim. The slice reuses OrbitFleet sessions, authentication, event streams,
+approvals, observations, exports, body geometry, energy accounting, and deterministic
+validation with a dedicated Mars adapter. The `/mars` experience operates nine
+proposed spacecraft over the fixed 1 January 2025 six-hour reference window; the four
+historical spacecraft remain display-only context and cannot be commanded.
+
+Implemented behavior includes Mars J2 plus illustrative drag propagation, sampled IAU
+orientation and Earth/Sun geometry, ellipsoidal surface contacts, eclipse and bounded
+power, assumed finite radio capacities, priority-first 20,000 Mbit node buffers,
+store-and-forward Earth delivery, one-way observation and command delay, and local
+preauthorization with a bounded five-second delay. The first scenarios cover relay
+loss, permanent weak-array degradation, and a manually injected processor upset.
+There are no crosslinks, real RF budgets, mission schedules, radiation probabilities,
+or claims that historical missions provide modeled service.
+
+The measured one-hour fixture makes the policy tradeoff visible:
+
+| Case | Total received | Priority received |
+| --- | ---: | ---: |
+| Healthy | 6,537.5 Mbit | 897.5 Mbit |
+| Untreated relay fault | 6,200.4 Mbit | 560.4 Mbit |
+| Local spare response | 6,102.9 Mbit | 897.5 Mbit |
+
+The local spare restores priority delivery in this case while total received data is
+lower than with the untreated fault. Its reduced capacity serves high-priority surface
+traffic ahead of imagery. This is a scenario-specific prioritization tradeoff, not a
+general throughput improvement.
+
+Review gates before deployment are:
+
+- independently verify Mars frame/orientation transformations, reference Hermite
+  interpolation, force integration, ellipsoid visibility, eclipse, and power bounds;
+- prove buffer conservation, contact capacity, delayed Earth receipt, observation
+  arrival, return-command delay, command-path failure, and priority ordering;
+- exercise Earth approval and local preauthorization for every initial fault, retaining
+  failed, degraded, and inconclusive outcomes;
+- validate `/mars` launch, pause/resume/step, authenticated recovery, WebSocket event
+  ordering, fixed-window completion, exports, and accessibility in the production
+  build;
+- measure CPU, memory, event payloads, bundled-source transfer, and session retention;
+- review source hashes, fixed interval, model-limit wording, secrets handling, and
+  deployment configuration without introducing a new service or paid AI dependency.
+
+Detailed implemented scope, provenance, assumptions, API behavior, and future slices
+are recorded in OrbitFleet `docs/mars-operations-v1.md`.
+
+The integrated six-hour local check propagated all nine proposed spacecraft in 4.63
+seconds on the developer machine; this is not a server-capacity benchmark. Relay
+reference differences were about `1.15e-6 km`, and the imager maximum was `0.001417
+km`, including the new drag term and a different integration path. An independent
+SpiceyPy `IAU_MARS` to `J2000` comparison at six times through the interval and all
+three body axes had a maximum position discrepancy of `1.008e-7 km`. The same run
+reported a data conservation residual of `8.74e-11 Mbit`, `36,679.2 Mbit` received at
+Earth, and battery state of charge from `0.8956` to `1.0`.
+
+OrbitFleet now also carries the offline `scripts/build_mars_environment.py` builder,
+preserved raw Earth and Sun source responses, and an environment manifest with
+SHA-256 hashes. Release review must confirm those hashes and reproduce the bounded
+environment before deployment; no runtime network fetch is required.
