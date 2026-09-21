@@ -108,6 +108,10 @@
     @apply shadow-md border-gray-400 dark:border-gray-300;
   }
 
+  .nav-link-dark-active {
+    @apply border-mars-orange text-mars-orange bg-gray-800;
+  }
+
   /* Mars-themed prose */
   .prose-mars {
     @apply prose prose-lg max-w-none;

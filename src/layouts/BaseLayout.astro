@@ -96,7 +96,7 @@ const structuredData = {
             <a href="/" class="text-white font-display text-base sm:text-lg font-bold whitespace-nowrap hover:text-mars-orange transition-colors">
               Mars Population
             </a>
-            <div class="hidden lg:block text-gray-300 text-sm whitespace-nowrap" id="current-datetime">
+            <div class="hidden xl:block text-gray-300 text-sm whitespace-nowrap" id="current-datetime">
               <!-- Date/time will be populated by client-side script -->
             </div>
             <div class="flex items-center space-x-1.5 sm:space-x-2 whitespace-nowrap">
@@ -106,10 +106,15 @@ const structuredData = {
           </div>
           
           <!-- Desktop Navigation -->
-          <div class="hidden md:block">
-            <div class="ml-10 flex items-baseline space-x-4">
+          <div class="hidden lg:block">
+            <div class="ml-8 flex items-baseline space-x-2">
               <a href="/orbit" class="nav-link-dark">Orbit</a>
               <a href="/construction" class="nav-link-dark">Infrastructure</a>
+              <a
+                href="/blog"
+                class:list={['nav-link-dark', { 'nav-link-dark-active': Astro.url.pathname.startsWith('/blog') }]}
+                aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}
+              >Blog</a>
               <a href="/construction/sintering-bricks" class="nav-link-dark">Sintering Lab</a>
               {showDonationCTA && (
                 <a href="/support" class="btn-primary ml-6">
@@ -120,7 +125,7 @@ const structuredData = {
           </div>
           
           <!-- Mobile menu button -->
-          <div class="md:hidden">
+          <div class="lg:hidden">
             <button 
               type="button" 
               class="btn-ghost p-2" 
@@ -137,10 +142,15 @@ const structuredData = {
         </div>
         
         <!-- Mobile Navigation -->
-        <div class="md:hidden hidden" id="mobile-menu">
+        <div class="lg:hidden hidden" id="mobile-menu">
           <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gwern-border dark:border-gwern-border-dark">
             <a href="/orbit" class="block nav-link-dark">Orbit</a>
             <a href="/construction" class="block nav-link-dark">Infrastructure</a>
+            <a
+              href="/blog"
+              class:list={['block nav-link-dark', { 'nav-link-dark-active': Astro.url.pathname.startsWith('/blog') }]}
+              aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}
+            >Blog</a>
             <a href="/construction/sintering-bricks" class="block nav-link-dark">Sintering Lab</a>
             {showDonationCTA && (
               <a href="/support" class="block btn-primary mt-4">
@@ -180,6 +190,7 @@ const structuredData = {
           <div>
             <h3 class="font-display font-semibold text-gwern-text dark:text-gwern-text-dark mb-4">Quick Links</h3>
             <ul class="space-y-2">
+              <li><a href="/blog" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">Blog</a></li>
               <li><a href="/about" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">About</a></li>
               <li><a href="/privacy" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">Privacy</a></li>
               <li><a href="/terms" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">Terms</a></li>

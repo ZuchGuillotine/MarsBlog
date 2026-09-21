@@ -304,25 +304,21 @@ const sections = [
   }
 
   :global(body.attack-satellites-page) {
-    background: #e9e0d2;
-    color: #26231f;
+    background: #f7eeee;
+    color: #252022;
   }
 
   :global(.attack-satellites-page main) {
-    background:
-      radial-gradient(circle at 15% 4%, rgba(164, 90, 56, 0.09), transparent 30rem),
-      linear-gradient(90deg, rgba(92, 70, 46, 0.035) 1px, transparent 1px),
-      #e9e0d2;
-    background-size: auto, 5rem 5rem, auto;
+    background: #f7eeee;
   }
 
   .article-shell {
-    --paper: #f6f0e5;
-    --ink: #26231f;
-    --muted: #6d665d;
-    --rule: #c8baaa;
-    --rule-strong: #9d8d7c;
-    --rust: #9f4228;
+    --paper: #fffafa;
+    --ink: #252022;
+    --muted: #6d6266;
+    --rule: #d8c4c8;
+    --rule-strong: #aa898f;
+    --rust: #963d45;
     width: min(1320px, calc(100% - 2rem));
     margin: 0 auto;
     padding: clamp(1rem, 3vw, 2.5rem) 0 clamp(4rem, 8vw, 8rem);
@@ -333,7 +329,7 @@ const sections = [
     overflow: hidden;
     min-height: clamp(22rem, 52vw, 38rem);
     background: #111;
-    box-shadow: 0 2rem 6rem rgba(64, 42, 24, 0.19);
+    box-shadow: 0 2rem 6rem rgba(77, 24, 35, 0.16);
   }
 
   .article-hero::after {
@@ -381,7 +377,7 @@ const sections = [
     align-items: start;
     padding: clamp(3rem, 7vw, 6.5rem) clamp(1rem, 4vw, 4rem);
     background: var(--paper);
-    box-shadow: 0 2rem 6rem rgba(64, 42, 24, 0.13);
+    box-shadow: 0 2rem 6rem rgba(77, 24, 35, 0.1);
   }
 
   .contents {
@@ -406,13 +402,13 @@ const sections = [
   }
 
   .contents li + li {
-    border-top: 1px solid rgba(157, 141, 124, 0.35);
+    border-top: 1px solid rgba(150, 61, 69, 0.2);
   }
 
   .contents a {
     display: block;
     padding: 0.65rem 0;
-    color: #766d62;
+    color: #74666a;
     font: 600 0.7rem/1.4 ui-sans-serif, system-ui, sans-serif;
     text-decoration: none;
     transition: color 160ms ease, transform 160ms ease;
@@ -442,7 +438,7 @@ const sections = [
   }
 
   .opening p:first-child {
-    color: #443d35;
+    color: #443b3e;
     font-size: clamp(1.35rem, 2.3vw, 1.78rem);
     line-height: 1.52;
   }
@@ -467,7 +463,7 @@ const sections = [
     margin: 0 0 1.25rem;
     padding-top: 1.35rem;
     border-top: 1px solid var(--rule-strong);
-    color: #1f1b17;
+    color: #211b1d;
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: clamp(1.85rem, 3.2vw, 2.8rem);
     font-weight: 650;
@@ -494,7 +490,7 @@ const sections = [
   }
 
   strong {
-    color: #181511;
+    color: #181315;
   }
 
   .table-shell {
@@ -504,10 +500,10 @@ const sections = [
     overflow-x: auto;
     border: 1px solid var(--rule-strong);
     border-radius: 0.2rem;
-    background: #fbf7ef;
-    box-shadow: 0 0.85rem 2.25rem rgba(71, 49, 29, 0.08);
+    background: #fffafa;
+    box-shadow: 0 0.85rem 2.25rem rgba(77, 24, 35, 0.07);
     overscroll-behavior-inline: contain;
-    scrollbar-color: var(--rust) #e5d9c9;
+    scrollbar-color: var(--rust) #eadcdf;
   }
 
   .table-shell.wide {
@@ -528,7 +524,7 @@ const sections = [
     width: 100%;
     min-width: var(--table-min);
     border-collapse: collapse;
-    color: #2d2924;
+    color: #2d2729;
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 0.84rem;
     line-height: 1.45;
@@ -556,18 +552,18 @@ const sections = [
     position: sticky;
     top: 0;
     z-index: 1;
-    background: #2e2924;
-    color: #fffaf2;
+    background: #33272b;
+    color: #fff8f9;
     font-weight: 700;
     letter-spacing: -0.01em;
   }
 
   tbody tr:nth-child(even) {
-    background: #f0e7da;
+    background: #f7ecee;
   }
 
   tbody tr:hover {
-    background: #ead8c4;
+    background: #efdadd;
   }
 
   td:not(:first-child) {
