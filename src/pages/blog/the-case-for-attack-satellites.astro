@@ -1,0 +1,710 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const sections = [
+  ['what-is-up-there-now', '1. What is up there now'],
+  ['what-is-applied-for', '2. What is applied for'],
+  ['data-centre-debris-problem', '3. Why a data centre in orbit is a debris problem'],
+  ['dead-satellites-arithmetic', '4. Dead satellites: the arithmetic that matters'],
+  ['why-lasers', '5. Why lasers'],
+  ['the-physics', '6. The physics'],
+  ['the-satellite', '7. The satellite'],
+  ['where-they-go', '8. Where they go and how many'],
+  ['the-weapon-problem', '9. The weapon problem'],
+  ['what-should-happen-next', '10. What should happen next'],
+];
+---
+
+<BaseLayout
+  title="The Case for Attack Satellites | Mars Population"
+  description="Have you seen Star Wars? Pretty cool, right? This is not that. This is a real problem that is likely imminent, and the funnest solution happens to be satellites that shoot lasers. Still pretty cool."
+  ogImage="/images/blog/kessler2.png"
+  showDonationCTA={false}
+  className="attack-satellites-page"
+>
+  <article class="article-shell">
+    <header class="article-hero">
+      <img
+        src="/images/blog/kessler2.png"
+        alt="Satellites and orbital debris above Earth"
+        width="2488"
+        height="1384"
+        fetchpriority="high"
+      />
+      <div class="title-card">
+        <h1>The Case for Attack Satellites</h1>
+      </div>
+    </header>
+
+    <div class="article-grid">
+      <aside class="contents" aria-label="Article sections">
+        <p>Contents</p>
+        <ol>
+          {sections.map(([id, label]) => (
+            <li><a href={`#${id}`}>{label}</a></li>
+          ))}
+        </ol>
+      </aside>
+
+      <div class="article-copy">
+        <div class="opening">
+          <p>Have you seen Star Wars? Pretty cool, right? This is not that. This is a real problem that is likely imminent, and the funnest solution happens to be satellites that shoot lasers. Still pretty cool.</p>
+
+          <p>An immense amount of hardware is going into orbit in the next decade: giant telecom networks, telescopes, data centres. Space is big, and avoiding things is easy while there are a few thousand of them. Applications now on file with regulators ask for about 1.3 million more satellites. Everything in low orbit moves at roughly 27,300 km/h. Put a hundred thousand objects in a Walker shell where the median gap between neighbours is 36 km, and collision avoidance stops being an occasional maneuver and becomes the main thing your satellites do. Starlink already reports 200,000 avoidance maneuvers every six months.</p>
+
+          <p>Enter Kessler syndrome. A collision does not immediately produce the Sandra Bullock nightmare in <em>Gravity</em>. But it does produces a few thousand fragments in the same orbital band, each of which can hit something else, and a band where fragments are created faster than the atmosphere removes them, something that should still cause heavy breathing (for investors at least). ESA's 2026 environment report says low orbit is already there: even with no further launches, collisions among existing objects will grow the debris population. What changes with a million new satellites is the speed. The result is tens of thousands of pieces of expensive critical infrastructure getting destroyed, delayed exploration, and an expensive nightmare cleanup scenario.</p>
+
+          <p>We are going to need attack satellites. They are just going to attack junk.</p>
+        </div>
+
+        <section id="what-is-up-there-now">
+          <h2>1. What is up there now</h2>
+
+          <div class="table-shell" role="region" aria-label="What is up there now table" tabindex="0">
+            <table>
+              <thead>
+                <tr><th scope="col">Count</th><th scope="col">Value</th><th scope="col">As of</th><th scope="col">Source</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Publicly catalogued objects, all Earth orbits</td><td>34,641</td><td>17 Sep 2026</td><td><a href="https://planet4589.org/space/stats/active.html">McDowell</a></td></tr>
+                <tr><td>of which active payloads</td><td>16,810 (11,114 Starlink)</td><td>17 Sep 2026</td><td>McDowell</td></tr>
+                <tr><td>of which dead payloads</td><td>3,101</td><td>17 Sep 2026</td><td>McDowell</td></tr>
+                <tr><td>of which rocket stages / components</td><td>2,065 / 1,495</td><td>17 Sep 2026</td><td>McDowell</td></tr>
+                <tr><td>of which catalogued fragments</td><td>11,170</td><td>17 Sep 2026</td><td>McDowell</td></tr>
+                <tr><td>ESA catalogue incl. unidentified objects</td><td>46,935</td><td>31 Jul 2026</td><td><a href="https://sdup.esoc.esa.int/discosweb/statistics/">ESA DISCOS</a></td></tr>
+                <tr><td>Modelled objects &gt;10 cm (all orbits)</td><td>~68,000</td><td>Feb 2026 model</td><td><a href="https://sdup.esoc.esa.int/discosweb/statistics/embed/bythenumbers">ESA MASTER</a></td></tr>
+                <tr><td>Modelled objects 1–10 cm</td><td>~1.5 million</td><td>Feb 2026 model</td><td>ESA MASTER</td></tr>
+                <tr><td>Mass in LEO, all objects / rocket bodies</td><td>9,877 t / 1,589 t</td><td>31 Jul 2026</td><td>ESA DISCOS</td></tr>
+                <tr><td>Payloads launched in 2025</td><td>&gt;4,000</td><td>full year</td><td><a href="https://www.esa.int/Space_Safety/Space_Debris/ESA_Space_Environment_Report_2026">ESA SER 2026</a></td></tr>
+                <tr><td>Starlink avoidance manoeuvres, Dec 2025–May 2026</td><td>207,152</td><td>six months</td><td><a href="https://www.space.com/space-exploration/satellites/every-spacex-starlink-satellite-has-to-dodge-a-collision-almost-weekly-and-experts-fear-the-worst">SpaceX FCC report via Space.com</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>First, the dangerous mass is old: of the "top 50" derelicts experts most want removed, 34 are Soviet or Russian, 44 are rocket bodies, and 76% predate 2000; the worst are 9-tonne SL-16 stages at 700–900 km (<a href="https://newspaceeconomy.ca/2025/10/25/the-top-50-space-debris-items-that-should-be-removed-a-critical-look-at-orbital-threats/">McKnight et al., 2025 update</a>). ESA attributes 96% of assessed LEO risk to inactive objects. Second, the population is not stable. ESA's health index for the LEO environment went from about 4 to about 50 in a single year, and the agency shortened its modelling horizon from 200 years to 100 because the projected object count runs away.</p>
+        </section>
+
+        <section id="what-is-applied-for">
+          <h2>2. What is applied for</h2>
+
+          <p>These are requests and grants, not launches. The FCC took three years to partially grant SpaceX's previous 30,000-satellite application.</p>
+
+          <div class="table-shell wide filings-table" role="region" aria-label="Satellite systems applied for table" tabindex="0">
+            <table>
+              <thead>
+                <tr><th scope="col">Operator / system</th><th scope="col">Requested</th><th scope="col">Authorised</th><th scope="col">Orbit</th><th scope="col">Status (2026)</th><th scope="col">Flying</th><th scope="col">Source</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>SpaceX orbital data centres</td><td>1,000,000</td><td>0</td><td>500–2,000 km, 5-yr life</td><td>Accepted for filing 30 Jan 2026</td><td>0</td><td><a href="https://docs.fcc.gov/public/attachments/DA-26-113A1.pdf">FCC DA 26-113</a></td></tr>
+                <tr><td>SpaceX Starlink Gen3</td><td>100,000</td><td>0</td><td>323–327 and 473–477 km</td><td>Filed July 2026</td><td>0</td><td><a href="https://www.datacenterdynamics.com/en/news/spacex-files-fcc-application-for-100000-gen3-starlink-satellites/">DCD</a></td></tr>
+                <tr><td>SpaceX Starlink Gen2</td><td>29,988</td><td>15,000</td><td>340–535 km</td><td>Second 7,500 granted 9 Jan 2026</td><td>~11,100 (all gens)</td><td><a href="https://docs.fcc.gov/public/attachments/DA-26-36A1.pdf">FCC DA 26-36</a></td></tr>
+                <tr><td>Starcloud</td><td>88,000</td><td>0</td><td>~600–850 km SSO</td><td>Filed Feb 2026</td><td>1</td><td><a href="https://www.swfound.org/publications-and-reports/swf-filing-comments-on-starclouds-orbital-data-center-application">SWF comments on the filing</a></td></tr>
+                <tr><td>Blue Origin Project Sunrise</td><td>51,600</td><td>0</td><td>SSO</td><td>Filed Mar 2026</td><td>0</td><td><a href="https://www.datacenterdynamics.com/en/news/bezos-backed-blue-origin-files-for-approval-to-put-data-centers-in-space/">DCD</a></td></tr>
+                <tr><td>Blue Origin TeraWave</td><td>5,408</td><td>0</td><td>LEO + MEO</td><td>Filed 2026</td><td>0</td><td><a href="https://www.satellitetoday.com/connectivity/2026/01/21/blue-origin-reveals-terawave-leo-meo-constellation-out-of-the-blue/">Via Satellite</a></td></tr>
+                <tr><td>Amazon Leo (ex-Kuiper)</td><td>7,740</td><td>7,740</td><td>590–630 km</td><td>Gen2 granted 10 Feb 2026</td><td>~400</td><td><a href="https://docs.fcc.gov/public/attachments/DA-26-552A1.pdf">FCC DA 26-552</a></td></tr>
+                <tr><td>Astra Space</td><td>12,280</td><td>0</td><td>380–700 km</td><td>Re-filed July 2026</td><td>0</td><td><a href="https://communicationsdaily.com/article/2026/07/08/satellite-processing-round-sees-plans-for-multiple-constellations-in-ka-ku-v-bands-2607070003">Comms Daily</a></td></tr>
+                <tr><td>Logos Space</td><td>4,178</td><td>4,178</td><td>870–925 km</td><td>Granted 11 Feb 2026</td><td>0</td><td><a href="https://spacenews.com/fcc-clears-logos-to-deploy-more-than-4000-broadband-satellites/">SpaceNews</a></td></tr>
+                <tr><td>Guowang (China)</td><td>12,992 (ITU)</td><td>state programme</td><td>500–1,150 km</td><td>~6,500 due by 2032</td><td>~200</td><td><a href="https://circleid.com/posts/chinese-leo-satellite-internet-update-guowang-qianfan-and-honghu-3">CircleID</a></td></tr>
+                <tr><td>Qianfan (China)</td><td>~15,000</td><td>state programme</td><td>800–1,160 km</td><td>resumed 2026</td><td>~250</td><td><a href="https://en.wikipedia.org/wiki/Qianfan">Wikipedia</a></td></tr>
+                <tr><td>Honghu-3 (China)</td><td>10,000</td><td>national approval</td><td>LEO</td><td>prototype 2026</td><td>1</td><td>CircleID</td></tr>
+                <tr><td>AST SpaceMobile</td><td>248</td><td>248</td><td>520–690 km</td><td>Granted Apr 2026</td><td>~13</td><td><a href="https://docs.fcc.gov/public/attachments/DA-26-391A1.pdf">FCC DA 26-391</a></td></tr>
+                <tr><td>Others ≥200 (CesiumAstro 737, Rivada 576, Eutelsat Next 528, Telesat 300, IRIS² 292)</td><td>~2,400</td><td>mixed</td><td>1,000–1,220 km</td><td>2026–2029</td><td>0</td><td>Comms Daily; <a href="https://circleid.com/posts/western-leo-satellite-internet-update-oneweb-telesat-kuiper-iris">CircleID</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Adding the requested column gives about 1.34 million. That is the size of the ask. It is not a forecast; the world launched about 4,000 payloads last year. The <em>Science</em> paper "One million (paper) satellites" counted over a million in ITU filings for 2017–2022 alone and expects most never to launch (<a href="https://outerspaceinstitute.ca/osisite/wp-content/uploads/One-million-paper-satellites-Accepted-Version-.pdf">Falle et al.</a>). Analyst forecasts on current build rates put 30,000–45,000 active satellites in orbit by 2031 (<a href="https://nova.space/press-release/novaspace-projects-665b-in-satellite-build-and-launch-activity/">Novaspace</a>, <a href="https://www.advanced-television.com/2025/01/14/forecast-27000-satellites-in-orbit-by-2030/">McKinsey</a>).</p>
+
+          <p>The argument below does not need the paper to become metal. It uses three build-out cases: <strong>10%, 30% and 50% of the requested total</strong>, which is 130,000, 400,000 and 650,000 satellites. The 10% case is roughly what Starship at a few hundred launches per year could deliver in a decade. The 50% case is what the applicants say they intend.</p>
+        </section>
+
+        <section id="data-centre-debris-problem">
+          <h2>3. Why a data centre in orbit is a debris problem</h2>
+
+          <p>The applications are dominated by orbital compute, so it is worth estimating about what one data centre in orbit is. Take a 2 GW site, the announced target for xAI's Colossus 2 (the built first cluster is ~210 MW; 2 GW is the target, not the current state, per <a href="https://newsletter.semianalysis.com/p/xais-colossus-2-first-gigawatt-datacenter">SemiAnalysis</a>).</p>
+
+          <p>Assumptions: 2 GW of usable IT load; 10% overhead for pumps and communications; 20% spare compute installed but idle; one relay body per 50 compute bodies; five-year life per SpaceX's own filing; bodies rounded up to integers.</p>
+
+          <div class="table-shell wide compute-table" role="region" aria-label="Orbital data centre body count table" tabindex="0">
+            <table>
+              <thead>
+                <tr><th scope="col">Usable IT per body</th><th scope="col">Compute bodies</th><th scope="col">Relay bodies</th><th scope="col">On orbit at once</th><th scope="col">Steady replacement per year</th><th scope="col">Launches in years 0–10 (two cohorts)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>30 kW</td><td>66,667</td><td>1,334</td><td>68,001</td><td>13,600</td><td>136,002</td></tr>
+                <tr><td>100 kW</td><td>20,000</td><td>400</td><td>20,400</td><td>4,080</td><td>40,800</td></tr>
+                <tr><td>250 kW</td><td>8,000</td><td>160</td><td>8,160</td><td>1,632</td><td>16,320</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Electrical demand is 2.2 GW with spares idle, 2.64 GW with everything powered. For comparison, IEEE Spectrum's independent estimate is about 4,300 satellites per gigawatt at 240–250 kW each (<a href="https://spectrum.ieee.org/orbital-data-centers">IEEE Spectrum</a>); SpaceX's filing describes 100 kW of compute per tonne of satellite, which at the 2–2.5 t Gen3 mass lands on the 250 kW row. So one 2 GW site is <strong>8,000 to 20,000 bodies on orbit, replaced every five years.</strong></p>
+
+          <p>Those bodies cannot be spread across a Starlink-style shell. A GB200 NVL72 rack moves 130 TB/s between its 72 GPUs over NVLink (<a href="https://www.nvidia.com/en-us/data-center/gb200-nvl72/">NVIDIA</a>). Summed over the 1.1 million GPUs in a 2 GW site that is ~16,000 Pbps of port capacity. A three-neighbour laser mesh over 24,000 bodies is 36,000 links; at the 1.6 Tbps Google demonstrated on a bench (<a href="https://arxiv.org/html/2511.19468v1">Suncatcher paper</a>) that is 58 Pbps. Port sums are not application throughput, and training topologies differ from mesh topologies, but the ratio is a few hundred to one, which is why Google's illustrative design flies its satellites 100–200 m apart inside a 1 km cluster. An orbital data centre is a tight formation of thousands of spacecraft. A dead unit inside that formation is a hazard to its neighbours at a distance most satellites never come within.</p>
+        </section>
+
+        <section id="dead-satellites-arithmetic">
+          <h2>4. Dead satellites: the arithmetic that matters</h2>
+
+          <p>Operators promise regulators a post-mission disposal success rate. SpaceX claims better than 99%; the FCC minimum is 95%; ESA measures 54% active-disposal compliance for large LEO payloads and 88–99% natural compliance for small ones (<a href="https://www.sdo.esoc.esa.int/environment_report/Space_Environment_Report_I10R1_20260908.pdf">ESA SER 2026</a>). The number that matters is how many satellites die where the atmosphere will not remove them for decades. There is no fixed altitude for that; decay time depends on the object's area-to-mass ratio, attitude and the solar cycle. As a rule, a typical satellite below ~500 km is gone in years; at 800 km it is up for a century or more; the orbital-data-centre applications are at 500–2,000 km and 600–850 km.</p>
+
+          <p>Steady-state arithmetic: derelicts per year = active population ÷ design life × disposal-failure fraction. This assumes a stable age distribution and no deployment ramp; it understates the early years of a fast build and ignores infant-mortality failures. Failure fractions are assumptions (source I made them up).</p>
+
+          <div class="table-shell wide" role="region" aria-label="Annual derelict satellite estimate table" tabindex="0">
+            <table>
+              <thead>
+                <tr><th scope="col">Active satellites above natural-decay altitudes</th><th scope="col">Retirements per year (5-yr life)</th><th scope="col">Derelicts per year at 0.1%</th><th scope="col">at 1%</th><th scope="col">at 3%</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>30,000 (roughly 2031 on current build rates)</td><td>6,000</td><td>6</td><td>60</td><td>180</td></tr>
+                <tr><td>130,000 (10% of filings)</td><td>26,000</td><td>26</td><td>260</td><td>780</td></tr>
+                <tr><td>400,000 (30%)</td><td>80,000</td><td>80</td><td>800</td><td>2,400</td></tr>
+                <tr><td>650,000 (50%)</td><td>130,000</td><td>130</td><td>1,300</td><td>3,900</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Today's stock of dead payloads in all orbits, accumulated since 1957, is 3,101. At 1% failure, the 30% build-out adds a quarter of that stock <em>every year, every year</em>, at the altitudes where it stays. At the operators' own 1% and a 1,200 kg mean mass, <em>the 30% case</em> strands about 960 tonnes per year, against 1,589 tonnes of rocket bodies now in LEO.</p>
+
+          <p>Deorbit rules do not touch this. A dead satellite cannot obey a five-year rule. Collision-avoidance software does not touch it either; it only helps the live satellite dodge. What is left is remediation: something has to go and move the dead ones. How about a space laser.</p>
+        </section>
+
+        <section id="why-lasers">
+          <h2>5. Why lasers</h2>
+
+          <p>Two remediation approaches exist. Capture missions rendezvous with one object and drag it down: ESA's ClearSpace-1 (now targeting PROBA-1, planned for 2029, <a href="https://www.esa.int/Space_Safety/ClearSpace-1">ESA</a>) and Astroscale's ADRAS-J2 (one H-2A stage, $90 M, by 2029). These are first demonstrations, and their prices are development prices, not the mature cost of a removal. But a capture mission handles one object per flight by construction, that’s pretty damn slow when the table above is hundreds to thousands of objects per year.</p>
+
+          <p>Laser ablation is the other (see fun) approach. A pulsed laser vaporises micrograms off the target's surface; the vapour leaves at km per second and the target recoils. Repeated over thousands of pulses the recoil lowers the orbit until the atmosphere finishes the job. No rendezvous, no capture, one spacecraft hits many targets, and it works on objects too small to grab. NASA's 2023 cost-benefit study of remediation options found removal of 1–10 cm debris the fastest-paying category and laser methods the shortest break-even among them (<a href="https://www.nasa.gov/wp-content/uploads/2023/03/otps_-_cost_and_benefit_analysis_of_orbital_debris_remediation_-_final.pdf">NASA OTPS 2023</a>). Ground-based versions (ORION, 1996) and space-based versions (L'ADROIT, 2014) have been designed in detail on paper by Claude Phipps and collaborators. None has flown.</p>
+
+          <p>The reason none has flown is not the physics.</p>
+        </section>
+
+        <section id="the-physics">
+          <h2>6. The physics</h2>
+
+          <p><strong>Direction.</strong> Ablation pushes the target along the beam, away from the laser. The operator does not pick the direction; the geometry does. Apply 50 m/s to a satellite in an 800 km circular orbit:</p>
+
+          <div class="table-shell" role="region" aria-label="Laser direction and orbital effect table" tabindex="0">
+            <table>
+              <thead>
+                <tr><th scope="col">Laser position</th><th scope="col">Push direction</th><th scope="col">New perigee</th><th scope="col">New apogee</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Ahead of the target, head-on</td><td>against velocity</td><td><strong>611 km</strong></td><td>800 km</td></tr>
+                <tr><td>Above or below</td><td>radial</td><td>752 km</td><td>848 km</td></tr>
+                <tr><td>Behind the target</td><td>with velocity</td><td>800 km</td><td><strong>996 km</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>A push against the velocity lowers perigee about four times more per m/s than a radial push, and a push from behind raises the orbit. This makes a straightforward operating rule: <strong>fire only on targets that are approaching, from ahead.</strong> Every serious design since ORION has this rule; a 2023 study measured head-on irradiation as 23 ± 8% more effective than outward irradiation (<a href="https://www.hou.usra.edu/meetings/orbitaldebris2023/pdf/6041.pdf">Orbital Debris Conference 2023</a>). It also answers the obvious worry: an ASAT that follows this rule cannot push things into higher orbits and create more problems.</p>
+
+          <p><strong>Δv.</strong> To drop perigee to 200 km, where re-entry follows within weeks: 99 m/s from 550 km, 165 m/s from 800 km, 214 m/s from 1,000 km, 261 m/s from 1,200 km.</p>
+
+          <p><strong>Coupling.</strong> The impulse per joule delivered, C_m, is the number everything scales with. Phipps' models give 75–100 µN·s/J for aluminium at optimum fluence (355 nm, 100 ps pulses); an independent 2023 analysis gets an effective 20–30 µN·s/J across a real beam profile (<a href="https://www.hou.usra.edu/meetings/orbitaldebris2023/pdf/6041.pdf">same paper</a>); lab shots at GSI measured &gt;0.3 m/s per pulse on gram-class aluminium (<a href="https://www.nature.com/articles/s41598-018-26336-1">Sci. Rep. 8, 8460</a>). Everything below uses 50 µN·s/J as a middle case and shows 25 and 100.</p>
+
+          <p><strong>Energy per object.</strong> Energy on target is mass × Δv ÷ C_m: at 50 µN·s/J, <strong>4 MJ per kilogram</strong> for 200 m/s.</p>
+
+          <div class="table-shell" role="region" aria-label="Energy and firing time per object table" tabindex="0">
+            <table>
+              <thead>
+                <tr><th scope="col">Target</th><th scope="col">Energy on target</th><th scope="col">Firing time at 1.65 kW on target</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>10 g fragment</td><td>40 kJ</td><td>24 s</td></tr>
+                <tr><td>1 kg fragment</td><td>4 MJ</td><td>40 min</td></tr>
+                <tr><td>100 kg object</td><td>400 MJ</td><td>67 h</td></tr>
+                <tr><td>1 t dead satellite (from 800 km)</td><td>3.3 GJ</td><td>23 days</td></tr>
+                <tr><td>9 t SL-16 stage</td><td>42 GJ</td><td>300 days</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>The same spacecraft removes centimetre fragments in a single pass and shepherds tonne-class carcasses over weeks. It is not a fast way to clear the top-50 list but it is the only way that also addresses the 1.5 million objects between 1 and 10 cm that nothing can grab.</p>
+
+          <p><strong>Range.</strong> Beam spot scales as 2.44·M²·λ·R/D. With a 1 m mirror and 343 nm light at 100 ps, optimum fluence at 250 km needs ~660 J per pulse; at 500 km, 2.6 kJ. At the 1,030 nm fundamental with nanosecond pulses the same numbers are 50–200 kJ, which is why the design frequency-triples the laser and works at 100–300 km.</p>
+        </section>
+
+        <section id="the-satellite">
+          <h2>7. The satellite</h2>
+
+          <p>Conceptually this could work, but you know I haven’t tried it out.</p>
+
+          <p>Laser: ytterbium gain medium (thin-disk or fibre) at 1,030 nm, pumped by gallium-arsenide diodes at 976 nm (50–52% electrical efficiency in current commercial emitters, <a href="https://www.coherent.com/web-resources/white-paper/976nm-factor-diode-wp">Coherent</a>), frequency-tripled to 343 nm. Chain: 20 kW electrical → ~6 kW infrared → ~3.3 kW ultraviolet at 30% wall-plug and 55% conversion. Pulses of 100 ps to 1 ns, hundreds of joules, 5–30 Hz.</p>
+
+          <p>Optics: 1 m silicon-carbide beam director. SiC has the specific stiffness and thermal conductivity for the job and flew as Herschel's 3.5 m primary at 25 kg/m² (<a href="https://www.mersen.com/sites/default/files/files_imported/spie-2011-from-herschel-to-gaia-3-meter-class-sic-space-optics-boostec-mersen.pdf">Boostec/Mersen</a>). It has not flown under kilowatt ultraviolet. Aeolus, at 0.1 W of 355 nm, lost half its throughput in two years to laser-induced contamination of its optics (<a href="https://arxiv.org/html/2310.08616">arXiv:2310.08616</a>). Contamination control, not laser physics, is the demonstrated hard problem.</p>
+
+          <p>Power: a Starlink V2-mini-class array is ~28 kW; a dawn-dusk sun-synchronous orbit keeps it lit over 90% of the time. Storage is sized by power, not energy: 700 J at 30 Hz is a 21 kW pulse train. ESA-qualified supercapacitors (~45 kW/kg, &gt;10⁶ cycles, <a href="https://passive-components.eu/supercapacitors-applications-in-space-development-conducted-by-esa-and-challenges-to-overcome/">ESA/EPCI</a>) carry the pulses; a lithium-ion or solid-state pack carries eclipse and the bus.</p>
+
+          <p>Lifetime: 9xx nm pump modules show MTTF above 100,000 hours in accelerated tests (<a href="https://www.science.gov/topicpages/n/nm+high+brightness">nLIGHT</a>); with 20% spare modules the pump stays at full power past five years. ICESat-2's laser has lost 1–2% per year over four years and a trillion shots (<a href="https://ntrs.nasa.gov/api/citations/20230010087/downloads/Martino_12512-17v2.pdf">NASA</a>).</p>
+
+          <p>Propulsion and disposal: Starlink's argon Hall thruster (170 mN, 2,500 s, 4.2 kW). Dropping a 2.3 t spacecraft from 800 km to a 100 km perigee takes about 18 kg of argon; the design carries 150 kg so it can re-phase and still guarantee its own re-entry. A debris-removal satellite that becomes debris would be comical.</p>
+
+          <p>Mass ~2.3 t. Cost: no one has built one. For scale, Phipps' L'ADROIT was costed at $560 M as a single 10 t, 16 kW station; a Starlink V2-mini is estimated by outside analysts at under $1 M. A production unit built on a Starlink-class bus is plausibly tens of millions; a first unit will cost what first units cost. Could definitely be done under $560M though.</p>
+        </section>
+
+        <section id="where-they-go">
+          <h2>8. Where they go and how many</h2>
+
+          <p><strong>Orbit.</strong> The hazardous mass is at 700–1,000 km, and the applications put the new mass at 600–850 km and 500–2,000 km. So: near-polar, mildly eccentric, sweeping 600–1,000 km, which is where L'ADROIT's design sat (560 × 960 km). Two modes:</p>
+
+          <p><em>Sweeper.</em> A polar satellite crosses every inclination band twice per orbit. Fragments approach at 10–15 km/s; the engagement is a 10–40 s head-on burst at 100–300 km; a 10 g fragment is deorbited in one pass. This is the mode for the 1–10 cm population. It needs an onboard sensor because those objects are not in any catalogue; Phipps' design tracks them passively in UV but there might be better methods.</p>
+
+          <p><em>Shepherd.</em> A tonne-class derelict needs weeks of firing, so the satellite flies in the same plane, 50–200 km ahead of the target, firing backward. Plane-matching costs propellant (1° of inclination at 800 km is 130 m/s, ~12 kg of argon), so shepherds are assigned to inclination families at launch: 53°, 70°, 83°, 97–99°. Right ascension is free: Earth's oblateness precesses orbital planes at a rate that depends on altitude, so a shepherd loitering 50 km below its targets drifts 36°/year relative to them at 53° inclination, 8°/year at sun-synchronous, and can reach any plane in its family over months for no propellant. This is also the result of the 2018 Air Force Engineering University study of the problem (<a href="https://phys.org/news/2018-01-china-space-junk-lasers.html">Phys.org</a>).</p>
+
+          <p>The loitering-below rule has a second purpose: a shepherd that fails decays before the things it was sent to remove.</p>
+
+          <p><strong>How many.</strong> One unit at 3.3 kW UV, half its energy on target, firing 45% of the time, delivers about 1.2 million N·s per year at 50 µN·s/J. Divide the stranded mass flux from §4 times 165 m/s by that, and you get unit-years of firing. This is an energy budget, not an operations plan; it omits detection, scheduling, availability and margin, each of which multiplies it.</p>
+
+          <div class="table-shell wide" role="region" aria-label="Debris removal satellite fleet size table" tabindex="0">
+            <table>
+              <thead>
+                <tr><th scope="col">Satellite Build-out</th><th scope="col">Derelicts per year at 1% failure</th><th scope="col">Stranded mass</th><th scope="col">Unit-years at 25 / 50 / 100 µN·s/J</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>30,000 active</td><td>60</td><td>72 t</td><td>20 / 10 / 5</td></tr>
+                <tr><td>130,000 (10%)</td><td>260</td><td>312 t</td><td>88 / 44 / 22</td></tr>
+                <tr><td>400,000 (30%)</td><td>800</td><td>960 t</td><td>270 / 135 / 67</td></tr>
+                <tr><td>650,000 (50%)</td><td>1,300</td><td>1,560 t</td><td>438 / 219 / 110</td></tr>
+                <tr><td>at 3% failure</td><td>×3</td><td>×3</td><td>×3</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Plus the backlog: the 1,589 t of rocket bodies now in LEO is 140–540 unit-years, and the 1–10 cm population is limited by encounter rate rather than energy (Phipps estimated ~100,000 small objects per 4.6 months for a 16 kW station).</p>
+
+          <p>Today's problem is a handful of units. The 10% build-out at the operators' own promised failure rate is a fleet of tens to a hundred, with realistic margins. The 30–50% build-outs are hundreds. At that point the sweepers are a constellation in their own right, and the reasonable position is that the operators whose failure rates set the fleet size should be paying for it.</p>
+        </section>
+
+        <section id="the-weapon-problem">
+          <h2>9. The weapon problem</h2>
+
+          <p>A spacecraft that can put hundreds of joules of ultraviolet on a 30 cm spot at 250 km, in any orbital plane it chooses, can do that to a working satellite's radiator or star tracker. Nothing but software distinguishes the two uses, and there is no way to verify from the ground which one a beam is being used for. That is why none of these designs has flown in thirty years.</p>
+
+          <p>The legal position is unsettled not necessarily prohibitive. The Outer Space Treaty bans weapons of mass destruction in orbit, requires "due regard" for other states and makes launching states liable; it does not classify lasers (<a href="https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/outerspacetreaty.html">UNOOSA</a>). The 2022 U.S. moratorium and UN resolution 77/41 cover destructive direct-ascent missile tests only (<a href="https://www.armscontrol.org/act/2022-05/news/us-commits-asat-ban">Arms Control Association</a>). Russia has built a ground laser, Kalina, for dazzling satellite optics (<a href="https://www.thespacereview.com/article/4416/1">The Space Review</a>), and China's military engineering university has published the orbital-laser debris study cited above. Dual-use systems are coming whether or not civillian ones do. Lot’s of institutions will oppose these, because they technically could be weapons, but there’s an appropriate old saying “it’s better to have a working space laser satellite than ask permission”.</p>
+
+          <p>So the choice is not between a laser fleet and no laser fleet. It is between a civil one built in the open and a military one built quietly, and who knows maybe the US will even pay for it. The physics gives the civil version things to point to: it only works head-on at short range, it loiters below its targets, and its firing log can be published, target by target, for anyone with a telescope to check.</p>
+        </section>
+
+        <section id="what-should-happen-next">
+          <h2>10. What should happen next</h2>
+
+          <p>Fly one. A single 2–3 t spacecraft on a Starlink-class bus, in a sun-synchronous orbit at 700–800 km, with a kilowatt-class ultraviolet laser, tasked with catalogued fragments in the 700–900 km band and instrumented to measure what everyone argues about: the delivered impulse per joule on real, tumbling, mixed-material debris, and how fast the optics degrade. That measurement decides whether the fleet in §8 is tens of units or hundreds. It costs less than one capture mission and answers a question a capture mission cannot. Run it beside the capture demonstrations, not instead of them, and publish the firing log.</p>
+
+          <p>The million satellites are applied for. Some fraction of them will fly, and some fraction of those will die where they are. The satellites that clean up after them are as inevitable as the mess. Better to build them on purpose, better to build them before the junk pile gets any worse.</p>
+        </section>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  :global(html) {
+    scroll-padding-top: 5.5rem;
+  }
+
+  :global(body.attack-satellites-page) {
+    background: #e9e0d2;
+    color: #26231f;
+  }
+
+  :global(.attack-satellites-page main) {
+    background:
+      radial-gradient(circle at 15% 4%, rgba(164, 90, 56, 0.09), transparent 30rem),
+      linear-gradient(90deg, rgba(92, 70, 46, 0.035) 1px, transparent 1px),
+      #e9e0d2;
+    background-size: auto, 5rem 5rem, auto;
+  }
+
+  .article-shell {
+    --paper: #f6f0e5;
+    --ink: #26231f;
+    --muted: #6d665d;
+    --rule: #c8baaa;
+    --rule-strong: #9d8d7c;
+    --rust: #9f4228;
+    width: min(1320px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: clamp(1rem, 3vw, 2.5rem) 0 clamp(4rem, 8vw, 8rem);
+  }
+
+  .article-hero {
+    position: relative;
+    overflow: hidden;
+    min-height: clamp(22rem, 52vw, 38rem);
+    background: #111;
+    box-shadow: 0 2rem 6rem rgba(64, 42, 24, 0.19);
+  }
+
+  .article-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 42%, rgba(3, 5, 8, 0.12) 62%, rgba(3, 5, 8, 0.78));
+    pointer-events: none;
+  }
+
+  .article-hero img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+
+  .title-card {
+    position: absolute;
+    z-index: 1;
+    right: clamp(1.25rem, 5vw, 5.5rem);
+    bottom: clamp(1.25rem, 5vw, 4.75rem);
+    left: clamp(1.25rem, 5vw, 5.5rem);
+    color: #fffaf2;
+  }
+
+  .title-card h1 {
+    max-width: 12ch;
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(3.25rem, 7vw, 6.4rem);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.055em;
+    text-wrap: balance;
+    text-shadow: 0 0.15em 0.8em rgba(0, 0, 0, 0.4);
+  }
+
+  .article-grid {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 48rem) 1fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
+    padding: clamp(3rem, 7vw, 6.5rem) clamp(1rem, 4vw, 4rem);
+    background: var(--paper);
+    box-shadow: 0 2rem 6rem rgba(64, 42, 24, 0.13);
+  }
+
+  .contents {
+    position: sticky;
+    top: 6rem;
+    padding-top: 0.35rem;
+    border-top: 2px solid var(--rust);
+  }
+
+  .contents p {
+    margin: 0.85rem 0 1rem;
+    color: var(--rust);
+    font: 700 0.7rem/1.2 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .contents ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contents li + li {
+    border-top: 1px solid rgba(157, 141, 124, 0.35);
+  }
+
+  .contents a {
+    display: block;
+    padding: 0.65rem 0;
+    color: #766d62;
+    font: 600 0.7rem/1.4 ui-sans-serif, system-ui, sans-serif;
+    text-decoration: none;
+    transition: color 160ms ease, transform 160ms ease;
+  }
+
+  .contents a:hover,
+  .contents a:focus-visible {
+    color: var(--rust);
+    transform: translateX(0.2rem);
+  }
+
+  .article-copy {
+    grid-column: 2;
+    min-width: 0;
+    color: var(--ink);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.05rem, 1.35vw, 1.19rem);
+    line-height: 1.78;
+  }
+
+  .article-copy p {
+    margin: 0 0 1.45em;
+  }
+
+  .opening {
+    margin-bottom: 5rem;
+  }
+
+  .opening p:first-child {
+    color: #443d35;
+    font-size: clamp(1.35rem, 2.3vw, 1.78rem);
+    line-height: 1.52;
+  }
+
+  .opening p:first-child::first-letter {
+    float: left;
+    margin: 0.05em 0.12em 0 0;
+    color: var(--rust);
+    font-size: 4.35em;
+    line-height: 0.75;
+  }
+
+  section {
+    scroll-margin-top: 5.5rem;
+  }
+
+  section + section {
+    margin-top: 5.5rem;
+  }
+
+  h2 {
+    margin: 0 0 1.25rem;
+    padding-top: 1.35rem;
+    border-top: 1px solid var(--rule-strong);
+    color: #1f1b17;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: clamp(1.85rem, 3.2vw, 2.8rem);
+    font-weight: 650;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  a {
+    color: var(--rust);
+    text-decoration-color: rgba(159, 66, 40, 0.42);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  a:hover {
+    text-decoration-color: currentColor;
+  }
+
+  a:focus-visible,
+  .table-shell:focus-visible {
+    outline: 3px solid rgba(159, 66, 40, 0.65);
+    outline-offset: 4px;
+  }
+
+  strong {
+    color: #181511;
+  }
+
+  .table-shell {
+    --table-min: 46rem;
+    width: 100%;
+    margin: 2.25rem 0 2rem;
+    overflow-x: auto;
+    border: 1px solid var(--rule-strong);
+    border-radius: 0.2rem;
+    background: #fbf7ef;
+    box-shadow: 0 0.85rem 2.25rem rgba(71, 49, 29, 0.08);
+    overscroll-behavior-inline: contain;
+    scrollbar-color: var(--rust) #e5d9c9;
+  }
+
+  .table-shell.wide {
+    width: min(68rem, calc(100vw - 3rem));
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .filings-table {
+    --table-min: 68rem;
+  }
+
+  .compute-table {
+    --table-min: 58rem;
+  }
+
+  table {
+    width: 100%;
+    min-width: var(--table-min);
+    border-collapse: collapse;
+    color: #2d2924;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.84rem;
+    line-height: 1.45;
+  }
+
+  th,
+  td {
+    padding: 0.8rem 0.85rem;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    text-align: left;
+  }
+
+  th:last-child,
+  td:last-child {
+    border-right: 0;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #2e2924;
+    color: #fffaf2;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  tbody tr:nth-child(even) {
+    background: #f0e7da;
+  }
+
+  tbody tr:hover {
+    background: #ead8c4;
+  }
+
+  td:not(:first-child) {
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 1020px) {
+    .article-grid {
+      grid-template-columns: minmax(0, 48rem);
+      justify-content: center;
+    }
+
+    .contents {
+      position: static;
+      display: none;
+    }
+
+    .article-copy {
+      grid-column: 1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .article-shell {
+      width: 100%;
+      padding-top: 0;
+    }
+
+    .article-hero {
+      min-height: 28rem;
+    }
+
+    .article-hero img {
+      object-position: 46% 50%;
+    }
+
+    .title-card h1 {
+      font-size: clamp(3rem, 16vw, 5rem);
+    }
+
+    .article-grid {
+      padding: 3rem 1.15rem 4.5rem;
+      box-shadow: none;
+    }
+
+    .article-copy {
+      font-size: 1.04rem;
+      line-height: 1.72;
+    }
+
+    .opening {
+      margin-bottom: 4rem;
+    }
+
+    section + section {
+      margin-top: 4rem;
+    }
+
+    .table-shell,
+    .table-shell.wide {
+      width: calc(100vw - 1.5rem);
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+
+    table {
+      font-size: 0.78rem;
+    }
+
+    th,
+    td {
+      padding: 0.7rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
+    }
+
+    .contents a {
+      transition: none;
+    }
+  }
+
+  @media print {
+    :global(body.attack-satellites-page),
+    :global(.attack-satellites-page main) {
+      background: #fff;
+    }
+
+    .article-shell {
+      width: 100%;
+      padding: 0;
+    }
+
+    .article-hero {
+      min-height: 8cm;
+      box-shadow: none;
+    }
+
+    .article-grid {
+      display: block;
+      padding: 1.5cm 0;
+      box-shadow: none;
+    }
+
+    .contents {
+      display: none;
+    }
+
+    .article-copy {
+      font-size: 10.5pt;
+      line-height: 1.5;
+    }
+
+    .table-shell,
+    .table-shell.wide {
+      width: 100%;
+      margin: 1rem 0;
+      overflow: visible;
+      box-shadow: none;
+      transform: none;
+      break-inside: avoid;
+    }
+
+    table {
+      min-width: 0;
+      font-size: 7.5pt;
+    }
+
+    th {
+      position: static;
+    }
+
+    a {
+      color: inherit;
+    }
+  }
+</style>
