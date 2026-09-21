@@ -251,3 +251,17 @@ Mars mission control is deployed at https://orbitfleet.populationmars.com/mars
 provides separate active Earth and Mars console links. Production API launch,
 fault injection, source-manifest exports, readiness, and the standalone browser
 route were checked. Existing hosting is reused; no new paid service was added.
+
+### 21 September 2026 — debris outgassing demonstrator
+
+Implemented locally in OrbitFleet at `/debris`: three fictional bodies, six prescribed
+surface-recoil response cases, Earth central gravity plus J2, same-time gravity-only
+comparisons, osculating perigee/apogee, and synthetic observations with an explicit
+tracking gap. The user narrowed this feature to escaping-material orbital mechanics;
+laser controls, pulse parameters and laser telemetry are excluded. No laser-system
+performance or removal throughput is inferred from the blog tables.
+
+The browser replays an offline numerical dataset, avoiding per-visitor integration
+and server sessions. Numerical model, limitations, provenance, reproduction and
+validation are recorded in OrbitFleet's `docs/debris-outgassing-v1.md`. This is a local
+review build, not a deployed replacement for the existing Earth or Mars consoles.
