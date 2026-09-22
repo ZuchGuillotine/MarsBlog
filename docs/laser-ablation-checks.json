@@ -1,0 +1,28 @@
+{
+  "j2AccelerationGradientErrorKmS2": 1.1113607066111357e-12,
+  "gravityOnlyRelativeEnergyDrift": 1.9837845862897316e-14,
+  "stepHalvingPositionDifferenceKm": 1.216435563624493e-09,
+  "designRoundTripPositionErrorKm": 8.434306887916777e-12,
+  "pulseEnergyAt250KmJ": 657.5658270075548,
+  "optimumPulseEnergyAt500KmJ": 2630.2633080302194,
+  "dvTo200KmFrom550KmCircularMs": 98.92463419199693,
+  "dvTo200KmFrom800KmCircularMs": 164.3230318497899,
+  "dvTo200KmFrom1000KmCircularMs": 213.7705569205579,
+  "dvTo200KmFrom1200KmCircularMs": 260.84942555032865,
+  "untouchedTargets": [
+    "fragment-2",
+    "fragment-3",
+    "fragment-4",
+    "fragment-5",
+    "fragment-10"
+  ],
+  "untouchedMaxPerigeeDeltaKm": 0.0,
+  "engagements": 25,
+  "outcomes": {
+    "EFFECTIVE": 12,
+    "PARTIAL": 6,
+    "INEFFECTIVE": 5,
+    "ABORTED": 2
+  },
+  "orbitFleetBaselineMaxDifferenceKm": 8.267076504190052e-05
+}

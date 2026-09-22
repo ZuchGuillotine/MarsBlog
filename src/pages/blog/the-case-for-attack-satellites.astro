@@ -274,6 +274,11 @@ const sections = [
           <p>Plus the backlog: the 1,589 t of rocket bodies now in LEO is 140–540 unit-years, and the 1–10 cm population is limited by encounter rate rather than energy (Phipps estimated ~100,000 small objects per 4.6 months for a 16 kW station).</p>
 
           <p>Today's problem is a handful of units. The 10% build-out at the operators' own promised failure rate is a fleet of tens to a hundred, with realistic margins. The 30–50% build-outs are hundreds. At that point the sweepers are a constellation in their own right, and the reasonable position is that the operators whose failure rates set the fleet size should be paying for it.</p>
+
+          <aside class="sim-callout" aria-label="Interactive simulation">
+            <p class="sim-callout-kicker">See it fly</p>
+            <p><a href="/orbit/laser-ablation">Three of these satellites working a fictional debris field</a> — two shepherds ahead of a derelict and a spent stage, one sweeper crossing everything else. Every engagement attempt is logged with the impulse delivered, the orbit change, the rule that allowed or refused the shot, and the projected time to a 200 km perigee. The physics follows sections 6–8 above and states its assumptions.</p>
+          </aside>
         </section>
 
         <section id="the-weapon-problem">
@@ -453,6 +458,26 @@ const sections = [
 
   section {
     scroll-margin-top: 5.5rem;
+  }
+
+  .sim-callout {
+    margin: 2.5rem 0 0;
+    padding: 1.35rem 1.5rem;
+    border: 1px solid var(--rule-strong);
+    border-left: 4px solid var(--rust);
+    background: rgba(255, 255, 255, 0.55);
+  }
+
+  .sim-callout-kicker {
+    margin: 0 0 0.5rem !important;
+    color: var(--rust);
+    font: 700 0.7rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .sim-callout p:last-child {
+    margin: 0;
   }
 
   section + section {
