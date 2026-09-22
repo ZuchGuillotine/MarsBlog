@@ -7,7 +7,7 @@ import OrbitalSample from '../components/OrbitalSample';
   <main class="observatory">
     <header class="orbit-hero">
       <div class="orbit-kicker"><span></span> Orbital observatory</div>
-      <h1>Two planets, four views<br /><em>of orbital operations.</em></h1>
+      <h1>Two planets, four views<br /><span>of orbital operations.</span></h1>
       <p>Explore NASA’s Mars relay visualization, compare Mars and Earth orbital paths, and open interactive Earth and Mars fleet simulations. Each view identifies whether its spacecraft are historical, proposed, or hypothetical.</p>
       <div class="hero-legend" aria-label="Evidence categories"><span><i class="historical"></i> Historical</span><span><i class="proposed"></i> Proposed</span><span><i class="configured-dot"></i> Simulation sample</span><span><i class="active-dot"></i> Active demo</span></div>
     </header>
@@ -61,7 +61,7 @@ import OrbitalSample from '../components/OrbitalSample';
   .orbit-hero { display:grid;grid-template-columns:minmax(0,1.25fr) minmax(18rem,.75fr);gap:1.4rem 4rem;align-items:end;padding-bottom:clamp(2rem,3.5vw,3.25rem); }
   .orbit-kicker { grid-column:1/-1;color:#c7aaa0;font:600 .7rem/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.2em; }
   .orbit-kicker span { display:inline-block;width:2.75rem;height:1px;margin:0 .8rem .25rem 0;background:var(--mars); }
-  .orbit-hero h1 { margin:0;max-width:18ch;font:500 clamp(2.8rem,5vw,4.6rem)/.95 Georgia,'Times New Roman',serif;letter-spacing:-.045em; }.orbit-hero h1 em { color:var(--mars);font-weight:400; }
+  .orbit-hero h1 { margin:0;max-width:18ch;color:#e8e4dc;font:600 clamp(2.8rem,5vw,4.6rem)/1.02 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:-.055em; }.orbit-hero h1 span { color:#9fbfc4;font-weight:500;font-style:normal; }
   .orbit-hero>p { margin:0;max-width:38rem;color:#b8b3ac;font-size:clamp(1rem,1.4vw,1.2rem);line-height:1.7; }
   .hero-legend { grid-column:1/-1;display:flex;flex-wrap:wrap;gap:.65rem 1.5rem;padding-top:1.1rem;border-top:1px solid var(--line);color:#8f8c87;font:600 .66rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.11em; }
   .hero-legend span { display:inline-flex;align-items:center;gap:.5rem; }.hero-legend i { width:.48rem;height:.48rem;border-radius:50%; }.historical{background:#d2b27a}.proposed{border:1px solid #bb86d9}.configured-dot{background:var(--cyan)}.active-dot{background:#72d19d;box-shadow:0 0 10px rgba(114,209,157,.6)}
