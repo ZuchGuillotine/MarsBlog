@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SolarProcessExplorer from '../../components/sintering/SolarProcessExplorer.astro';
 import { getCollection } from 'astro:content';
 
 const allEntries = await getCollection(
@@ -15,202 +16,2489 @@ const renderedEntries = await Promise.all(
     Content: (await entry.render()).Content,
   }))
 );
-
 const dateFormat = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   month: 'short',
   day: 'numeric',
   timeZone: 'UTC',
 });
+const expertise =
+  'mailto:feedback@haidaa.com?subject=Population%20Mars%20%E2%80%94%20solar%20sintering%20collaboration';
+const support =
+  'mailto:feedback@haidaa.com?subject=Population%20Mars%20%E2%80%94%20support%20a%20solar%20sintering%20test';
+const generations = [
+  {
+    version: 'V1',
+    status: 'CURRENT DEVELOPMENT',
+    title: 'Find the process window.',
+    name: 'Physics / material process window',
+    build:
+      'A person-sized, manually controlled solar test rig. An experimental instrument for learning what the material does.',
+    test: 'Map the transition from loose MGS-1 to bonded ceramic, glazing and melt. Make stationary coupons, straight tracks and small rastered surfaces.',
+    learn:
+      'Can we reproduce a known material state—and explain how the feedstock, delivered flux and thermal history produced it?',
+    gate: 'A reproducible process window, with characterized samples.',
+    hardware: [
+      'Satellite-style parabolic dish with replaceable mirror facets',
+      'Controllable mirror shielding / aperture sections and safe beam interruption',
+      'MGS-1 or closely characterized Mars-regolith simulant',
+      'Refractory firing surface, removable molds or coupon substrates',
+      'Manual X/Y material stage and Z-axis focal adjustment',
+      'Pyrometer, substrate thermocouple, protected camera and irradiance measurement',
+      'Physical shielding and remote observation',
+    ],
+    questions: [],
+  },
+  {
+    version: 'V2',
+    status: 'PLANNED · DEPENDS ON V1',
+    title: 'Automate what works.',
+    name: 'Motion + closed-loop solar CNC',
+    build:
+      'Motorized X/Y motion, Z/focal adjustment and solar tracking, with an electronic aperture and remotely actuated beam shutter.',
+    test: 'Use pyrometry and imaging to adjust scan speed, aperture, focal offset or shutter duty cycle as sunlight and feedstock conditions change.',
+    learn:
+      'Can we join neighboring tracks, manage the cooling wake and produce repeatable pieces with acceptable dimensions?',
+    gate: 'Repeatable tiles or small fields under changing conditions.',
+    hardware: [
+      'Actuators, encoders, limit switches and safety interlocks',
+      'Programmed toolpaths and synchronized data logging',
+      'Fast pyrometer feedback and visible melt-pool imaging',
+      'Thermal imaging of the cooling wake when available',
+      'Controller state: X/Y/Z, scan velocity, incident solar power, aperture, temperature and observed material state',
+    ],
+    questions: [
+      'Can a new track bond without cracking an earlier one?',
+      'Can the controller compensate for changing sunlight?',
+      'Can we deliberately manage the cooling wake?',
+      'When does a rough, partially sintered surface outperform smooth vitrified glass?',
+      'What dimensional accuracy can we repeat?',
+    ],
+  },
+  {
+    version: 'V3',
+    status: 'CONCEPT · DEPENDS ON V1 + V2',
+    title: 'Integrate the cell.',
+    name: 'Autonomous regolith construction cell',
+    build:
+      'Coordinate preparation, solar processing, cooling, inspection and robotic handling in a compact planetary materials cell.',
+    test: 'Survey and classify material; prepare layers; process and inspect them; reject or recycle failures; transport, place and verify useful components.',
+    learn:
+      'Which products and machine architecture earn their complexity through measured performance, recoverability and low imported mass?',
+    gate: 'An integrated process selected by evidence, then tested for Mars.',
+    hardware: [
+      'Material preparation: blade / scoop, screening, metering, spreading and compaction',
+      'Solar processing: tracking optics, active aperture, focal control, motion, shielding and beam dump / safe shutdown',
+      'Thermal management: pyrometry, thermal imaging, scan strategy and cooling covers; possible heat recovery / storage',
+      'Robotic handling: arm or gantry, tool changing, molds, components, rejection / recycling and placement',
+      'Inspection: dimensions, thermal history, cracks / defects and explicit pass/fail criteria',
+      'Autonomy: toolpaths, material-state feedback, fault detection, jam recovery, reversible motions, safe recovery poses and logging',
+      'Eventually: coordination between several specialized machines',
+    ],
+    questions: [],
+  },
+];
+const experiments = [
+  [
+    '01',
+    'Characterize the focus',
+    'Measure the optical focal region and spot geometry.',
+  ],
+  [
+    '02',
+    'Map delivered flux',
+    'Compare aperture settings and focal offsets against incident irradiance.',
+  ],
+  [
+    '03',
+    'Heat stationary samples',
+    'Record thermal history, material response and failure observations.',
+  ],
+  [
+    '04',
+    'Locate material-state boundaries',
+    'Distinguish necking, useful sintering, glazing, stable melt and bubbling / ejection.',
+  ],
+  [
+    '05',
+    'Make straight tracks',
+    'Vary scan speed and dose; section tracks to measure bonded depth.',
+  ],
+  [
+    '06',
+    'Join a small raster',
+    'Vary track spacing and cooling strategy; inspect the previous tracks.',
+  ],
+  [
+    '07',
+    'Characterize and repeat',
+    'Section samples and test density, porosity, cracking and mechanical behavior.',
+  ],
+];
+const collaborators = [
+  [
+    '01',
+    'Optics / solar thermal',
+    'Concentrators, flux measurement, aperture design, tracking and dust-tolerant optics.',
+  ],
+  [
+    '02',
+    'Materials / ceramics',
+    'Basaltic minerals, sintering, vitrification, glass-ceramics, fracture and thermal cycling.',
+  ],
+  [
+    '03',
+    'Robotics / motion control',
+    'Rails, actuators, encoders, manipulators and rugged autonomous machinery.',
+  ],
+  [
+    '04',
+    'Controls',
+    'Pyrometry, feedback, adaptive scan rate, aperture control and fault handling.',
+  ],
+  [
+    '05',
+    'Computer vision',
+    'Melt-pool observation, defect detection, cooling-state estimation and process-state classification.',
+  ],
+  [
+    '06',
+    'Planetary science',
+    'Simulant fidelity, pressure and atmosphere effects, dust behavior and scale assumptions.',
+  ],
+  [
+    '07',
+    'Construction / manufacturing',
+    'Surface preparation, paver geometry, tooling, molds, structural testing and repairability.',
+  ],
+  [
+    '08',
+    'Test facilities / universities',
+    'Mechanical characterization, microscopy, thermal cycling, reduced-pressure testing, spectroscopy and solar-flux measurement.',
+  ],
+];
+const measurements = [
+  [
+    'Feedstock + bed',
+    'Particle-size distribution; simulant batch; green density / compaction; layer thickness.',
+    'Density, porosity, bonded depth and mass loss.',
+  ],
+  [
+    'Optics + motion',
+    'Solar irradiance; aperture fraction; spot diameter; focal distance / offset; scan speed; track spacing.',
+    'Track and melt-pool dimensions, surface texture and dimensional accuracy.',
+  ],
+  [
+    'Thermal history',
+    'Thermal dose; peak / focal temperature; dwell time; heating ramp; cooling rate.',
+    'Cracking, surface defects, thermal-cycle survival and compressive / flexural behavior where practical.',
+  ],
+  [
+    'Repeatability',
+    'Repeat the same configuration and compare runs as sunlight and feedstock change.',
+    'Variation, uncertainty and the limits of a reproducible process window.',
+  ],
+];
 ---
 
 <BaseLayout
-  title="Sintering Bricks with MGS-1 | Mars Explorer"
-  description="Ongoing research project: sintering bricks from MGS-1 Martian regolith simulant using parabolic mirrors, building structures from the bricks, and using those structures as regolith thermal batteries."
+  title="Solar Regolith Sintering | Population Mars"
+  description="An open development program: manual MGS-1 solar material tests, closed-loop solar CNC, and a future autonomous regolith construction cell. Follow the evidence and contribute expertise."
+  ogImage="/images/sintering/autonomous-solar-cell.webp"
 >
-  <div class="min-h-screen text-white" style="font-family: 'JetBrains Mono', monospace; background: linear-gradient(135deg, #7f1d1d 0%, #9a3412 30%, #b45309 70%, #92400e 100%);">
-    <!-- Technical Header -->
-    <section class="relative py-8 px-4 sm:px-6 lg:px-8 border-b border-white/30">
-      <div class="max-w-7xl mx-auto">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-          <div class="flex items-center space-x-4">
-            <div class="w-12 h-12 border-2 border-white bg-white/10 flex items-center justify-center flex-shrink-0">
-              <span class="text-white font-bold text-xl">▣</span>
-            </div>
-            <div>
-              <h1 class="text-xl sm:text-4xl font-bold text-white tracking-tight break-words">MGS1_SINTERING.project</h1>
-              <p class="text-orange-200 text-sm">REGOLITH_BRICK_RESEARCH | STATUS: ACTIVE</p>
-            </div>
-          </div>
-          <div class="text-left sm:text-right text-xs text-orange-200">
-            <div>FEEDSTOCK: MGS-1 MARS GLOBAL SIMULANT</div>
-            <div>ENERGY_SOURCE: CONCENTRATED SOLAR</div>
-            <div>LOG_ENTRIES: {logEntries.length}</div>
+  <div class="solar-program">
+    <header class="project-hero shell">
+      <div class="project-id">
+        <a href="/construction">INFRASTRUCTURE /</a><span
+          >MGS1_SINTERING.project</span
+        ><span class="status"><i></i> V1 · CURRENT DEVELOPMENT</span>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">POPULATION MARS / OPEN MATERIALS R&D</p>
+          <h1>
+            From regolith<br />to infrastructure<span class="accent">.</span>
+          </h1>
+          <p class="mission">
+            Use concentrated sunlight and locally available mineral feedstock to
+            develop increasingly autonomous machines capable of building useful
+            planetary infrastructure.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="#roadmap"
+              >EXPLORE THE ROADMAP <span aria-hidden="true">↘</span></a
+            ><a class="button" href="#research-log"
+              >READ THE RESEARCH LOG <span aria-hidden="true">↓</span></a>
           </div>
         </div>
+        <aside class="reality-panel" aria-label="Current project status">
+          <p class="eyebrow">THE EXPERIMENT TODAY</p>
+          <h2>Small on purpose.<br />Measured before scaled.</h2>
+          <dl>
+            <div><dt>FEEDSTOCK</dt><dd>MGS-1 Mars simulant</dd></div><div>
+              <dt>ENERGY</dt><dd>Concentrated sunlight</dd>
+            </div><div>
+              <dt>DEVELOPMENT</dt><dd>Manual terrestrial test rig</dd>
+            </div><div>
+              <dt>PUBLISHED RECORD</dt><dd>
+                {logEntries.length}
+                {
+                  logEntries.length === 1
+                    ? 'research-log entry'
+                    : 'research-log entries'
+                }
+              </dd>
+            </div>
+          </dl>
+          <p class="status-note">
+            The published record currently documents the kickoff and
+            experimental plan. A completed rig, validated material process
+            window and autonomous construction have not yet been demonstrated in
+            this log.
+          </p>
+          <a class="text-link" href="#research-log"
+            >Check the evidence <span aria-hidden="true">↗</span></a
+          >
+        </aside>
+      </div>
+    </header>
 
-        <div class="bg-white/10 border border-white/30 p-4 sm:p-6">
-          <div class="text-white font-bold mb-2">PROJECT_OVERVIEW</div>
-          <p class="text-orange-100 text-sm leading-relaxed">
-            This is a hands-on research project working with MGS-1 (Mars Global Simulant), a mineralogically
-            accurate stand-in for the basaltic regolith that covers most of Mars. The goal is a complete,
-            documented pipeline that could run on the Martian surface with almost no Earth-shipped mass:
-            concentrate sunlight with parabolic mirrors to sinter loose regolith into structural bricks,
-            assemble those bricks into simple structures, and then use the structures — filled with loose
-            regolith — as thermal batteries that store daytime solar heat for the brutally cold nights.
-            Videos, data, and write-ups are added to the research log below as the work progresses.
+    <nav class="section-nav" aria-label="Solar sintering sections">
+      <div class="shell nav-links">
+        <a href="#vision">01 / VISION</a><a href="#roadmap">02 / ROADMAP</a><a
+          href="#process">03 / PROCESS</a
+        ><a href="#measurements">04 / MEASUREMENTS</a><a href="#collaborate"
+          >05 / COLLABORATE</a
+        ><a href="#research-log">06 / RESEARCH LOG</a>
+      </div>
+    </nav>
+
+    <section
+      class="shell section vision"
+      id="vision"
+      aria-labelledby="vision-title"
+    >
+      <div class="section-top">
+        <p class="eyebrow">01 / THE LONG VIEW</p><span class="tag"
+          >V3 CONCEPT · NOT BUILT</span>
+      </div>
+      <figure class="system-render">
+        <img
+          src="/images/sintering/autonomous-solar-cell.webp"
+          srcset="/images/sintering/autonomous-solar-cell-840.webp 840w, /images/sintering/autonomous-solar-cell.webp 1672w"
+          sizes="(max-width: 1280px) 94vw, 1200px"
+          width="1672"
+          height="941"
+          alt="Conceptual Mars materials cell with a faceted solar concentrator, grading blade, metering hopper, small hot processing spot, inspection sensors and an industrial arm handling a paver."
+          fetchpriority="high"
+        />
+        <figcaption>
+          <strong>ONE POSSIBLE MATURE DESCENDANT</strong><span
+            >AI-generated engineering concept. Optical layout, mechanisms and
+            scale are illustrative, not a validated design or a photograph of
+            existing hardware.</span>
+        </figcaption>
+      </figure>
+      <div class="split vision-copy">
+        <div>
+          <h2 id="vision-title">Where this could lead.</h2><p class="lead">
+            A coordinated materials cell.<br />One controlled track at a time.
+          </p>
+        </div><div>
+          <p>
+            A compact machine works a prepared patch of Martian ground: collect
+            and condition the feedstock, spread a repeatable layer, compact it
+            when needed, then move a small high-temperature sintering or melt
+            zone along programmed paths.
+          </p><p>
+            A lightweight deployable concentrator tracks the Sun. Active
+            aperture shielding, focal adjustment, rapid beam interruption and
+            deliberate defocusing regulate the input. The objective is a useful
+            material state, with closed-loop thermal control.
+          </p><p>
+            Rugged rails, rollers, augers, shields and a compact arm do the
+            work. The arm could handle molds, position sensors, remove rejects,
+            swap tools, clear the bed and eventually place finished components.
+          </p>
+        </div>
+      </div>
+      <div class="regimes">
+        <article>
+          <p class="eyebrow">THERMAL ROUTE A</p><h3>
+            Bond without fully melting.
+          </h3><p class="route">
+            Compaction <b>→</b> partial sintering <b>→</b> strong bonded ceramic
+            layer
+          </p>
+        </article><article>
+          <p class="eyebrow">THERMAL ROUTE B</p><h3>
+            Melt where it earns its place.
+          </h3><p class="route">
+            Controlled melt <b>→</b> glass / glass-ceramic <b>→</b> managed cooling
+            / recrystallization
+          </p>
+        </article>
+      </div>
+      <div class="thermal-train">
+        <div class="thermal-heading">
+          <p class="eyebrow">THE THERMAL-MANAGEMENT TRAIN</p><p>
+            Controlling the cooling is part of making the material.
+          </p>
+        </div><ol>
+          <li>
+            <span class="thermal-dot hot"></span><strong
+              >Active solar spot</strong
+            ><span>Small sinter / melt zone</span>
+          </li><li>
+            <span class="thermal-dot warm"></span><strong
+              >Hot consolidated material</strong
+            ><span>Newly bonded track</span>
+          </li><li>
+            <span class="thermal-dot cooling"></span><strong
+              >Controlled cooling</strong
+            ><span>Manage thermal stress</span>
+          </li><li>
+            <span class="thermal-dot inspection"></span><strong
+              >Thermal + visible inspection</strong
+            ><span>Observe the cooling wake</span>
+          </li><li>
+            <span class="thermal-dot finished"></span><strong
+              >Finished surface</strong
+            ><span>Verify before use</span>
+          </li>
+        </ol>
+      </div>
+      <p class="quiet">
+        Possible outputs: stabilized ground, pavers, tiles, protective facings,
+        interlocking components, berm or wall elements, thermal-storage
+        structures and eventually larger compression-dominant infrastructure.
+        The experiments should select the architecture.
+      </p>
+    </section>
+
+    <section class="section comparison-band" aria-labelledby="now-title">
+      <div class="shell">
+        <div class="comparison">
+          <article>
+            <p class="eyebrow">NOW / V1 DEVELOPMENT</p><h2 id="now-title">
+              An instrument<br />for learning.
+            </h2><p>
+              A person-sized Earth rig: mirrored dish, refractory receiver,
+              MGS-1, sensors and manually controlled motion.
+            </p><p class="purpose">
+              <strong>Purpose</strong> Discover the physics and material process
+              window.
+            </p>
+          </article><div
+            class="comparison-link"
+            aria-label="Measure, learn, automate, scale"
+          >
+            <span>MEASURE</span><b>↓</b><span>LEARN</span><b>↓</b><span
+              >AUTOMATE</span
+            ><b>↓</b><span>SCALE</span>
+          </div><article>
+            <p class="eyebrow">TARGET / LONG-RANGE CONCEPT</p><h2>
+              A cell for<br />making infrastructure.
+            </h2><p>
+              Local feedstock preparation, closed-loop solar processing,
+              controlled cooling, inspection and robotic placement.
+            </p><p class="purpose">
+              <strong>Purpose</strong> Turn local minerals into useful infrastructure
+              with minimal imported consumables.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell section" id="roadmap" aria-labelledby="roadmap-title">
+      <div class="section-top">
+        <p class="eyebrow">02 / DEVELOPMENT ROADMAP</p><span class="meta"
+          >PROGRESSION BY EVIDENCE, NOT DATES</span>
+      </div>
+      <h2 id="roadmap-title">Measure. Learn. Automate. Scale.</h2><p
+        class="intro"
+      >
+        Each generation answers a different question. V1 establishes the
+        process; V2 controls it; V3 integrates the operations. Later generations
+        remain conditional on what the earlier experiments teach us.
+      </p>
+      <div class="roadmap-grid">
+        {
+          generations.map(g => (
+            <article
+              class:list={['generation', { current: g.version === 'V1' }]}
+            >
+              <>
+                <div class="generation-head">
+                  <>
+                    <span class="version">{g.version}</span>
+                    <span class="tag">{g.status}</span>
+                  </>
+                </div>
+                <p class="generation-name">{g.name}</p>
+                <h3>{g.title}</h3>
+                <dl>
+                  <>
+                    <dt>WHAT ARE WE BUILDING?</dt>
+                    <dd>{g.build}</dd>
+                    <dt>WHAT ARE WE TESTING?</dt>
+                    <dd>{g.test}</dd>
+                    <dt>WHAT MUST WE LEARN?</dt>
+                    <dd>{g.learn}</dd>
+                  </>
+                </dl>
+                <div class="gate">
+                  <>
+                    <span>ADVANCE WHEN</span>
+                    <p>{g.gate}</p>
+                  </>
+                </div>
+                <details>
+                  <summary>Hardware, controls &amp; subsystems</summary>
+                  <ul class="bullets">
+                    {g.hardware.map(item => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                  {g.questions.length > 0 && (
+                    <>
+                      <h4>Questions for V2</h4>
+                      <ul class="bullets">
+                        {g.questions.map(item => (
+                          <li>{item}</li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                </details>
+              </>
+            </article>
+          ))
+        }
+      </div>
+      <div class="protocol">
+        <div>
+          <p class="eyebrow">V1 / PROPOSED EXPERIMENT SEQUENCE</p><h3>
+            Build a map of<br />what the material does.
+          </h3><p>
+            The milestone is a reproducible processing window that produces a
+            known material state. A molten sample alone does not establish that
+            window.
+          </p><span class="tag">ALL STEPS BELOW ARE PLANNED</span>
+        </div><ol class="experiment-list">
+          {
+            experiments.map(([n, title, description]) => (
+              <li>
+                <>
+                  <span>{n}</span>
+                  <div>
+                    <>
+                      <h4>{title}</h4>
+                      <p>{description}</p>
+                    </>
+                  </div>
+                </>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+      <div class="v2-path">
+        <p class="eyebrow">V2 / INCREASING PROCESS COMPLEXITY</p><p>
+          Coupon <b>→</b> parallel tracks <b>→</b> small raster patch <b>→</b> approximately
+          30 cm prepared bed <b>→</b> interlocking tile / paver
+        </p>
+      </div>
+      <details class="full-details">
+        <summary>Material-state classification: what vision could add</summary
+        ><p>
+          Proposed V2 classes pair visible morphology with temperature and
+          thermal history. Computer vision complements pyrometry; it does not
+          replace temperature measurement. Early particle necking may require
+          microscopy or sectioning to confirm.
+        </p><ol class="state-list" start="0">
+          {
+            [
+              'Loose / unbonded',
+              'Early necking',
+              'Useful sintering',
+              'Partial melt',
+              'Stable melt pool',
+              'Excessive melt / bubbling',
+              'Ejection / process failure',
+            ].map((state, i) => (
+              <li>
+                <span>{i}</span>
+                {state}
+              </li>
+            ))
+          }
+        </ol><p>
+          Train and validate classifications against characterized samples
+          before using them for control. A camera label alone is not proof of
+          internal strength or bonded depth.
+        </p>
+      </details>
+      <p class="callout">
+        V3 is not a frozen design. A thin bonded layer over compacted ground may
+        prove more useful than a solid brick. Interlocking pavers, replaceable
+        wearing surfaces, structural shells, roads, landing-area components,
+        thermal-storage blocks and radiation / thermal infrastructure all remain
+        candidate uses.
+      </p>
+    </section>
+
+    <section
+      class="process-band section"
+      id="process"
+      aria-labelledby="process-title"
+    >
+      <div class="shell">
+        <div class="section-top">
+          <p class="eyebrow">03 / SYSTEM ARCHITECTURE</p><span class="tag"
+            >CONCEPTUAL WORKFLOW</span>
+        </div><h2 id="process-title">A process, with feedback.</h2><p
+          class="intro"
+        >
+          The manufacturing loop includes what happens before the hot spot, what
+          happens after it, and what happens when a part fails inspection.
+        </p>
+        <SolarProcessExplorer />
+        <div class="flow-layout">
+          <ol class="material-flow" aria-label="Material processing flow">
+            <li>LOCAL REGOLITH</li><li>COLLECT / SCREEN</li><li>SPREAD</li><li>
+              COMPACT
+            </li><li class="solar-step">
+              SOLAR PROCESSING <span>Small moving sinter / melt zone</span>
+            </li><li>CONTROLLED COOLING</li><li>INSPECT</li>
+          </ol><div class="feedback-panel">
+            <p class="eyebrow">FEEDBACK TO SOLAR PROCESSING</p><div
+              class="sensor-group"
+            >
+              <span>PYROMETER</span><b>+</b><span>VISIBLE CAMERA</span><b>+</b
+              ><span>THERMAL CAMERA</span>
+            </div><span class="flow-arrow" aria-hidden="true">↓</span><div
+              class="controller"
+            >
+              PROCESS CONTROLLER
+            </div><span class="flow-arrow" aria-hidden="true">↓</span><div
+              class="actuators"
+            >
+              APERTURE / FOCUS / SCAN SPEED<br /><span
+                >+ beam interruption / shutter duty cycle</span>
+            </div><p class="feedback-return">
+              ↺ Adjust the solar process; observe the response.
+            </p><p>
+              Track temperature, melt-pool dimensions, irradiance, aperture,
+              focal distance, scan velocity, layer depth, compaction, cooling
+              rate and surface defects.
+            </p><p class="quiet">
+              Fault handling needs a safe shutdown, reversible motions and
+              recoverable poses. Autonomy includes stopping and rejecting bad
+              material.
+            </p>
+          </div><div class="inspection-branches">
+            <div>
+              <span class="tag pass">PASS</span><strong
+                >Transport → place / use → verify</strong>
+            </div><div>
+              <span class="tag fail">FAIL / LEARN</span><strong
+                >Reject → recondition / recycle</strong
+              ><p>
+                Return suitable material to preparation; record the failure and
+                check whether reuse is possible.
+              </p>
+            </div>
+          </div>
+        </div>
+        <p class="quiet">
+          A mature field workflow would also survey the site and classify local
+          feedstock before collection. No integrated autonomous cell is claimed
+          today.
+        </p>
+      </div>
+    </section>
+
+    <section class="shell section" aria-labelledby="solar-title">
+      <div class="split">
+        <div>
+          <p class="eyebrow">THE ENERGY HYPOTHESIS</p><h2 id="solar-title">
+            Why direct solar?
+          </h2><p class="lead">
+            Local minerals.<br />Local sunlight.<br />Less conversion hardware?
+          </p>
+        </div><div>
+          <p>
+            Mars construction faces a severe logistics constraint: imported
+            hardware and consumables are costly. Regolith and sunlight are
+            locally available. Optical concentration may remove some
+            energy-conversion equipment from the heating chain.
+          </p><div class="energy-chain">
+            <span>ELECTRIC HEATING PATH</span><p>
+              Sunlight → photovoltaic electricity → power electronics → laser /
+              heater → regolith
+            </p>
+          </div><div class="energy-chain direct">
+            <span>DIRECT SOLAR PATH</span><p>
+              Sunlight → optical concentration → regolith
+            </p>
+          </div><p>
+            The shorter chain is a hypothesis worth testing, not proof of lower
+            total mass or higher efficiency. Tracking, shielding, dust
+            management, motion, sensing and control still require hardware and
+            auxiliary power.
+          </p><p>
+            Direct solar competes with—and may complement—microwave processing,
+            resistive heating, lasers, electric furnaces, mechanical compaction,
+            binders and hybrid processes. This program exists partly to find
+            where it actually makes sense.
+          </p>
+        </div>
+      </div>
+      <div class="metric-strip">
+        <p class="eyebrow">COMPARE THE WHOLE SYSTEM</p><ul>
+          {
+            [
+              'Infrastructure kg / imported hardware kg',
+              'Throughput',
+              'Energy efficiency',
+              'Collector area',
+              'Controllability',
+              'Strength / porosity',
+              'Thermal shock',
+              'Surface traction',
+              'Repairability',
+              'Dust tolerance',
+              'Autonomous operability',
+            ].map(metric => <li>{metric}</li>)
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section
+      class="measurement-band section"
+      id="measurements"
+      aria-labelledby="measurements-title"
+    >
+      <div class="shell">
+        <p class="eyebrow">04 / WHAT WE MEASURE</p><h2 id="measurements-title">
+          A hot spot is only the beginning.
+        </h2><p class="intro">
+          Every run should connect inputs, thermal history and a characterized
+          result. Publish the conditions and the uncertainty alongside the
+          photograph.
+        </p><div class="measurement-table">
+          <div class="measurement-row table-heading">
+            <span>EXPERIMENT DOMAIN</span><span>CONTROL / RECORD</span><span
+              >CHARACTERIZE</span>
+          </div>{
+            measurements.map(([domain, input, output]) => (
+              <div class="measurement-row">
+                <>
+                  <h3>{domain}</h3>
+                  <div>
+                    <>
+                      <span class="mobile-label">CONTROL / RECORD</span>
+                      <p>{input}</p>
+                    </>
+                  </div>
+                  <div>
+                    <>
+                      <span class="mobile-label">CHARACTERIZE</span>
+                      <p>{output}</p>
+                    </>
+                  </div>
+                </>
+              </div>
+            ))
+          }
+        </div><div class="measurement-notes">
+          <p>
+            <strong
+              >Initial temperature target: approximately 1000–1200°C.</strong
+            > This preserves the original focal-zone research target, not a measured
+            result or a universal sintering recipe. Composition, dose and cooling
+            determine the material state.
+          </p><p>
+            <strong>Measure carefully.</strong> Pyrometry depends on emissivity,
+            reflections and field of view. A substrate thermocouple helps interpret
+            the thermal history but does not directly measure the moving surface
+            pool. Pair sensor traces with imaging and sectioned samples.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Phase Cards -->
-    <section class="py-8 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-7xl mx-auto">
-        <h2 class="text-2xl font-bold text-white mb-4">RESEARCH_PHASES</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-          <div class="bg-white/10 border border-white/30 p-6">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-lg font-bold text-white">01_SOLAR_SINTERING</h3>
-              <div class="text-xs text-orange-200">PARABOLIC_MIRRORS</div>
-            </div>
-            <p class="text-orange-100 text-sm mb-4">
-              Sinter MGS-1 into bricks using nothing but concentrated sunlight. A parabolic mirror
-              focuses solar flux onto a packed regolith mold, fusing mineral grains into a solid
-              ceramic body without any binder or imported fuel.
+    <section class="shell section" aria-labelledby="earth-title">
+      <div class="split">
+        <div>
+          <p class="eyebrow">TERRESTRIAL TESTBED / PLANETARY PURPOSE</p><h2
+            id="earth-title"
+          >
+            Why build this<br />on Earth?
+          </h2>
+        </div><div>
+          <p class="lead">Learn cheaply before testing expensively.</p><p>
+            The Earth machine lets us investigate optics, materials, thermal
+            control, motion and autonomy together, and eliminate failure modes
+            before environmental simulation.
+          </p><p>
+            Earth results are not direct proof of Mars operation. Future tests
+            must address pressure, atmosphere, gravity, solar availability, dust
+            behavior and Martian thermal conditions. Simulant fidelity and
+            site-to-site material variation also matter.
+          </p><p class="quiet">
+            Possible Earth-side value includes low-fuel mineral consolidation,
+            remote construction, autonomous aggregate processing, off-grid
+            high-temperature processing and disaster / austere-site construction
+            research. Mars remains the mission.
+          </p>
+        </div>
+      </div>
+      <details class="full-details original-research">
+        <summary
+          >Original research threads: bricks, structures & thermal storage</summary
+        ><div class="research-threads">
+          <article>
+            <p class="eyebrow">01 / SOLAR SINTERING</p><h3>
+              MGS-1 to bonded material
+            </h3><p>
+              Concentrate sunlight onto packed regolith molds to explore grain
+              bonding without added binder or combustion fuel. Track particle
+              size, compaction, dwell time and ramp rate; test strength, density
+              and thermal cycling. Lightweight mirrors are attractive, but
+              cleaning and dust tolerance must be demonstrated.
             </p>
-            <ul class="text-orange-100 text-xs space-y-1">
-              <li>• Target temperature: ~1000–1200°C at the focal zone</li>
-              <li>• Variables: particle size, compaction, dwell time, ramp rate</li>
-              <li>• Measure: compressive strength, density, thermal cycling durability</li>
-              <li>• Mars relevance: mirrors are lightweight to ship and dust can be brushed off</li>
-            </ul>
-          </div>
-
-          <div class="bg-white/10 border border-white/30 p-6">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-lg font-bold text-white">02_BRICK_STRUCTURES</h3>
-              <div class="text-xs text-orange-200">CONSTRUCTION</div>
-            </div>
-            <p class="text-orange-100 text-sm mb-4">
-              Use the sintered bricks to build small test structures. Compression-dominant forms —
-              walls, arches, vaults — suit brittle ceramic bricks and Mars's 0.38g, where masonry
-              can span farther than on Earth.
+          </article><article>
+            <p class="eyebrow">02 / BRICK STRUCTURES</p><h3>
+              Test compression-dominant forms
+            </h3><p>
+              Explore walls, arches and vaults; interlocking geometries versus
+              mortared joints; candidate sulfur-based mortar / concrete and
+              sintered-in-place seams. Measure load capacity and joint thermal
+              expansion. Mars's approximately 0.38g changes self-weight loads,
+              but does not establish structural safety or allowable spans.
+            </p><p>
+              Potential uses include protective habitat shells, windbreaks and
+              radiation-shielding mass, subject to structural testing.
             </p>
-            <ul class="text-orange-100 text-xs space-y-1">
-              <li>• Interlocking brick geometries vs. mortared joints</li>
-              <li>• Candidate mortars: sulfur concrete, sintered-in-place seams</li>
-              <li>• Test: load capacity, thermal expansion at the joints</li>
-              <li>• Mars relevance: habitat shells, wind breaks, radiation mass</li>
-            </ul>
-          </div>
-
-          <div class="bg-white/10 border border-white/30 p-6">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-lg font-bold text-white">03_THERMAL_BATTERY</h3>
-              <div class="text-xs text-orange-200">HEAT_STORAGE</div>
-            </div>
-            <p class="text-orange-100 text-sm mb-4">
-              Fill the brick structures with loose regolith and charge them with the same parabolic
-              mirrors. The high thermal mass stores daytime heat and releases it slowly overnight —
-              a battery with no moving parts, made almost entirely of dirt.
+          </article><article>
+            <p class="eyebrow">03 / THERMAL BATTERY</p><h3>
+              Store heat in local material
+            </h3><p>
+              Investigate brick enclosures filled with loose regolith, charged
+              by concentrated solar heat during the day. Measure heat-retention
+              curves and insulation configurations; explore embedded
+              heat-exchange loops for heating.
+            </p><p>
+              Martian nights can reach around −80°C and below. Useful overnight
+              heat delivery, cycling durability and any reduction in electrical
+              heating load remain to be measured.
             </p>
-            <ul class="text-orange-100 text-xs space-y-1">
-              <li>• Charge cycle: concentrated solar → regolith core by day</li>
-              <li>• Measure: heat retention curves, insulation configurations</li>
-              <li>• Explore: embedded heat exchange loops for habitat heating</li>
-              <li>• Mars relevance: nights hit −80°C; stored heat cuts electrical load</li>
-            </ul>
-          </div>
+          </article>
+        </div>
+      </details>
+      <div class="references">
+        <p class="eyebrow">RESEARCH CONTEXT / NOT POPULATION MARS RESULTS</p><p>
+          MGS-1 is a Rocknest-based mineralogical analog for basaltic Martian
+          regolith, not a substitute for every Mars soil: <a
+            href="https://sciences.ucf.edu/class/simulant_marsglobal/"
+            >UCF / CLASS MGS-1 reference ↗</a
+          >.
+        </p><p>
+          Direct-solar regolith processing has research precedent, including
+          DLR's work on lunar simulants. Those results do not validate this Mars
+          system: <a
+            href="https://www.dlr.de/en/ff/research-and-transfer/research-infrastructure/high-flux-solar-furnace-and-solar-simulator"
+            >DLR high-flux solar furnace ↗</a
+          >.
+        </p>
+      </div>
+    </section>
 
+    <section
+      class="collaboration-band section"
+      id="collaborate"
+      aria-labelledby="collaborate-title"
+    >
+      <div class="shell">
+        <p class="eyebrow">05 / WHAT WE NEED HELP WITH</p><h2
+          id="collaborate-title"
+        >
+          THIS IS TOO MULTIDISCIPLINARY<br />FOR ONE PERSON.
+        </h2><p class="intro">
+          Population Mars is being developed in public because the interesting
+          part is not pretending one person already knows the answers. The
+          machine crosses optics, ceramics, robotics, controls, computer vision,
+          planetary science and construction. If you work in one of these areas,
+          there is a real experiment here to improve.
+        </p><div class="actions">
+          <a href={expertise} class="button primary"
+            >CONTRIBUTE EXPERTISE <span aria-hidden="true">↗</span></a
+          ><a href={support} class="button"
+            >SUPPORT A TEST <span aria-hidden="true">↗</span></a>
+        </div><p class="contact-note">
+          Both open an email to <a href="mailto:feedback@haidaa.com"
+            >feedback@haidaa.com</a
+          >. Tell us which experiment you could improve or what testing
+          capability you can offer.
+        </p><div class="collaborator-grid">
+          {
+            collaborators.map(([n, title, description]) => (
+              <article>
+                <>
+                  <span class="collaborator-number">{n}</span>
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                </>
+              </article>
+            ))
+          }
+        </div><div class="support-needs">
+          <h3>Practical support for the next tests</h3><p>
+            MGS-1 / characterized simulant · refractory materials · mirror
+            hardware · linear motion hardware · pyrometry · thermal camera
+            access · mechanical testing · machining / fabrication ·
+            environmental test equipment · engineering review.
+          </p><p class="quiet">
+            Equipment access, a well-designed test or a careful engineering
+            review can be as useful as funding. <a href="/support"
+              >Existing project support information ↗</a>
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- Research Log -->
-    <section class="py-8 px-4 sm:px-6 lg:px-8 border-t border-white/30">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-2xl font-bold text-white mb-6">RESEARCH_LOG</h2>
-
-        {renderedEntries.length === 0 && (
-          <div class="bg-white/10 border border-white/30 p-6 text-orange-100 text-sm">
-            No log entries yet — first field results coming soon.
-          </div>
-        )}
-
-        <div class="space-y-8">
-          {renderedEntries.map(({ entry, Content }) => (
-            <article class="bg-white/10 border border-white/30 p-4 sm:p-6">
-              <header class="mb-4 border-b border-white/20 pb-4">
-                <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
-                  <h3 class="text-lg font-bold text-white">{entry.data.title}</h3>
-                  <time
-                    datetime={entry.data.pubDate.toISOString()}
-                    class="text-xs text-orange-200 whitespace-nowrap"
-                  >
-                    {dateFormat.format(entry.data.pubDate)}
-                  </time>
-                </div>
-                <p class="text-orange-200 text-sm mt-1">{entry.data.description}</p>
+    <section
+      class="shell section"
+      id="research-log"
+      aria-labelledby="log-title"
+    >
+      <div class="section-top">
+        <p class="eyebrow">06 / RESEARCH LOG</p><span class="meta"
+          >{logEntries.length} PUBLISHED {
+            logEntries.length === 1 ? 'ENTRY' : 'ENTRIES'
+          }</span>
+      </div><h2 id="log-title">
+        The roadmap is the hypothesis.<br />The log is the evidence.
+      </h2><p class="intro">
+        Plans and results belong in separate records. The original kickoff is
+        preserved below. No completed material tests, sensor traces or validated
+        autonomous capabilities are reported in the current published log.
+      </p><div
+        class="log-status-key"
+        aria-label="Experiment status definitions"
+      >
+        <span class="tag">PLANNED</span><span class="tag">BUILDING</span><span
+          class="tag">TESTING</span
+        ><span class="tag pass">COMPLETE</span><span class="tag fail"
+          >FAILED / LEARNED</span
+        ><p>
+          Status vocabulary for future experiments. These tags are not claims
+          that each stage has been reached.
+        </p>
+      </div>
+      <details class="full-details">
+        <summary>What a useful experiment record should contain</summary><p>
+          Every run should have an experiment ID, configuration, simulant batch,
+          process variables, photographs / video, sensor traces, result, failure
+          observations and a next experiment. Preserve failures when they teach
+          us something; keep planned runs separate from completed measurements.
+        </p><a
+          class="text-link"
+          href="/research/sintering/experiment-record.md"
+          download>Download the experiment-record template ↓</a>
+      </details>
+      <div class="log-entries">
+        {
+          renderedEntries.length === 0 && (
+            <p class="callout">
+              No published log entries yet. Planned experiments are described in
+              the roadmap above.
+            </p>
+          )
+        }{
+          renderedEntries.map(({ entry, Content }) => (
+            <article class="log-entry" id={`log-${entry.slug}`}>
+              <header>
+                <>
+                  <div class="log-entry-meta">
+                    <>
+                      <span class="tag">
+                        {entry.slug === 'sintering-bricks-kickoff'
+                          ? 'PLANNED · KICKOFF'
+                          : 'RESEARCH RECORD'}
+                      </span>
+                      <time datetime={entry.data.pubDate.toISOString()}>
+                        {dateFormat.format(entry.data.pubDate)}
+                      </time>
+                    </>
+                  </div>
+                  <h3>{entry.data.title}</h3>
+                  <p>{entry.data.description}</p>
+                </>
               </header>
-
               {entry.data.videos.length > 0 && (
-                <div class="grid grid-cols-1 gap-4 mb-4">
+                <div class="log-media">
                   {entry.data.videos.map(video => (
                     <figure>
                       <video
                         controls
                         preload="metadata"
-                        class="w-full border border-white/30 bg-black"
                         src={video.src}
                         poster={video.poster}
                       >
-                        Your browser does not support embedded video.
-                        <a href={video.src} class="underline">Download the video</a> instead.
+                        Your browser does not support embedded video.{' '}
+                        <a href={video.src}>Download the video</a>.
                       </video>
                       {video.caption && (
-                        <figcaption class="text-xs text-orange-200 mt-2">{video.caption}</figcaption>
+                        <figcaption>{video.caption}</figcaption>
                       )}
                     </figure>
                   ))}
                 </div>
               )}
-
               {entry.data.images.length > 0 && (
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div class="log-media image-grid">
                   {entry.data.images.map(image => (
                     <figure>
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        loading="lazy"
-                        class="w-full border border-white/30"
-                      />
+                      <img src={image.src} alt={image.alt} loading="lazy" />
                       {image.caption && (
-                        <figcaption class="text-xs text-orange-200 mt-2">{image.caption}</figcaption>
+                        <figcaption>{image.caption}</figcaption>
                       )}
                     </figure>
                   ))}
                 </div>
               )}
-
-              <div class="prose prose-invert prose-sm max-w-none text-orange-50">
+              <div class="log-content">
                 <Content />
               </div>
             </article>
-          ))}
-        </div>
+          ))
+        }
       </div>
     </section>
-
-    <!-- Back Navigation -->
-    <section class="py-8 px-4 sm:px-6 lg:px-8 border-t border-white/30 bg-white/5">
-      <div class="max-w-7xl mx-auto text-center">
-        <a href="/construction" class="inline-block bg-white/15 border border-white/30 px-6 py-3 text-xs hover:bg-white/25 transition-colors">
-          <span class="text-white font-bold">← BACK_TO_INFRASTRUCTURE.blueprint</span>
-        </a>
+    <section class="closing section">
+      <div class="shell closing-grid">
+        <div>
+          <p class="eyebrow">POPULATION MARS / SOLAR REGOLITH PROGRAM</p><h2>
+            Build the process.<br />Measure it.<br /><span
+              >Automate what works.</span>
+          </h2><p>We know enough to build the next experiment.</p>
+        </div><div>
+          <a class="button primary" href={expertise}
+            >CONTRIBUTE EXPERTISE <span aria-hidden="true">↗</span></a
+          ><a class="button" href={support}
+            >SUPPORT A TEST <span aria-hidden="true">↗</span></a
+          ><a href="/construction" class="back-link"
+            >← BACK TO INFRASTRUCTURE</a>
+        </div>
       </div>
     </section>
   </div>
 </BaseLayout>
+
+<style>
+  .solar-program {
+    --ink: #eeeee8;
+    --muted: #b6b6ad;
+    --line: #3c3e38;
+    --amber: #efb86a;
+    --bg: #171b19;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Inter, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .solar-program * {
+    box-sizing: border-box;
+  }
+  .shell {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .solar-program h1,
+  .solar-program h2,
+  .solar-program h3,
+  .solar-program h4,
+  .solar-program p,
+  .solar-program figure,
+  .solar-program dl {
+    margin: 0;
+  }
+  .solar-program h1,
+  .solar-program h2,
+  .solar-program h3 {
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.04em;
+  }
+  .solar-program h2 {
+    font-size: clamp(30px, 3.6vw, 48px);
+  }
+  .solar-program h3 {
+    font-size: 23px;
+  }
+  .solar-program p + p {
+    margin-top: 18px;
+  }
+  .solar-program a {
+    color: inherit;
+  }
+  .solar-program a:focus-visible,
+  .solar-program summary:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 5px;
+  }
+  .solar-program section[id] {
+    scroll-margin-top: 88px;
+  }
+  .eyebrow,
+  .meta,
+  .tag,
+  .project-id,
+  .button,
+  .section-nav,
+  .generation dt,
+  .gate > span,
+  .generation-name,
+  .flow-layout,
+  .energy-chain > span,
+  .collaborator-number,
+  .contact-note,
+  .log-entry-meta,
+  .back-link,
+  .thermal-heading,
+  .mobile-label,
+  .table-heading {
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    font-weight: 500;
+    margin-bottom: 22px !important;
+  }
+  .meta {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .section {
+    padding-top: 88px;
+    padding-bottom: 88px;
+  }
+  .section-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .section-top .eyebrow {
+    margin-bottom: 0 !important;
+  }
+  .section-top .tag {
+    flex-shrink: 0;
+  }
+  .accent {
+    color: var(--amber);
+  }
+  .project-hero {
+    padding-top: 32px;
+    padding-bottom: 56px;
+  }
+  .project-id {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--line);
+  }
+  .project-id a {
+    text-decoration: none;
+  }
+  .status {
+    margin-left: auto;
+    color: var(--amber);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .status i {
+    width: 6px;
+    height: 6px;
+    background: var(--amber);
+    border-radius: 50%;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.65fr 1fr;
+    gap: 64px;
+    padding-top: 48px;
+    align-items: start;
+  }
+  .hero-grid h1 {
+    font-size: clamp(40px, 5.2vw, 68px);
+    letter-spacing: -0.055em;
+  }
+  .mission {
+    font-size: 18px;
+    line-height: 1.65;
+    color: #cccec5;
+    max-width: 660px;
+    margin-top: 25px !important;
+  }
+  .actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .button {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 22px;
+    min-height: 48px;
+    padding: 14px 18px;
+    border: 1px solid #73756b;
+    font-size: 10px;
+    letter-spacing: 0.055em;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background 0.18s,
+      border-color 0.18s;
+  }
+  .button:hover {
+    background: #30352e;
+    border-color: var(--amber);
+  }
+  .solar-program .button.primary {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: #20241f;
+  }
+  .button.primary:hover {
+    background: #ffcd87;
+  }
+  .reality-panel {
+    padding: 26px;
+    border: 1px solid #585647;
+    background: linear-gradient(135deg, #292d25, #21251f);
+  }
+  .reality-panel .eyebrow {
+    margin-bottom: 15px !important;
+  }
+  .reality-panel h2 {
+    font-size: 26px;
+    letter-spacing: -0.035em;
+  }
+  .reality-panel dl {
+    margin-top: 24px;
+  }
+  .reality-panel dl div {
+    padding: 10px 0;
+    border-top: 1px solid #444739;
+    display: flex;
+    gap: 18px;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .reality-panel dt {
+    font:
+      9px 'JetBrains Mono',
+      monospace;
+    color: var(--muted);
+  }
+  .reality-panel dd {
+    margin: 0;
+    font-size: 12px;
+    text-align: right;
+  }
+  .reality-panel .status-note {
+    font-size: 12px;
+    color: #c5c7bc;
+    line-height: 1.65;
+    margin: 18px 0;
+  }
+  .text-link {
+    text-underline-offset: 5px;
+    font-size: 12px;
+  }
+  .section-nav {
+    border-block: 1px solid var(--line);
+    background: #1e221f;
+  }
+  .nav-links {
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    overflow: auto;
+    scrollbar-width: thin;
+  }
+  .nav-links a {
+    white-space: nowrap;
+    text-decoration: none;
+    font-size: 10px;
+    letter-spacing: 0.045em;
+    padding: 18px 0;
+    color: #c6c8bb;
+  }
+  .nav-links a:hover {
+    color: var(--amber);
+  }
+  .vision {
+    padding-top: 48px;
+  }
+  .tag {
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    line-height: 1.5;
+    border: 1px solid #686958;
+    color: #d9daca;
+    padding: 6px 9px;
+    display: inline-block;
+  }
+  .system-render {
+    border: 1px solid #56594b;
+    background: #21241f;
+  }
+  .system-render img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .system-render figcaption {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 24px;
+    padding: 18px 22px;
+    font:
+      11px/1.65 'JetBrains Mono',
+      monospace;
+    color: var(--muted);
+  }
+  .system-render figcaption strong {
+    color: var(--amber);
+    font-weight: 400;
+  }
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 80px;
+  }
+  .vision-copy {
+    margin-top: 54px;
+  }
+  .vision-copy h2 {
+    margin-bottom: 20px;
+  }
+  .lead {
+    font-size: 23px;
+    line-height: 1.45;
+    color: #dedfd5;
+    letter-spacing: -0.025em;
+  }
+  .split > div > p:not(.eyebrow):not(.lead) {
+    color: #c0c3b7;
+  }
+  .regimes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 38px;
+  }
+  .regimes article {
+    background: #20251f;
+    padding: 28px;
+  }
+  .regimes .eyebrow {
+    margin-bottom: 12px !important;
+  }
+  .regimes h3 {
+    font-size: 22px;
+  }
+  .route {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 16px !important;
+  }
+  .route b {
+    color: var(--amber);
+    margin: 0 5px;
+  }
+  .thermal-train {
+    margin-top: 36px;
+    border: 1px solid var(--line);
+    padding: 28px;
+  }
+  .thermal-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .thermal-heading .eyebrow {
+    margin: 0 !important;
+  }
+  .thermal-train ol {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    margin: 30px 0 0;
+    padding: 0;
+  }
+  .thermal-train li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+  }
+  .thermal-train li:not(:last-child):after {
+    content: '→';
+    position: absolute;
+    right: -17px;
+    top: -4px;
+    color: #777e6d;
+  }
+  .thermal-train strong {
+    font-weight: 500;
+    margin-top: 10px;
+  }
+  .thermal-train li > span:last-child {
+    color: var(--muted);
+    font-size: 11px;
+  }
+  .thermal-dot {
+    height: 7px;
+    width: 100%;
+    background: #606d64;
+  }
+  .thermal-dot.hot {
+    background: #ffe6b5;
+  }
+  .thermal-dot.warm {
+    background: #dc793f;
+  }
+  .thermal-dot.cooling {
+    background: #9a5140;
+  }
+  .thermal-dot.inspection {
+    background: #77675a;
+  }
+  .quiet {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-top: 24px !important;
+  }
+  .comparison-band {
+    border-block: 1px solid var(--line);
+    background: #242920;
+  }
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 150px 1fr;
+    gap: 50px;
+  }
+  .comparison article > p:not(.eyebrow) {
+    margin-top: 22px;
+    color: #c6c8bb;
+  }
+  .comparison .purpose {
+    padding-top: 20px;
+    border-top: 1px solid #505342;
+    font-size: 13px;
+  }
+  .purpose strong {
+    display: block;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .comparison-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    font:
+      10px 'JetBrains Mono',
+      monospace;
+    letter-spacing: 0.1em;
+    color: var(--amber);
+  }
+  .comparison-link b {
+    font-size: 17px;
+    font-weight: 400;
+    color: #787e6b;
+  }
+  .intro {
+    max-width: 800px;
+    color: #c1c4b9;
+    font-size: 16px;
+    margin-top: 22px !important;
+    margin-bottom: 32px !important;
+  }
+  .roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+  }
+  .generation {
+    border: 1px solid #454a3e;
+    position: relative;
+    background: #1f241e;
+    min-width: 0;
+  }
+  .generation.current {
+    border-color: #b39665;
+  }
+  .generation-head {
+    padding: 22px 24px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+  }
+  .version {
+    font:
+      40px 'JetBrains Mono',
+      monospace;
+    letter-spacing: -0.08em;
+    color: var(--amber);
+  }
+  .generation-head .tag {
+    font-size: 8px;
+    max-width: 170px;
+  }
+  .generation-name {
+    font-size: 10px;
+    line-height: 1.6;
+    color: var(--muted);
+    padding: 0 24px;
+    min-height: 34px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .generation h3 {
+    padding: 16px 24px 24px;
+    font-size: 27px;
+  }
+  .generation dl {
+    padding: 0 24px;
+  }
+  .generation dt {
+    font-size: 9px;
+    color: var(--amber);
+    letter-spacing: 0.06em;
+    margin-bottom: 9px;
+  }
+  .generation dd {
+    margin: 0 0 24px;
+    color: #c6c9bd;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .gate {
+    padding: 22px 24px;
+    background: #303428;
+    border-block: 1px solid #454a3e;
+    min-height: 136px;
+  }
+  .gate > span {
+    font-size: 9px;
+    color: var(--amber);
+    letter-spacing: 0.09em;
+  }
+  .gate p {
+    font-size: 14px;
+    margin-top: 10px !important;
+  }
+  .generation details {
+    padding: 18px 24px;
+  }
+  .solar-program summary {
+    cursor: pointer;
+    font-size: 12px;
+    list-style-position: outside;
+    margin-left: 16px;
+    padding: 6px 0;
+    color: var(--ink);
+  }
+  .solar-program details[open] summary {
+    margin-bottom: 18px;
+    color: var(--amber);
+  }
+  .bullets {
+    padding-left: 18px;
+    color: #c6c9bd;
+    font-size: 12px;
+  }
+  .bullets li {
+    margin-bottom: 12px;
+  }
+  .generation h4 {
+    font-size: 13px;
+    margin-top: 22px;
+  }
+  .protocol {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 70px;
+    margin-top: 64px;
+  }
+  .protocol h3 {
+    font-size: 32px;
+    line-height: 1.2;
+    margin-bottom: 22px;
+  }
+  .protocol > div > p:not(.eyebrow) {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .experiment-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .experiment-list li {
+    display: flex;
+    gap: 22px;
+    padding: 17px 0;
+    border-top: 1px solid var(--line);
+  }
+  .experiment-list li > span {
+    font:
+      12px 'JetBrains Mono',
+      monospace;
+    color: var(--amber);
+    padding-top: 2px;
+  }
+  .experiment-list h4 {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .experiment-list p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  .v2-path {
+    border: 1px solid var(--line);
+    padding: 24px 28px;
+    margin-top: 34px;
+  }
+  .v2-path .eyebrow {
+    margin-bottom: 10px !important;
+  }
+  .v2-path p {
+    color: #ccd0c1;
+    font-size: 14px;
+    line-height: 2;
+  }
+  .v2-path b {
+    font-weight: 400;
+    color: var(--amber);
+    margin: 0 8px;
+  }
+  .full-details {
+    border-block: 1px solid var(--line);
+    padding: 18px 22px;
+    margin-top: 24px;
+    background: #1d221c;
+  }
+  .full-details > p {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 14px 0;
+  }
+  .state-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .state-list li {
+    border: 1px solid #49503f;
+    padding: 10px;
+    font-size: 11px;
+  }
+  .state-list li span {
+    color: var(--amber);
+    margin-right: 10px;
+  }
+  .callout {
+    padding: 22px 26px;
+    border-left: 2px solid var(--amber);
+    background: #252a21;
+    color: #ccd0c1;
+    font-size: 14px;
+    margin-top: 30px !important;
+  }
+  .process-band {
+    background: #111714;
+    border-block: 1px solid #344135;
+  }
+  .flow-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 70px;
+    row-gap: 26px;
+    align-items: center;
+    max-width: 980px;
+    margin: 45px auto 0;
+  }
+  .material-flow {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+  }
+  .material-flow li {
+    text-align: center;
+    background: #202a22;
+    border: 1px solid #53614b;
+    padding: 12px;
+    font-size: 11px;
+    position: relative;
+  }
+  .material-flow li + li {
+    margin-top: 25px;
+  }
+  .material-flow li + li:before {
+    content: '↓';
+    position: absolute;
+    left: calc(50% - 5px);
+    top: -24px;
+    color: #adbba0;
+    font-size: 14px;
+  }
+  .material-flow li.solar-step {
+    background: #3b3525;
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+  .solar-step span {
+    display: block;
+    font-size: 9px;
+    color: #d2c7ac;
+    margin-top: 5px;
+  }
+  .feedback-panel {
+    border: 1px dashed #727b60;
+    padding: 26px;
+    text-align: center;
+    position: relative;
+  }
+  .feedback-panel:before {
+    content: '←';
+    position: absolute;
+    left: -48px;
+    top: 50%;
+    color: var(--amber);
+    font-size: 26px;
+  }
+  .feedback-panel .eyebrow {
+    font-size: 9px;
+  }
+  .sensor-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 10px;
+  }
+  .sensor-group b {
+    color: var(--amber);
+    font-weight: 400;
+  }
+  .flow-arrow {
+    display: block;
+    margin: 8px;
+    color: var(--amber);
+  }
+  .controller {
+    padding: 15px;
+    background: #35422d;
+    font-size: 12px;
+    border: 1px solid #697b52;
+  }
+  .actuators {
+    font-size: 11px;
+    border: 1px solid #616e51;
+    padding: 14px;
+  }
+  .actuators span {
+    font-size: 9px;
+    color: var(--muted);
+  }
+  .feedback-panel > p:not(.eyebrow) {
+    font:
+      12px/1.7 Inter,
+      Arial,
+      sans-serif;
+    color: #b9c3b2;
+    margin-top: 18px;
+  }
+  .feedback-panel p.feedback-return {
+    color: var(--amber);
+    font:
+      10px/1.6 'JetBrains Mono',
+      monospace;
+  }
+  .inspection-branches {
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .inspection-branches > div {
+    padding: 22px;
+    border: 1px solid #505e46;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .inspection-branches strong {
+    font-size: 12px;
+    font-weight: 400;
+  }
+  .inspection-branches p {
+    font:
+      12px/1.7 Inter,
+      Arial,
+      sans-serif;
+    color: var(--muted);
+  }
+  .pass {
+    color: #c1d9a5;
+    border-color: #667953;
+  }
+  .fail {
+    color: #e6ad91;
+    border-color: #87614e;
+  }
+  .energy-chain {
+    margin: 24px 0;
+    padding: 20px 24px;
+    border: 1px solid var(--line);
+  }
+  .energy-chain > span {
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .energy-chain p {
+    margin-top: 12px;
+    color: #c5c8bc;
+    line-height: 1.9;
+    font-size: 14px;
+  }
+  .energy-chain.direct {
+    border-color: #8b7956;
+    background: #2e3023;
+  }
+  .direct > span {
+    color: var(--amber);
+  }
+  .metric-strip {
+    border-top: 1px solid var(--line);
+    margin-top: 42px;
+    padding-top: 26px;
+  }
+  .metric-strip ul {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+  .metric-strip li {
+    border: 1px solid #484e3f;
+    padding: 7px 13px;
+    font-size: 12px;
+    color: #c5cab9;
+  }
+  .measurement-band {
+    background: #23281f;
+    border-block: 1px solid #454b3b;
+  }
+  .measurement-row {
+    display: grid;
+    grid-template-columns: 0.7fr 1.2fr 1.1fr;
+    gap: 34px;
+    padding: 25px 0;
+    border-bottom: 1px solid #454c3b;
+    align-items: start;
+  }
+  .measurement-row h3 {
+    font-size: 19px;
+    letter-spacing: -0.025em;
+  }
+  .measurement-row p {
+    font-size: 13px;
+    color: #c9cdbf;
+  }
+  .measurement-row.table-heading {
+    font-size: 9px;
+    color: var(--amber);
+    padding: 18px 0;
+  }
+  .mobile-label {
+    display: none;
+  }
+  .measurement-notes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 30px;
+  }
+  .measurement-notes p {
+    font-size: 12px;
+    color: #bcc3b0;
+    margin: 0 !important;
+  }
+  .measurement-notes strong {
+    color: #e3e6d8;
+    font-weight: 500;
+  }
+  .original-research {
+    margin-top: 42px;
+  }
+  .research-threads {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .research-threads .eyebrow {
+    margin: 0 0 12px !important;
+  }
+  .research-threads h3 {
+    font-size: 20px;
+    margin-bottom: 18px;
+  }
+  .research-threads p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .references {
+    margin-top: 34px;
+  }
+  .references .eyebrow {
+    margin-bottom: 16px !important;
+  }
+  .references p:not(.eyebrow) {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .references a,
+  .quiet a,
+  .contact-note a {
+    text-underline-offset: 3px;
+  }
+  .collaboration-band {
+    background: #323326;
+    border-block: 1px solid #555741;
+  }
+  .collaboration-band h2 {
+    font-size: clamp(27px, 3.6vw, 46px);
+    letter-spacing: -0.035em;
+    line-height: 1.18;
+  }
+  .collaboration-band .intro {
+    max-width: 850px;
+    color: #d0d1c3;
+  }
+  .contact-note {
+    font-size: 10px;
+    max-width: 750px;
+    color: #c2c4b1;
+    margin-top: 18px !important;
+    line-height: 1.9;
+  }
+  .collaborator-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 44px;
+    border-top: 1px solid #65654d;
+    border-left: 1px solid #65654d;
+  }
+  .collaborator-grid article {
+    border-right: 1px solid #65654d;
+    border-bottom: 1px solid #65654d;
+    padding: 24px;
+    min-width: 0;
+  }
+  .collaborator-number {
+    font-size: 10px;
+    color: var(--amber);
+  }
+  .collaborator-grid h3 {
+    font-size: 19px;
+    margin-top: 25px;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+  }
+  .collaborator-grid p {
+    font-size: 12px;
+    color: #c9cbb9;
+    margin-top: 13px;
+  }
+  .support-needs {
+    margin-top: 34px;
+  }
+  .support-needs h3 {
+    font-size: 23px;
+  }
+  .support-needs p {
+    font-size: 13px;
+    line-height: 1.9;
+    color: #c9cbb9;
+    margin-top: 18px;
+  }
+  .support-needs .quiet {
+    font-size: 12px;
+  }
+  .log-status-key {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .log-status-key p {
+    flex-basis: 100%;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 5px;
+  }
+  .log-entries {
+    margin-top: 36px;
+  }
+  .log-entry {
+    border: 1px solid #49503f;
+    background: #1e241d;
+    padding: 32px;
+  }
+  .log-entry + .log-entry {
+    margin-top: 24px;
+  }
+  .log-entry header {
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 24px;
+  }
+  .log-entry-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .log-entry h3 {
+    font-size: 26px;
+  }
+  .log-entry header > p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+  .log-content {
+    max-width: 850px;
+    color: #d0d4c5;
+    font-size: 14px;
+  }
+  .log-content :global(p) {
+    margin: 0 0 20px;
+    line-height: 1.8;
+  }
+  .log-content :global(ol),
+  .log-content :global(ul) {
+    padding-left: 24px;
+    list-style: revert;
+    margin: 20px 0;
+  }
+  .log-content :global(li) {
+    margin: 12px 0;
+  }
+  .log-content :global(strong) {
+    color: #e8ecdd;
+  }
+  .log-content :global(a) {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .log-content :global(h2),
+  .log-content :global(h3) {
+    margin: 28px 0 18px;
+    font-size: 22px;
+  }
+  .log-media {
+    margin-bottom: 24px;
+    display: grid;
+    gap: 20px;
+  }
+  .log-media.image-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .log-media video,
+  .log-media img {
+    max-width: 100%;
+    height: auto;
+  }
+  .log-media figcaption {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  .closing {
+    border-top: 1px solid var(--line);
+    background: #262d23;
+  }
+  .closing-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .closing h2 {
+    line-height: 1.18;
+  }
+  .closing h2 span {
+    color: var(--amber);
+  }
+  .closing p:not(.eyebrow) {
+    color: var(--muted);
+    margin-top: 25px;
+  }
+  .closing-grid > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 320px;
+    justify-self: end;
+    width: 100%;
+  }
+  .back-link {
+    font-size: 10px;
+    margin-top: 18px;
+    text-decoration: none;
+    color: #bec6af !important;
+  }
+  @media (min-width: 1051px) {
+    .generation {
+      display: flex;
+      flex-direction: column;
+    }
+    .generation dl {
+      flex: 1;
+    }
+    .generation:not(:last-child):after {
+      content: '→';
+      position: absolute;
+      right: -17px;
+      top: 38px;
+      color: var(--amber);
+      z-index: 1;
+      background: var(--bg);
+      font-size: 18px;
+    }
+  }
+  @media (max-width: 1050px) {
+    .hero-grid {
+      gap: 32px;
+      grid-template-columns: 1.3fr 1fr;
+    }
+    .hero-grid h1 {
+      font-size: 48px;
+    }
+    .split {
+      gap: 40px;
+    }
+    .roadmap-grid {
+      gap: 12px;
+    }
+    .generation-head {
+      padding: 20px 18px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .generation h3 {
+      padding: 16px 18px;
+      font-size: 25px;
+    }
+    .generation-name,
+    .generation dl {
+      padding-inline: 18px;
+    }
+    .generation-name {
+      min-height: 50px;
+    }
+    .gate {
+      padding: 20px 18px;
+      min-height: 150px;
+    }
+    .generation details {
+      padding: 16px 18px;
+    }
+    .collaborator-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .comparison {
+      gap: 24px;
+      grid-template-columns: 1fr 110px 1fr;
+    }
+    .comparison h2 {
+      font-size: 34px;
+    }
+    .protocol {
+      gap: 40px;
+    }
+    .flow-layout {
+      gap: 30px;
+    }
+    .feedback-panel:before {
+      left: -27px;
+      font-size: 20px;
+    }
+    .thermal-heading {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+  @media (max-width: 760px) {
+    .shell {
+      padding-left: 22px;
+      padding-right: 22px;
+    }
+    .section {
+      padding-top: 55px;
+      padding-bottom: 55px;
+    }
+    .project-hero {
+      padding-top: 24px;
+      padding-bottom: 34px;
+    }
+    .project-id {
+      font-size: 9px;
+      gap: 8px;
+      padding-bottom: 20px;
+    }
+    .status {
+      margin: 8px 0 0;
+      width: 100%;
+    }
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      padding-top: 30px;
+    }
+    .hero-grid h1 {
+      font-size: clamp(39px, 8vw, 58px);
+    }
+    .mission {
+      font-size: 16px;
+    }
+    .eyebrow {
+      font-size: 10px;
+      margin-bottom: 18px !important;
+    }
+    .button {
+      font-size: 9px;
+      padding: 13px 15px;
+    }
+    .actions {
+      gap: 10px;
+    }
+    .reality-panel {
+      padding: 22px;
+    }
+    .reality-panel h2 {
+      font-size: 25px;
+    }
+    .nav-links {
+      gap: 26px;
+    }
+    .nav-links a {
+      font-size: 9px;
+    }
+    .section-top {
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+    .section-top .tag {
+      font-size: 8px;
+    }
+    .vision {
+      padding-top: 32px;
+    }
+    .system-render figcaption {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      font-size: 9px;
+      padding: 15px;
+    }
+    .split {
+      grid-template-columns: 1fr;
+      gap: 25px;
+    }
+    .vision-copy {
+      margin-top: 32px;
+    }
+    .vision-copy h2 {
+      margin-bottom: 16px;
+    }
+    .lead {
+      font-size: 21px;
+    }
+    .regimes {
+      grid-template-columns: 1fr;
+      margin-top: 28px;
+    }
+    .regimes article {
+      padding: 24px;
+    }
+    .thermal-train {
+      padding: 22px;
+    }
+    .thermal-train ol {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .thermal-train li {
+      padding-left: 25px;
+      min-height: 45px;
+    }
+    .thermal-dot {
+      position: absolute;
+      left: 0;
+      top: 4px;
+      width: 6px;
+      height: 100%;
+    }
+    .thermal-train strong {
+      margin-top: 0;
+    }
+    .thermal-train li:not(:last-child):after {
+      content: '↓';
+      top: auto;
+      bottom: -23px;
+      left: 0;
+      right: auto;
+    }
+    .comparison {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    .comparison-link {
+      flex-direction: row;
+      gap: 12px;
+      font-size: 9px;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      border-block: 1px solid #505342;
+      padding: 20px 0;
+    }
+    .comparison-link b {
+      transform: rotate(-90deg);
+    }
+    .comparison h2 {
+      font-size: 32px;
+    }
+    .comparison .purpose {
+      margin-top: 20px !important;
+      padding-top: 16px;
+    }
+    .roadmap-grid {
+      grid-template-columns: 1fr;
+      gap: 22px;
+      margin-top: 28px;
+    }
+    .generation-head {
+      flex-direction: row;
+      align-items: center;
+      padding: 22px 24px 14px;
+    }
+    .generation-name {
+      min-height: 0;
+      padding: 0 24px;
+    }
+    .generation h3 {
+      font-size: 29px;
+      padding: 14px 24px 26px;
+    }
+    .generation dl {
+      padding: 0 24px;
+    }
+    .generation dd {
+      font-size: 14px;
+    }
+    .gate {
+      min-height: 0;
+      padding: 20px 24px;
+    }
+    .generation details {
+      padding: 18px 24px;
+    }
+    .protocol {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      margin-top: 42px;
+    }
+    .protocol h3 {
+      font-size: 28px;
+    }
+    .v2-path {
+      padding: 22px;
+    }
+    .v2-path p {
+      font-size: 13px;
+    }
+    .full-details {
+      padding: 16px;
+    }
+    .callout {
+      padding: 20px;
+      font-size: 13px;
+    }
+    .flow-layout {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-top: 30px;
+    }
+    .feedback-panel:before {
+      display: none;
+    }
+    .feedback-panel {
+      padding: 24px;
+    }
+    .feedback-panel .eyebrow {
+      font-size: 10px;
+    }
+    .inspection-branches {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .flow-layout .material-flow {
+      grid-row: 1;
+    }
+    .feedback-panel {
+      grid-row: 3;
+    }
+    .inspection-branches {
+      grid-row: 2;
+    }
+    .measurement-row {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 24px 0;
+    }
+    .measurement-row.table-heading {
+      display: none;
+    }
+    .mobile-label {
+      display: block;
+      font-size: 9px;
+      color: var(--amber);
+      margin-bottom: 8px;
+    }
+    .measurement-notes {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+    .research-threads {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .collaborator-grid article {
+      padding: 18px;
+    }
+    .collaborator-grid h3 {
+      font-size: 17px;
+    }
+    .collaborator-grid p {
+      font-size: 12px;
+    }
+    .collaboration-band h2 br {
+      display: none;
+    }
+    .log-entry {
+      padding: 22px;
+    }
+    .log-entry h3 {
+      font-size: 23px;
+    }
+    .log-entry-meta {
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .log-content {
+      font-size: 13px;
+    }
+    .log-media.image-grid {
+      grid-template-columns: 1fr;
+    }
+    .closing-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .closing-grid > div:last-child {
+      justify-self: start;
+      max-width: 360px;
+    }
+    .intro {
+      font-size: 15px;
+    }
+    .thermal-heading > p:last-child {
+      font-size: 10px;
+    }
+  }
+  @media (max-width: 380px) {
+    .shell {
+      padding-inline: 16px;
+    }
+    .hero-grid h1 {
+      font-size: 37px;
+    }
+    .actions .button {
+      width: 100%;
+    }
+    .collaborator-grid {
+      grid-template-columns: 1fr;
+    }
+    .collaborator-grid h3 {
+      margin-top: 14px;
+    }
+    .comparison-link {
+      gap: 8px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .button {
+      transition: none;
+    }
+  }
+</style>
