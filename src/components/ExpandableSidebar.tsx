@@ -75,9 +75,9 @@ const categories: SidebarCategory[] = [
         description: 'Full technical specification',
       },
       {
-        label: 'Brick Sintering Project',
+        label: 'Solar Regolith Paving',
         href: '/construction/sintering-bricks',
-        description: 'Sintering MGS-1 regolith with solar power',
+        description: 'Paving pads and roads with concentrated sunlight',
       },
     ],
   },
@@ -87,9 +87,9 @@ const categories: SidebarCategory[] = [
     description: 'Martian soil and geological resources',
     links: [
       {
-        label: 'Sintering Bricks with MGS-1',
+        label: 'Solar Regolith Paving',
         href: '/construction/sintering-bricks',
-        description: 'Parabolic mirrors, bricks, and thermal batteries',
+        description: 'Melting local rock into road base',
       },
       {
         label: 'Materials Matrix',
