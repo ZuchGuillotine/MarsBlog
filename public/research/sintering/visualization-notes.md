@@ -1,10 +1,13 @@
 # Solar regolith paving — visuals on the project page
 
-## Hero film (in production)
-- Files: `/videos/sintering/regolith-paver-film.webm` (VP9) and `.mp4` (H.264), poster `/videos/sintering/regolith-paver-poster.jpg`.
-- Spec: 1920 × 1080, 24 fps, ~77 s, silent autoplay loop on the page (muted, playsinline). The page pauses it and shows controls for visitors with reduced-motion enabled.
-- Content: a V3 concept of the five-car paving train on Mars (grade, preheat/degas, melt, screed, anneal), a schematic sequence, and the V1 Earth test head. Plates are generated footage; labels, numbers and the schematic are drawn in code and match the design on the page. It is a concept film, not footage of hardware.
-- Wiring: the page emits `<source>` tags only for files that exist in `public/` at build time. Until the poster exists, it uses the concept image below. Drop the files in `public/videos/sintering/` and rebuild.
+## Hero film — "Sun-paved" (Sept 2026)
+- Files: `/videos/sintering/regolith-paver-film.mp4` (H.264, ~2 Mbps, 20 MB), poster `/videos/sintering/regolith-paver-poster.jpg`. 1920 × 1080, 24 fps, 76.8 s.
+- Page behaviour: muted autoplay loop with controls; paused for visitors with reduced motion.
+- Structure (100 BPM, cuts on the bar): landing plume and stalled wheels → title → the train arrives and deploys its dish and iris → side-elevation schematic of all five stations with the temperature profile → one close-up per station (grade, preheat/degas, melt, filler metering, screed, joint scoring, anneal) → finished road, crew rover, landing pad → the planned V1 Earth rig → V1/V2/V3 roadmap card.
+- Picture: stills from Grok Imagine Image 2.0, animated with Grok Imagine Video 1.5 (image-to-video, 1080p). Every train prompt carries the same written machine description so the five cars, dish, blade and hood stay consistent. Prompts and picks are kept in the project's `film-work/` folder (`prompts.json`, `picks*.json`, `gen-log.jsonl`).
+- Graphics: labels, numbers, the schematic and the title/end cards are drawn in code (canvas in headless Chromium) on the music grid; stations, temperatures and numbers match this page.
+- Score: original, synthesized in code (numpy); no samples.
+- It is a concept film of the V3 design, not footage of hardware.
 
 ## Paving-train schematic
 - Component: `src/components/sintering/PavingTrainSchematic.astro` (inline SVG).
