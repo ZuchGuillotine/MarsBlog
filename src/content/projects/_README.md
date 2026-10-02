@@ -2,7 +2,9 @@
 
 Each `.md`/`.mdx` file in this folder (except files starting with `_`) is one
 research-log entry. Entries with `project: 'sintering-bricks'` appear on
-`/construction/sintering-bricks`, newest first.
+`/construction/sintering-bricks` (the Solar Regolith Paving page), newest first.
+Set the optional `status` field (`planned`, `building`, `testing`, `complete`,
+`failed`) to show a status tag on the entry.
 
 ## Adding a new entry
 
@@ -14,6 +16,7 @@ title: 'First Successful Sinter'
 description: 'One-line summary shown under the entry title.'
 pubDate: 2026-08-15
 project: 'sintering-bricks'
+status: 'complete' # optional: planned | building | testing | complete | failed
 tags: ['sintering', 'solar']
 videos:
   - src: '/videos/sintering/first-sinter.mp4'
