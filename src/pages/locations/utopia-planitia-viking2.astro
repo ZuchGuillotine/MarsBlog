@@ -1,5 +1,6 @@
 ---
 import LocationLayout from '../../layouts/LocationLayout.astro';
+import LocationHero from '../../components/LocationHero.astro';
 import { marsLocations } from '../../data/marsLocations';
 
 const location = marsLocations.find(loc => loc.id === 'utopia-planitia-viking2');
@@ -9,20 +10,7 @@ if (!location) {
 ---
 
 <LocationLayout title="Utopia Planitia (Viking 2) - Mars Location" location={location}>
-  <!-- Hero Image Section -->
-  <div class="mb-8">
-    <div
-      class="relative h-96 bg-gradient-to-r from-indigo-900 to-indigo-700 rounded-lg overflow-hidden"
-    >
-      <div class="absolute inset-0 bg-black/20"></div>
-      <div class="absolute bottom-6 left-6 text-white">
-        <p class="text-sm opacity-80">
-          Viking 2 lander view showing seasonal frost in Utopia Planitia
-        </p>
-        <p class="text-xs opacity-60">NASA/JPL Viking 2 Lander</p>
-      </div>
-    </div>
-  </div>
+  <LocationHero locationId={location.id} />
 
   <!-- Overview Section -->
   <section class="mb-12">

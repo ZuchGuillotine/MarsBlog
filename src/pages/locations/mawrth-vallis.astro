@@ -1,5 +1,6 @@
 ---
 import LocationLayout from '../../layouts/LocationLayout.astro';
+import LocationHero from '../../components/LocationHero.astro';
 import { marsLocations } from '../../data/marsLocations';
 
 const location = marsLocations.find(loc => loc.id === 'mawrth-vallis');
@@ -9,20 +10,7 @@ if (!location) {
 ---
 
 <LocationLayout title="Mawrth Vallis - Mars Location" location={location}>
-  <!-- Hero Image Section -->
-  <div class="mb-8">
-    <div
-      class="relative h-96 bg-gradient-to-r from-green-900 to-emerald-800 rounded-lg overflow-hidden"
-    >
-      <div class="absolute inset-0 bg-black/20"></div>
-      <div class="absolute bottom-6 left-6 text-white">
-        <p class="text-sm opacity-80">
-          Layered phyllosilicate deposits revealing Mars' ancient water history
-        </p>
-        <p class="text-xs opacity-60">NASA/JPL/CRISM</p>
-      </div>
-    </div>
-  </div>
+  <LocationHero locationId={location.id} />
 
   <!-- Overview Section -->
   <section class="mb-12">

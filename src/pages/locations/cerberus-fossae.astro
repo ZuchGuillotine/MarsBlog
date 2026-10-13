@@ -1,5 +1,6 @@
 ---
 import LocationLayout from '../../layouts/LocationLayout.astro';
+import LocationHero from '../../components/LocationHero.astro';
 import { marsLocations } from '../../data/marsLocations';
 
 const location = marsLocations.find(loc => loc.id === 'cerberus-fossae');
@@ -9,20 +10,7 @@ if (!location) {
 ---
 
 <LocationLayout title="Cerberus Fossae - Mars Location" location={location}>
-  <!-- Hero Image Section -->
-  <div class="mb-8">
-    <div
-      class="relative h-96 bg-gradient-to-r from-red-900 to-orange-800 rounded-lg overflow-hidden"
-    >
-      <div class="absolute inset-0 bg-black/20"></div>
-      <div class="absolute bottom-6 left-6 text-white">
-        <p class="text-sm opacity-80">
-          Mars Express view of Cerberus Fossae's dramatic fracture system
-        </p>
-        <p class="text-xs opacity-60">ESA/DLR/FU Berlin</p>
-      </div>
-    </div>
-  </div>
+  <LocationHero locationId={location.id} />
 
   <!-- Overview Section -->
   <section class="mb-12">
