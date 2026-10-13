@@ -19,7 +19,7 @@ export const contact = {
   email: 'feedback@haidaa.com',
   collaborate:
     'mailto:feedback@haidaa.com?subject=Solar%20regolith%20paving%20%E2%80%94%20collaboration',
-  fund: 'mailto:feedback@haidaa.com?subject=Solar%20regolith%20paving%20%E2%80%94%20funding%20V1',
+  fund: '/support',
 };
 
 export const glance = [
