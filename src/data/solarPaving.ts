@@ -16,9 +16,9 @@ export type Kind =
   | 'estimate';
 
 export const contact = {
-  email: 'feedback@haidaa.com',
+  email: 'info@populationmars.com',
   collaborate:
-    'mailto:feedback@haidaa.com?subject=Solar%20regolith%20paving%20%E2%80%94%20collaboration',
+    'mailto:info@populationmars.com?subject=Solar%20regolith%20paving%20%E2%80%94%20collaboration',
   fund: '/support',
 };
 
