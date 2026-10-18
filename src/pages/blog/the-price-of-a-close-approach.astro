@@ -1,0 +1,1098 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const sections = [
+  ['from-475-km', '1. From 475 kilometers to a few meters'],
+  ['why-this-satellite', '2. Why this satellite'],
+  ['the-vpn-attack', '3. The attack that already happened came through a VPN'],
+  ['where-the-money-sits', '4. Where the money actually sits'],
+  ['before-anything-breaks', '5. What it costs before anything breaks'],
+  ['the-us-does-this-too', '6. The United States does this too'],
+  ['the-navy-comparison', '7. The navy comparison, with dates'],
+  ['the-missing-product', '8. The missing product is evidence'],
+  ['what-to-watch', '9. What to watch'],
+];
+---
+
+<BaseLayout
+  title="The Price of a Close Approach | Mars Population"
+  description="A Russian military satellite spent three weeks maneuvering next to a commercial radar satellite tied to Ukraine. What that costs the space industry before anything breaks, and the evidence nobody can yet produce."
+  ogImage="/images/blog/close-approach-hero.png"
+  showDonationCTA={false}
+  className="close-approach-page"
+>
+  <article class="article-shell">
+    <header class="article-hero">
+      <img
+        src="/images/blog/close-approach-hero.png"
+        alt="Two satellites on nearly identical orbits above the night side of Earth"
+        width="2488"
+        height="1384"
+        fetchpriority="high"
+      />
+      <div class="title-card">
+        <h1>The Price of a Close Approach</h1>
+      </div>
+    </header>
+
+    <div class="article-grid">
+      <aside class="contents" aria-label="Article sections">
+        <p>Contents</p>
+        <ol>
+          {sections.map(([id, label]) => (
+            <li><a href={`#${id}`}>{label}</a></li>
+          ))}
+        </ol>
+      </aside>
+
+      <div class="article-copy">
+<p class="status"><em>Status as of 17 October 2026, 21:00 Pacific (04:00 UTC on the 18th). This story is still moving.</em></p>
+        <div class="opening">
+
+<p>At 02:17 UTC on 12 October, a Russian military satellite called Cosmos 2612 fired its engine and changed its velocity by 27.9 meters per second. The burn dropped it to about 555 kilometers, one kilometer below ICEYE-X36, a U.S.-registered radar satellite operated by the Finnish-founded company ICEYE, and put it in the same orbital plane at an inclination of 97.85 degrees. That is the account in <a href="https://isruniversity.com/2026/10/12/issue-155/">Integrity ISR's Issue 155</a>, drawn from commercial tracking providers that report to the U.S. Space Force's Joint Commercial Operations cell.</p>
+<p>ICEYE-X36 weighs about 90 kilograms. Its last maneuver that anyone outside the company could detect was a small orbit adjustment in late June. Nobody outside ICEYE knows whether it has the propellant to get out of the way.</p>
+<p>Cosmos 2612, by Integrity's count, has spent about 175 m/s of velocity change since launch. That is roughly 60 m/s more than any of the four sister satellites launched with it. Changing a satellite's orbital plane in low Earth orbit takes a lot of propellant, which is one reason analysts read these maneuvers as deliberate.</p>
+        </div>
+
+        <section id="from-475-km">
+          <h2>1. From 475 kilometers to a few meters</h2>
+<p>On 12 and 13 October the two satellites were about 475 km apart, with Cosmos 2612 trailing and closing slowly. Then it sped up. <a href="https://www.axios.com/2026/10/17/russia-ukraine-satellite-space">LeoLabs told Axios</a> that the gap was more than 200 miles on Thursday and roughly three miles on Friday afternoon. The company called it a deliberate approach, said behavior like this is relatively uncommon in low Earth orbit, and said the intent remains uncertain.</p>
+          <figure class="fig sep-fig" aria-labelledby="fig-sep-title">
+            <p class="fig-kicker">Figure 1</p>
+            <p class="fig-title" id="fig-sep-title">Reported separation between Cosmos 2612 and ICEYE-X36</p>
+            <div class="sep-chart" role="img" aria-label="Five reported separations on a log scale: about 475 kilometers on 12 to 13 October, more than 320 kilometers on 15 October, about 4.8 kilometers on the afternoon of 16 October, 1 to 2 kilometers at 18:15 UTC on 17 October, and a predicted few meters early on 18 October.">
+              <div class="sep-axis" aria-hidden="true">
+                <span style="--x:0%">1 m</span><span style="--x:16.67%">10 m</span><span style="--x:33.33%">100 m</span><span style="--x:50%">1 km</span><span style="--x:66.67%">10 km</span><span style="--x:83.33%">100 km</span><span style="--x:100%">1,000 km</span>
+              </div>
+              <ol class="sep-rows">
+                <li><span class="sep-when"><b>12–13 Oct</b> Integrity ISR, from JCO commercial tracking</span><span class="sep-track"><span class="sep-dot" style="--x:94.61%" title="About 475 km, 12–13 Oct (Integrity ISR)"></span><span class="sep-val" style="--x:94.61%">~475 km</span></span></li>
+                <li><span class="sep-when"><b>15 Oct</b> LeoLabs, via Axios</span><span class="sep-track"><span class="sep-dot more" style="--x:91.79%" title="More than 200 miles (320 km), 15 Oct (LeoLabs via Axios)"></span><span class="sep-val" style="--x:91.79%">&gt;320 km</span></span></li>
+                <li><span class="sep-when"><b>16 Oct, afternoon</b> LeoLabs, via Axios</span><span class="sep-track"><span class="sep-dot" style="--x:61.4%" title="About 3 miles (4.8 km), 16 Oct afternoon (LeoLabs via Axios)"></span><span class="sep-val" style="--x:61.4%">~4.8 km</span></span></li>
+                <li><span class="sep-when"><b>17 Oct, 18:15 UTC</b> Langbroek, public orbital elements</span><span class="sep-track"><span class="sep-range" style="--x1:50.0%;--x2:55.02%" title="1–2 km, 17 Oct 18:15 UTC (Langbroek, from TLEs)"></span><span class="sep-val" style="--x:52.93%">1–2 km</span></span></li>
+                <li class="predicted"><span class="sep-when"><b>18 Oct, early UTC</b> Langbroek's prediction</span><span class="sep-track"><span class="sep-range open" style="--x1:0.0%;--x2:16.67%" title="A few meters, predicted for early 18 Oct UTC; not observed"></span><span class="sep-val" style="--x:7.95%">a few meters, predicted</span></span></li>
+              </ol>
+              <span class="sep-ref" style="--xr:0.6640999999999999" aria-hidden="true"><span>~10 km: usual practice, per Brynildson</span></span>
+            </div>
+            <figcaption>Log scale. Each row is a different source, method and time, so the points are not joined into one line. The last row is a forecast from two-line elements, which carry no uncertainty data; it has not been observed. Sources: <a href="https://isruniversity.com/2026/10/12/issue-155/">Integrity ISR</a>, <a href="https://www.axios.com/2026/10/17/russia-ukraine-satellite-space">Axios</a>, <a href="https://sattrackcam.blogspot.com/2026/10/kosmos-2612-and-iceye-x36-worrisome-cat.html">Langbroek</a>.</figcaption>
+          </figure>
+
+<p>Marco Langbroek, a Dutch analyst who has tracked military satellites from Leiden for years, was skeptical over the summer that Cosmos 2612 was after X36 at all. The orbits were similar, but the geometry did not produce frequent close passes, and he thought the match could be coincidence. The 30 September maneuvers changed his mind. In a <a href="https://sattrackcam.blogspot.com/2026/10/kosmos-2612-and-iceye-x36-worrisome-cat.html">post on Saturday</a>, he put the separation at 1 to 2 km as of 18:15 UTC, based on the latest public orbital elements, and calculated that Cosmos 2612 might pass within a few meters of X36 in the early hours of 18 October UTC.</p>
+          <figure class="fig media-fig" aria-labelledby="fig-video-title">
+            <p class="fig-kicker">Figure 2</p>
+            <p class="fig-title" id="fig-video-title">Cosmos 2612 relative to ICEYE-X36, projected 24 hours ahead</p>
+            <div class="media-frame">
+              <video controls muted playsinline loop preload="metadata" width="768" height="432" aria-describedby="fig-video-cap">
+                <source src="/videos/cosmos-2612-iceye-x36-cohen.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <figcaption id="fig-video-cap">ICEYE-X36 sits at the origin of a radial / in-track / cross-track (RIC) frame; the trace is Cosmos 2612. The animation is a 24-hour coast from 12:00 UTC on 17 October to 12:00 UTC on 18 October, assuming no further maneuvers, computed from public orbital data. One second of video is about 30 minutes. It shows where the orbits lead, not observed positions. Visualization by <a href="https://x.com/AdamCohen8">Adam Cohen (@AdamCohen8)</a> using Orbital Engineering Lab, from his <a href="https://x.com/AdamCohen8/status/2111477601583989226">17 October thread</a>.</figcaption>
+          </figure>
+
+<p>That pass, if it happened, would have taken place in the last few hours. As of this writing there is no public report of it, and no report of damage or lost service. Langbroek's figure is a prediction from two-line element sets, a public orbit format that NASA's conjunction guidance notes lacks the uncertainty information you need for meter-level estimates. It tells you the approach was continuing. It is not a measured distance.</p>
+<p>Clayton Swope at CSIS described the Friday distance to Axios as bumper-to-bumper. Aaron Brynildson, who teaches space law at the University of Mississippi, told the same reporters that no rule sets a minimum distance between satellites. Countries usually keep around six miles apart as a matter of practice.</p>
+<p>ICEYE declined to comment. The Pentagon said it had nothing to release.</p>
+        </section>
+
+        <section id="why-this-satellite">
+          <h2>2. Why this satellite</h2>
+<p>ICEYE signed a contract in August 2022 giving Ukraine's government access to its radar constellation, and this January it announced expanded work with a customer inside Ukraine's Ministry of Defence. Synthetic aperture radar sees through cloud and at night, which makes it useful for watching military equipment move. A Ukrainian official told Axios that the military uses ICEYE's capabilities but could not say whether X36 specifically is part of that work.</p>
+<p>This is also not the first approach. Russia launched six satellites, Cosmos 2609 through 2614, from Plesetsk in April. According to <a href="https://www.csis.org/analysis/could-russia-be-poised-use-orbit-weapon-against-commercial-satellite">CSIS</a>, five of them made plane changes in May to match the ICEYE satellite's orbit, and Cosmos 2609 came within about 2.5 km of it on 26 May. Then the planes drifted apart until Cosmos 2612 went back on 30 September.</p>
+<p>Possible reasons include inspection, collecting signals, testing a capability, or sending a message to the countries buying the imagery. None of these has been established, and each would mean something different for ICEYE's customers.</p>
+        </section>
+
+        <section id="the-vpn-attack">
+          <h2>3. The attack that already happened came through a VPN</h2>
+<p>If you want to know what conflict does to a commercial space business, the best evidence is from 24 February 2022, the morning Russia invaded Ukraine, and it involved no spacecraft maneuvers at all.</p>
+<p>At about 03:02 UTC, Viasat's KA-SAT network started seeing large volumes of malicious traffic from customer modems in Ukraine. Around 04:15 UTC, modems across much of Europe began dropping offline, and over roughly 45 minutes tens of thousands of them disappeared from the network. According to <a href="https://www.viasat.com/perspectives/corporate/2022/ka-sat-network-cyber-attack-overview/">Viasat's own incident report</a>, the attacker had come in through a misconfigured VPN appliance, moved into the network segment used to manage the system, and used legitimate management commands to overwrite the flash memory on residential modems in bulk.</p>
+          <figure class="fig timeline-fig" aria-labelledby="fig-kasat-title">
+            <p class="fig-kicker">Figure 3</p>
+            <p class="fig-title" id="fig-kasat-title">KA-SAT, 24 February 2022: no satellite touched</p>
+            <ol class="timeline">
+              <li><time>03:02 UTC</time><p>Large volumes of malicious traffic start coming from modems in Ukraine.</p></li>
+              <li><time>~04:15 UTC</time><p>Modems across much of Europe begin dropping off the network. Tens of thousands go dark over about 45 minutes.</p></li>
+              <li><time>Same day</time><p>Network largely stabilized within hours.</p></li>
+              <li><time>Following days</time><p>Fully stabilized. Modems restored by over-the-air update, factory reset, or replacement.</p></li>
+              <li><time>30 Mar 2022</time><p>Viasat publishes its incident overview: nearly 30,000 replacement modems shipped to distributors.</p></li>
+              <li><time>10 May 2022</time><p>The EU attributes the attack to Russia.</p></li>
+            </ol>
+            <figcaption>Entry point: a misconfigured VPN appliance on the ground network. Sources: <a href="https://www.viasat.com/perspectives/corporate/2022/ka-sat-network-cyber-attack-overview/">Viasat</a>, <a href="https://www.consilium.europa.eu/en/press/press-releases/2022/05/10/russian-cyber-operations-against-ukraine-declaration-by-the-high-representative-on-behalf-of-the-european-union/">Council of the EU</a>.</figcaption>
+          </figure>
+
+<p>The satellite was fine. Customers in Ukraine and across Europe lost their connections anyway. Viasat stabilized the network within hours, fully within days, and shipped nearly 30,000 replacement modems to distributors. In May 2022 the <a href="https://www.consilium.europa.eu/en/press/press-releases/2022/05/10/russian-cyber-operations-against-ukraine-declaration-by-the-high-representative-on-behalf-of-the-european-union/">European Union attributed the attack to Russia</a>.</p>
+<p>For an operator or investor, KA-SAT is the best-documented case of what conflict costs a commercial space company. The damage was done on the ground. Most of the people who lost service had nothing to do with the war, and the company recovered by buying and shipping hardware.</p>
+        </section>
+
+        <section id="where-the-money-sits">
+          <h2>4. Where the money actually sits</h2>
+<p>Three numbers get passed around in space-economy coverage, and they measure different things.</p>
+<div class="table-shell" role="region" aria-label="Three space-economy figures" tabindex="0"><table class="money-table">
+<thead>
+<tr>
+<th>Figure</th>
+<th>What it counts</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$303B (2025)</td>
+<td>Satellite industry revenue: services, ground equipment, manufacturing, launch</td>
+<td><a href="https://sia.org/wp-content/uploads/2026/05/SSIR26-One-Pager-Exec-Summary-FINAL.pdf.pdf">SIA/BryceTech</a></td>
+</tr>
+<tr>
+<td>$92.5B (2026, through Q3)</td>
+<td>Private investment into space companies, already above all of 2025</td>
+<td><a href="https://www.spacecapital.com/blogs/space-iq-q3-2026-opening-letter">Space Capital</a></td>
+</tr>
+<tr>
+<td>$1.8T (2035)</td>
+<td>A forecast that includes activity on Earth enabled by space, up from $630B in 2023</td>
+<td><a href="https://www.weforum.org/media/space-economy-set-to-triple-to-1-8-trillion-by-2035-new-research-reveals/">WEF/McKinsey</a></td>
+</tr>
+</tbody>
+</table></div>
+<p>Do not add these. Annual revenue, capital raised, and a ten-year forecast are different kinds of quantity, and the forecast is not $1.8 trillion "at risk" in any accounting sense.</p>
+<p>The SIA breakdown is where the useful detail is. Of the $303 billion, $165.2 billion is ground equipment, and $125.8 billion of that is GNSS equipment: the navigation chips in phones, cars, ships and farm machinery. Satellite services, which includes broadband and TV, are $105 billion. Remote sensing, the business ICEYE is in, is $3.6 billion. Launch is $12.4 billion. Everything filed under space sustainability, which covers servicing, life extension, situational awareness and debris removal, comes to about $500 million.</p>
+          <figure class="fig bars-fig" aria-labelledby="fig-sia-title">
+            <p class="fig-kicker">Figure 4</p>
+            <p class="fig-title" id="fig-sia-title">Where the $303B satellite industry earned its 2025 revenue</p>
+            <ul class="bars">
+<li class="bar-group"><span class="bar-group-name">Ground equipment</span><span class="bar-group-total">$165.2B</span></li>
+<li class="bar-row hi" title="GNSS equipment (navigation chips, receivers): $125.8B"><span class="bar-name">GNSS equipment (navigation chips, receivers)</span><span class="bar-track"><span class="bar" style="--w:96.77%"></span><span class="bar-val">$125.8B</span></span></li>
+<li class="bar-row" title="Consumer equipment (dishes, terminals): $20.3B"><span class="bar-name">Consumer equipment (dishes, terminals)</span><span class="bar-track"><span class="bar" style="--w:15.62%"></span><span class="bar-val">$20.3B</span></span></li>
+<li class="bar-row" title="Network equipment (VSATs, gateways): $19.1B"><span class="bar-name">Network equipment (VSATs, gateways)</span><span class="bar-track"><span class="bar" style="--w:14.69%"></span><span class="bar-val">$19.1B</span></span></li>
+<li class="bar-group"><span class="bar-group-name">Satellite services</span><span class="bar-group-total">$105.0B</span></li>
+<li class="bar-row" title="Consumer (TV, radio, broadband): $80.2B"><span class="bar-name">Consumer (TV, radio, broadband)</span><span class="bar-track"><span class="bar" style="--w:61.69%"></span><span class="bar-val">$80.2B</span></span></li>
+<li class="bar-row" title="Enterprise (transponders, managed services): $21.1B"><span class="bar-name">Enterprise (transponders, managed services)</span><span class="bar-track"><span class="bar" style="--w:16.23%"></span><span class="bar-val">$21.1B</span></span></li>
+<li class="bar-row hi" title="Remote sensing (imagery, incl. radar): $3.6B"><span class="bar-name">Remote sensing (imagery, incl. radar)</span><span class="bar-track"><span class="bar" style="--w:2.77%"></span><span class="bar-val">$3.6B</span></span></li>
+<li class="bar-group"><span class="bar-group-name">Satellite manufacturing</span><span class="bar-group-total">$20.4B</span></li>
+<li class="bar-row" title="Satellites built: $20.4B"><span class="bar-name">Satellites built</span><span class="bar-track"><span class="bar" style="--w:15.69%"></span><span class="bar-val">$20.4B</span></span></li>
+<li class="bar-group"><span class="bar-group-name">Launch</span><span class="bar-group-total">$12.4B</span></li>
+<li class="bar-row" title="Launch services: $12.4B"><span class="bar-name">Launch services</span><span class="bar-track"><span class="bar" style="--w:9.54%"></span><span class="bar-val">$12.4B</span></span></li>
+<li class="bar-group"><span class="bar-group-name">Space sustainability</span><span class="bar-group-total">$0.5B</span></li>
+<li class="bar-row" title="Servicing, life extension, SSA, debris removal: $0.5B"><span class="bar-name">Servicing, life extension, SSA, debris removal</span><span class="bar-track"><span class="bar" style="--w:0.60%"></span><span class="bar-val">$0.5B</span></span></li>
+            </ul>
+            <figcaption>Billions of U.S. dollars, 2025, worldwide. Sub-items are SIA's own breakdown; rounded values do not sum exactly. Highlighted: the largest line, which is ground receivers, and remote sensing, ICEYE's business. Source: <a href="https://sia.org/wp-content/uploads/2026/05/SSIR26-One-Pager-Exec-Summary-FINAL.pdf.pdf">SIA / BryceTech, 2026 State of the Satellite Industry</a>.</figcaption>
+          </figure>
+
+<p>So the largest single slice of the satellite industry's revenue is receivers on Earth that depend on a signal from orbit. That signal can be jammed from the ground without anyone touching a satellite.</p>
+<p>A 2019 study presented to the U.S. GPS advisory board <a href="https://www.gps.gov/governance/advisory/meetings/2019-11/gallaher.pdf">modeled a 30-day GPS outage</a> at more than $1 billion a day in U.S. losses, about $30.3 billion in total. Maritime operations accounted for $10.4 billion of that, mostly ports, and telecommunications for $9.8 billion. It is an old, conditional scenario. It still gives a sense of how much ordinary commerce runs on timing and position data.</p>
+<p>The imaging business works the other way. Remote sensing revenue is small, but governments now buy it in wartime, which raises demand and exposure together.</p>
+        </section>
+
+        <section id="before-anything-breaks">
+          <h2>5. What it costs before anything breaks</h2>
+<p>Nobody has published what the last three weeks have cost ICEYE, and the company has said nothing. We can list the kinds of cost an operator takes on when another country's satellite parks next to theirs, without assigning numbers to them.</p>
+<p>Someone has to watch it around the clock. If the operator decides to move, it spends propellant that was budgeted for the satellite's working life, and a 90 kg satellite does not carry much. Imaging tasks may be dropped while the spacecraft maneuvers. Customers, especially government customers, will ask what is happening and what the operator is doing about it. If the operator carries insurance, the policy wording on hostile acts, war and cyber events decides what is recoverable, and those exclusions vary.</p>
+<p>Then there is financing. A company raising money for a constellation now has to answer questions about a risk that was abstract a year ago. We do not know yet whether any insurer or lender has changed terms because of this encounter. We would like to.</p>
+<p>If you operate satellites, or work in space insurance or finance and have seen this come up, we want to hear what a close approach actually costs you in staff hours, fuel, lost collections or changed terms. Send it to <a href="mailto:feedback@haidaa.com">feedback@haidaa.com</a>. Real numbers will go in a follow-up piece, with your name or without it.</p>
+        </section>
+
+        <section id="the-us-does-this-too">
+          <h2>6. The United States does this too</h2>
+<p>A fair reading of Cosmos 2612 needs the same standard applied to everyone.</p>
+<p>The U.S. Space Force operates the <a href="https://www.ussf-cfc.spaceforce.mil/About-Us/Fact-Sheets/Display/Article/2381739/geosynchronous-space-situational-awareness-program">Geosynchronous Space Situational Awareness Program</a>, satellites built to approach and inspect other objects in geostationary orbit, and the Secure World Foundation has documented U.S. approaches to foreign satellites. In September 1985 the U.S. Air Force destroyed its own Solwind satellite with a missile fired from an F-15. China destroyed one of its weather satellites in 2007. Russia's November 2021 missile test against its own Cosmos 1408 produced more than 1,500 trackable fragments, according to U.S. Space Command.</p>
+<p>On 14 September, Air Force Secretary Troy Meink told the Air &amp; Space Forces Association's conference in National Harbor, Maryland, that the Space Force now has <a href="https://www.airandspaceforces.com/meink-space-force-on-orbit-space-control-weapons/">"on-orbit space control weapons."</a> He would not say whether they are kinetic or non-kinetic, or whether they have been tested, and he said the wording was deliberate. That is a public acknowledgment of weapons already in orbit. It does not tell us when they were deployed, how many there are, or what they do.</p>
+<p>The law gives little guidance on how close is too close. The Outer Space Treaty bans nuclear weapons in orbit and national claims of territory, and requires "due regard" for other countries' activities. It sets no keep-out distance. The Liability Convention makes a state liable for damage in space only where fault can be shown, and showing fault depends on evidence that is often classified or does not exist.</p>
+        </section>
+
+        <section id="the-navy-comparison">
+          <h2>7. The navy comparison, with dates</h2>
+<p>A common argument holds that American naval power kept sea lanes open after 1945, trade grew, and space needs the same thing. Naval power was part of it. So were the Bretton Woods monetary agreements of 1944 and the trade rules that became GATT in 1947, along with reconstruction lending and new shipping technology.</p>
+<p>The Strait of Hormuz this month shows the limit of the military half on its own. The EIA's <a href="https://www.eia.gov/outlooks/steo/archives/oct26.pdf">October 2026 Short-Term Energy Outlook</a> describes constrained flows, convoys and rerouting, in a region where the U.S. Navy has operated for decades.</p>
+<p>Orbit is also harder to patrol than a strait. Every satellite is moving, changing orbit costs fuel and time, debris from a fight stays in the way of everyone afterward, and the most damaging attack so far went through a ground network.</p>
+        </section>
+
+        <section id="the-missing-product">
+          <h2>8. The missing product is evidence</h2>
+<p>Langbroek added a note to his Saturday post that is the most important sentence in this story for the industry. If ICEYE-X36 failed tonight, he wrote, it would look suspicious, but it would be very hard to attribute the failure to Cosmos 2612 without ambiguity.</p>
+<p>Satellites fail on their own every year from radiation damage and software faults. An operator that loses a spacecraft next to a foreign military satellite has to show its insurer and customers what happened, and possibly a court. Today that evidence is scattered across classified sensors, commercial trackers like LeoLabs and Slingshot, public orbital elements, and the operator's own telemetry, and none of it is collected in a form designed to settle a dispute.</p>
+<p>That is a real business gap. Tracking companies already sell conjunction alerts. The next step is evidence an insurer or a government will accept: maneuver records with stated uncertainty, timestamps that can be checked independently, and a clear record of who consented to what. Servicing and debris-removal companies face the same question from the other side. A spacecraft that can approach and grab a dead satellite can also approach a live one, so Astroscale or ClearSpace will need to prove what their vehicles did and did not do.</p>
+<p>The same problem will follow industry out of Earth orbit. NASA's lunar relay contract with Intuitive Machines, announced in September 2024, has a <a href="https://www.nasa.gov/news-release/nasa-selects-lunar-relay-contractor-for-near-space-network-services/">ceiling of $4.82 billion</a> over up to ten years. That is a maximum, not money spent. It is also a shared communications and navigation service that every lunar mission will lean on, and the rules for who can approach it, and how a failure gets investigated, have not been written.</p>
+          <figure class="fig embed-fig" aria-labelledby="fig-x-title">
+            <p class="fig-kicker">Figure 5</p>
+            <p class="fig-title" id="fig-x-title">Earth–Moon cycler orbits, from the Ross Dynamics Lab</p>
+            <blockquote class="twitter-tweet" data-dnt="true" data-conversation="none">
+              <p lang="en" dir="ltr">Nice to see the Earth-Moon cycler orbits our lab recently discovered featured in @GarretsonPeter's overview of the cislunar space economy. Lots of interesting possibilities for transportation, surveillance, and infrastructure.</p>
+              &mdash; Shane Ross (@RossDynamicsLab) <a href="https://x.com/RossDynamicsLab/status/2110402714815562029">October 14, 2026</a>
+            </blockquote>
+            <figcaption>Cycler orbits repeat between Earth and the Moon on a fixed schedule, so many operators could share the same routes. The clip comes from the American Foreign Policy Council's <a href="https://www.youtube.com/watch?v=kdpOdSMzXTA">"The Strategic Importance of Cislunar Space"</a>. Post by Shane Ross, Virginia Tech.</figcaption>
+          </figure>
+
+        </section>
+
+        <section id="what-to-watch">
+          <h2>9. What to watch</h2>
+<p>Integrity ISR expects two of Cosmos 2612's sister satellites, 2611 and 2613, to cross the orbital plane of another ICEYE satellite, X37, around 6 November and 15 November. If either one repeats the climb-and-descend sequence that 2612 used, it will show up in public tracking data a week or two before the closest approach.</p>
+<p>Langbroek posts his analysis at <a href="https://sattrackcam.blogspot.com/">SatTrackCam Leiden</a>. LeoLabs publishes its tracking commentary on its own site and through reporters. ICEYE has not said whether X36 is healthy. That is the next fact worth having, and we will update this piece when someone states it on the record.</p>
+        </section>
+
+        <section id="sources" class="sources">
+          <h2>Sources</h2>
+          <ol class="source-list">
+              <li><a href="https://isruniversity.com/2026/10/12/issue-155/">Integrity ISR, Integrity Flash Issue 155 (12 Oct 2026)</a></li>
+              <li><a href="https://www.axios.com/2026/10/17/russia-ukraine-satellite-space">Axios, Russian satellite approaches U.S.-owned satellite tied to Ukraine (17 Oct 2026)</a></li>
+              <li><a href="https://sattrackcam.blogspot.com/2026/10/kosmos-2612-and-iceye-x36-worrisome-cat.html">Marco Langbroek, SatTrackCam Leiden (17 Oct 2026)</a></li>
+              <li><a href="https://x.com/AdamCohen8/status/2111477601583989226">Adam Cohen, Cosmos 2612 visualizations (17 Oct 2026)</a></li>
+              <li><a href="https://www.csis.org/analysis/could-russia-be-poised-use-orbit-weapon-against-commercial-satellite">CSIS, Could Russia Be Poised to Use an On-Orbit Weapon Against a Commercial Satellite? (15 Oct 2026)</a></li>
+              <li><a href="https://www.iceye.com/newsroom/press-releases/iceye-signs-contract-to-provide-government-of-ukraine-with-access-to-its-sar-satellite-constellation">ICEYE, contract with the Government of Ukraine (Aug 2022)</a></li>
+              <li><a href="https://www.viasat.com/perspectives/corporate/2022/ka-sat-network-cyber-attack-overview/">Viasat, KA-SAT network cyber attack overview (30 Mar 2022)</a></li>
+              <li><a href="https://www.consilium.europa.eu/en/press/press-releases/2022/05/10/russian-cyber-operations-against-ukraine-declaration-by-the-high-representative-on-behalf-of-the-european-union/">Council of the EU, attribution of the KA-SAT attack (10 May 2022)</a></li>
+              <li><a href="https://sia.org/wp-content/uploads/2026/05/SSIR26-One-Pager-Exec-Summary-FINAL.pdf.pdf">SIA / BryceTech, 2026 State of the Satellite Industry summary</a></li>
+              <li><a href="https://www.spacecapital.com/blogs/space-iq-q3-2026-opening-letter">Space Capital, Space IQ Q3 2026</a></li>
+              <li><a href="https://www.weforum.org/media/space-economy-set-to-triple-to-1-8-trillion-by-2035-new-research-reveals/">WEF / McKinsey, Space: The $1.8 Trillion Opportunity (Apr 2024)</a></li>
+              <li><a href="https://www.gps.gov/governance/advisory/meetings/2019-11/gallaher.pdf">RTI, Economic benefits of GPS (Nov 2019)</a></li>
+              <li><a href="https://www.ussf-cfc.spaceforce.mil/About-Us/Fact-Sheets/Display/Article/2381739/geosynchronous-space-situational-awareness-program">U.S. Space Force, GSSAP fact sheet</a></li>
+              <li><a href="https://www.swfound.org/publications-and-reports/u-s-military-and-intelligence-rendezvous-and-proximity-operations-fact-sheet">Secure World Foundation, U.S. RPO fact sheet</a></li>
+              <li><a href="https://www.nationalmuseum.af.mil/Visit/Museum-Exhibits/Fact-Sheets/Display/Article/198034/vought-asm-135a-anti-satellite-missile/">National Museum of the USAF, ASM-135A fact sheet</a></li>
+              <li><a href="https://www.spacecom.mil/Newsroom/News/Article-Display/Article/2842957/russian-direct-ascent-anti-satellite-missile-test-creates-significant-long-last/">U.S. Space Command on the Cosmos 1408 test (Nov 2021)</a></li>
+              <li><a href="https://www.airandspaceforces.com/meink-space-force-on-orbit-space-control-weapons/">Air & Space Forces Magazine, Meink keynote (14 Sep 2026)</a></li>
+              <li><a href="https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/outerspacetreaty.html">UNOOSA, Outer Space Treaty</a></li>
+              <li><a href="https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/introliability-convention.html">UNOOSA, Liability Convention</a></li>
+              <li><a href="https://www.eia.gov/outlooks/steo/archives/oct26.pdf">U.S. EIA, Short-Term Energy Outlook (Oct 2026)</a></li>
+              <li><a href="https://www.nasa.gov/news-release/nasa-selects-lunar-relay-contractor-for-near-space-network-services/">NASA, lunar relay contract award (17 Sep 2024)</a></li>
+              <li><a href="https://nodis3.gsfc.nasa.gov/displayDir.cfm?Internal_ID=N_PR_8079_0001_&page_name=AppendixD">NASA, conjunction assessment requirements, Appendix D</a></li>
+          </ol>
+        </section>
+      </div>
+    </div>
+  </article>
+  <script is:inline async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</BaseLayout>
+
+<style>
+  :global(html) {
+    scroll-padding-top: 5.5rem;
+  }
+
+  :global(body.close-approach-page) {
+    background: #f7eeee;
+    color: #252022;
+  }
+
+  :global(.close-approach-page main) {
+    background: #f7eeee;
+  }
+
+  .article-shell {
+    --paper: #fffafa;
+    --ink: #252022;
+    --muted: #6d6266;
+    --rule: #d8c4c8;
+    --rule-strong: #aa898f;
+    --rust: #963d45;
+    width: min(1320px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: clamp(1rem, 3vw, 2.5rem) 0 clamp(4rem, 8vw, 8rem);
+  }
+
+  .article-hero {
+    position: relative;
+    overflow: hidden;
+    min-height: clamp(22rem, 52vw, 38rem);
+    background: #111;
+    box-shadow: 0 2rem 6rem rgba(77, 24, 35, 0.16);
+  }
+
+  .article-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 42%, rgba(3, 5, 8, 0.12) 62%, rgba(3, 5, 8, 0.78));
+    pointer-events: none;
+  }
+
+  .article-hero img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+
+  .title-card {
+    position: absolute;
+    z-index: 1;
+    right: clamp(1.25rem, 5vw, 5.5rem);
+    bottom: clamp(1.25rem, 5vw, 4.75rem);
+    left: clamp(1.25rem, 5vw, 5.5rem);
+    color: #fffaf2;
+  }
+
+  .title-card h1 {
+    max-width: 12ch;
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(3.25rem, 7vw, 6.4rem);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.055em;
+    text-wrap: balance;
+    text-shadow: 0 0.15em 0.8em rgba(0, 0, 0, 0.4);
+  }
+
+  .article-grid {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 48rem) 1fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
+    padding: clamp(3rem, 7vw, 6.5rem) clamp(1rem, 4vw, 4rem);
+    background: var(--paper);
+    box-shadow: 0 2rem 6rem rgba(77, 24, 35, 0.1);
+  }
+
+  .contents {
+    position: sticky;
+    top: 6rem;
+    padding-top: 0.35rem;
+    border-top: 2px solid var(--rust);
+  }
+
+  .contents p {
+    margin: 0.85rem 0 1rem;
+    color: var(--rust);
+    font: 700 0.7rem/1.2 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .contents ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contents li + li {
+    border-top: 1px solid rgba(150, 61, 69, 0.2);
+  }
+
+  .contents a {
+    display: block;
+    padding: 0.65rem 0;
+    color: #74666a;
+    font: 600 0.7rem/1.4 ui-sans-serif, system-ui, sans-serif;
+    text-decoration: none;
+    transition: color 160ms ease, transform 160ms ease;
+  }
+
+  .contents a:hover,
+  .contents a:focus-visible {
+    color: var(--rust);
+    transform: translateX(0.2rem);
+  }
+
+  .article-copy {
+    grid-column: 2;
+    min-width: 0;
+    color: var(--ink);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.05rem, 1.35vw, 1.19rem);
+    line-height: 1.78;
+  }
+
+  .article-copy p {
+    margin: 0 0 1.45em;
+  }
+
+  .opening {
+    margin-bottom: 5rem;
+  }
+
+  .opening p:first-child {
+    color: #443b3e;
+    font-size: clamp(1.35rem, 2.3vw, 1.78rem);
+    line-height: 1.52;
+  }
+
+  .opening p:first-child::first-letter {
+    float: left;
+    margin: 0.05em 0.12em 0 0;
+    color: var(--rust);
+    font-size: 4.35em;
+    line-height: 0.75;
+  }
+
+  section {
+    scroll-margin-top: 5.5rem;
+  }
+
+  section + section {
+    margin-top: 5.5rem;
+  }
+
+  h2 {
+    margin: 0 0 1.25rem;
+    padding-top: 1.35rem;
+    border-top: 1px solid var(--rule-strong);
+    color: #211b1d;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: clamp(1.85rem, 3.2vw, 2.8rem);
+    font-weight: 650;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  a {
+    color: var(--rust);
+    text-decoration-color: rgba(159, 66, 40, 0.42);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  a:hover {
+    text-decoration-color: currentColor;
+  }
+
+  a:focus-visible,
+  .table-shell:focus-visible {
+    outline: 3px solid rgba(159, 66, 40, 0.65);
+    outline-offset: 4px;
+  }
+
+  strong {
+    color: #181315;
+  }
+
+  .table-shell {
+    --table-min: 46rem;
+    width: 100%;
+    margin: 2.25rem 0 2rem;
+    overflow-x: auto;
+    border: 1px solid var(--rule-strong);
+    border-radius: 0.2rem;
+    background: #fffafa;
+    box-shadow: 0 0.85rem 2.25rem rgba(77, 24, 35, 0.07);
+    overscroll-behavior-inline: contain;
+    scrollbar-color: var(--rust) #eadcdf;
+  }
+
+  .table-shell.wide {
+    width: min(68rem, calc(100vw - 3rem));
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .filings-table {
+    --table-min: 68rem;
+  }
+
+  .compute-table {
+    --table-min: 58rem;
+  }
+
+  table {
+    width: 100%;
+    min-width: var(--table-min);
+    border-collapse: collapse;
+    color: #2d2729;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.84rem;
+    line-height: 1.45;
+  }
+
+  th,
+  td {
+    padding: 0.8rem 0.85rem;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    text-align: left;
+  }
+
+  th:last-child,
+  td:last-child {
+    border-right: 0;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #33272b;
+    color: #fff8f9;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  tbody tr:nth-child(even) {
+    background: #f7ecee;
+  }
+
+  tbody tr:hover {
+    background: #efdadd;
+  }
+
+  td:not(:first-child) {
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 1020px) {
+    .article-grid {
+      grid-template-columns: minmax(0, 48rem);
+      justify-content: center;
+    }
+
+    .contents {
+      position: static;
+      display: none;
+    }
+
+    .article-copy {
+      grid-column: 1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .article-shell {
+      width: 100%;
+      padding-top: 0;
+    }
+
+    .article-hero {
+      min-height: 28rem;
+    }
+
+    .article-hero img {
+      object-position: 46% 50%;
+    }
+
+    .title-card h1 {
+      font-size: clamp(3rem, 16vw, 5rem);
+    }
+
+    .article-grid {
+      padding: 3rem 1.15rem 4.5rem;
+      box-shadow: none;
+    }
+
+    .article-copy {
+      font-size: 1.04rem;
+      line-height: 1.72;
+    }
+
+    .opening {
+      margin-bottom: 4rem;
+    }
+
+    section + section {
+      margin-top: 4rem;
+    }
+
+    .table-shell,
+    .table-shell.wide {
+      width: calc(100vw - 1.5rem);
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+
+    table {
+      font-size: 0.78rem;
+    }
+
+    th,
+    td {
+      padding: 0.7rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
+    }
+
+    .contents a {
+      transition: none;
+    }
+  }
+
+  @media print {
+    :global(body.close-approach-page),
+    :global(.close-approach-page main) {
+      background: #fff;
+    }
+
+    .article-shell {
+      width: 100%;
+      padding: 0;
+    }
+
+    .article-hero {
+      min-height: 8cm;
+      box-shadow: none;
+    }
+
+    .article-grid {
+      display: block;
+      padding: 1.5cm 0;
+      box-shadow: none;
+    }
+
+    .contents {
+      display: none;
+    }
+
+    .article-copy {
+      font-size: 10.5pt;
+      line-height: 1.5;
+    }
+
+    .table-shell,
+    .table-shell.wide {
+      width: 100%;
+      margin: 1rem 0;
+      overflow: visible;
+      box-shadow: none;
+      transform: none;
+      break-inside: avoid;
+    }
+
+    table {
+      min-width: 0;
+      font-size: 7.5pt;
+    }
+
+    th {
+      position: static;
+    }
+
+    a {
+      color: inherit;
+    }
+  }
+
+  /* Figures added for this article. Same palette as the rest of the page. */
+  .article-shell {
+    --bar-context: #c4959a;
+    --track: #f1e4e6;
+  }
+
+  .status {
+    margin: 0 0 2rem;
+    padding: 0.7rem 0.9rem;
+    border-left: 3px solid var(--rust);
+    background: #f7ecee;
+    color: var(--muted);
+    font: 500 0.82rem/1.5 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .status em {
+    font-style: normal;
+  }
+
+  .fig {
+    margin: 2.75rem 0 2.5rem;
+    padding: 1.4rem 1.4rem 1.2rem;
+    border: 1px solid var(--rule-strong);
+    background: #fffafa;
+    box-shadow: 0 0.85rem 2.25rem rgba(77, 24, 35, 0.07);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .fig-kicker {
+    margin: 0 0 0.3rem !important;
+    color: var(--rust);
+    font: 700 0.68rem/1.2 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .fig-title {
+    margin: 0 0 1.2rem !important;
+    color: #211b1d;
+    font-size: 1.05rem;
+    font-weight: 650;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .fig figcaption {
+    margin-top: 1.1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.55;
+  }
+
+  /* Figure 1: separation dot plot on a log axis */
+  .sep-chart {
+    position: relative;
+    --label-w: 11.5rem;
+    --gut: 1.5rem;
+  }
+
+  .sep-axis,
+  .sep-track {
+    position: relative;
+  }
+
+  .sep-axis {
+    height: 1.4rem;
+    margin-left: var(--label-w);
+    margin-right: var(--gut);
+    border-bottom: 1px solid var(--rule-strong);
+  }
+
+  .sep-axis span {
+    position: absolute;
+    left: var(--x);
+    bottom: 0.35rem;
+    transform: translateX(-50%);
+    color: var(--muted);
+    font: 500 0.68rem/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .sep-rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sep-rows li {
+    display: grid;
+    grid-template-columns: var(--label-w) minmax(0, 1fr);
+    align-items: center;
+    min-height: 3.1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .sep-when {
+    padding-right: 0.9rem;
+    color: var(--muted);
+    font-size: 0.74rem;
+    line-height: 1.35;
+  }
+
+  .sep-when b {
+    display: block;
+    color: var(--ink);
+    font-size: 0.8rem;
+    font-weight: 650;
+  }
+
+  .sep-track {
+    height: 3.1rem;
+    margin-right: var(--gut);
+    background:
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px) 0 0 / calc(100% / 6) 100%;
+  }
+
+  .sep-dot {
+    position: absolute;
+    top: 50%;
+    left: var(--x);
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background: var(--rust);
+    box-shadow: 0 0 0 2px #fffafa;
+    transform: translate(-50%, -50%);
+  }
+
+  .sep-dot.more::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    width: 0.9rem;
+    border-top: 2px solid var(--rust);
+    transform: translateY(-50%);
+  }
+
+  .sep-range {
+    position: absolute;
+    top: 50%;
+    left: var(--x1);
+    width: calc(var(--x2) - var(--x1));
+    min-width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 0.4rem;
+    background: var(--rust);
+    box-shadow: 0 0 0 2px #fffafa;
+    transform: translateY(-50%);
+  }
+
+  .sep-range.open {
+    background: #fffafa;
+    border: 2px dashed var(--rust);
+  }
+
+  .sep-val {
+    position: absolute;
+    top: calc(50% + 0.65rem);
+    left: var(--x);
+    transform: translateX(-50%);
+    color: var(--ink);
+    font: 600 0.7rem/1.2 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .predicted .sep-when b,
+  .predicted .sep-val {
+    color: var(--rust);
+  }
+
+  .predicted .sep-val {
+    left: calc(var(--x) + 0.4rem);
+    transform: none;
+  }
+
+  .sep-ref {
+    position: absolute;
+    top: 1.4rem;
+    bottom: 0;
+    left: calc(var(--label-w) + (100% - var(--label-w) - var(--gut)) * var(--xr, 0));
+    pointer-events: none;
+  }
+
+  .sep-ref {
+    border-left: 1px dashed var(--rule-strong);
+  }
+
+  .sep-ref span {
+    position: absolute;
+    bottom: -1.5rem;
+    left: 0;
+    transform: translateX(-50%);
+    color: var(--muted);
+    font-size: 0.66rem;
+    white-space: nowrap;
+  }
+
+  .sep-fig figcaption {
+    margin-top: 2.2rem;
+  }
+
+  /* Figure 2: video */
+  .media-frame {
+    overflow: hidden;
+    background: #0d1018;
+    aspect-ratio: 16 / 9;
+    max-width: 100%;
+  }
+
+  .media-frame video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* Figure 3: timeline */
+  .timeline {
+    position: relative;
+    margin: 0;
+    padding: 0 0 0 1.2rem;
+    list-style: none;
+    border-left: 2px solid var(--rule-strong);
+  }
+
+  .timeline li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 0.9rem;
+    padding: 0.55rem 0;
+  }
+
+  .timeline li::before {
+    content: '';
+    position: absolute;
+    top: 0.95rem;
+    left: calc(-1.2rem - 6px);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fffafa;
+    border: 2px solid var(--rust);
+  }
+
+  .timeline li:nth-child(-n + 2)::before {
+    background: var(--rust);
+  }
+
+  .timeline time {
+    color: var(--rust);
+    font: 700 0.76rem/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .timeline p {
+    margin: 0 !important;
+    color: var(--ink);
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  /* Figure 4: revenue bars */
+  .bars {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .bar-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--rule-strong);
+    color: #211b1d;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .bar-group:first-child {
+    margin-top: 0;
+  }
+
+  .bar-group-total {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    gap: 0.8rem;
+    align-items: center;
+    padding: 0.32rem 0;
+  }
+
+  .bar-name {
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.3;
+  }
+
+  .bar-track {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-width: 0;
+  }
+
+  .bar {
+    flex: none;
+    width: calc(var(--w) * 0.82);
+    height: 0.85rem;
+    border-radius: 0 4px 4px 0;
+    background: var(--bar-context);
+  }
+
+  .bar-val {
+    color: var(--ink);
+    font: 600 0.72rem/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .bar-row.hi .bar {
+    background: var(--rust);
+  }
+
+  .bar-row.hi .bar-name {
+    color: var(--ink);
+    font-weight: 650;
+  }
+
+  /* Figure 5: embedded post */
+  .embed-fig :global(.twitter-tweet) {
+    margin: 0 auto !important;
+  }
+
+  .embed-fig blockquote {
+    margin: 0;
+    padding: 1rem 1.1rem;
+    border-left: 3px solid var(--rust);
+    background: #f7ecee;
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .embed-fig blockquote p {
+    margin: 0 0 0.6rem !important;
+  }
+
+  /* Money table */
+  .money-table {
+    --table-min: 36rem;
+  }
+
+  .table-shell:has(.money-table) {
+    --table-min: 36rem;
+  }
+
+  /* Sources */
+  .source-list {
+    margin: 0;
+    padding-left: 1.3rem;
+    color: var(--muted);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .source-list li + li {
+    margin-top: 0.45rem;
+  }
+
+  @media (max-width: 640px) {
+    .fig {
+      margin-inline: -0.4rem;
+      padding: 1.1rem 0.9rem 1rem;
+    }
+
+    .sep-chart {
+      --label-w: 6.8rem;
+    }
+
+    .sep-when {
+      font-size: 0.66rem;
+    }
+
+    .sep-when b {
+      font-size: 0.72rem;
+    }
+
+    .sep-axis span {
+      font-size: 0.58rem;
+    }
+
+    .sep-axis span:nth-child(even) {
+      visibility: hidden;
+    }
+
+    .sep-chart {
+      --gut: 0.8rem;
+    }
+
+    .sep-ref span {
+      font-size: 0.58rem;
+      white-space: normal;
+      width: 7rem;
+      text-align: center;
+    }
+
+    .timeline li {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+
+    .bar-row {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+  }
+
+</style>
