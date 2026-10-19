@@ -1,0 +1,30 @@
+---
+import locationImages from '../data/locationImages.json';
+
+interface Props {
+  locationId: string;
+}
+
+const { locationId } = Astro.props;
+const image = locationImages[locationId as keyof typeof locationImages];
+if (!image) throw new Error(`Missing location image: ${locationId}`);
+---
+
+<figure class="mb-8 overflow-hidden rounded-lg border border-gray-700 bg-gray-900">
+  <a href={image.source} class="block bg-black" aria-label={`View NASA source: ${image.title}`}>
+    <img
+      src={image.src}
+      alt={image.alt}
+      width={image.width}
+      height={image.height}
+      fetchpriority="high"
+      class="w-full h-64 md:h-96 object-contain"
+    />
+  </a>
+  <figcaption class="px-5 py-4 text-sm text-gray-200">
+    <p>{image.title}</p>
+    <a href={image.source} class="mt-1 inline-block text-xs text-gray-400 underline hover:text-white">
+      Image: {image.credit} · {image.nasaId} · NASA source
+    </a>
+  </figcaption>
+</figure>

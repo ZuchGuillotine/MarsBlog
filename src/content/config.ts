@@ -74,6 +74,8 @@ const projectCollection = defineCollection({
     description: z.string(),
     pubDate: z.date(),
     project: z.string(), // e.g. 'sintering-bricks' — groups log entries by project
+    // Experiment status shown as a tag on the log entry.
+    status: z.enum(['planned', 'building', 'testing', 'complete', 'failed']).optional(),
     author: z.string().default('Benjamin Cox'),
     tags: z.array(z.string()).default([]),
     videos: z.array(z.object({

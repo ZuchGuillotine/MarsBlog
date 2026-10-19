@@ -211,6 +211,24 @@
     background: #b7410e;
   }
 
+  .systems-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #64748b transparent;
+  }
+
+  .systems-scrollbar::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .systems-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .systems-scrollbar::-webkit-scrollbar-thumb {
+    background: #64748b;
+    border-radius: 999px;
+  }
+
   /* Animation utilities */
   .animate-float {
     animation: float 6s ease-in-out infinite;

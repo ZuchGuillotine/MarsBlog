@@ -1,5 +1,6 @@
 ---
 import LocationLayout from '../../layouts/LocationLayout.astro';
+import LocationHero from '../../components/LocationHero.astro';
 import marsLocations from '../../data/marsLocations';
 
 const location = marsLocations.find(loc => loc.id === 'jezero-crater');
@@ -9,20 +10,7 @@ if (!location) {
 ---
 
 <LocationLayout title="Jezero Crater - Mars Location" location={location}>
-  <!-- Hero Image Section -->
-  <div class="mb-8">
-    <div
-      class="relative h-96 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg overflow-hidden"
-    >
-      <div class="absolute inset-0 bg-black/20"></div>
-      <div class="absolute bottom-6 left-6 text-white">
-        <p class="text-sm opacity-80">
-          Perseverance rover's 360-degree mosaic from "Airey Hill"
-        </p>
-        <p class="text-xs opacity-60">NASA/JPL-Caltech/ASU/MSSS</p>
-      </div>
-    </div>
-  </div>
+  <LocationHero locationId={location.id} />
 
   <!-- Overview Section -->
   <section class="mb-12">

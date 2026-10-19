@@ -1,9 +1,19 @@
 # Laser ablation campaign simulation
 
-Page: `/orbit/laser-ablation` · component: `src/components/LaserAblationSim.tsx` ·
-data: `public/data/orbits/laser-ablation-scene.json` (1.97 MB raw, 0.73 MB gzip) ·
-builder: `scripts/orbits/build_laser_ablation_scene.py` ·
-checks: `scripts/orbits/verify_laser_ablation_scene.py` → `docs/laser-ablation-checks.json`.
+> **Retired public implementation (2026-09-22).** The public
+> `/orbit/laser-ablation` route, UI component, and precomputed scene and manifest
+> assets have been retired. This document, the builder and verification scripts,
+> and their recorded checks remain only as historical audit references; the
+> implementation and output descriptions below do not describe retained current
+> outputs. The published simulator is
+> <https://orbitfleet.populationmars.com/debris>.
+
+Historical implementation references: component
+`src/components/LaserAblationSim.tsx` (removed) · data
+`public/data/orbits/laser-ablation-scene.json` (removed; formerly 1.97 MB raw,
+0.73 MB gzip) · builder: `scripts/orbits/build_laser_ablation_scene.py` · checks:
+`scripts/orbits/verify_laser_ablation_scene.py` →
+`docs/laser-ablation-checks.json`.
 
 ## Scope
 

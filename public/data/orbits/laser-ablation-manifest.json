@@ -1,8 +1,0 @@
-{
-  "sha256": "4d5601898ce670bdbbde1ccc13fc3ad4519ff20cfc562f40bb4e97dc52a91b09",
-  "generator": "scripts/orbits/build_laser_ablation_scene.py",
-  "generatorSha256": "5ed3d55fc897420197275b5ed35c00abe6cef17c1ee647fac26dea33c9a9d072",
-  "model": "laser-ablation-1",
-  "objects": 13,
-  "engagements": 25
-}

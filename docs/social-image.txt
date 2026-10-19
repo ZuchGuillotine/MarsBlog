@@ -1,0 +1,8 @@
+Social preview: public/images/social/mars-whole-planet.jpg
+Created with the built-in image_gen tool. AI-generated illustration, not a spacecraft photograph.
+Native resolution: 1731 x 909; JPEG quality 95, 4:4:4 chroma.
+
+Final generation prompt:
+Use case: ads-marketing
+Asset type: social sharing Open Graph image for Mars Population website.
+Primary request: An exceptionally detailed photorealistic whole planet Mars against pure black space. Landscape canvas approximately 1.91:1, ideally 2400x1260. The entire circular planet is centered and visible, its diameter 88% of canvas height, with comfortable black margin all around. Nearly full sunlit disc with subtle natural shading at right limb for spherical depth. Rich realistic rusty ochre terrain, fine impact craters and recognizable broad canyon and volcanic features, small subtle polar ice, realistic orbital photography aesthetic. Maximize crisp surface detail without exaggerated relief or artificial sharpening. No horizon closeup, no cropped planet, no text, no logos, no stars, no spacecraft, no settlement, no decorative glow. This is an illustrative image, not a map.

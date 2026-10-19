@@ -12,7 +12,7 @@ export interface Props {
 
 const {
   title,
-  description = "Explore Mars in 3D and learn about the science, engineering, and ethics of terraforming the Red Planet.",
+  description = "Explore where we could settle on Mars, how we could build there, and what it would take to make the planet habitable.",
   ogImage,
   showDonationCTA = true,
   className = "",
@@ -20,13 +20,13 @@ const {
 } = Astro.props;
 
 const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url;
-const socialImage = new URL(ogImage || '/mars-data/marsgeology.jpg', canonicalURL);
+const socialImage = new URL(ogImage || '/images/social/mars-whole-planet.jpg', canonicalURL);
 
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'Terraforming Mars Explorer',
-  description: 'Interactive exploration of Mars terraforming science and technology',
+  name: 'Mars Population',
+  description: 'Explore where we could settle on Mars, how we could build there, and what it would take to make the planet habitable.',
   url: canonicalURL.origin,
 };
 ---
@@ -48,7 +48,9 @@ const structuredData = {
     
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=mars" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="generator" content={Astro.generator} />
     
     <!-- SEO -->
@@ -57,18 +59,22 @@ const structuredData = {
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImage} />
-    <meta property="og:site_name" content="Terraforming Mars Explorer" />
+    {!ogImage && <meta property="og:image:width" content="1731" />}
+    {!ogImage && <meta property="og:image:height" content="909" />}
+    <meta property="og:site_name" content="Mars Population" />
+    {!ogImage && <meta property="og:image:alt" content="Detailed illustration of the whole planet Mars against black space" />}
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImage} />
+    {!ogImage && <meta property="twitter:image:alt" content="Detailed illustration of the whole planet Mars against black space" />}
     
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
@@ -115,7 +121,7 @@ const structuredData = {
                 class:list={['nav-link-dark', { 'nav-link-dark-active': Astro.url.pathname.startsWith('/blog') }]}
                 aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}
               >Blog</a>
-              <a href="/construction/sintering-bricks" class="nav-link-dark">Sintering Lab</a>
+              <a href="/construction/sintering-bricks" class="nav-link-dark">Solar Paving</a>
               {showDonationCTA && (
                 <a href="/support" class="btn-primary ml-6">
                   Support Research
@@ -151,7 +157,7 @@ const structuredData = {
               class:list={['block nav-link-dark', { 'nav-link-dark-active': Astro.url.pathname.startsWith('/blog') }]}
               aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}
             >Blog</a>
-            <a href="/construction/sintering-bricks" class="block nav-link-dark">Sintering Lab</a>
+            <a href="/construction/sintering-bricks" class="block nav-link-dark">Solar Paving</a>
             {showDonationCTA && (
               <a href="/support" class="block btn-primary mt-4">
                 Support Research
@@ -194,7 +200,7 @@ const structuredData = {
               <li><a href="/about" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">About</a></li>
               <li><a href="/privacy" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">Privacy</a></li>
               <li><a href="/terms" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">Terms</a></li>
-              <li><a href="/contact" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">Contact</a></li>
+              <li><a href="/support" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">Contact</a></li>
             </ul>
           </div>
           

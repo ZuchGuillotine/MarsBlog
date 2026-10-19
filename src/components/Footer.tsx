@@ -44,7 +44,7 @@ const footerLinks = {
   support: [
     { label: 'Donate', href: '/support' },
     { label: 'Newsletter', href: '/newsletter' },
-    { label: 'Contact Us', href: '/contact' },
+    { label: 'Contact Us', href: '/support' },
     { label: 'Partnership', href: '/partnership' },
   ],
   legal: [
