@@ -204,26 +204,26 @@ def build() -> dict[str, Any]:
         lit = m.sunlit(laser[:3], sun)
         pulse_j = rate_hz = power_on = 0.0
         if campaign_done:
-            status, reason = "COAST", "threshold cleared; monitoring to closest approach"
+            status, reason, code = "COAST", "threshold cleared; monitoring to closest approach", "CLEARED"
         elif t < hold_until:
-            status, reason = "HOLD", "re-assessing predicted miss after touch"
+            status, reason, code = "HOLD", "re-assessing predicted miss after touch", "REASSESS"
         elif rng > design["maxRangeKm"]:
-            status, reason = "HOLD", "target beyond 300 km"
+            status, reason, code = "HOLD", "target beyond 300 km", "RANGE_FAR"
         elif rng < design["minRangeKm"]:
-            status, reason = "HOLD", "target inside 60 km"
+            status, reason, code = "HOLD", "target inside 60 km", "RANGE_CLOSE"
         elif head_on < design["minHeadOnCosine"]:
-            status, reason = "HOLD", "beam not within 60° of target velocity (prograde push)"
+            status, reason, code = "HOLD", "beam not within 60° of target velocity (prograde push)", "GEOMETRY"
         elif clearance < BEAM_CLEARANCE_DEG:
-            status, reason = "HOLD", f"protected asset within {BEAM_CLEARANCE_DEG:.2f}° of the beam axis"
+            status, reason, code = "HOLD", f"protected asset within {BEAM_CLEARANCE_DEG:.2f}° of the beam axis", "BEAM_SAFETY"
         elif not lit:
-            status, reason = "HOLD", "laser in eclipse"
+            status, reason, code = "HOLD", "laser in eclipse", "ECLIPSE"
         else:
             firing = True
-            status, reason = "TOUCH", ""
+            status, reason, code = "TOUCH", "", ""
         if firing:
             if touch_open is None:
                 touch_open = {"n": len(touches) + 1, "start": t, "dv0": dv_retro, "e0": energy_on_target,
-                              "ranges": [], "cos": [], "clear": []}
+                              "ranges": [], "cos": [], "clear": [], "detail": []}
                 log(t, "TOUCH_START", f"Touch {touch_open['n']}: firing at {rng:.0f} km from behind, asset {clearance:.2f}° off the beam axis beyond the target")
             pulse_j, rate_hz, fluence = m.pulse_plan(rng)
             coupling = m.coupling_ns_per_j(fluence) * INTRUDER["recoil_efficiency"]
@@ -243,6 +243,7 @@ def build() -> dict[str, Any]:
             touch_open["ranges"].append(rng)
             touch_open["cos"].append(head_on)
             touch_open["clear"].append(clearance)
+            touch_open["detail"].append([t, rng, head_on, pulse_j, rate_hz, power_on, dv_retro])
             if t - touch_open["start"] + STEP >= TOUCH_MAX_S:
                 firing_end = True
             else:
@@ -266,6 +267,7 @@ def build() -> dict[str, Any]:
                 "predictedMissAfterKm": predicted_miss_km,
                 "predictedAtTcaKm": predicted_at_tca_km,
                 "predictedTcaS": tca_pred,
+                "detail": touch_open["detail"],
             }
             touches.append(touch)
             predictions.append({"t": end, "tcaS": tca_pred, "missKm": predicted_miss_km, "atTcaKm": predicted_at_tca_km, "touches": len(touches)})
@@ -288,6 +290,7 @@ def build() -> dict[str, Any]:
                 "t": t,
                 "asset": asset[:3], "intruder": intruder[:3], "laser": laser[:3],
                 "intruderV": intruder[3:], "assetV": asset[3:], "laserV": laser[3:],
+                "baselineIntruder": baseline_intruder[:3], "baselineIntruderV": baseline_intruder[3:],
                 "intruderRtnKm": [rr, aa, nn],
                 "laserRtnKm": [lr, la, ln],
                 "baselineRtnKm": [br, ba, bn],
@@ -295,7 +298,9 @@ def build() -> dict[str, Any]:
                 "rangeLaserIntruderKm": rng,
                 "status": status,
                 "reason": reason,
+                "holdCode": code,
                 "firing": firing,
+                "firingS": firing_s,
                 "pulseJ": pulse_j, "repHz": rate_hz, "powerOnTargetW": power_on,
                 "dvRetroCmS": dv_retro * 100,
                 "energyOnTargetJ": energy_on_target,
@@ -361,6 +366,15 @@ def build() -> dict[str, Any]:
             "beamClearanceDeg": BEAM_CLEARANCE_DEG, "exhaustKmS": ABLATION_EXHAUST_KM_S,
         },
         "bodies": {"asset": ASSET, "intruder": INTRUDER, "laser": {"id": "las-1", "name": "LAS-1 Shepherd", "massKg": design["busMassKg"]}},
+        "holdText": {
+            "REASSESS": "re-assessing predicted separation after a touch",
+            "RANGE_FAR": "target beyond 300 km",
+            "RANGE_CLOSE": "target inside 60 km minimum range",
+            "GEOMETRY": "beam not within 60° of the target velocity (prograde push)",
+            "BEAM_SAFETY": f"protected satellite within {BEAM_CLEARANCE_DEG:.2f}° of the beam axis",
+            "ECLIPSE": "laser in eclipse; firing suspended",
+            "CLEARED": "separation criteria met; no further touches",
+        },
         "laserDesign": design,
         "summary": summary,
         "touches": touches,
@@ -385,7 +399,8 @@ def rounded(value: Any, digits: int = 5) -> Any:
     if isinstance(value, list):
         return [rounded(x, digits) for x in value]
     if isinstance(value, dict):
-        return {k: rounded(x, digits) for k, x in value.items()}
+        # Keep the laser design constants (wavelength, coupling) at full precision.
+        return {k: (x if k == "laserDesign" else rounded(x, digits)) for k, x in value.items()}
     return value
 
 
