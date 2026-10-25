@@ -286,7 +286,7 @@
     /* On mobile, ensure cards fit within screen bounds */
     max-width: calc(100vw - 2rem) !important;
     width: 200px !important;
-    /* Position cards away from Mars Population card */
+    /* Position cards away from Population Mars card */
     transform: translateX(clamp(-150px, -25vw, 0px));
   }
 }

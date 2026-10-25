@@ -16,5 +16,7 @@ export default defineConfig({
   site,
   integrations: [react(), tailwind({
     applyBaseStyles: false,
-  }), mdx(), sitemap()],
+  }), mdx(), sitemap({
+    filter: (page) => !page.includes('/thanks'),
+  })],
 });

@@ -117,7 +117,7 @@ export const MarsGlobeExample: React.FC<MarsGlobeExampleProps> = ({
       {/* Controls overlay */}
       <div className="absolute top-4 left-4 space-y-2 z-30">
         <div className="bg-black/50 backdrop-blur-sm rounded-lg p-3 text-white">
-          <h3 className="text-lg font-bold mb-2">Mars Explorer</h3>
+          <h3 className="text-lg font-bold mb-2">Population Mars</h3>
           <div className="space-y-1 text-sm">
             <div>Locations: {marsLocations.length}</div>
             <div>Quality: {quality}</div>

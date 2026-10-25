@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Thank you" description="Your submission was received." noindex>
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+    <h1 class="text-3xl sm:text-4xl font-display font-bold mb-4" id="thanks-title">Thank you</h1>
+    <p class="text-lg text-gray-600 mb-8" id="thanks-body">We received your submission and will be in touch soon.</p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="/" class="btn-primary">Back to the atlas</a>
+      <a href="/blog" class="btn-secondary">Read the blog</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const messages: Record<string, [string, string]> = {
+    newsletter: ['You’re subscribed', 'Watch for the next research update in your inbox.'],
+    contact: ['Message sent', 'Thanks for writing. We reply within two business days.'],
+    listing: ['Listing request received', 'We review every submission editorially and will email you about next steps.'],
+  };
+  const message = messages[new URLSearchParams(location.search).get('form') ?? ''];
+  if (message) {
+    document.getElementById('thanks-title')!.textContent = message[0];
+    document.getElementById('thanks-body')!.textContent = message[1];
+  }
+</script>

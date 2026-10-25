@@ -335,7 +335,7 @@ const Footer: React.FC<FooterProps> = ({
                   />
                 </svg>
                 <div>
-                  <div className="font-display font-bold text-mars-red">Mars Explorer</div>
+                  <div className="font-display font-bold text-mars-red">Population Mars</div>
                   <div className="text-sm text-gwern-muted">
                     &copy; 2025 StackTracker Labs. All rights reserved.
                   </div>

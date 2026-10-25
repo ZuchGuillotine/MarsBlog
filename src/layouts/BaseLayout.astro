@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
+import { SITE_EMAIL, SITE_NAME } from '../data/site';
 
 export interface Props {
   title: string;
@@ -8,6 +10,7 @@ export interface Props {
   showDonationCTA?: boolean;
   className?: string;
   preloadGlobeTexture?: boolean;
+  noindex?: boolean;
 }
 
 const {
@@ -16,19 +19,47 @@ const {
   ogImage,
   showDonationCTA = true,
   className = "",
-  preloadGlobeTexture = false
+  preloadGlobeTexture = false,
+  noindex = false
 } = Astro.props;
+
+// Every page title ends with the brand so search results read consistently.
+const pageTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
 
 const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url;
 const socialImage = new URL(ogImage || '/images/social/mars-whole-planet.jpg', canonicalURL);
 
 const structuredData = {
   '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'Mars Population',
-  description: 'Explore where we could settle on Mars, how we could build there, and what it would take to make the planet habitable.',
-  url: canonicalURL.origin,
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${canonicalURL.origin}/#website`,
+      name: SITE_NAME,
+      description: 'Explore where we could settle on Mars, how we could build there, and what it would take to make the planet habitable.',
+      url: canonicalURL.origin,
+      publisher: { '@id': `${canonicalURL.origin}/#organization` },
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${canonicalURL.origin}/#organization`,
+      name: SITE_NAME,
+      url: canonicalURL.origin,
+      email: SITE_EMAIL,
+      logo: new URL('/apple-touch-icon.png', canonicalURL.origin).href,
+    },
+  ],
 };
+const footerLinks = [
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+  { href: '/support', label: 'Support the research' },
+  { href: '/pitch', label: 'Investors & grants' },
+  { href: '/space-economy', label: 'Space economy directory' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/privacy', label: 'Privacy' },
+  { href: '/terms', label: 'Terms' },
+];
 ---
 
 <!DOCTYPE html>
@@ -54,24 +85,25 @@ const structuredData = {
     <meta name="generator" content={Astro.generator} />
     
     <!-- SEO -->
-    <title>{title}</title>
+    <title>{pageTitle}</title>
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonicalURL} />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImage} />
     {!ogImage && <meta property="og:image:width" content="1731" />}
     {!ogImage && <meta property="og:image:height" content="909" />}
-    <meta property="og:site_name" content="Mars Population" />
+    <meta property="og:site_name" content={SITE_NAME} />
     {!ogImage && <meta property="og:image:alt" content="Detailed illustration of the whole planet Mars against black space" />}
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
+    <meta property="twitter:title" content={pageTitle} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImage} />
     {!ogImage && <meta property="twitter:image:alt" content="Detailed illustration of the whole planet Mars against black space" />}
@@ -97,10 +129,10 @@ const structuredData = {
     <header class="sticky top-0 z-40 bg-gray-700 backdrop-blur-sm border-b border-gray-600">
       <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
-          <!-- Mars Population Info (replacing logo) -->
+          <!-- Brand and population counter (replacing logo) -->
           <div class="flex items-center min-w-0 space-x-3 sm:space-x-4">
             <a href="/" class="text-white font-display text-base sm:text-lg font-bold whitespace-nowrap hover:text-mars-orange transition-colors">
-              Mars Population
+              {SITE_NAME}
             </a>
             <div class="hidden xl:block text-gray-300 text-sm whitespace-nowrap" id="current-datetime">
               <!-- Date/time will be populated by client-side script -->
@@ -191,52 +223,45 @@ const structuredData = {
           <div class="col-span-1 md:col-span-2">
             <div class="flex items-center space-x-3 mb-4">
               <div class="w-8 h-8 bg-mars-gradient rounded-full flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"></path>
                 </svg>
               </div>
-              <span class="font-display font-semibold text-lg">Mars Explorer</span>
+              <span class="font-display font-semibold text-lg">{SITE_NAME}</span>
             </div>
-            <p class="text-gray-600 dark:text-gray-400 max-w-md">
-              Explore Mars in 3D and learn about the science, engineering, and ethics of terraforming the Red Planet.
+            <p class="text-gray-600 dark:text-gray-400 max-w-md mb-6">
+              Independent research toward settling Mars: candidate landing sites, regolith construction, and the orbital operations a settlement depends on.
             </p>
+            <div class="max-w-md">
+              <NewsletterSignup source="footer" />
+            </div>
           </div>
-          
+
           <!-- Quick Links -->
           <div>
-            <h3 class="font-display font-semibold text-gwern-text dark:text-gwern-text-dark mb-4">Quick Links</h3>
+            <h2 class="font-display font-semibold text-gwern-text dark:text-gwern-text-dark mb-4">{SITE_NAME}</h2>
             <ul class="space-y-2">
-              <li><a href="/blog" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">Blog</a></li>
-              <li><a href="/about" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">About</a></li>
-              <li><a href="/privacy" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">Privacy</a></li>
-              <li><a href="/terms" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">Terms</a></li>
-              <li><a href="/support" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">Contact</a></li>
+              {footerLinks.map((link) => (
+                <li><a href={link.href} class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">{link.label}</a></li>
+              ))}
             </ul>
           </div>
-          
-          <!-- Social Links -->
+
+          <!-- Contact -->
           <div>
-            <h3 class="font-display font-semibold text-gwern-text dark:text-gwern-text-dark mb-4">Connect</h3>
-            <div class="flex space-x-4">
-              <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">
-                <span class="sr-only">Twitter</span>
-                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                </svg>
-              </a>
-              <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-mars-red dark:hover:text-mars-orange transition-colors">
-                <span class="sr-only">GitHub</span>
-                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                </svg>
-              </a>
-            </div>
+            <h2 class="font-display font-semibold text-gwern-text dark:text-gwern-text-dark mb-4">Get in touch</h2>
+            <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+              <li><a href="/contact#investors" class="hover:text-mars-red dark:hover:text-mars-orange transition-colors">Investors</a></li>
+              <li><a href="/contact#press" class="hover:text-mars-red dark:hover:text-mars-orange transition-colors">Press</a></li>
+              <li><a href="/contact#grants" class="hover:text-mars-red dark:hover:text-mars-orange transition-colors">Grants &amp; partners</a></li>
+              <li><a href={`mailto:${SITE_EMAIL}`} class="break-all hover:text-mars-red dark:hover:text-mars-orange transition-colors">{SITE_EMAIL}</a></li>
+            </ul>
           </div>
         </div>
         
         <div class="mt-8 pt-8 border-t border-gwern-border dark:border-gwern-border-dark">
           <p class="text-center text-gray-600 dark:text-gray-400 text-sm">
-            © 2025 Mars Explorer. Built with ❤️ for the future of humanity.
+            © {new Date().getFullYear()} {SITE_NAME}. Built for the future of humanity.
           </p>
         </div>
       </div>

@@ -1,0 +1,51 @@
+---
+// Email signup handled by Netlify Forms; submissions appear in the Netlify
+// dashboard under the "newsletter" form.
+export interface Props {
+  source: string;
+  heading?: string;
+  blurb?: string;
+  tone?: 'light' | 'panel';
+}
+
+const {
+  source,
+  heading = 'Get research updates',
+  blurb = 'New experiments, simulator releases and funding milestones. About once a month, no spam.',
+  tone = 'light',
+} = Astro.props;
+const id = `newsletter-${source}`;
+---
+
+<form
+  name="newsletter"
+  method="POST"
+  action="/thanks?form=newsletter"
+  data-netlify="true"
+  netlify-honeypot="company-website"
+  class:list={[
+    'newsletter-form',
+    tone === 'panel' && 'rounded-lg border border-gwern-border dark:border-mars-brown bg-gray-50 dark:bg-gray-800 p-6',
+  ]}
+  aria-labelledby={`${id}-heading`}
+>
+  <input type="hidden" name="form-name" value="newsletter" />
+  <input type="hidden" name="source" value={source} />
+  <p class="hidden"><label>Leave this empty <input name="company-website" tabindex="-1" autocomplete="off" /></label></p>
+  <h2 id={`${id}-heading`} class="font-display font-semibold text-lg text-gwern-text dark:text-gwern-text-dark mb-2">{heading}</h2>
+  <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">{blurb}</p>
+  <div class="flex flex-col sm:flex-row gap-2">
+    <label for={`${id}-email`} class="sr-only">Email address</label>
+    <input
+      id={`${id}-email`}
+      type="email"
+      name="email"
+      required
+      autocomplete="email"
+      placeholder="you@example.com"
+      class="min-w-0 flex-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gwern-text dark:text-gwern-text-dark focus:border-mars-red focus:outline-none"
+    />
+    <button type="submit" class="rounded-lg bg-mars-red px-4 py-2 font-display font-medium text-white hover:bg-mars-rust transition-colors">Subscribe</button>
+  </div>
+  <p class="mt-2 text-xs text-gray-500 dark:text-gray-500">See the <a href="/privacy" class="underline hover:no-underline">privacy policy</a>. Unsubscribe any time.</p>
+</form>

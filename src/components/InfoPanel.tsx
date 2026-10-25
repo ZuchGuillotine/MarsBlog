@@ -239,7 +239,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(
-                    `${location.name}: ${location.coordinates.lat}, ${location.coordinates.lng} - Mars Explorer`
+                    `${location.name}: ${location.coordinates.lat}, ${location.coordinates.lng} - Population Mars`
                   );
                 }}
                 className="btn-mars-outline flex-1 text-sm"

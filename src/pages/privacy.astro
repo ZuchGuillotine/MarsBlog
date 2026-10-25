@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_EMAIL, SITE_NAME } from '../data/site';
+
+const effective = 'October 25, 2026';
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description={`How ${SITE_NAME} collects, uses and protects information from visitors, newsletter subscribers and supporters.`}
+>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h1 class="text-3xl sm:text-4xl font-display font-bold mb-2">Privacy Policy</h1>
+    <p class="text-gray-500 mb-10">Effective {effective}</p>
+
+    <div class="prose prose-lg max-w-none prose-a:text-mars-red hover:prose-a:text-mars-rust">
+      <p>
+        This policy explains what information {SITE_NAME} ("we", "us") collects when you use
+        populationmars.com and orbitfleet.populationmars.com (the "sites"), why we collect it, and the
+        choices you have. We collect as little as we can and we do not sell personal information.
+      </p>
+
+      <h2>Information we collect</h2>
+      <h3>Information you give us</h3>
+      <ul>
+        <li><strong>Newsletter signups:</strong> your email address and the page you signed up from.</li>
+        <li><strong>Contact and directory forms:</strong> your name, email address, organization, the topic you choose and your message. Directory submissions also include the company details you provide.</li>
+        <li><strong>Email:</strong> anything you send to {SITE_EMAIL}.</li>
+      </ul>
+
+      <h3>Payments</h3>
+      <p>
+        Donations are processed by Stripe on Stripe-hosted checkout pages. We never see or store your
+        full card number. Stripe shares with us the information needed to record the payment, such as
+        your name, email address, amount and date. Stripe's handling of your data is described in the
+        <a href="https://stripe.com/privacy" rel="noopener noreferrer">Stripe Privacy Policy</a>.
+      </p>
+
+      <h3>Analytics</h3>
+      <p>
+        We use Google Analytics 4 to understand which pages are read and how visitors find us. It uses
+        cookies and collects information such as pages viewed, approximate location derived from your IP
+        address, device and browser type, and referring site. We use this only in aggregate. You can opt
+        out with the <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener noreferrer">Google Analytics opt-out browser add-on</a>
+        or by blocking cookies in your browser. See
+        <a href="https://policies.google.com/technologies/partner-sites" rel="noopener noreferrer">how Google uses data from sites that use its services</a>.
+      </p>
+
+      <h3>Hosting and simulator sessions</h3>
+      <p>
+        Our hosting providers keep standard server logs (IP address, request time, requested URL and
+        browser user agent) for security and reliability. When you launch an OrbitFleet simulation, the
+        service creates a short-lived session identifier so it can stream your simulation and limit
+        concurrent use. Simulation sessions contain synthetic data only.
+      </p>
+
+      <h2>How we use information</h2>
+      <ul>
+        <li>To send the newsletter you asked for.</li>
+        <li>To reply to your messages and evaluate directory submissions.</li>
+        <li>To process donations, send receipts and meet tax and accounting obligations.</li>
+        <li>To keep the sites secure and understand how they are used.</li>
+      </ul>
+
+      <h2>Who we share it with</h2>
+      <p>
+        We share information only with service providers that run the sites for us: our hosting and
+        form-handling provider (Netlify), Stripe for payments, and Google for analytics. We may disclose
+        information if required by law. We do not sell or rent personal information, and we do not share
+        it for cross-context behavioral advertising.
+      </p>
+
+      <h2>How long we keep it</h2>
+      <p>
+        Newsletter addresses are kept until you unsubscribe. Messages and form submissions are kept as
+        long as needed to handle the conversation and for up to two years after. Payment records are
+        kept as long as tax and accounting law requires.
+      </p>
+
+      <h2>Your choices and rights</h2>
+      <p>
+        You can unsubscribe from the newsletter at any time by replying "unsubscribe" or writing to
+        <a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>. Depending on where you live, including the
+        European Economic Area, the United Kingdom and California, you may have the right to access,
+        correct, delete or receive a copy of your personal information, and to object to or restrict
+        certain processing. To make a request, email us; we will respond within 30 days. You also have
+        the right to complain to your local data-protection authority.
+      </p>
+
+      <h2>Children</h2>
+      <p>
+        The sites are written for a general audience and are not directed at children under 13. We do not
+        knowingly collect personal information from children under 13. If you believe a child has sent us
+        personal information, contact us and we will delete it.
+      </p>
+
+      <h2>International transfers</h2>
+      <p>
+        Our service providers may process information in the United States and other countries. Where
+        required, they rely on recognized transfer mechanisms such as standard contractual clauses.
+      </p>
+
+      <h2>Changes</h2>
+      <p>
+        If we change this policy we will update the effective date above, and for material changes we
+        will note it on the site or in the newsletter.
+      </p>
+
+      <h2>Contact</h2>
+      <p>Questions about privacy: <a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>.</p>
+    </div>
+  </div>
+</BaseLayout>
