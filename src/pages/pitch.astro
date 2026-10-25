@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { channels, references, roadmap } from '../data/solarPaving';
 import { companyCount } from '../data/spaceEconomy';
-import { ORBITFLEET_URL, SITE_EMAIL, SITE_NAME, mailto } from '../data/site';
+import { ORBITFLEET_URL, SITE_EMAIL, SITE_NAME, founder, mailto } from '../data/site';
 
 const refUrl = (id: string) => references.find((reference) => reference.id === id)?.url;
 
@@ -167,6 +167,16 @@ const pitchData = {
           <p class="text-sm text-gray-600">Space situational awareness, debris mitigation and education calls, where OrbitFleet's open, inspectable scenarios serve as a research and teaching platform.</p>
         </li>
       </ul>
+    </section>
+
+    <section class="mb-10" aria-labelledby="team">
+      <h2 id="team" class="pitch-h2">Founder</h2>
+      <div class="rounded-lg border border-gwern-border p-5">
+        <p class="font-display font-semibold text-lg">{founder.name} <span class="text-sm font-normal text-gray-500">· {founder.role}, {founder.location}</span></p>
+        <p class="text-gray-700 mt-2">{founder.bio[0]}</p>
+        <p class="text-gray-700 mt-2">{founder.bio[1]}</p>
+        <p class="text-sm mt-3 print:hidden"><a href="/about#founder" class="text-mars-red underline">Full bio</a> · <a href={founder.github} class="text-mars-red underline">GitHub</a></p>
+      </div>
     </section>
 
     <section class="mb-10" aria-labelledby="ask">

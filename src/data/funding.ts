@@ -1,8 +1,8 @@
-// Fundraising settings for /support. Update `raised` by hand after checking the
-// Stripe dashboard; the progress bar and copy read from here.
+// Fundraising settings for /support. `raised` is updated by hand and includes
+// founder contributions as well as Stripe and offline gifts.
 export const fundingGoal = {
   goal: 2500,
-  raised: 0,
+  raised: 227,
   updated: '2026-10-25',
   campaign: 'Fall 2026 research sprint',
 };
