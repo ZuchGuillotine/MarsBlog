@@ -24,9 +24,9 @@ export const oneTimeTiers: GivingTier[] = [
 // without a link render as "opening soon" rather than sending donors to a
 // one-time checkout.
 export const monthlyTiers: GivingTier[] = [
-  { amount: 5, label: 'Orbiter', buys: 'Keeps the simulators online for a day each month.' },
-  { amount: 15, label: 'Lander', buys: 'Covers a month of data storage for published runs.' },
-  { amount: 50, label: 'Rover', buys: 'Funds one new scenario in OrbitFleet every quarter.' },
+  { amount: 5, label: 'Orbiter', buys: 'Keeps the simulators online for a day each month.', link: 'https://buy.stripe.com/aFa14m1wteVgeKZbla63K03' },
+  { amount: 15, label: 'Lander', buys: 'Covers a month of data storage for published runs.', link: 'https://buy.stripe.com/eVq7sK7UR00m46lexm63K02' },
+  { amount: 50, label: 'Rover', buys: 'Gets 7 grams into orbit.', link: 'https://buy.stripe.com/3cI00i6QN28u6etbla63K01' },
 ];
 
 // Planned use of the $2,500 goal. Amounts must sum to fundingGoal.goal.
