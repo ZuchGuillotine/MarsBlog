@@ -1,0 +1,305 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { companyCount, recentFunding, spaceCategories } from '../../data/spaceEconomy';
+
+const updated = 'October 17, 2026';
+const featuredFunding = recentFunding.slice(0, 8);
+const moreFunding = recentFunding.slice(8);
+const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+---
+
+<BaseLayout
+  title="Space Economy Directory | Mars Population"
+  description={`A curated directory of ${companyCount} companies and investors across launch, satellites, connectivity, Earth data, lunar systems, orbital infrastructure, and the wider space economy. Updated ${updated}.`}
+  showDonationCTA={false}
+  className="space-directory-page"
+>
+  <div class="directory-shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-topline"><span class="signal-dot" aria-hidden="true"></span> Mars Population / Field Guide <span class="edition">Snapshot · {updated}</span></div>
+      <div class="hero-content">
+        <div>
+          <p class="overline">The commercial space economy</p>
+          <h1 id="page-title">Who builds<br />what comes next?</h1>
+          <p class="hero-copy">An explorable map of the companies, operators, suppliers, and capital behind activity beyond Earth. From launch giants to spectrum owners and newly funded orbital infrastructure teams.</p>
+          <a class="jump-link" href="#directory">Explore the directory <span aria-hidden="true">↘</span></a>
+        </div>
+        <div class="hero-aside" aria-label="Directory summary">
+          <p><strong>{companyCount}</strong><span>organizations</span></p>
+          <p><strong>{spaceCategories.length}</strong><span>sectors</span></p>
+          <p><strong>{recentFunding.length}</strong><span>recent funding updates</span></p>
+        </div>
+      </div>
+      <div class="hero-foot"><span>01 — Directory</span><span>Independent editorial selection</span><span>Scroll to explore ↓</span></div>
+    </section>
+
+    <section class="intro-band" aria-label="About this directory">
+      <p>The space economy is more than rocket companies. Satellite manufacturers, data providers, ground networks, propulsion suppliers, investors, and spectrum holders all shape what can happen in orbit.</p>
+    </section>
+
+    <aside class="signal-note" aria-labelledby="signal-note-title">
+      <span class="signal-note-index">Under the radar / 01</span>
+      <div><h2 id="signal-note-title">Spectrum is space infrastructure.</h2><p>Grain Management is a communications infrastructure investor, not a satellite manufacturer. Its nationwide 800 MHz licenses became a space-economy asset when it <a href="https://www.prnewswire.com/news-releases/grain-management-announces-definitive-agreement-to-sell-nationwide-800-mhz-spectrum-portfolio-to-spacex-302902974.html" target="_blank" rel="noopener noreferrer">announced an agreement</a> to sell the portfolio to SpaceX for direct-to-device service in October 2026. The agreement is not yet a completed sale.</p></div>
+      <a class="signal-note-link" href="#grain-management">Grain Management profile <span aria-hidden="true">↗</span></a>
+    </aside>
+
+    <section class="funding" aria-labelledby="funding-title">
+      <div class="section-heading">
+        <div><p class="overline">Fresh capital / changing status</p><h2 id="funding-title">Recently funded</h2></div>
+        <p>Selected announced rounds in 2026. Status describes the project at the time of its linked update, not a guarantee of future milestones.</p>
+      </div>
+      <div class="funding-grid">
+        {featuredFunding.map((company) => (
+          <article class="funding-card">
+            <div class="funding-card-top"><span>{company.category}</span><time datetime={company.update!.date}>{new Date(`${company.update!.date}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</time></div>
+            <h3><a href={`#${slug(company.name)}`}>{company.name}</a></h3>
+            <p class="funding-amount">{company.update!.label}</p>
+            <p class="funding-status">{company.update!.status}</p>
+            <a class="source-link" href={company.update!.source} target="_blank" rel="noopener noreferrer">Announcement <span aria-hidden="true">↗</span></a>
+          </article>
+        ))}
+      </div>
+      {moreFunding.length > 0 && (
+        <details class="more-funding">
+          <summary>View {moreFunding.length} more funding updates <span aria-hidden="true">＋</span></summary>
+          <div class="funding-grid funding-grid-more">
+            {moreFunding.map((company) => (
+              <article class="funding-card">
+                <div class="funding-card-top"><span>{company.category}</span><time datetime={company.update!.date}>{new Date(`${company.update!.date}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</time></div>
+                <h3><a href={`#${slug(company.name)}`}>{company.name}</a></h3>
+                <p class="funding-amount">{company.update!.label}</p>
+                <p class="funding-status">{company.update!.status}</p>
+                <a class="source-link" href={company.update!.source} target="_blank" rel="noopener noreferrer">Announcement <span aria-hidden="true">↗</span></a>
+              </article>
+            ))}
+          </div>
+        </details>
+      )}
+    </section>
+
+    <section class="directory" id="directory" aria-labelledby="directory-title">
+      <div class="section-heading directory-heading">
+        <div><p class="overline">Browse the ecosystem</p><h2 id="directory-title">The directory</h2></div>
+        <p>Choose a sector or search by company, product, or activity. Open an entry for its overview and source links.</p>
+      </div>
+
+      <div class="filter-bar" aria-label="Directory filters">
+        <label class="search-wrap">
+          <span class="sr-only">Search companies</span>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8"/></svg>
+          <input id="company-search" type="search" placeholder="Search organizations or capabilities" autocomplete="off" />
+          <kbd>/</kbd>
+        </label>
+        <div class="category-filters" role="group" aria-label="Filter by sector">
+          <button class="filter-button is-active" type="button" data-category="all" aria-pressed="true">All sectors <span>{companyCount}</span></button>
+          {spaceCategories.map((category) => <button class="filter-button" type="button" data-category={category.id} aria-pressed="false">{category.title} <span>{category.companies.length}</span></button>)}
+        </div>
+        <p class="result-count" id="result-count" aria-live="polite">Showing {companyCount} organizations</p>
+      </div>
+
+      <div class="category-list" id="category-list">
+        {spaceCategories.map((category, index) => (
+          <section class="category-section" data-section={category.id} aria-labelledby={`${category.id}-title`}>
+            <div class="category-heading">
+              <span class="category-index">{String(index + 1).padStart(2, '0')} / {String(spaceCategories.length).padStart(2, '0')}</span>
+              <div><h3 id={`${category.id}-title`}>{category.title}</h3><p>{category.description}</p></div>
+              <span class="category-total">{category.companies.length} organizations</span>
+            </div>
+            <div class="company-grid">
+              {category.companies.map((company) => (
+                <details class="company-card" id={slug(company.name)} data-company data-search={`${company.name} ${company.summary} ${category.title}`.toLowerCase()}>
+                  <summary>
+                    <span class="company-name">{company.name}</span>
+                    <span class="company-card-bottom"><span>{company.update ? '2026 update' : 'Overview'}</span><span class="expand-icon" aria-hidden="true">＋</span></span>
+                  </summary>
+                  <div class="company-overview">
+                    <p>{company.summary}</p>
+                    {company.update && <p class="company-update"><strong>{company.update.label}</strong><br />{company.update.status}</p>}
+                    <div class="company-links">
+                      <a href={company.url} target="_blank" rel="noopener noreferrer">Company site ↗</a>
+                      {company.projectSource && <a href={company.projectSource} target="_blank" rel="noopener noreferrer">Project source ↗</a>}
+                      {company.update && <a href={company.update.source} target="_blank" rel="noopener noreferrer">Update source ↗</a>}
+                    </div>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+      <p class="no-results" id="no-results" hidden>No matches. Try another term or choose all sectors.</p>
+    </section>
+
+    <section class="method" aria-labelledby="method-title">
+      <div><p class="overline">Editorial notes</p><h2 id="method-title">How to read this map</h2></div>
+      <div>
+        <p>Each organization appears once in its primary category, even when it spans several. SpaceX, for example, appears under launch although Starlink also belongs in connectivity. Grain Management appears under connectivity because spectrum ownership is central to direct-to-device service.</p>
+        <p>Funding figures are announced round sizes, and some announcements combine equity with debt or credit facilities. The date is the public announcement date. Company descriptions and status notes can change; use the linked first-party source for current details.</p>
+        <p>Coverage is global but selective, with an emphasis on firms building or financing space-specific products and services. Government agencies, universities, and most downstream customers are outside this edition.</p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const search = document.querySelector<HTMLInputElement>('#company-search');
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('.filter-button')];
+  const sections = [...document.querySelectorAll<HTMLElement>('[data-section]')];
+  const resultCount = document.querySelector<HTMLElement>('#result-count');
+  const noResults = document.querySelector<HTMLElement>('#no-results');
+  let activeCategory = 'all';
+
+  const filter = () => {
+    const query = search?.value.trim().toLocaleLowerCase() || '';
+    let visible = 0;
+    for (const section of sections) {
+      const categoryMatches = activeCategory === 'all' || section.dataset.section === activeCategory;
+      let sectionVisible = 0;
+      for (const card of section.querySelectorAll<HTMLElement>('[data-company]')) {
+        const matches = categoryMatches && (!query || card.dataset.search?.includes(query));
+        card.hidden = !matches;
+        if (matches) sectionVisible++;
+      }
+      section.hidden = sectionVisible === 0;
+      visible += sectionVisible;
+    }
+    if (resultCount) resultCount.textContent = `Showing ${visible} ${visible === 1 ? 'organization' : 'organizations'}`;
+    if (noResults) noResults.hidden = visible !== 0;
+  };
+
+  search?.addEventListener('input', filter);
+  for (const button of buttons) {
+    button.addEventListener('click', () => {
+      activeCategory = button.dataset.category || 'all';
+      for (const item of buttons) {
+        const selected = item === button;
+        item.classList.toggle('is-active', selected);
+        item.setAttribute('aria-pressed', String(selected));
+      }
+      filter();
+    });
+  }
+  document.addEventListener('keydown', (event) => {
+    if (event.key === '/' && !(event.target instanceof HTMLInputElement) && !(event.target instanceof HTMLTextAreaElement)) {
+      event.preventDefault();
+      search?.focus();
+    }
+  });
+  // Editorial deep links should reveal an entry even after filtering.
+  document.querySelectorAll<HTMLAnchorElement>('.funding-card h3 a, .signal-note-link').forEach((link) => link.addEventListener('click', () => {
+    if (search) search.value = '';
+    buttons[0]?.click();
+    const target = document.getElementById((link.getAttribute('href') || '').slice(1)) as HTMLDetailsElement | null;
+    if (target) target.open = true;
+  }));
+  // Keep a direct company URL useful when opened from an external page.
+  if (location.hash) {
+    const target = document.getElementById(decodeURIComponent(location.hash.slice(1))) as HTMLDetailsElement | null;
+    if (target?.matches('[data-company]')) target.open = true;
+  }
+</script>
+
+<style>
+  :global(body.space-directory-page), :global(.space-directory-page main) { background: #f3f0e9; color: #162423; }
+  :global(.space-directory-page main) { overflow: clip; }
+  .directory-shell { --ink: #172623; --muted: #65706c; --line: #d7d9d0; --accent: #c8633e; --deep: #14231f; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  .hero { background: radial-gradient(circle at 12% 8%, rgba(166, 61, 36, .13), transparent 30rem), radial-gradient(circle at 88% 72%, rgba(44, 105, 117, .1), transparent 34rem), #0c1012; color: #e8e4dc; padding: 1.35rem max(1.5rem, calc((100vw - 82rem) / 2)); position: relative; }
+  .hero-topline, .hero-foot { position: relative; display: flex; align-items: center; gap: .7rem; color: #aaa69f; font: 600 .66rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .11em; text-transform: uppercase; }
+  .hero-topline { padding-bottom: 1.2rem; border-bottom: 1px solid rgba(255, 255, 255, .12); }
+  .signal-dot { width: .42rem; height: .42rem; border-radius: 50%; background: #df6b45; }
+  .edition { margin-left: auto; }
+  .hero-content { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 15rem; gap: 4rem; align-items: end; padding: clamp(4.5rem, 8vw, 7rem) 0 clamp(4rem, 6vw, 5.5rem); }
+  .overline { color: var(--accent); margin: 0 0 1.1rem; font-size: .68rem; line-height: 1.3; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
+  .hero .overline { color: #c7aaa0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 600; letter-spacing: .15em; }
+  h1, h2, h3, p { margin-top: 0; }
+  h1, h2, .category-heading h3 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
+  h1 { max-width: 18ch; margin-bottom: 1.5rem; color: #e8e4dc; font: 600 clamp(3rem, 5.5vw, 5.2rem)/1.03 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; letter-spacing: -.055em; }
+  .hero-copy { max-width: 39rem; color: #b8b3ac; font: 400 clamp(1rem, 1.3vw, 1.16rem)/1.7 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  .jump-link { display: inline-flex; gap: 1.5rem; align-items: center; margin-top: 1.25rem; padding: .9rem 1.05rem; border: 1px solid #a77a65; background: transparent; color: #e7ad8d; font-size: .7rem; font-weight: 800; letter-spacing: .1em; text-decoration: none; text-transform: uppercase; transition: background 150ms, color 150ms; }
+  .jump-link:hover { background: #df6b45; color: #0c1012; }
+  .jump-link span { font-size: 1.2rem; line-height: .7; }
+  .hero-aside { border-left: 1px solid rgba(255, 255, 255, .12); padding-left: 2rem; display: flex; flex-direction: column; justify-content: end; }
+  .hero-aside p { display: flex; align-items: baseline; gap: .8rem; margin: 0; padding: .9rem 0; border-bottom: 1px solid rgba(255, 255, 255, .12); }
+  .hero-aside strong { color: #e8e4dc; font: 500 2rem/1 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.04em; }
+  .hero-aside p span { color: #9f9c96; font: 600 .62rem/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .04em; text-transform: uppercase; }
+  .hero-foot { justify-content: space-between; padding: 1rem 0 .15rem; border-top: 1px solid rgba(255, 255, 255, .12); }
+  .intro-band, .funding, .directory, .method { width: min(82rem, calc(100% - 3rem)); margin: 0 auto; }
+  .intro-band { padding: 3.5rem 0; border-bottom: 1px solid var(--line); }
+  .intro-band p { margin: 0; max-width: 37rem; color: #354440; font-family: Georgia, 'Times New Roman', serif; font-size: 1.18rem; line-height: 1.65; }
+  .signal-note { display: grid; grid-template-columns: 10rem minmax(0, 1fr) auto; align-items: start; gap: 2rem; width: min(82rem, calc(100% - 3rem)); margin: 0 auto; padding: 1.6rem 0 2.2rem; border-bottom: 1px solid var(--line); }
+  .signal-note-index { padding-top: .45rem; color: #b65f40; font-size: .66rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .signal-note h2 { margin: 0 0 .7rem; color: #253c30; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.7rem, 2.5vw, 2.35rem); font-weight: 400; letter-spacing: -.04em; }
+  .signal-note p { max-width: 42rem; margin: 0; color: #5d6b60; font-size: .85rem; line-height: 1.65; }
+  .signal-note p a { color: #a65034; font-weight: 700; text-underline-offset: 3px; }
+  .signal-note-link { align-self: end; color: #275a47; white-space: nowrap; font-size: .67rem; font-weight: 800; letter-spacing: .07em; text-decoration-thickness: 1px; text-underline-offset: 3px; text-transform: uppercase; }
+  .funding { padding: 5rem 0 5.5rem; }
+  .section-heading { display: flex; justify-content: space-between; gap: 3rem; align-items: end; margin-bottom: 2.25rem; }
+  .section-heading h2, .method h2 { margin: 0; color: var(--ink); font-size: clamp(3rem, 5vw, 5.3rem); letter-spacing: -.055em; line-height: .95; }
+  .section-heading > p { max-width: 25rem; margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.6; }
+  .funding-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .7rem; }
+  .funding-card { display: flex; flex-direction: column; min-height: 17rem; padding: 1.25rem; background: #e8eae0; border: 1px solid #cfd5c9; }
+  .funding-card:nth-child(4n + 2) { background: #e7e4d9; }
+  .funding-card-top { display: flex; justify-content: space-between; gap: .5rem; color: #69766f; font-size: .63rem; font-weight: 800; letter-spacing: .09em; line-height: 1.4; text-transform: uppercase; }
+  .funding-card-top time { white-space: nowrap; }
+  .funding-card h3 { margin: 2.15rem 0 .35rem; font-family: Georgia, 'Times New Roman', serif; font-size: 1.55rem; font-weight: 400; line-height: 1.1; letter-spacing: -.03em; }
+  .funding-card h3 a { color: var(--ink); text-decoration: none; }
+  .funding-card h3 a:hover { color: #a64d2f; }
+  .funding-amount { margin-bottom: .75rem; color: #b75535; font-size: .75rem; font-weight: 800; }
+  .funding-status { color: #4a5b53; font-size: .78rem; line-height: 1.5; }
+  .source-link { color: #263d35; margin-top: auto; padding-top: .65rem; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-decoration-thickness: 1px; text-underline-offset: 3px; text-transform: uppercase; }
+  .source-link span { margin-left: .25rem; }
+  .more-funding { margin-top: 1.5rem; }
+  .more-funding > summary { display: flex; justify-content: space-between; align-items: center; cursor: pointer; list-style: none; padding: .9rem 0; border-top: 1px solid #b7c2b7; border-bottom: 1px solid #b7c2b7; color: #314b41; font-size: .76rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+  .more-funding > summary::-webkit-details-marker { display: none; }
+  .more-funding[open] > summary span { transform: rotate(45deg); }
+  .funding-grid-more { padding-top: 1rem; }
+  .directory { padding: 5rem 0 7rem; border-top: 1px solid var(--line); }
+  .directory-heading { margin-bottom: 2.5rem; }
+  .filter-bar { position: sticky; top: 4rem; z-index: 20; padding: 1rem; background: #f3f0e9f2; border: 1px solid #d5d8ce; box-shadow: 0 .8rem 2rem #29382d11; backdrop-filter: blur(12px); }
+  .search-wrap { height: 3.5rem; display: flex; align-items: center; gap: .8rem; padding: 0 1rem; background: #fffefa; border: 1px solid #cbd2c7; }
+  .search-wrap svg { width: 1.25rem; color: #60756a; flex: none; }
+  .search-wrap input { width: 100%; min-width: 0; height: 100%; border: 0; outline: none; background: transparent; color: var(--ink); font-size: .95rem; }
+  .search-wrap input::placeholder { color: #86918a; }
+  .search-wrap:focus-within { outline: 2px solid #b65f40; outline-offset: 2px; }
+  .search-wrap kbd { padding: .1rem .35rem; border: 1px solid #d7dcd2; border-radius: 3px; color: #78867a; font-size: .65rem; }
+  .category-filters { display: flex; gap: .35rem; overflow-x: auto; padding: .8rem 0 .1rem; scrollbar-width: thin; scrollbar-color: #aeb9ad transparent; }
+  .filter-button { flex: none; padding: .53rem .7rem; border: 1px solid transparent; background: transparent; color: #506158; white-space: nowrap; font-size: .68rem; font-weight: 750; cursor: pointer; }
+  .filter-button span { margin-left: .25rem; opacity: .55; }
+  .filter-button:hover, .filter-button:focus-visible { border-color: #a6b6a7; }
+  .filter-button.is-active { background: var(--deep); color: #fff; }
+  .result-count { margin: .65rem 0 0; color: #627269; font-size: .7rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+  .category-list { margin-top: 4rem; }
+  .category-section { scroll-margin-top: 14rem; margin-bottom: 5rem; }
+  .category-heading { display: grid; grid-template-columns: 4rem 1fr auto; align-items: start; gap: 1.5rem; padding: 0 0 1.4rem; border-bottom: 1px solid #aeb9ad; }
+  .category-index, .category-total { padding-top: .6rem; color: #b65f40; font-size: .65rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+  .category-total { color: #6d7b70; }
+  .category-heading h3 { margin: 0; color: #19332a; font-size: clamp(2.2rem, 4vw, 3.5rem); letter-spacing: -.04em; line-height: 1; }
+  .category-heading p { max-width: 40rem; margin: .75rem 0 0; color: #68746b; font-size: .86rem; line-height: 1.5; }
+  .company-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 .75rem; }
+  .company-card { align-self: start; scroll-margin-top: 14rem; border-bottom: 1px solid #ccd4c9; }
+  .company-card summary { display: flex; flex-direction: column; justify-content: space-between; gap: 1.4rem; min-height: 7.3rem; padding: 1.35rem .25rem .8rem; cursor: pointer; list-style: none; }
+  .company-card summary::-webkit-details-marker { display: none; }
+  .company-card summary:hover .company-name, .company-card[open] .company-name { color: #a75539; }
+  .company-name { color: #263b31; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.2rem, 1.7vw, 1.55rem); line-height: 1.2; transition: color 150ms; }
+  .company-card-bottom { display: flex; justify-content: space-between; align-items: center; color: #9d634c; font-size: .63rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .expand-icon { font-size: 1.35rem; font-weight: 400; line-height: .7; }
+  .company-card[open] .expand-icon { transform: rotate(45deg); }
+  .company-overview { padding: .15rem .25rem 1.5rem; animation: reveal 180ms ease-out; }
+  .company-overview > p { max-width: 34rem; color: #526159; font-size: .85rem; line-height: 1.65; }
+  .company-update { padding-left: .75rem; border-left: 2px solid #bf6b4b; }
+  .company-update strong { color: #ad563a; font-size: .76rem; }
+  .company-links { display: flex; flex-wrap: wrap; gap: .8rem 1.3rem; }
+  .company-links a { color: #275a47; font-size: .7rem; font-weight: 800; letter-spacing: .05em; text-decoration-thickness: 1px; text-underline-offset: 3px; text-transform: uppercase; }
+  .no-results { padding: 4rem 1rem; text-align: center; color: #5e6c62; font-family: Georgia, 'Times New Roman', serif; font-size: 1.4rem; }
+  .method { display: grid; grid-template-columns: 1fr 1.15fr; gap: 5rem; padding: 4rem 0 6rem; border-top: 1px solid var(--line); }
+  .method h2 { max-width: 27rem; }
+  .method p:not(.overline) { color: #56645c; font-size: .92rem; line-height: 1.7; }
+  .method p:not(.overline) + p { margin-top: 1rem; }
+  a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid #bf603e; outline-offset: 4px; }
+  [hidden] { display: none !important; }
+  @keyframes reveal { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 1050px) { .funding-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .company-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .hero-content { grid-template-columns: 1fr 12rem; } .signal-note { grid-template-columns: 8rem 1fr; } .signal-note-link { grid-column: 2; } }
+  @media (max-width: 730px) { .hero-content { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 0; } .hero-aside { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; border: 0; padding: 0; } .hero-aside p { display: block; } .hero-aside strong { display: block; font-size: 1.8rem; } .hero-aside p span { font-size: .6rem; } .hero-foot span:nth-child(2) { display: none; } .method { grid-template-columns: 1fr; gap: 1.5rem; } .signal-note { grid-template-columns: 1fr; gap: .8rem; } .signal-note-link { grid-column: 1; margin-top: .35rem; } .section-heading { display: block; } .section-heading > p { margin-top: 1.3rem; } .company-grid { grid-template-columns: 1fr; } .category-heading { grid-template-columns: 1fr auto; gap: .5rem; } .category-index { grid-column: 1 / -1; } .category-total { text-align: right; } .directory { padding-top: 4rem; } .filter-bar { top: 4rem; } }
+  @media (max-width: 530px) { .hero { padding-inline: 1rem; } .hero-topline, .hero-foot { font-size: .57rem; } .hero-topline { flex-wrap: wrap; } .edition { width: 100%; margin: .3rem 0 0 1.2rem; } h1 { font-size: clamp(2.9rem, 12vw, 4.3rem); } .intro-band, .signal-note, .funding, .directory, .method { width: min(100% - 2rem, 82rem); } .intro-band { padding: 3rem 0; } .funding-grid { grid-template-columns: 1fr; } .funding-card { min-height: 15rem; } .category-heading { grid-template-columns: 1fr; } .category-total { text-align: left; } .filter-bar { margin: 0 -.45rem; padding: .65rem; } .search-wrap kbd { display: none; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+</style>
