@@ -61,3 +61,26 @@ export const budget = [
     detail: 'Hosting, data storage and write-ups so every result is free to read and reuse.',
   },
 ];
+
+// The longer path the current sprint starts. Only the first milestone is
+// reader-funded; the larger stages are grant- and investor-scale.
+export const milestones = [
+  {
+    amount: 2500,
+    title: 'Research sprint',
+    detail: 'Paver bench parts and first melt coupons, plus three-body and debris-mitigation simulations.',
+    funding: 'Readers',
+  },
+  {
+    amount: 40000,
+    title: 'Paver V1 test head',
+    detail: 'Full Earth test campaign: concentrator, control head, instrumentation and coupon characterization.',
+    funding: 'Readers, grants',
+  },
+  {
+    amount: 250000,
+    title: 'Debris remediation system',
+    detail: 'Start building a debris-remediation payload on an open satellite bus, guided by the OrbitFleet simulations.',
+    funding: 'Grants, investors',
+  },
+];

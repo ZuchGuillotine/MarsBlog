@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
-import { budget, customAmountLink, fundingGoal, monthlyTiers, oneTimeTiers } from '../data/funding';
+import { budget, customAmountLink, fundingGoal, milestones, monthlyTiers, oneTimeTiers } from '../data/funding';
 import { SITE_NAME } from '../data/site';
 
 const usd = (amount: number) => `$${amount.toLocaleString('en-US')}`;
@@ -52,6 +52,23 @@ const donateData = {
         <div class="h-full rounded-full bg-gradient-to-r from-mars-red to-mars-orange" style={`width: ${Math.max(percent, fundingGoal.raised > 0 ? 2 : 0)}%`}></div>
       </div>
       <p class="mt-3 text-xs text-gray-500">Updated {updated}. Totals are updated by hand from Stripe.</p>
+    </section>
+
+    <section aria-labelledby="ladder-heading" class="mb-12">
+      <h2 id="ladder-heading" class="text-2xl font-display font-semibold mb-2">Where this leads</h2>
+      <p class="text-gray-600 mb-6">This sprint is the first step on a longer path. Each stage builds on the results of the one before it.</p>
+      <ol class="grid gap-4 md:grid-cols-3">
+        {milestones.map((milestone, index) => (
+          <li class:list={['rounded-lg border-2 p-5', index === 0 ? 'border-mars-red bg-white' : 'border-gwern-border bg-gray-50']}>
+            <span class="text-xs uppercase tracking-wider text-gray-500">Stage {index + 1}{index === 0 && ' · now'}</span>
+            <p class="text-3xl font-display font-bold my-2">{usd(milestone.amount)}</p>
+            <h3 class="font-display font-semibold mb-1">{milestone.title}</h3>
+            <p class="text-sm text-gray-600 mb-3">{milestone.detail}</p>
+            <p class="text-xs text-gray-500">Funded by: {milestone.funding}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="mt-4 text-sm text-gray-600">Backing a later stage? See the <a href="/pitch" class="text-mars-red underline hover:no-underline">investor &amp; grant summary</a>.</p>
     </section>
 
     <section aria-labelledby="give-heading" class="mb-14">
