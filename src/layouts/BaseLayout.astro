@@ -117,6 +117,11 @@ const structuredData = {
               <a href="/orbit" class="nav-link-dark">Orbit</a>
               <a href="/construction" class="nav-link-dark">Infrastructure</a>
               <a
+                href="/space-economy"
+                class:list={['nav-link-dark', { 'nav-link-dark-active': Astro.url.pathname.startsWith('/space-economy') }]}
+                aria-current={Astro.url.pathname.startsWith('/space-economy') ? 'page' : undefined}
+              >Space Economy</a>
+              <a
                 href="/blog"
                 class:list={['nav-link-dark', { 'nav-link-dark-active': Astro.url.pathname.startsWith('/blog') }]}
                 aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}
@@ -152,6 +157,11 @@ const structuredData = {
           <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gwern-border dark:border-gwern-border-dark">
             <a href="/orbit" class="block nav-link-dark">Orbit</a>
             <a href="/construction" class="block nav-link-dark">Infrastructure</a>
+            <a
+              href="/space-economy"
+              class:list={['block nav-link-dark', { 'nav-link-dark-active': Astro.url.pathname.startsWith('/space-economy') }]}
+              aria-current={Astro.url.pathname.startsWith('/space-economy') ? 'page' : undefined}
+            >Space Economy</a>
             <a
               href="/blog"
               class:list={['block nav-link-dark', { 'nav-link-dark-active': Astro.url.pathname.startsWith('/blog') }]}
