@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_EMAIL, SITE_NAME, mailto } from '../data/site';
+
+const tracks = [
+  {
+    id: 'investors',
+    title: 'Investors',
+    lead: 'Equity and strategic investment in the paving hardware and orbital-operations software.',
+    include: ['Your firm and typical check size', 'Stage and sector focus', 'What you would like to see (deck, data room, demo)'],
+    subject: `Investor inquiry: ${SITE_NAME}`,
+    extra: { href: '/pitch', label: 'Read the one-page summary' },
+  },
+  {
+    id: 'press',
+    title: 'Press',
+    lead: 'Interviews, comment on orbital debris and Mars settlement, and permission to use our images and simulator footage.',
+    include: ['Outlet and deadline', 'The story or question', 'Format: written, audio or video'],
+    subject: `Press request: ${SITE_NAME}`,
+    extra: { href: '/blog', label: 'Recent analysis on the blog' },
+  },
+  {
+    id: 'grants',
+    title: 'Grants & partners',
+    lead: 'Grant programs, university and lab partners, test facilities, and rover or payload partners.',
+    include: ['Program or organization', 'Relevant solicitation or topic number', 'Timeline and partnering role'],
+    subject: `Grant / partnership: ${SITE_NAME}`,
+    extra: { href: '/pitch#grants', label: 'Programs we are a fit for' },
+  },
+];
+
+const topics = [
+  { value: 'investors', label: 'Investment' },
+  { value: 'press', label: 'Press / media' },
+  { value: 'grants', label: 'Grants & research partnerships' },
+  { value: 'directory', label: 'Space economy directory listing' },
+  { value: 'general', label: 'Something else' },
+];
+
+const contactData = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: `Contact ${SITE_NAME}`,
+  url: new URL('/contact', Astro.site ?? Astro.url).href,
+  mainEntity: {
+    '@type': 'Organization',
+    name: SITE_NAME,
+    email: SITE_EMAIL,
+    contactPoint: tracks.map((track) => ({ '@type': 'ContactPoint', contactType: track.title, email: SITE_EMAIL })),
+  },
+};
+---
+
+<BaseLayout
+  title="Contact: Investors, Press and Grants"
+  description={`Contact ${SITE_NAME} about investment, press interviews, grants and research partnerships in Mars construction, satellite operations and space debris.`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(contactData)} />
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h1 class="text-3xl sm:text-4xl font-display font-bold mb-4">Contact</h1>
+    <p class="text-lg text-gray-600 max-w-2xl mb-10">
+      Pick the route that fits and we'll get back to you within two business days. Everything reaches
+      the team at <a href={`mailto:${SITE_EMAIL}`} class="text-mars-red underline hover:no-underline">{SITE_EMAIL}</a>.
+    </p>
+
+    <div class="grid gap-6 md:grid-cols-3 mb-16">
+      {tracks.map((track) => (
+        <section id={track.id} aria-labelledby={`${track.id}-title`} class="scroll-mt-24 flex flex-col rounded-lg border border-gwern-border bg-gray-50 p-6">
+          <h2 id={`${track.id}-title`} class="text-xl font-display font-semibold mb-2">{track.title}</h2>
+          <p class="text-gray-600 mb-4">{track.lead}</p>
+          <p class="text-sm font-semibold text-gray-700 mb-2">Helpful to include</p>
+          <ul class="text-sm text-gray-600 list-disc pl-5 space-y-1 mb-6">
+            {track.include.map((item) => <li>{item}</li>)}
+          </ul>
+          <div class="mt-auto space-y-3">
+            <a href={mailto(track.subject)} class="block text-center rounded-lg bg-mars-red px-4 py-2 font-display font-medium text-white hover:bg-mars-rust transition-colors">Email {track.title.toLowerCase()}</a>
+            <a href={`?topic=${track.id}#message`} data-topic={track.id} class="block text-center text-sm text-mars-red underline hover:no-underline">Use the form instead</a>
+            <a href={track.extra.href} class="block text-center text-sm text-gray-600 hover:text-mars-red">{track.extra.label} →</a>
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <section id="message" aria-labelledby="form-title" class="scroll-mt-24 max-w-2xl">
+      <h2 id="form-title" class="text-2xl font-display font-semibold mb-2">Send a message</h2>
+      <p class="text-gray-600 mb-6">Use this for anything else too, including collaboration ideas and directory corrections.</p>
+      <form name="contact" method="POST" action="/thanks?form=contact" data-netlify="true" netlify-honeypot="company-website" class="space-y-5">
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="hidden"><label>Leave this empty <input name="company-website" tabindex="-1" autocomplete="off" /></label></p>
+        <div>
+          <label for="contact-topic" class="block font-medium mb-1">Topic</label>
+          <select id="contact-topic" name="topic" required class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 focus:border-mars-red focus:outline-none">
+            {topics.map((topic) => <option value={topic.value}>{topic.label}</option>)}
+          </select>
+        </div>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="contact-name" class="block font-medium mb-1">Name</label>
+            <input id="contact-name" name="name" required autocomplete="name" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 focus:border-mars-red focus:outline-none" />
+          </div>
+          <div>
+            <label for="contact-email" class="block font-medium mb-1">Email</label>
+            <input id="contact-email" name="email" type="email" required autocomplete="email" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 focus:border-mars-red focus:outline-none" />
+          </div>
+        </div>
+        <div>
+          <label for="contact-org" class="block font-medium mb-1">Organization <span class="text-gray-500 font-normal">(optional)</span></label>
+          <input id="contact-org" name="organization" autocomplete="organization" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 focus:border-mars-red focus:outline-none" />
+        </div>
+        <div>
+          <label for="contact-message" class="block font-medium mb-1">Message</label>
+          <textarea id="contact-message" name="message" rows="6" required class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 focus:border-mars-red focus:outline-none"></textarea>
+        </div>
+        <label class="flex items-start gap-2 text-sm text-gray-600">
+          <input type="checkbox" name="newsletter" value="yes" class="mt-1" />
+          <span>Also send me the monthly research update.</span>
+        </label>
+        <button type="submit" class="rounded-lg bg-mars-red px-6 py-3 font-display font-medium text-white hover:bg-mars-rust transition-colors">Send message</button>
+        <p class="text-xs text-gray-500">We use your details only to reply. See the <a href="/privacy" class="underline">privacy policy</a>.</p>
+      </form>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  // Preselect the topic from ?topic= or from the track the visitor clicked.
+  const select = document.querySelector<HTMLSelectElement>('#contact-topic');
+  const choose = (topic: string | null) => {
+    if (select && topic && [...select.options].some((option) => option.value === topic)) select.value = topic;
+  };
+  choose(new URLSearchParams(location.search).get('topic'));
+  document.querySelectorAll<HTMLAnchorElement>('[data-topic]').forEach((link) =>
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      choose(link.dataset.topic ?? null);
+      document.getElementById('message')?.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('contact-name')?.focus({ preventScroll: true });
+    }),
+  );
+</script>

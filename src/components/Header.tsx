@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({
             <a
               href="/"
               className="flex items-center space-x-3 text-xl font-display font-bold text-mars-red hover:text-mars-rust transition-colors duration-200"
-              aria-label="Mars Population Explorer - Home"
+              aria-label="Population Mars - Home"
             >
               <svg
                 className="w-8 h-8"
@@ -105,7 +105,7 @@ const Header: React.FC<HeaderProps> = ({
                   opacity="0.6"
                 />
               </svg>
-              <span className="hidden sm:block">Mars Explorer</span>
+              <span className="hidden sm:block">Population Mars</span>
             </a>
           </div>
 

@@ -3,6 +3,11 @@ export type SpaceCompany = {
   url: string;
   summary: string;
   projectSource?: string;
+  // Referral or affiliate link, shown as a disclosed partner link next to the company site.
+  partner?: {
+    url: string;
+    label: string;
+  };
   update?: {
     date: string;
     label: string;

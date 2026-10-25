@@ -1,0 +1,200 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { channels, references, roadmap } from '../data/solarPaving';
+import { companyCount } from '../data/spaceEconomy';
+import { ORBITFLEET_URL, SITE_EMAIL, SITE_NAME, mailto } from '../data/site';
+
+const refUrl = (id: string) => references.find((reference) => reference.id === id)?.url;
+
+const built = [
+  { value: '3', label: 'live OrbitFleet consoles: Earth fleet, Mars relay, space debris', href: '/orbit' },
+  { value: '27', label: 'candidate Mars sites in the 3D settlement atlas', href: '/' },
+  { value: String(companyCount), label: 'organizations mapped in the space economy directory', href: '/space-economy' },
+  { value: 'V1', label: 'solar paving test head: design, experiment plan and kill criteria published', href: '/construction/sintering-bricks' },
+];
+
+const programs = [
+  {
+    name: 'Orbital operations software',
+    summary:
+      'OrbitFleet is a fleet-operations control plane that closes the loop from telemetry to a human-approved, validated response and a measured outcome. The same engine runs an Earth constellation, a proposed Mars relay network with light-time delay, and debris-mitigation scenarios such as laser ablation and collision buffers.',
+    next: 'Physically consistent maneuvers and service models, evidence-quality exports, and three-body (Earth–Moon) trajectory scenarios.',
+    href: ORBITFLEET_URL,
+    cta: 'Open the simulators',
+  },
+  {
+    name: 'Solar regolith paving',
+    summary:
+      'Landing plumes sandblast hardware at hundreds of meters per second. We are developing a solar concentrator that melts local rock into crystalline pavement for landing pads and roads, aiming for 5 cm per pass with no imported binder, and testing it first with basalt and Mars simulant on Earth.',
+    next: 'V1 bench campaign: melt depth, foaming, filler loading and cooling-rate experiments, each with a published kill criterion.',
+    href: '/construction/sintering-bricks',
+    cta: 'Read the technical plan',
+  },
+];
+
+const pitchData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: `${SITE_NAME}: investor and grant summary`,
+  url: new URL('/pitch', Astro.site ?? Astro.url).href,
+  about: { '@type': 'Organization', name: SITE_NAME, email: SITE_EMAIL },
+};
+---
+
+<BaseLayout
+  title="Investor & Grant Summary"
+  description={`One-page summary of ${SITE_NAME} for investors and grant programs: orbital operations software, space-debris mitigation and solar regolith paving for Moon and Mars landing pads.`}
+  className="pitch-page"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(pitchData)} />
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14 print:py-0">
+    <header class="mb-10 border-b border-gwern-border pb-8">
+      <p class="text-sm font-display uppercase tracking-wider text-mars-red mb-3">Investor &amp; grant summary · {SITE_NAME}</p>
+      <h1 class="text-3xl sm:text-4xl font-display font-bold mb-4">Infrastructure for a population on Mars, proven on problems we can measure today</h1>
+      <p class="text-lg text-gray-600">
+        We build the operations software and surface construction methods a settlement needs first, and
+        we test them now on Earth: satellite fleet operations, space-debris mitigation, and paving made
+        from local rock.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3 print:hidden">
+        <a href={mailto(`Investor inquiry: ${SITE_NAME}`)} class="btn-primary">Request the deck</a>
+        <a href={mailto(`Grant / partnership: ${SITE_NAME}`)} class="btn-secondary">Discuss a grant or partnership</a>
+        <button type="button" onclick="window.print()" class="btn-ghost border border-gwern-border">Print / save as PDF</button>
+      </div>
+    </header>
+
+    <section class="mb-10" aria-labelledby="problem">
+      <h2 id="problem" class="pitch-h2">The problem</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <p class="text-gray-700">
+          <strong>In orbit:</strong> low Earth orbit is getting crowded and contested. Operators must decide
+          quickly whether to maneuver, reroute or wait, often with uncertain data. Tools that show
+          what an action actually changed, and that keep a human accountable, are scarce, and debris
+          mitigation is still mostly studied rather than practiced.
+        </p>
+        <p class="text-gray-700">
+          <strong>On the surface:</strong> every landing on the Moon or Mars blasts regolith outward. Apollo
+          12's plume pitted Surveyor 3 from 155 m away, and Phoenix eroded 5–18 cm of Martian soil.
+          Repeated landings at one base need hard pads, and shipping binder or pavers from Earth is not
+          viable.
+        </p>
+      </div>
+    </section>
+
+    <section class="mb-10" aria-labelledby="built">
+      <h2 id="built" class="pitch-h2">What exists today</h2>
+      <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {built.map((item) => (
+          <li class="rounded-lg border border-gwern-border bg-gray-50 p-4">
+            <a href={item.href} class="block">
+              <span class="block text-3xl font-display font-bold text-mars-red">{item.value}</span>
+              <span class="text-sm text-gray-600">{item.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-4 text-sm text-gray-600">Plus published analysis of real conjunctions and laser-ablation debris removal on the <a href="/blog" class="text-mars-red underline">blog</a>.</p>
+    </section>
+
+    <section class="mb-10" aria-labelledby="programs">
+      <h2 id="programs" class="pitch-h2">Two programs, one approach</h2>
+      <div class="grid gap-6 md:grid-cols-2">
+        {programs.map((program) => (
+          <div class="rounded-lg border border-gwern-border p-5">
+            <h3 class="font-display font-semibold text-lg mb-2">{program.name}</h3>
+            <p class="text-gray-700 mb-3">{program.summary}</p>
+            <p class="text-sm text-gray-600 mb-3"><strong>Next:</strong> {program.next}</p>
+            <a href={program.href} class="text-sm font-semibold text-mars-red underline hover:no-underline print:hidden">{program.cta} →</a>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb-10" aria-labelledby="market">
+      <h2 id="market" class="pitch-h2">Why now</h2>
+      <ul class="list-disc pl-5 space-y-2 text-gray-700">
+        <li>The satellite industry earned about $303 billion in 2025, yet servicing, life extension, space situational awareness and debris removal were only about $0.5 billion of it (<a href="https://sia.org/wp-content/uploads/2026/05/SSIR26-One-Pager-Exec-Summary-FINAL.pdf.pdf" class="text-mars-red underline">SIA/BryceTech</a>). That gap is where operations and debris tools fit.</li>
+        <li>Close approaches between military and commercial satellites are now public news, which raises demand for transparent, inspectable decision tools (<a href="/blog/the-price-of-a-close-approach" class="text-mars-red underline">our analysis</a>).</li>
+        <li>NASA and ESA programs are funding regolith construction for landing pads and roads, the problem our paving work targets.</li>
+      </ul>
+    </section>
+
+    <section class="mb-10" aria-labelledby="milestones">
+      <h2 id="milestones" class="pitch-h2">Milestones and funding</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="border-b-2 border-gwern-border">
+            <tr><th class="py-2 pr-4">Stage</th><th class="py-2 pr-4">What it proves</th><th class="py-2">Estimated funding</th></tr>
+          </thead>
+          <tbody class="divide-y divide-gwern-border">
+            <tr>
+              <td class="py-3 pr-4 align-top font-semibold">Now: research sprint</td>
+              <td class="py-3 pr-4 align-top text-gray-700">Three-body trajectory and debris-mitigation simulations; first paving bench coupons.</td>
+              <td class="py-3 align-top whitespace-nowrap"><a href="/support" class="text-mars-red underline">$2,500</a> (reader-funded)</td>
+            </tr>
+            {roadmap.map((stage) => (
+              <tr>
+                <td class="py-3 pr-4 align-top font-semibold">Paving {stage.v}: {stage.title}</td>
+                <td class="py-3 pr-4 align-top text-gray-700">{stage.proves}</td>
+                <td class="py-3 align-top text-gray-700">{stage.needs.match(/\$[\d.]+[kM]?(?:–[\d.]+[kM])?\+?/)?.[0] ?? 'To be scoped'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-3 text-xs text-gray-500">Funding figures are estimates. Each paving stage depends on the previous one passing its published exit criteria.</p>
+    </section>
+
+    <section id="grants" class="mb-10 scroll-mt-24" aria-labelledby="grants-title">
+      <h2 id="grants-title" class="pitch-h2">Grant and program fit</h2>
+      <p class="text-gray-700 mb-4">Programs whose published topics match our work. Listing a program here does not imply it has funded or endorsed us.</p>
+      <ul class="grid gap-4 sm:grid-cols-2">
+        {channels.map((channel) => (
+          <li class="rounded-lg border border-gwern-border p-4">
+            <h3 class="font-display font-semibold mb-1">
+              {refUrl(channel.ref) ? <a href={refUrl(channel.ref)} class="hover:text-mars-red">{channel.name}</a> : channel.name}
+            </h3>
+            <p class="text-sm text-gray-600">{channel.note}</p>
+          </li>
+        ))}
+        <li class="rounded-lg border border-gwern-border p-4">
+          <h3 class="font-display font-semibold mb-1">Space safety and debris programs</h3>
+          <p class="text-sm text-gray-600">Space situational awareness, debris mitigation and education calls, where OrbitFleet's open, inspectable scenarios serve as a research and teaching platform.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="mb-10" aria-labelledby="ask">
+      <h2 id="ask" class="pitch-h2">What we're looking for</h2>
+      <ul class="grid gap-4 sm:grid-cols-3">
+        <li class="rounded-lg bg-gray-50 border border-gwern-border p-4"><strong class="block font-display mb-1">Investors</strong><span class="text-sm text-gray-600">Pre-seed capital for the paving V1–V2 path and OrbitFleet product development. Deck and model on request.</span></li>
+        <li class="rounded-lg bg-gray-50 border border-gwern-border p-4"><strong class="block font-display mb-1">Grant partners</strong><span class="text-sm text-gray-600">Small-business or university partners for SBIR/STTR, and program sponsors for V2 flight-like testing.</span></li>
+        <li class="rounded-lg bg-gray-50 border border-gwern-border p-4"><strong class="block font-display mb-1">Technical partners</strong><span class="text-sm text-gray-600">Optics and ceramics reviewers, vacuum or solar-furnace time, and a rover platform for a paving payload.</span></li>
+      </ul>
+    </section>
+
+    <footer class="border-t border-gwern-border pt-6">
+      <p class="font-display font-semibold mb-1">Contact</p>
+      <p class="text-gray-700"><a href={`mailto:${SITE_EMAIL}`} class="text-mars-red underline">{SITE_EMAIL}</a> · populationmars.com/contact</p>
+      <p class="mt-4 text-xs text-gray-500">This summary is for information only and is not an offer to sell or a solicitation of an offer to buy any security.</p>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .pitch-h2 {
+    font-family: theme('fontFamily.display');
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  @media print {
+    :global(.pitch-page header.sticky),
+    :global(.pitch-page footer.bg-gray-50) {
+      display: none;
+    }
+    :global(.pitch-page) {
+      background: #fff;
+    }
+  }
+</style>

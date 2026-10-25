@@ -5,18 +5,25 @@ import { companyCount, recentFunding, spaceCategories } from '../../data/spaceEc
 const updated = 'October 17, 2026';
 const featuredFunding = recentFunding.slice(0, 8);
 const moreFunding = recentFunding.slice(8);
+const partnerCount = spaceCategories.reduce((total, category) => total + category.companies.filter((company) => company.partner).length, 0);
+const interests = [
+  { value: 'listing', label: 'Free editorial listing' },
+  { value: 'correction', label: 'Update or correct an entry' },
+  { value: 'affiliate', label: 'Affiliate or referral partnership' },
+  { value: 'featured', label: 'Featured profile / sponsorship' },
+];
 const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 ---
 
 <BaseLayout
-  title="Space Economy Directory | Mars Population"
+  title="Space Economy Directory | Population Mars"
   description={`A curated directory of ${companyCount} companies and investors across launch, satellites, connectivity, Earth data, lunar systems, orbital infrastructure, and the wider space economy. Updated ${updated}.`}
   showDonationCTA={false}
   className="space-directory-page"
 >
   <div class="directory-shell">
     <section class="hero" aria-labelledby="page-title">
-      <div class="hero-topline"><span class="signal-dot" aria-hidden="true"></span> Mars Population / Field Guide <span class="edition">Snapshot · {updated}</span></div>
+      <div class="hero-topline"><span class="signal-dot" aria-hidden="true"></span> Population Mars / Field Guide <span class="edition">Snapshot · {updated}</span></div>
       <div class="hero-content">
         <div>
           <p class="overline">The commercial space economy</p>
@@ -41,6 +48,11 @@ const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').re
       <span class="signal-note-index">Under the radar / 01</span>
       <div><h2 id="signal-note-title">Spectrum is space infrastructure.</h2><p>Grain Management is a communications infrastructure investor, not a satellite manufacturer. Its nationwide 800 MHz licenses became a space-economy asset when it <a href="https://www.prnewswire.com/news-releases/grain-management-announces-definitive-agreement-to-sell-nationwide-800-mhz-spectrum-portfolio-to-spacex-302902974.html" target="_blank" rel="noopener noreferrer">announced an agreement</a> to sell the portfolio to SpaceX for direct-to-device service in October 2026. The agreement is not yet a completed sale.</p></div>
       <a class="signal-note-link" href="#grain-management">Grain Management profile <span aria-hidden="true">↗</span></a>
+    </aside>
+
+    <aside class="partner-strip" aria-label="For companies">
+      <p><strong>Building in space?</strong> Listings are free and editorial. Companies with referral or affiliate programs can also partner with us, with every partner link clearly disclosed.</p>
+      <a href="#get-listed">List or partner with us <span aria-hidden="true">→</span></a>
     </aside>
 
     <section class="funding" aria-labelledby="funding-title">
@@ -117,6 +129,7 @@ const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').re
                     {company.update && <p class="company-update"><strong>{company.update.label}</strong><br />{company.update.status}</p>}
                     <div class="company-links">
                       <a href={company.url} target="_blank" rel="noopener noreferrer">Company site ↗</a>
+                      {company.partner && <a class="partner-link" href={company.partner.url} target="_blank" rel="sponsored noopener">{company.partner.label} ↗ <span class="partner-badge">Partner link</span></a>}
                       {company.projectSource && <a href={company.projectSource} target="_blank" rel="noopener noreferrer">Project source ↗</a>}
                       {company.update && <a href={company.update.source} target="_blank" rel="noopener noreferrer">Update source ↗</a>}
                     </div>
@@ -130,11 +143,61 @@ const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').re
       <p class="no-results" id="no-results" hidden>No matches. Try another term or choose all sectors.</p>
     </section>
 
+    <section class="get-listed" id="get-listed" aria-labelledby="get-listed-title">
+      <div class="get-listed-intro">
+        <p class="overline">For companies, investors and affiliates</p>
+        <h2 id="get-listed-title">Get listed. Partner with us.</h2>
+        <p>Readers here are founders, engineers, investors and students following the commercial space economy. Put your company in front of them and help fund independent Mars research at the same time.</p>
+      </div>
+      <div class="partner-options">
+        <article>
+          <span class="option-index">01 / Free</span>
+          <h3>Editorial listing</h3>
+          <p>Space-specific companies and investors can request a listing or a correction. We verify against first-party sources and write the summary ourselves. Inclusion is never paid.</p>
+        </article>
+        <article>
+          <span class="option-index">02 / Affiliates</span>
+          <h3>Referral &amp; affiliate partners</h3>
+          <p>Run a referral or affiliate program for hardware, data, launch brokerage, software or courses? Listed companies can add a partner link to their entry. Every partner link is labeled, and commissions fund our open research.</p>
+        </article>
+        <article>
+          <span class="option-index">03 / Sponsors</span>
+          <h3>Featured profiles</h3>
+          <p>Sponsor a sector, a funding roundup or an expanded profile with product links and imagery. Sponsored placements are marked and kept separate from editorial ranking.</p>
+        </article>
+      </div>
+      <form class="listing-form" name="listing" method="POST" action="/thanks?form=listing" data-netlify="true" netlify-honeypot="company-website-confirm">
+        <input type="hidden" name="form-name" value="listing" />
+        <p hidden><label>Leave this empty <input name="company-website-confirm" tabindex="-1" autocomplete="off" /></label></p>
+        <label>Organization<input name="organization" required autocomplete="organization" /></label>
+        <label>Website<input name="website" type="url" required placeholder="https://" /></label>
+        <label>Sector
+          <select name="sector" required>
+            {spaceCategories.map((category) => <option value={category.id}>{category.title}</option>)}
+            <option value="other">Other / not sure</option>
+          </select>
+        </label>
+        <label>I'm interested in
+          <select name="interest" required>
+            {interests.map((interest) => <option value={interest.value}>{interest.label}</option>)}
+          </select>
+        </label>
+        <label>Your name<input name="name" required autocomplete="name" /></label>
+        <label>Email<input name="email" type="email" required autocomplete="email" /></label>
+        <label class="wide">What should readers know? Include affiliate program details if relevant.<textarea name="notes" rows="4"></textarea></label>
+        <div class="wide form-foot">
+          <button type="submit">Submit for review <span aria-hidden="true">→</span></button>
+          <p>We reply within a week. Questions: <a href="/contact?topic=directory#message">contact us</a>.</p>
+        </div>
+      </form>
+    </section>
+
     <section class="method" aria-labelledby="method-title">
       <div><p class="overline">Editorial notes</p><h2 id="method-title">How to read this map</h2></div>
       <div>
         <p>Each organization appears once in its primary category, even when it spans several. SpaceX, for example, appears under launch although Starlink also belongs in connectivity. Grain Management appears under connectivity because spectrum ownership is central to direct-to-device service.</p>
         <p>Funding figures are announced round sizes, and some announcements combine equity with debt or credit facilities. The date is the public announcement date. Company descriptions and status notes can change; use the linked first-party source for current details.</p>
+        <p>Partner links are marked "Partner link" and use sponsored link attributes. {partnerCount > 0 ? `${partnerCount} ${partnerCount === 1 ? 'entry currently has one' : 'entries currently have one'}.` : 'No entries have one yet.'} We may earn a commission when you buy through them, at no extra cost to you. Partnerships never affect whether or how a company is listed.</p>
         <p>Coverage is global but selective, with an emphasis on firms building or financing space-specific products and services. Government agencies, universities, and most downstream customers are outside this edition.</p>
       </div>
     </section>
@@ -298,8 +361,32 @@ const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').re
   a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid #bf603e; outline-offset: 4px; }
   [hidden] { display: none !important; }
   @keyframes reveal { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+  .partner-strip { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem; width: min(82rem, calc(100% - 3rem)); margin: 0 auto; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+  .partner-strip p { margin: 0; max-width: 52rem; color: #4a5853; font-size: .88rem; line-height: 1.6; }
+  .partner-strip p strong { color: var(--ink); }
+  .partner-strip a, .get-listed button { display: inline-flex; gap: .8rem; align-items: center; padding: .75rem 1rem; border: 1px solid var(--ink); background: var(--ink); color: #f3f0e9; font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-decoration: none; text-transform: uppercase; white-space: nowrap; cursor: pointer; transition: background 150ms, border-color 150ms; }
+  .partner-strip a:hover, .get-listed button:hover { background: var(--accent); border-color: var(--accent); }
+  .partner-link { color: #a65034 !important; }
+  .partner-badge { margin-left: .3rem; padding: .1rem .3rem; border: 1px solid #d9a58f; color: #a65034; font-size: .55rem; letter-spacing: .08em; }
+  .get-listed { width: min(82rem, calc(100% - 3rem)); margin: 0 auto; padding: 4.5rem 0; border-top: 1px solid var(--line); scroll-margin-top: 5rem; }
+  .get-listed-intro { max-width: 46rem; margin-bottom: 2.5rem; }
+  .get-listed-intro h2 { margin: 0 0 1rem; color: var(--ink); font-size: clamp(2.4rem, 4vw, 4rem); letter-spacing: -.05em; line-height: 1; }
+  .get-listed-intro p:not(.overline) { color: #56645c; font-size: .98rem; line-height: 1.7; }
+  .partner-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin-bottom: 2.5rem; background: var(--line); border: 1px solid var(--line); }
+  .partner-options article { padding: 1.4rem; background: #f7f5ef; }
+  .option-index { color: var(--accent); font: 600 .62rem/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .12em; text-transform: uppercase; }
+  .partner-options h3 { margin: .9rem 0 .5rem; color: var(--ink); font-family: Georgia, 'Times New Roman', serif; font-size: 1.45rem; font-weight: 400; letter-spacing: -.03em; }
+  .partner-options p { margin: 0; color: #5d6b60; font-size: .86rem; line-height: 1.65; }
+  .listing-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.5rem; max-width: 56rem; }
+  .listing-form label { display: flex; flex-direction: column; gap: .4rem; color: #3d4b46; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+  .listing-form input, .listing-form select, .listing-form textarea { padding: .7rem .8rem; border: 1px solid #c6cbc0; background: #fffdf8; color: var(--ink); font: 400 .95rem/1.4 inherit; letter-spacing: 0; text-transform: none; }
+  .listing-form input:focus, .listing-form select:focus, .listing-form textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .listing-form .wide { grid-column: 1 / -1; }
+  .form-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
+  .form-foot p { margin: 0; color: var(--muted); font-size: .82rem; }
+  .form-foot a { color: #a65034; }
   @media (max-width: 1050px) { .funding-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .company-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .hero-content { grid-template-columns: 1fr 12rem; } .signal-note { grid-template-columns: 8rem 1fr; } .signal-note-link { grid-column: 2; } }
-  @media (max-width: 730px) { .hero-content { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 0; } .hero-aside { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; border: 0; padding: 0; } .hero-aside p { display: block; } .hero-aside strong { display: block; font-size: 1.8rem; } .hero-aside p span { font-size: .6rem; } .hero-foot span:nth-child(2) { display: none; } .method { grid-template-columns: 1fr; gap: 1.5rem; } .signal-note { grid-template-columns: 1fr; gap: .8rem; } .signal-note-link { grid-column: 1; margin-top: .35rem; } .section-heading { display: block; } .section-heading > p { margin-top: 1.3rem; } .company-grid { grid-template-columns: 1fr; } .category-heading { grid-template-columns: 1fr auto; gap: .5rem; } .category-index { grid-column: 1 / -1; } .category-total { text-align: right; } .directory { padding-top: 4rem; } .filter-bar { top: 4rem; } }
-  @media (max-width: 530px) { .hero { padding-inline: 1rem; } .hero-topline, .hero-foot { font-size: .57rem; } .hero-topline { flex-wrap: wrap; } .edition { width: 100%; margin: .3rem 0 0 1.2rem; } h1 { font-size: clamp(2.9rem, 12vw, 4.3rem); } .intro-band, .signal-note, .funding, .directory, .method { width: min(100% - 2rem, 82rem); } .intro-band { padding: 3rem 0; } .funding-grid { grid-template-columns: 1fr; } .funding-card { min-height: 15rem; } .category-heading { grid-template-columns: 1fr; } .category-total { text-align: left; } .filter-bar { margin: 0 -.45rem; padding: .65rem; } .search-wrap kbd { display: none; } }
+  @media (max-width: 730px) { .hero-content { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 0; } .hero-aside { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; border: 0; padding: 0; } .hero-aside p { display: block; } .hero-aside strong { display: block; font-size: 1.8rem; } .hero-aside p span { font-size: .6rem; } .hero-foot span:nth-child(2) { display: none; } .method { grid-template-columns: 1fr; gap: 1.5rem; } .partner-options, .listing-form { grid-template-columns: 1fr; } .signal-note { grid-template-columns: 1fr; gap: .8rem; } .signal-note-link { grid-column: 1; margin-top: .35rem; } .section-heading { display: block; } .section-heading > p { margin-top: 1.3rem; } .company-grid { grid-template-columns: 1fr; } .category-heading { grid-template-columns: 1fr auto; gap: .5rem; } .category-index { grid-column: 1 / -1; } .category-total { text-align: right; } .directory { padding-top: 4rem; } .filter-bar { top: 4rem; } }
+  @media (max-width: 530px) { .hero { padding-inline: 1rem; } .hero-topline, .hero-foot { font-size: .57rem; } .hero-topline { flex-wrap: wrap; } .edition { width: 100%; margin: .3rem 0 0 1.2rem; } h1 { font-size: clamp(2.9rem, 12vw, 4.3rem); } .intro-band, .signal-note, .partner-strip, .funding, .directory, .get-listed, .method { width: min(100% - 2rem, 82rem); } .intro-band { padding: 3rem 0; } .funding-grid { grid-template-columns: 1fr; } .funding-card { min-height: 15rem; } .category-heading { grid-template-columns: 1fr; } .category-total { text-align: left; } .filter-bar { margin: 0 -.45rem; padding: .65rem; } .search-wrap kbd { display: none; } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>

@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
+import { ORBITFLEET_URL, SITE_EMAIL, SITE_NAME } from '../data/site';
+
+const projects = [
+  {
+    title: 'Mars settlement atlas',
+    href: '/',
+    body: 'An interactive 3D globe of 27 candidate settlement and science sites, each with terrain, water-ice, resource and mission context.',
+  },
+  {
+    title: 'Solar regolith paving',
+    href: '/construction/sintering-bricks',
+    body: 'Open hardware research into melting local rock with concentrated sunlight to build landing pads and roads without imported binder.',
+  },
+  {
+    title: 'OrbitFleet simulators',
+    href: '/orbit',
+    body: 'Browser-based operations consoles for an Earth satellite fleet, a proposed Mars relay network and space-debris mitigation.',
+  },
+  {
+    title: 'Space economy directory',
+    href: '/space-economy',
+    body: 'A curated, sourced map of the companies and investors building launch, satellites, orbital infrastructure and lunar systems.',
+  },
+];
+
+const aboutData = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: `About ${SITE_NAME}`,
+  url: new URL('/about', Astro.site ?? Astro.url).href,
+  mainEntity: { '@type': 'Organization', name: SITE_NAME, email: SITE_EMAIL },
+};
+---
+
+<BaseLayout
+  title="About"
+  description={`${SITE_NAME} is an independent research project working on what it takes to settle Mars: landing-site analysis, regolith construction, and open simulators for satellite and debris operations.`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(aboutData)} />
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <p class="text-sm font-display uppercase tracking-wider text-mars-red mb-3">About</p>
+    <h1 class="text-3xl sm:text-4xl font-display font-bold mb-6">The work between here and a population on Mars</h1>
+
+    <div class="prose prose-lg max-w-none prose-a:text-mars-red hover:prose-a:text-mars-rust">
+      <p class="lead">
+        {SITE_NAME} is an independent research project. We study the practical problems a permanent
+        settlement on Mars would have to solve first, and we publish the tools, data and reasoning so
+        anyone can check them and build on them.
+      </p>
+
+      <p>
+        The population counter in the header reads zero. Changing that depends on unglamorous
+        infrastructure: somewhere safe to land, surfaces that don't blast dust into every machine,
+        communication links that keep working when Earth is twenty minutes away, and orbits that
+        stay usable as more hardware is launched. That is where our work sits.
+      </p>
+
+      <h2>What we work on</h2>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 my-8">
+      {projects.map((project) => (
+        <a href={project.href} class="block rounded-lg border border-gwern-border bg-gray-50 p-5 hover:border-mars-red transition-colors">
+          <h3 class="font-display font-semibold text-lg mb-2">{project.title}</h3>
+          <p class="text-gray-600 text-sm">{project.body}</p>
+        </a>
+      ))}
+    </div>
+
+    <div class="prose prose-lg max-w-none prose-a:text-mars-red hover:prose-a:text-mars-rust">
+      <h2>How we work</h2>
+      <ul>
+        <li><strong>Open by default.</strong> Experiment plans, kill criteria, simulator assumptions and results are published, including the ones that fail.</li>
+        <li><strong>Label the evidence.</strong> Every view says whether its data are historical, proposed, simulated or synthetic. Our simulators are educational and engineering tools, not operational collision warnings or mission telemetry.</li>
+        <li><strong>Earth first, then Mars.</strong> Most hardware and software is tested on problems we can measure today, such as satellite operations, debris and basalt melting, before it is extended to Mars.</li>
+        <li><strong>Cite sources.</strong> Articles and the directory link to first-party sources so readers can verify claims.</li>
+      </ul>
+
+      <h2>Funding and independence</h2>
+      <p>
+        The project is funded by individual supporters and is seeking grants and aligned investment for
+        the hardware stages that need it. Supporters do not influence editorial content or research
+        conclusions. Read the <a href="/pitch">investor and grant summary</a>, or
+        <a href="/support">support the current research sprint</a>.
+      </p>
+
+      <h2>Get in touch</h2>
+      <p>
+        Investors, journalists, grant officers and potential collaborators can reach us through the
+        <a href="/contact">contact page</a> or at <a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>.
+        The simulators run at <a href={ORBITFLEET_URL}>orbitfleet.populationmars.com</a>.
+      </p>
+    </div>
+
+    <div class="mt-12">
+      <NewsletterSignup source="about" tone="panel" />
+    </div>
+  </div>
+</BaseLayout>

@@ -1,49 +1,176 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
+import { budget, customAmountLink, fundingGoal, monthlyTiers, oneTimeTiers } from '../data/funding';
+import { SITE_NAME } from '../data/site';
+
+const usd = (amount: number) => `$${amount.toLocaleString('en-US')}`;
+const percent = Math.min(100, Math.round((fundingGoal.raised / fundingGoal.goal) * 100));
+const remaining = Math.max(0, fundingGoal.goal - fundingGoal.raised);
+const updated = new Date(`${fundingGoal.updated}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const budgetTotal = budget.reduce((total, line) => total + line.amount, 0);
+if (budgetTotal !== fundingGoal.goal) throw new Error(`Support budget sums to ${budgetTotal}, expected ${fundingGoal.goal}`);
+
+const donateData = {
+  '@context': 'https://schema.org',
+  '@type': 'DonateAction',
+  name: `Support ${SITE_NAME} research`,
+  recipient: { '@type': 'Organization', name: SITE_NAME },
+  target: customAmountLink,
+};
 ---
 
 <BaseLayout
-  title="Support the Research | Mars Explorer"
-  description="Help fund hands-on Mars in-situ resource utilization research, including regolith brick sintering with MGS-1 simulant."
+  title="Support the Research"
+  description={`Help ${SITE_NAME} reach its ${usd(fundingGoal.goal)} goal for three-body trajectory simulations, space-debris mitigation studies and solar regolith paving tests. One-time and monthly giving.`}
   showDonationCTA={false}
 >
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <h1 class="text-3xl sm:text-4xl font-display font-bold mb-6">Support the Research</h1>
-
-    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
-      Mars Explorer is an independent project combining interactive tools, like the 3D globe of
-      candidate settlement sites, with hands-on in-situ resource utilization experiments, such as
-      our <a href="/construction/sintering-bricks" class="text-mars-red dark:text-mars-orange underline hover:no-underline">solar regolith paving project</a>.
+  <script type="application/ld+json" set:html={JSON.stringify(donateData)} />
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <p class="text-sm font-display uppercase tracking-wider text-mars-red mb-3">{fundingGoal.campaign}</p>
+    <h1 class="text-3xl sm:text-4xl font-display font-bold mb-6">Fund the next {usd(fundingGoal.goal)} of open Mars and orbital research</h1>
+    <p class="text-lg text-gray-600 max-w-3xl mb-8">
+      {SITE_NAME} is independent and reader-funded. This sprint pays for trajectory and debris
+      simulations, the first solar paving bench tests, and publishing every result openly so anyone
+      can check and reuse it.
     </p>
 
-    <p class="text-gray-600 dark:text-gray-300 mb-6">
-      Your support pays for regolith simulant, mirror hardware, instrumentation, and the time to
-      document everything openly so anyone can build on the results.
+    <section aria-labelledby="progress-heading" class="rounded-lg border border-gwern-border bg-gray-50 p-6 mb-12">
+      <h2 id="progress-heading" class="sr-only">Progress toward the goal</h2>
+      <div class="flex flex-wrap items-baseline justify-between gap-2 mb-3">
+        <p class="text-2xl font-display font-bold">{usd(fundingGoal.raised)} <span class="text-base font-normal text-gray-600">raised of {usd(fundingGoal.goal)}</span></p>
+        <p class="text-sm text-gray-600">{percent}% · {usd(remaining)} to go</p>
+      </div>
+      <div
+        class="h-4 w-full overflow-hidden rounded-full bg-gray-200"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax={fundingGoal.goal}
+        aria-valuenow={fundingGoal.raised}
+        aria-valuetext={`${usd(fundingGoal.raised)} of ${usd(fundingGoal.goal)} raised`}
+      >
+        <div class="h-full rounded-full bg-gradient-to-r from-mars-red to-mars-orange" style={`width: ${Math.max(percent, fundingGoal.raised > 0 ? 2 : 0)}%`}></div>
+      </div>
+      <p class="mt-3 text-xs text-gray-500">Updated {updated}. Totals are updated by hand from Stripe.</p>
+    </section>
+
+    <section aria-labelledby="give-heading" class="mb-14">
+      <h2 id="give-heading" class="text-2xl font-display font-semibold mb-4">Choose how to give</h2>
+      <div class="inline-flex rounded-lg border border-gwern-border p-1 mb-6" role="tablist" aria-label="Giving frequency">
+        <button type="button" role="tab" id="tab-once" aria-controls="panel-once" aria-selected="true" class="give-tab rounded-md px-4 py-2 font-display font-medium aria-selected:bg-mars-red aria-selected:text-white">One-time</button>
+        <button type="button" role="tab" id="tab-monthly" aria-controls="panel-monthly" aria-selected="false" class="give-tab rounded-md px-4 py-2 font-display font-medium aria-selected:bg-mars-red aria-selected:text-white">Monthly</button>
+      </div>
+
+      <div id="panel-once" role="tabpanel" aria-labelledby="tab-once">
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {oneTimeTiers.map((tier) => (
+            <a href={tier.link ?? customAmountLink} class="group flex flex-col rounded-lg border-2 border-gwern-border bg-white p-5 hover:border-mars-red transition-colors" data-amount={tier.amount}>
+              <span class="text-xs uppercase tracking-wider text-gray-500">{tier.label}</span>
+              <span class="text-3xl font-display font-bold my-2">{usd(tier.amount)}</span>
+              <span class="text-sm text-gray-600 mb-4">{tier.buys}</span>
+              <span class="mt-auto text-sm font-semibold text-mars-red group-hover:underline">Give {usd(tier.amount)} →</span>
+            </a>
+          ))}
+        </div>
+        <p class="mt-4 text-sm text-gray-600">
+          Prefer a different amount? <a href={customAmountLink} class="text-mars-red underline hover:no-underline">Give any amount</a>.
+          {oneTimeTiers.some((tier) => !tier.link) && ' Checkout opens on Stripe; enter the amount you chose.'}
+        </p>
+      </div>
+
+      <div id="panel-monthly" role="tabpanel" aria-labelledby="tab-monthly" hidden>
+        <div class="grid gap-4 sm:grid-cols-3">
+          {monthlyTiers.map((tier) => (
+            tier.link ? (
+              <a href={tier.link} class="group flex flex-col rounded-lg border-2 border-gwern-border bg-white p-5 hover:border-mars-red transition-colors">
+                <span class="text-xs uppercase tracking-wider text-gray-500">{tier.label}</span>
+                <span class="text-3xl font-display font-bold my-2">{usd(tier.amount)}<span class="text-base font-normal text-gray-500">/mo</span></span>
+                <span class="text-sm text-gray-600 mb-4">{tier.buys}</span>
+                <span class="mt-auto text-sm font-semibold text-mars-red group-hover:underline">Give {usd(tier.amount)} monthly →</span>
+              </a>
+            ) : (
+              <div class="flex flex-col rounded-lg border-2 border-dashed border-gwern-border bg-white p-5">
+                <span class="text-xs uppercase tracking-wider text-gray-500">{tier.label}</span>
+                <span class="text-3xl font-display font-bold my-2">{usd(tier.amount)}<span class="text-base font-normal text-gray-500">/mo</span></span>
+                <span class="text-sm text-gray-600 mb-4">{tier.buys}</span>
+                <span class="mt-auto text-sm font-semibold text-gray-500">Opening soon</span>
+              </div>
+            )
+          ))}
+        </div>
+        <p class="mt-4 text-sm text-gray-600">Monthly gifts can be cancelled any time from your Stripe receipt. {monthlyTiers.some((tier) => !tier.link) && 'Subscribe below to hear when monthly giving opens.'}</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="budget-heading" class="mb-14">
+      <h2 id="budget-heading" class="text-2xl font-display font-semibold mb-2">What {usd(fundingGoal.goal)} buys</h2>
+      <p class="text-gray-600 mb-6">Planned allocation for this sprint. We publish what was spent and what came out of it when the sprint closes.</p>
+      <div class="flex h-3 w-full overflow-hidden rounded-full mb-6" aria-hidden="true">
+        {budget.map((line, index) => (
+          <div style={`width: ${(line.amount / fundingGoal.goal) * 100}%`} class={['bg-mars-red', 'bg-mars-orange', 'bg-mars-rust', 'bg-mars-brown', 'bg-gray-400'][index % 5]}></div>
+        ))}
+      </div>
+      <ol class="divide-y divide-gwern-border border-y border-gwern-border">
+        {budget.map((line, index) => (
+          <li class="grid gap-2 py-5 sm:grid-cols-[1fr_auto]">
+            <div>
+              <h3 class="font-display font-semibold flex items-center gap-2">
+                <span class={`inline-block h-3 w-3 rounded-full ${['bg-mars-red', 'bg-mars-orange', 'bg-mars-rust', 'bg-mars-brown', 'bg-gray-400'][index % 5]}`} aria-hidden="true"></span>
+                {line.item}
+              </h3>
+              <p class="text-gray-600 mt-1">{line.detail}</p>
+            </div>
+            <p class="font-display font-bold text-lg sm:text-right">{usd(line.amount)}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="mt-4 text-sm text-gray-600">
+        See the work these fund: <a href="/orbit" class="text-mars-red underline hover:no-underline">orbit and debris simulators</a> ·
+        <a href="/construction/sintering-bricks" class="text-mars-red underline hover:no-underline">solar regolith paving</a> ·
+        <a href="/blog/the-case-for-attack-satellites" class="text-mars-red underline hover:no-underline">laser-ablation analysis</a>
+      </p>
+    </section>
+
+    <section aria-labelledby="other-heading" class="grid gap-6 md:grid-cols-2 mb-14">
+      <div class="rounded-lg border border-gwern-border bg-gray-50 p-6">
+        <h2 id="other-heading" class="text-xl font-display font-semibold mb-2">Investing or funding a grant?</h2>
+        <p class="text-gray-600 mb-4">Larger hardware stages need equity, grants and test partners. The one-page summary covers the plan, milestones and fit.</p>
+        <a href="/pitch" class="text-mars-red font-semibold underline hover:no-underline">Investor &amp; grant summary →</a>
+      </div>
+      <div class="rounded-lg border border-gwern-border bg-gray-50 p-6">
+        <h2 class="text-xl font-display font-semibold mb-2">Collaborate</h2>
+        <p class="text-gray-600 mb-4">Optics, ceramics and orbital-mechanics reviewers, test facilities and rover partners are as valuable as money.</p>
+        <a href="/contact#grants" class="text-mars-red font-semibold underline hover:no-underline">Get in touch →</a>
+      </div>
+    </section>
+
+    <NewsletterSignup source="support" tone="panel" heading="Follow the sprint" blurb="Funding milestones, what the money produced, and new simulator releases. About once a month." />
+
+    <p class="mt-8 text-xs text-gray-500">
+      Donations are processed securely by Stripe and are gifts to support research; they are not tax-deductible and do not buy goods or equity. See the <a href="/terms" class="underline">terms</a>.
     </p>
-
-    <div class="space-y-6">
-      <section aria-labelledby="support-heading" class="bg-gray-50 dark:bg-gray-800 border border-gwern-border dark:border-mars-brown rounded-lg p-6">
-        <h2 id="support-heading" class="text-xl font-display font-semibold mb-3">Support</h2>
-        <p class="text-gray-600 dark:text-gray-300 mb-5">
-          Choose your own contribution to support the research. Complete your donation securely through Stripe.
-        </p>
-        <a
-          href="https://buy.stripe.com/bJe7sKdfb8wS46lexm63K00"
-          class="inline-flex items-center justify-center rounded-lg bg-mars-red px-6 py-3 font-semibold text-white hover:bg-red-800 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-mars-orange"
-        >Donate what you want</a>
-      </section>
-
-      <section aria-labelledby="investors-heading" class="bg-gray-50 dark:bg-gray-800 border border-gwern-border dark:border-mars-brown rounded-lg p-6">
-        <h2 id="investors-heading" class="text-xl font-display font-semibold mb-3">Equity investors reach out</h2>
-        <a href="mailto:info@populationmars.com" class="text-mars-red dark:text-mars-orange underline hover:no-underline">info@populationmars.com</a>
-      </section>
-
-      <section aria-labelledby="collaboration-heading" class="bg-gray-50 dark:bg-gray-800 border border-gwern-border dark:border-mars-brown rounded-lg p-6">
-        <h2 id="collaboration-heading" class="text-xl font-display font-semibold mb-3">Interested in collaborating?</h2>
-        <p class="text-gray-600 dark:text-gray-300">
-          Send requests to <a href="mailto:info@populationmars.com" class="text-mars-red dark:text-mars-orange underline hover:no-underline">info@populationmars.com</a>.
-        </p>
-      </section>
-    </div>
   </div>
 </BaseLayout>
+
+<script>
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>('.give-tab')];
+  const select = (tab: HTMLButtonElement) => {
+    for (const other of tabs) {
+      const selected = other === tab;
+      other.setAttribute('aria-selected', String(selected));
+      other.tabIndex = selected ? 0 : -1;
+      const panel = document.getElementById(other.getAttribute('aria-controls') ?? '');
+      if (panel) panel.hidden = !selected;
+    }
+  };
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => select(tab));
+    tab.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+      const next = tabs[(index + (event.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      select(next);
+      next.focus();
+    });
+  });
+  if (location.hash === '#monthly' && tabs[1]) select(tabs[1]);
+</script>

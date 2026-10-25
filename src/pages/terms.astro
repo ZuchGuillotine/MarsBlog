@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_EMAIL, SITE_NAME } from '../data/site';
+
+const effective = 'October 25, 2026';
+---
+
+<BaseLayout
+  title="Terms of Use"
+  description={`Terms for using ${SITE_NAME}, its articles, directory and OrbitFleet simulators, and for donations.`}
+>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h1 class="text-3xl sm:text-4xl font-display font-bold mb-2">Terms of Use</h1>
+    <p class="text-gray-500 mb-10">Effective {effective}</p>
+
+    <div class="prose prose-lg max-w-none prose-a:text-mars-red hover:prose-a:text-mars-rust">
+      <p>
+        These terms apply to populationmars.com, orbitfleet.populationmars.com and related pages (the
+        "sites") run by {SITE_NAME} ("we", "us"). By using the sites you agree to them. If you do not
+        agree, please do not use the sites.
+      </p>
+
+      <h2>Educational and research content</h2>
+      <p>
+        Articles, the Mars atlas, the space economy directory and the OrbitFleet simulators are provided
+        for education and research. Simulations use public, proposed, configured or synthetic data and
+        approximate physics, and each view labels which. Nothing on the sites is an operational
+        collision warning, navigation product, mission telemetry, engineering certification, or
+        investment, legal or financial advice. Do not rely on it for safety-critical or financial
+        decisions.
+      </p>
+
+      <h2>Directory listings</h2>
+      <p>
+        The space economy directory is an independent editorial selection. Inclusion is not an
+        endorsement, and company descriptions and funding figures come from public sources that may
+        change. Some links may be partner or affiliate links; when they are, we say so near the link.
+        Listing requests are reviewed editorially and may be declined or edited. To request a correction,
+        email <a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>.
+      </p>
+
+      <h2>Donations</h2>
+      <p>
+        Donations are voluntary gifts that support our research and publishing. They are processed by
+        Stripe and do not buy goods, services, equity or any other interest in {SITE_NAME}.
+        {SITE_NAME} is not currently a registered charity, so donations are generally not tax-deductible;
+        please consult your tax adviser. Monthly gifts can be cancelled at any time from your Stripe
+        receipt or by emailing us. Because donations fund work already in progress, they are generally
+        non-refundable, but if you made a mistake, contact us within 14 days and we will try to help.
+      </p>
+
+      <h2>Investment inquiries</h2>
+      <p>
+        Pages describing our plans, including the investor and grant summary, are for information only
+        and are not an offer to sell or a solicitation of an offer to buy any security. Any investment
+        would be made only through definitive documents and in compliance with applicable law.
+      </p>
+
+      <h2>Acceptable use</h2>
+      <p>Please do not:</p>
+      <ul>
+        <li>attempt to disrupt, overload or gain unauthorized access to the sites or the simulator service;</li>
+        <li>use automated means to launch simulator sessions in bulk or to evade session limits;</li>
+        <li>submit unlawful, misleading or infringing content through our forms;</li>
+        <li>misrepresent our content as an official agency product or operational data.</li>
+      </ul>
+
+      <h2>Content and reuse</h2>
+      <p>
+        Unless a page says otherwise, text, graphics and code on the sites are owned by {SITE_NAME} or used
+        with permission. You may quote short excerpts with attribution and a link. Third-party images,
+        videos, data and trademarks belong to their owners and are credited where used. Research data and
+        code released under an open license are governed by that license.
+      </p>
+
+      <h2>Third-party links and services</h2>
+      <p>
+        The sites link to and embed third-party sites and services, including Stripe, NASA, company
+        websites and social media. We are not responsible for their content or practices.
+      </p>
+
+      <h2>Disclaimer and limitation of liability</h2>
+      <p>
+        The sites are provided "as is" and "as available", without warranties of any kind, including
+        accuracy, availability or fitness for a particular purpose. To the fullest extent permitted by
+        law, {SITE_NAME} is not liable for indirect, incidental, special or consequential damages, or for
+        any loss arising from use of the sites, and our total liability for any claim is limited to the
+        greater of the amount you paid us in the past twelve months or US$50.
+      </p>
+
+      <h2>Changes</h2>
+      <p>
+        We may update these terms. The effective date above shows the latest version, and continued use
+        of the sites after a change means you accept it.
+      </p>
+
+      <h2>Contact</h2>
+      <p>Questions about these terms: <a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>. See also our <a href="/privacy">Privacy Policy</a>.</p>
+    </div>
+  </div>
+</BaseLayout>
