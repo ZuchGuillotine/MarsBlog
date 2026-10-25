@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
-import { ORBITFLEET_URL, SITE_EMAIL, SITE_NAME } from '../data/site';
+import { ORBITFLEET_URL, SITE_EMAIL, SITE_NAME, founder } from '../data/site';
 
 const projects = [
   {
@@ -31,7 +31,13 @@ const aboutData = {
   '@type': 'AboutPage',
   name: `About ${SITE_NAME}`,
   url: new URL('/about', Astro.site ?? Astro.url).href,
-  mainEntity: { '@type': 'Organization', name: SITE_NAME, email: SITE_EMAIL },
+  mainEntity: {
+    '@type': 'Organization',
+    name: SITE_NAME,
+    email: SITE_EMAIL,
+    foundingDate: '2025',
+    founder: { '@type': 'Person', name: founder.name, jobTitle: founder.role, sameAs: [founder.github] },
+  },
 };
 ---
 
@@ -79,6 +85,17 @@ const aboutData = {
         <li><strong>Cite sources.</strong> Articles and the directory link to first-party sources so readers can verify claims.</li>
       </ul>
 
+      <h2 id="founder">Founder</h2>
+    </div>
+
+    <section aria-labelledby="founder" class="my-6 rounded-lg border border-gwern-border bg-gray-50 p-6">
+      <p class="font-display font-semibold text-xl">{founder.name}</p>
+      <p class="text-sm text-gray-500 mb-4">{founder.role} · {founder.location}</p>
+      {founder.bio.map((paragraph) => <p class="text-gray-700 mb-3">{paragraph}</p>)}
+      <p class="text-sm"><a href={founder.github} class="text-mars-red underline hover:no-underline">GitHub</a> · <a href={ORBITFLEET_URL} class="text-mars-red underline hover:no-underline">OrbitFleet</a></p>
+    </section>
+
+    <div class="prose prose-lg max-w-none prose-a:text-mars-red hover:prose-a:text-mars-rust">
       <h2>Funding and independence</h2>
       <p>
         The project is funded by individual supporters and is seeking grants and aligned investment for
