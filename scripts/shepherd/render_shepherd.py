@@ -183,7 +183,7 @@ def override_beam_material() -> None:
     out = n.new("ShaderNodeOutputMaterial")
     em = n.new("ShaderNodeEmission")
     em.inputs["Color"].default_value = (0.62, 0.38, 1.0, 1)
-    em.inputs["Strength"].default_value = 0.9
+    em.inputs["Strength"].default_value = 0.55
     tr = n.new("ShaderNodeBsdfTransparent")
     mix = n.new("ShaderNodeMixShader")
     # fade: brighter near the aperture, fainter toward the target, plus a soft edge
@@ -191,9 +191,9 @@ def override_beam_material() -> None:
     sep = n.new("ShaderNodeSeparateXYZ")
     ramp = n.new("ShaderNodeValToRGB")
     ramp.color_ramp.elements[0].position = 0.0
-    ramp.color_ramp.elements[0].color = (0.010, 0.010, 0.010, 1)
+    ramp.color_ramp.elements[0].color = (0.004, 0.004, 0.004, 1)
     ramp.color_ramp.elements[1].position = 1.0
-    ramp.color_ramp.elements[1].color = (0.040, 0.040, 0.040, 1)
+    ramp.color_ramp.elements[1].color = (0.020, 0.020, 0.020, 1)
     l.new(coord.outputs["Generated"], sep.inputs["Vector"])
     l.new(sep.outputs["Z"], ramp.inputs["Fac"])  # cone axis is local Z before rotation
     l.new(ramp.outputs["Color"], mix.inputs["Fac"])
@@ -289,13 +289,13 @@ def explode(factor: float) -> None:
 # ----------------------------------------------------------------------------
 HERO_SHOTS = {
     # name: (camera location, look-at, lens)
-    "hero-aft-quarter": ((-3.3, -3.9, 1.6), (-0.45, 0.1, -0.1), 40),
-    "hero-aft-high": ((-3.6, -3.1, 2.4), (-0.45, 0.05, 0.0), 38),
-    "hero-beam-and-target": ((-10.6, -1.7, 1.5), (-4.2, 0.3, 0.55), 42),
-    "hero-ram-quarter": ((3.4, -2.6, 1.7), (0.25, 0.05, -0.2), 40),
-    "hero-anti-sun": ((-2.6, 4.2, 2.1), (-0.2, 0.9, -0.2), 40),
-    "hero-wide": ((-9.5, -12.5, 4.5), (-0.2, 0.0, -3.0), 50),
-    "hero-telescope-close": ((-1.9, -1.1, 0.95), (-0.5, 0.0, 0.28), 55),
+    "hero-aft-quarter": ((-3.3, -3.9, 1.5), (-0.45, 0.1, 0.05), 40),
+    "hero-aft-high": ((-3.6, -3.1, 2.3), (-0.45, 0.05, 0.1), 38),
+    "hero-beam-and-target": ((-4.0, -10.8, 2.9), (-4.3, 0.2, 0.3), 28),
+    "hero-ram-quarter": ((3.4, -2.6, 1.6), (0.25, 0.05, 0.0), 40),
+    "hero-anti-sun": ((-2.6, 4.2, 2.0), (-0.2, 0.9, 0.0), 40),
+    "hero-wide": ((-11.0, -14.5, 5.2), (-0.2, 0.0, -0.4), 32),
+    "hero-telescope-close": ((-2.4, -1.6, 1.15), (-0.5, 0.0, 0.25), 45),
 }
 
 
@@ -320,7 +320,7 @@ def render_stills(res, samples, quick: bool) -> None:
         if o.get("overlay"):
             o.hide_render = True
     explode(1.0)
-    camera((-5.2, -5.0, 3.6), (-0.1, 0.1, -0.5), 42, "exploded")
+    camera((-5.4, -5.2, 3.6), (-0.1, 0.1, -0.3), 40, "exploded")
     dt = render(OUT / "exploded.png")
     print(f"[stills] exploded: {dt:.0f} s", flush=True)
     explode(0.0)
@@ -330,7 +330,7 @@ def render_stills(res, samples, quick: bool) -> None:
     add_earth()
     add_lights()
     setup_render(res, samples)
-    camera((-2.4, -2.1, 1.5), (-0.1, 0.0, -0.3), 45, "stowed")
+    camera((-2.4, -2.1, 1.4), (-0.1, 0.0, -0.1), 45, "stowed")
     dt = render(OUT / "stowed.png")
     print(f"[stills] stowed: {dt:.0f} s", flush=True)
 
