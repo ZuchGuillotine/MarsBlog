@@ -54,7 +54,7 @@ def add_world() -> None:
     ramp.color_ramp.interpolation = "CONSTANT"
     ramp.color_ramp.elements[0].position = 0.0
     ramp.color_ramp.elements[0].color = (1, 1, 1, 1)
-    ramp.color_ramp.elements[1].position = 0.055
+    ramp.color_ramp.elements[1].position = 0.045
     ramp.color_ramp.elements[1].color = (0, 0, 0, 1)
     # vary star brightness with a noise
     noise = nodes.new("ShaderNodeTexNoise")
@@ -63,7 +63,7 @@ def add_world() -> None:
     mul.operation = "MULTIPLY"
     mul2 = nodes.new("ShaderNodeMath")
     mul2.operation = "MULTIPLY"
-    mul2.inputs[1].default_value = 1.6
+    mul2.inputs[1].default_value = 1.3
     links.new(coord.outputs["Generated"], mapping.inputs["Vector"])
     links.new(mapping.outputs["Vector"], vor.inputs["Vector"])
     links.new(vor.outputs["Distance"], ramp.inputs["Fac"])
@@ -83,7 +83,7 @@ def add_world() -> None:
         pass
 
 
-def add_earth(center=(0.0, 0.0, -84.0), radius=72.0) -> None:
+def add_earth(center=(0.0, 0.0, -64.5), radius=58.5) -> None:
     """A stylised Earth below the spacecraft (we are at 750 km; the limb fills
     the lower part of wide frames). Procedural ocean / land / cloud shading
     and a Fresnel atmosphere shell."""
@@ -289,12 +289,12 @@ def explode(factor: float) -> None:
 # ----------------------------------------------------------------------------
 HERO_SHOTS = {
     # name: (camera location, look-at, lens)
-    "hero-aft-quarter": ((-3.3, -3.9, 1.15), (-0.45, 0.1, 0.25), 40),
-    "hero-aft-high": ((-3.6, -3.1, 2.1), (-0.45, 0.05, 0.22), 38),
-    "hero-beam-and-target": ((-8.6, -2.2, 1.9), (-2.0, 0.25, 0.45), 48),
-    "hero-ram-quarter": ((3.4, -2.6, 1.4), (0.25, 0.05, 0.05), 40),
-    "hero-anti-sun": ((-2.6, 4.2, 1.9), (-0.2, 0.9, 0.05), 40),
-    "hero-wide": ((-9.5, -12.5, 4.5), (-0.2, 0.0, -0.3), 50),
+    "hero-aft-quarter": ((-3.3, -3.9, 1.6), (-0.45, 0.1, -0.1), 40),
+    "hero-aft-high": ((-3.6, -3.1, 2.4), (-0.45, 0.05, 0.0), 38),
+    "hero-beam-and-target": ((-10.6, -1.7, 1.5), (-4.2, 0.3, 0.55), 42),
+    "hero-ram-quarter": ((3.4, -2.6, 1.7), (0.25, 0.05, -0.2), 40),
+    "hero-anti-sun": ((-2.6, 4.2, 2.1), (-0.2, 0.9, -0.2), 40),
+    "hero-wide": ((-9.5, -12.5, 4.5), (-0.2, 0.0, -3.0), 50),
     "hero-telescope-close": ((-1.9, -1.1, 0.95), (-0.5, 0.0, 0.28), 55),
 }
 
@@ -320,7 +320,7 @@ def render_stills(res, samples, quick: bool) -> None:
         if o.get("overlay"):
             o.hide_render = True
     explode(1.0)
-    camera((-5.2, -5.0, 3.4), (-0.1, 0.1, -0.05), 42, "exploded")
+    camera((-5.2, -5.0, 3.6), (-0.1, 0.1, -0.5), 42, "exploded")
     dt = render(OUT / "exploded.png")
     print(f"[stills] exploded: {dt:.0f} s", flush=True)
     explode(0.0)
@@ -330,7 +330,7 @@ def render_stills(res, samples, quick: bool) -> None:
     add_earth()
     add_lights()
     setup_render(res, samples)
-    camera((-2.4, -2.1, 1.3), (-0.1, 0.0, -0.05), 45, "stowed")
+    camera((-2.4, -2.1, 1.5), (-0.1, 0.0, -0.3), 45, "stowed")
     dt = render(OUT / "stowed.png")
     print(f"[stills] stowed: {dt:.0f} s", flush=True)
 
@@ -343,8 +343,8 @@ def render_turntable(res, samples, frames: int, fps: int = 24) -> None:
     add_lights()
     setup_render(res, samples)
     override_beam_material()
-    look = Vector((-0.35, 0.15, 0.15))
-    radius, height = 4.6, 1.55
+    look = Vector((-0.35, 0.15, -0.15))
+    radius, height = 4.6, 1.75
     cam = camera((radius, 0, height), look, 40, "turntable")
     for i in range(frames):
         a = 2 * math.pi * i / frames + math.radians(215)

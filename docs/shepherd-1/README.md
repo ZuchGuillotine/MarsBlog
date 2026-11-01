@@ -179,8 +179,12 @@ fire control, the independent interlock unit.
 ### Structure and mechanisms
 
 1.0 × 0.95 × 0.85 m aluminium-honeycomb / CFRP body on a 24-inch Lightband-class
-ring; stowed 1.17 × 1.12 × 0.99 m, inside the Moog ESPA Grande nominal port
-envelope (1.07 × 1.17 × 0.97 m) and well under the 700 kg qualified port mass.
+ring. Stowed, with appendages folded, the model measures 1.33 × 1.23 × 1.12 m:
+the body sits inside the Moog ESPA Grande nominal port envelope
+(1.07 × 1.17 × 0.97 m), the rolled wings, folded radiators, parked telescope,
+star-tracker baffles and thruster platform add 0.15–0.3 m per axis, so the
+vehicle needs an XL-volume rideshare slot or a negotiated envelope on a
+dedicated ring. Wet mass is well under the 700 kg qualified port limit.
 Stuffed-Whipple bumpers on the ram face over the xenon tank and laser bench.
 Non-explosive release devices (EBAD NEA 9100 / TiNi Frangibolt class) on both
 wings, both radiators, the gimbal and the aperture door. Dissimilar metal
@@ -226,8 +230,9 @@ perigee from 800 km at 45 % duty: 1 kg 0.9 days, 10 kg 8.6 days, 50 kg
   thrust for disposal, against a five-year clock.
 - **Pointing chain.** 35 µrad bus → 5 mrad FSM range → 1.4 µrad half-spot:
   the FSM captures 140× the bus error; this is the lasercom-terminal pattern.
-- **Envelope and mass.** 486 kg and 1.17 × 1.12 × 0.99 m against the 700 kg,
-  1.07 × 1.17 × 0.97 m ESPA Grande port.
+- **Envelope and mass.** 486 kg against the 700 kg port limit; stowed
+  1.33 × 1.23 × 1.12 m against the 1.07 × 1.17 × 0.97 m nominal Moog envelope
+  (body inside, appendages over by 0.15–0.3 m per axis: an XL-volume slot).
 
 ## 6. Why not a CubeSat, and why not the 2.3 t unit yet
 

@@ -199,22 +199,23 @@ def systems_svg() -> str:
     s.text(x1 + 14, yy + 6, f"Array EOL {P['array_eol_w']} W; thruster not run while firing", size=10, fill=MUTED)
 
     x2, y2 = 1280, 364
-    s.rect(x2, y2, 440, 212, fill=PANEL, stroke=LINE)
+    s.rect(x2, y2, 440, 224, fill=PANEL, stroke=LINE)
     s.text(x2 + 14, y2 + 22, "Launch & envelope", size=13, weight=700)
     for i, ln in enumerate((
         "24-inch ESPA Grande port, Lightband-class separation",
-        "Stowed 1.17 x 1.12 x 0.99 m (Moog Grande envelope)",
+        "Body 1.0 x 0.95 x 0.85 m inside the Moog Grande envelope;",
+        "stowed with appendages 1.33 x 1.23 x 1.12 m (XL-volume slot)",
         "Port qualified to 700 kg; wet mass 486 kg",
         "SpaceX rideshare XL plate: 300 kg included, more purchasable",
-        "Deployed: 11.3 m along nadir-zenith, 5.0 m across radiators",
+        "Deployed: 10.9 m along nadir-zenith, 3.2 m across radiators",
         "Wings roll out along +/-Z; radiators hinge off anti-sun face",
         "NEA / Frangibolt HDRMs on wings, radiators, gimbal, door",
         "Dissimilar metals + MoS2 at every separable contact",
     )):
         s.text(x2 + 14, y2 + 44 + i * 19, ln, size=10.5, fill=MUTED)
 
-    x3, y3 = 1280, 600
-    s.rect(x3, y3, 440, 330, fill=PANEL, stroke=LINE)
+    x3, y3 = 1280, 612
+    s.rect(x3, y3, 440, 318, fill=PANEL, stroke=LINE)
     s.text(x3 + 14, y3 + 22, "Heritage gap (honest)", size=13, weight=700)
     for i, ln in enumerate((
         "Highest avg optical power flown: ~25 W (CATS, ISS)",

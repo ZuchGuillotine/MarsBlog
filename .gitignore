@@ -26,3 +26,7 @@ pnpm-debug.log*
 # Shepherd-1 scratch renders (final renders are committed)
 public/shepherd/renders/diag-*.png
 public/shepherd/renders/preview*.png
+
+# Python bytecode
+__pycache__/
+*.pyc

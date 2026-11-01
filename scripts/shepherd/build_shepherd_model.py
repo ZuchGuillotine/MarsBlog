@@ -201,6 +201,7 @@ def init_materials() -> None:
 # Scene helpers
 # ----------------------------------------------------------------------------
 ROOTS: dict[str, bpy.types.Object] = {}
+STOWED_FLAG = [False]
 
 
 def reset_scene() -> None:
@@ -308,15 +309,22 @@ def sphere(radius, loc, mat, sid, label, part=None, parent=None, segments=48):
     return finish(obj, mat, sid, label, part, parent, smooth=True)
 
 
-def empty(name, loc, parent=None, rot=(0, 0, 0)):
+def empty(name, loc, parent=None):
+    """Pivot empty. Create it unrotated, parent the children, then rotate it
+    with ``rotate_pivot`` so the children turn about the pivot (a parent
+    inverse computed from a rotated parent would cancel the rotation)."""
     e = bpy.data.objects.new(name, None)
     e.empty_display_size = 0.05
     bpy.context.scene.collection.objects.link(e)
     e.location = loc
-    e.rotation_euler = Euler(rot)
     if parent is not None:
         set_parent(e, parent)
     return e
+
+
+def rotate_pivot(e, rot=(0, 0, 0)) -> None:
+    e.rotation_euler = Euler(rot)
+    bpy.context.view_layer.update()
 
 
 # ----------------------------------------------------------------------------
@@ -379,9 +387,9 @@ def build_beam_director(stowed: bool, target: Vector | None):
         el = math.radians(80.0)
     elif target is not None:
         d = (target - Vector((GIMBAL_X, 0, EL_Z))).normalized()
-        az = math.atan2(d.y, -d.x)          # rotation about +Z, positive toward +Y
+        az = -math.atan2(d.y, -d.x)         # rotation about +Z; -X boresight swings toward +Y for negative angles
         el = math.asin(max(-1, min(1, d.z)))  # positive toward +Z
-    az_empty = empty("gimbal_az", (GIMBAL_X, 0, 0.08), parent=root, rot=(0, 0, az))
+    az_empty = empty("gimbal_az", (GIMBAL_X, 0, 0.08), parent=root)
     az_empty["subsystem"] = sid
     az_empty["label"] = "Gimbal azimuth axis"
     # Azimuth drum and yoke arms (children of az)
@@ -394,7 +402,7 @@ def build_beam_director(stowed: bool, target: Vector | None):
     for y, part in ((-0.355, "elevation drive"), (0.355, "coude fold housing")):
         cylinder(0.06, 0.05, (GIMBAL_X, y, EL_Z), "steel", sid, "Gimbal elevation axis", part, parent=az_empty, axis="Y")
     # Elevation empty
-    el_empty = empty("gimbal_el", (GIMBAL_X, 0, EL_Z), parent=az_empty, rot=(0, el, 0))
+    el_empty = empty("gimbal_el", (GIMBAL_X, 0, EL_Z), parent=az_empty)
     el_empty["subsystem"] = sid
     el_empty["label"] = "Gimbal elevation axis"
     # Trunnions
@@ -419,8 +427,7 @@ def build_beam_director(stowed: bool, target: Vector | None):
     # Front baffle / sunshade extension
     tube(TUBE_R + 0.006, TUBE_R - 0.004, 0.14, (GIMBAL_X - TUBE_L / 2 - 0.07, 0, EL_Z), "mli_black", sid, "Stray-light baffle", "front baffle", parent=el_empty, axis="X")
     # Contamination door: disc hinged at the top of the baffle; open 110 deg in deployed configuration
-    door_hinge = empty("aperture_door_hinge", (GIMBAL_X - TUBE_L / 2 - 0.14, 0, EL_Z + TUBE_R + 0.01), parent=el_empty,
-                       rot=(0, 0 if stowed else math.radians(-110), 0))
+    door_hinge = empty("aperture_door_hinge", (GIMBAL_X - TUBE_L / 2 - 0.14, 0, EL_Z + TUBE_R + 0.01), parent=el_empty)
     cylinder(TUBE_R + 0.01, 0.012, (GIMBAL_X - TUBE_L / 2 - 0.146, 0, EL_Z), "aluminium", sid, "Aperture contamination door", "aperture door", parent=door_hinge, axis="X")
     cylinder(0.02, 0.5, (GIMBAL_X - TUBE_L / 2 - 0.14, 0, EL_Z + TUBE_R + 0.01), "steel", sid, "Aperture contamination door", "door hinge", parent=el_empty, axis="Y", verts=24)
     # Fine steering mirror / relay optics housing behind the primary (coude input)
@@ -431,6 +438,10 @@ def build_beam_director(stowed: bool, target: Vector | None):
     cylinder(0.03, 0.006, (GIMBAL_X - 0.172, -TUBE_R - 0.04, EL_Z), "glass_dark", "tracking", "LWIR thermal camera", "LWIR lens", parent=el_empty, axis="X", verts=32)
     # Inertial reference unit (MIRU class) on the tube
     box((0.10, 0.08, 0.06), (GIMBAL_X + 0.1, TUBE_R + 0.045, EL_Z), "aluminium", sid, "Inertial reference unit", "IRU", parent=el_empty)
+    # Apply the pointing now that every child is attached
+    rotate_pivot(door_hinge, (0, 0 if stowed else math.radians(-110), 0))
+    rotate_pivot(el_empty, (0, el, 0))
+    rotate_pivot(az_empty, (0, 0, az))
     return az_empty, el_empty, prim
 
 
@@ -470,15 +481,17 @@ def build_laser() -> None:
 def build_tracking() -> None:
     sid = "tracking"
     # 15 cm acquisition telescope, body-fixed on the aft face, looking aft
-    x0 = -HX - 0.02
-    tube(0.09, 0.08, 0.30, (x0 - 0.15, -0.30, -0.20), "cfrp", sid, "15 cm acquisition telescope (SBV / Sapphire class)", "acquisition telescope tube", axis="X")
-    cylinder(0.078, 0.004, (x0 - 0.05, -0.30, -0.20), "mirror_sic", sid, "15 cm acquisition telescope (SBV / Sapphire class)", "acquisition primary", axis="X")
-    cylinder(0.09, 0.02, (x0 - 0.01, -0.30, -0.20), "aluminium_dark", sid, "15 cm acquisition telescope (SBV / Sapphire class)", "acquisition rear housing", axis="X")
-    box((0.12, 0.14, 0.12), (x0 + 0.08, -0.30, -0.20), "aluminium_dark", sid, "Acquisition camera electronics", "acquisition electronics")
-    tube(0.095, 0.088, 0.10, (x0 - 0.35, -0.30, -0.20), "mli_black", sid, "15 cm acquisition telescope (SBV / Sapphire class)", "acquisition baffle", axis="X")
-    # Laser ranging receiver (photon counting) next to it
-    cylinder(0.04, 0.16, (x0 - 0.08, 0.30, -0.22), "aluminium_dark", sid, "Ranging receiver (photon counting, 343 nm)", "ranging receiver", axis="X", verts=32)
-    cylinder(0.036, 0.004, (x0 - 0.162, 0.30, -0.22), "glass_dark", sid, "Ranging receiver (photon counting, 343 nm)", "ranging window", axis="X", verts=32)
+    # Recessed through the aft face: 0.30 m tube mostly inside the lower deck, short baffle outside
+    xa = -HX + 0.20  # tube centre
+    tube(0.09, 0.08, 0.30, (xa, -0.30, -0.20), "cfrp", sid, "15 cm acquisition telescope (SBV / Sapphire class)", "acquisition telescope tube", axis="X")
+    cylinder(0.078, 0.004, (xa + 0.12, -0.30, -0.20), "mirror_sic", sid, "15 cm acquisition telescope (SBV / Sapphire class)", "acquisition primary", axis="X")
+    cylinder(0.09, 0.02, (xa + 0.16, -0.30, -0.20), "aluminium_dark", sid, "15 cm acquisition telescope (SBV / Sapphire class)", "acquisition rear housing", axis="X")
+    box((0.12, 0.14, 0.12), (xa + 0.26, -0.30, -0.20), "aluminium_dark", sid, "Acquisition camera electronics", "acquisition electronics")
+    tube(0.095, 0.088, 0.10, (-HX - 0.05, -0.30, -0.20), "mli_black", sid, "15 cm acquisition telescope (SBV / Sapphire class)", "acquisition baffle", axis="X")
+    # Laser ranging receiver (photon counting) next to it, window flush with a short hood
+    cylinder(0.04, 0.16, (-HX + 0.06, 0.30, -0.22), "aluminium_dark", sid, "Ranging receiver (photon counting, 343 nm)", "ranging receiver", axis="X", verts=32)
+    cylinder(0.036, 0.004, (-HX - 0.022, 0.30, -0.22), "glass_dark", sid, "Ranging receiver (photon counting, 343 nm)", "ranging window", axis="X", verts=32)
+    tube(0.044, 0.04, 0.06, (-HX - 0.03, 0.30, -0.22), "mli_black", sid, "Ranging receiver (photon counting, 343 nm)", "ranging hood", axis="X", verts=32)
     # Payload processor (GPU) box inside the aft lower deck (shown for exploded view)
     box((0.24, 0.20, 0.10), (-0.33, 0.05, -0.12), "aluminium", sid, "Payload processor (tracking & fire control)", "payload processor", bevel=0.005)
 
@@ -498,8 +511,8 @@ def build_solar_arrays(stowed: bool) -> None:
         for x in (-0.35, 0.35):
             box((0.06, 0.09, 0.05), (x, -HY - 0.045, zc), "aluminium_dark", sid, "Roll-out array canister", f"{part} bracket {x:+.1f}")
         if stowed:
-            # blanket rolled: a fatter cylinder
-            cylinder(0.11, WING_W, (0, y_can - 0.05, zc), "solar_back", sid, "Roll-out blanket (stowed)", f"{part} roll", axis="X")
+            # blanket rolled on the mandrel inside the canister envelope
+            cylinder(0.10, WING_W, (0, y_can - 0.01, zc), "solar_back", sid, "Roll-out blanket (stowed)", f"{part} roll", axis="X")
             continue
         # deployed blanket and booms
         z0 = zc + sign * 0.085
@@ -529,7 +542,7 @@ def build_radiators(stowed: bool) -> None:
             cylinder(0.022, 0.05, (xh, HY + 0.06, z), "steel", sid, "Radiator launch lock (NEA class)", f"{part} HDRM {z:+.1f}", axis="Y", verts=20)
         if stowed:
             # each panel folds in two 1.0 m leaves and stacks against the anti-sun face
-            yoff = HY + (0.06 if sx > 0 else 0.095)
+            yoff = HY + (0.035 if sx > 0 else 0.065)
             box((RAD_L / 2 - 0.04, 0.025, RAD_H), (0, yoff, 0), "osr", sid, "Deployable radiator panel 2.0 x 0.85 m (stowed)", f"{part} panel stowed")
             continue
         yc = HY + 0.04 + RAD_L / 2
@@ -547,23 +560,23 @@ def build_radiators(stowed: bool) -> None:
             box((0.032, RAD_L - 0.1, 0.012), (xh, yc, z), "aluminium", sid, "Pumped-loop tubes", f"{part} tube {i}")
         # edge frame
         box((0.03, 0.03, RAD_H), (xh, HY + 0.04 + RAD_L - 0.015, 0), "aluminium_dark", sid, "Radiator edge frame", f"{part} outer frame")
-    # Pump package on the anti-sun face between the hinges
-    box((0.26, 0.10, 0.16), (0, HY + 0.05, -0.2), "aluminium", sid, "Mechanically pumped loop: pump package", "pump package", bevel=0.005)
-    for x in (-0.12, 0.12):
-        cylinder(0.014, 0.2, (x, HY + 0.1, -0.2), "steel", sid, "Mechanically pumped loop: pump package", f"accumulator {x:+.1f}", axis="Z", verts=20)
+    # Pump package just inside the anti-sun face (shown in the exploded view)
+    box((0.26, 0.10, 0.16), (0.30, HY - 0.08, -0.12), "aluminium", sid, "Mechanically pumped loop: pump package", "pump package", bevel=0.005)
+    for x in (0.18, 0.42):
+        cylinder(0.014, 0.2, (x, HY - 0.03, -0.12), "steel", sid, "Mechanically pumped loop: pump package", f"accumulator {x:+.1f}", axis="Z", verts=20)
 
 
 def build_propulsion() -> None:
     sid = "propulsion"
     # Thrust-vector platform at the ram face centre (two-axis)
-    cylinder(0.07, 0.05, (HX + 0.045, 0, -0.03), "aluminium_dark", sid, "Thrust-vector platform (2-axis)", "platform base", axis="X")
-    cylinder(0.05, 0.04, (HX + 0.09, 0, -0.03), "steel", sid, "Thrust-vector platform (2-axis)", "platform gimbal", axis="X")
-    box((0.03, 0.40, 0.20), (HX + 0.12, 0, -0.03), "aluminium_dark", sid, "Thrust-vector platform (2-axis)", "thruster plate", bevel=0.006)
+    cylinder(0.07, 0.04, (HX + 0.04, 0, -0.03), "aluminium_dark", sid, "Thrust-vector platform (2-axis)", "platform base", axis="X")
+    cylinder(0.05, 0.03, (HX + 0.075, 0, -0.03), "steel", sid, "Thrust-vector platform (2-axis)", "platform gimbal", axis="X")
+    box((0.03, 0.40, 0.20), (HX + 0.10, 0, -0.03), "aluminium_dark", sid, "Thrust-vector platform (2-axis)", "thruster plate", bevel=0.006)
     for y, part in ((-0.11, "Hall thruster A (prime)"), (0.11, "Hall thruster B (redundant)")):
-        cylinder(0.065, 0.10, (HX + 0.185, y, -0.03), "aluminium_dark", sid, "600 W xenon Hall thruster", part, axis="X")
-        tube(0.05, 0.03, 0.04, (HX + 0.235, y, -0.03), "ceramic", sid, "600 W xenon Hall thruster", f"{part} BN channel", axis="X")
-        cylinder(0.029, 0.03, (HX + 0.225, y, -0.03), "copper", sid, "600 W xenon Hall thruster", f"{part} centre pole", axis="X", verts=32)
-        cylinder(0.012, 0.09, (HX + 0.19, y, 0.05), "steel", sid, "600 W xenon Hall thruster", f"{part} cathode", axis="X", verts=20)
+        cylinder(0.065, 0.10, (HX + 0.165, y, -0.03), "aluminium_dark", sid, "600 W xenon Hall thruster", part, axis="X")
+        tube(0.05, 0.03, 0.04, (HX + 0.215, y, -0.03), "ceramic", sid, "600 W xenon Hall thruster", f"{part} BN channel", axis="X")
+        cylinder(0.029, 0.03, (HX + 0.205, y, -0.03), "copper", sid, "600 W xenon Hall thruster", f"{part} centre pole", axis="X", verts=32)
+        cylinder(0.012, 0.09, (HX + 0.17, y, 0.05), "steel", sid, "600 W xenon Hall thruster", f"{part} cathode", axis="X", verts=20)
     # Xenon COPV inside the upper deck (shown in exploded view)
     sphere(0.17, (0.26, -0.16, 0.20), "titanium", sid, "Xenon tank, 25 L COPV (24 kg Xe)", "xenon tank")
     box((0.10, 0.10, 0.06), (0.26, -0.16, 0.39), "aluminium_dark", sid, "Xenon tank, 25 L COPV (24 kg Xe)", "tank boss")
@@ -603,13 +616,19 @@ def build_adcs() -> None:
 def build_comms() -> None:
     sid = "comms"
     # Optical crosslink terminal on the zenith face (hemispherical gimbal)
-    cylinder(0.09, 0.04, (0.30, 0.22, HZ + 0.02), "aluminium_dark", sid, "Optical crosslink terminal (SDA-compatible, 2.5 Gbps)", "OCT base")
-    cylinder(0.065, 0.06, (0.30, 0.22, HZ + 0.07), "aluminium", sid, "Optical crosslink terminal (SDA-compatible, 2.5 Gbps)", "OCT azimuth stage")
-    oct_el = empty("oct_el", (0.30, 0.22, HZ + 0.14), rot=(math.radians(35), 0, math.radians(20)))
-    oct_el["subsystem"] = sid
+    cylinder(0.09, 0.03, (0.30, 0.22, HZ + 0.015), "aluminium_dark", sid, "Optical crosslink terminal (SDA-compatible, 2.5 Gbps)", "OCT base")
+    oct_az = empty("oct_az", (0.30, 0.22, HZ + 0.03), parent=subsystem_root(sid))
+    oct_az["subsystem"] = sid
+    cylinder(0.065, 0.05, (0.30, 0.22, HZ + 0.055), "aluminium", sid, "Optical crosslink terminal (SDA-compatible, 2.5 Gbps)", "OCT azimuth stage", parent=oct_az)
     for y in (-0.07, 0.07):
-        box((0.03, 0.02, 0.10), (0.30, 0.22 + y, HZ + 0.12), "aluminium_dark", sid, "Optical crosslink terminal (SDA-compatible, 2.5 Gbps)", f"OCT fork {y:+.2f}")
-    cylinder(0.05, 0.14, (0.30, 0.22, HZ + 0.14), "aluminium_dark", sid, "Optical crosslink terminal (SDA-compatible, 2.5 Gbps)", "OCT telescope", axis="X", rot_extra=(0, math.radians(-40), math.radians(25)))
+        box((0.03, 0.02, 0.09), (0.30, 0.22 + y, HZ + 0.105), "aluminium_dark", sid, "Optical crosslink terminal (SDA-compatible, 2.5 Gbps)", f"OCT fork {y:+.2f}", parent=oct_az)
+    oct_el = empty("oct_el", (0.30, 0.22, HZ + 0.12), parent=oct_az)
+    oct_el["subsystem"] = sid
+    cylinder(0.05, 0.14, (0.30, 0.22, HZ + 0.12), "aluminium_dark", sid, "Optical crosslink terminal (SDA-compatible, 2.5 Gbps)", "OCT telescope", axis="X", parent=oct_el)
+    cylinder(0.046, 0.004, (0.30 + 0.07, 0.22, HZ + 0.12), "glass_dark", sid, "Optical crosslink terminal (SDA-compatible, 2.5 Gbps)", "OCT aperture", axis="X", parent=oct_el)
+    # deployed: look up-forward toward the next fleet member; stowed: parked flat along +X
+    rotate_pivot(oct_el, (0, math.radians(-40) if not STOWED_FLAG[0] else 0, 0))
+    rotate_pivot(oct_az, (0, 0, math.radians(25) if not STOWED_FLAG[0] else 0))
     # S-band patches (zenith and nadir), X-band patch array (nadir), L-band relay patch (zenith)
     box((0.10, 0.10, 0.02), (0.42, -0.30, HZ + 0.01), "white_paint", sid, "S-band TT&C patch (zenith)", "S-band zenith")
     box((0.10, 0.10, 0.02), (-0.15, -0.12, -HZ - 0.01), "white_paint", sid, "S-band TT&C patch (nadir)", "S-band nadir")
@@ -636,17 +655,20 @@ def build_overlay(target: Vector, el_empty) -> None:
     """Beam and debris target for visualisation only (tagged overlay=1)."""
     sid = "beam_director"
     aperture = Vector((GIMBAL_X - TUBE_L / 2 - 0.15, 0, EL_Z))
-    # Beam: cylinder from aperture to target along the boresight, in the elevation frame
+    # Beam: cone from aperture to target along the boresight, in the elevation frame
     length = (target - Vector((GIMBAL_X, 0, EL_Z))).length
     # focusing cone: 0.40 m at the aperture converging to the spot at the target
     bpy.ops.mesh.primitive_cone_add(vertices=48, radius1=0.02, radius2=0.20, depth=length,
-                                    location=(aperture.x - length / 2, 0, EL_Z), rotation=(0, math.pi / 2, 0))
+                                    location=(0, 0, 0), rotation=(0, math.pi / 2, 0))
     beam = bpy.context.active_object
     beam.data.materials.append(MATS["beam"])
     for poly in beam.data.polygons:
         poly.use_smooth = True
     tag(beam, sid, "343 nm beam (visualisation)", "beam")
-    set_parent(beam, el_empty)
+    # place in the elevation frame: boresight is local -X from the pivot
+    beam.parent = el_empty
+    beam.matrix_parent_inverse = Matrix.Identity(4)
+    beam.location = (aperture.x - GIMBAL_X - length / 2, 0, 0)
     beam["overlay"] = 1
     beam.visible_shadow = False
     # Debris target: a crumpled bracket (deformed icosphere)
@@ -670,6 +692,7 @@ def build_overlay(target: Vector, el_empty) -> None:
 # ----------------------------------------------------------------------------
 def build(stowed: bool = False, overlay: bool = True, target=(-9.0, 0.6, 0.9)):
     reset_scene()
+    STOWED_FLAG[0] = stowed
     init_materials()
     tgt = Vector(target)
     build_bus(stowed)
