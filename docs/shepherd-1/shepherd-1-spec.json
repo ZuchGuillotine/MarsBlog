@@ -1,0 +1,322 @@
+{
+  "name": "Shepherd-1",
+  "subtitle": "Laser-ablation debris-remediation pathfinder",
+  "version": "v1 pitch-stage design, 2026-11-01",
+  "status": "Proposed. Pitch-stage system design; no hardware exists. Figures are first-order budgets, not a flight analysis.",
+  "classification": "ESPA-Grande-class spacecraft on a commercial bus core with mission-specific power and thermal subsystems",
+  "lineage": {
+    "article": "The Case for Attack Satellites, sections 6-8 (populationmars.com/blog/the-case-for-attack-satellites)",
+    "simulations": [
+      "scripts/orbits/build_laser_ablation_scene.py (three-satellite campaign, LAS-1/2 shepherds)",
+      "scripts/orbits/build_conjunction_response.py (COSMOS 2612 / ICEYE-X36 minimal-touch response)"
+    ],
+    "kept_from_article": [
+      "343 nm frequency-tripled ytterbium laser",
+      "head-on engagement rule: fire only on targets approaching from ahead so recoil lowers perigee",
+      "loiter 50 km below the target band so a failed shepherd decays first and J2 drifts the plane for free",
+      "silicon-carbide beam director",
+      "supercapacitor pulse storage sized by power, not energy",
+      "Hall-effect propulsion with a locked disposal reserve",
+      "published, per-target firing log"
+    ],
+    "changed_from_article": [
+      "scale: 480 kg pathfinder instead of the 2.3 t production unit, so it fits a commercial ESPA-Grande bus and a rideshare launch",
+      "laser: 20 J, 10 Hz, 1 ns, 200 W UV (nearest lab analogue HiLASE Bivoj THG: 50 J at 10 Hz at 343 nm) instead of 700 J, 100 ps, 3.3 kW",
+      "aperture: 0.45 m instead of 1.0 m",
+      "engagement range: 5-12 km in co-orbital shepherd formation instead of 60-300 km sweeper passes",
+      "targets: catalogued 1-50 kg fragments at 700-900 km, to measure coupling and prove the concept, not tonne-class derelicts"
+    ]
+  },
+  "orbit": {
+    "type": "dawn-dusk sun-synchronous",
+    "altitude_km": 750,
+    "inclination_deg": 98.4,
+    "rationale": "Continuous sunlight for most of the year powers the laser without large batteries; 50 km below the 800 km target band so the shepherd decays first and differential J2 precession (7.9 deg/yr) walks it between target planes for no propellant.",
+    "design_life_years": 5,
+    "disposal": "Hall-thruster lowering to 300 km (248 m/s, 43 days continuous at 35 mN) with locked 8.8 kg xenon reserve; natural decay from 750 km alone would exceed the FCC 5-year rule, so the second thruster string is the disposal backup."
+  },
+  "body_frame": {
+    "x": "+X ram (velocity). Hall thrusters exhaust along +X to lower the orbit.",
+    "y": "-Y sun side (dawn-dusk orbit keeps the Sun near -Y); +Y anti-sun, radiators.",
+    "z": "+Z zenith, -Z nadir (separation ring, Earth-facing antennas).",
+    "beam": "Beam director points aft (-X), at the target the shepherd flies ahead of."
+  },
+  "dimensions_m": {
+    "bus_body": [
+      1.0,
+      0.95,
+      0.85
+    ],
+    "stowed_envelope": [
+      1.17,
+      1.12,
+      0.99
+    ],
+    "deployed_span_z_m": 11.3,
+    "deployed_span_y_m": 5.0,
+    "launch_interface": "24-inch (610 mm) ESPA Grande port, Lightband-class separation system",
+    "envelope_note": "Within the Moog ESPA Grande nominal port envelope (1.07 x 1.17 x 0.97 m) and 700 kg qualified port mass; above the 300 kg included mass of a SpaceX rideshare XL plate (extra mass purchasable)."
+  },
+  "laser": {
+    "architecture": "Yb:YAG master oscillator + diode-pumped multi-slab power amplifier at 1030 nm, third-harmonic generation in LBO to 343 nm, no pulse compressor",
+    "wavelength_nm": 343,
+    "pulse_energy_j": 20,
+    "pulse_duration_ns": 1.0,
+    "rep_rate_hz": 10,
+    "uv_average_power_w": 200,
+    "ir_pulse_energy_j": 45,
+    "electrical_input_w": 2000,
+    "waste_heat_w": 1800,
+    "wall_plug_efficiency": 0.1,
+    "beam_quality_m2": 1.5,
+    "enclosure": "sealed, pressurized housing with oxygen partial pressure (EarthCARE ATLID heritage) and zeolite molecular-adsorber panels (ICESat-2 heritage) to stop laser-induced contamination of UV optics",
+    "pulse_power": "supercapacitor bank delivers ~450 J per 1 ms quasi-CW pump pulse (~0.4 MW peak) to the diode stacks; bank is sized by current and cycle count, not energy",
+    "heritage_gap": "Highest average optical power flown is ~25 W (CATS); highest UV ~3.5 W (Aeolus ALADIN); highest pulse energy ~0.2 J (CALIPSO). Shepherd-1 is ~100x beyond flown pulse energy and ~60x beyond flown UV average power. Nearest ground analogue: HiLASE Bivoj third harmonic, 50-55 J at 10 Hz at 343 nm, 53-64 % conversion. The laser is the critical-path development item.",
+    "vendor_candidates": [
+      "Fibertek (ATLAS, CATS heritage)",
+      "Trumpf / Amphos (thin-disk, Innoslab)",
+      "Dausinger + Giesen",
+      "HiLASE / STFC CLF DiPOLE architecture licence"
+    ]
+  },
+  "optics": {
+    "beam_director": "0.45 m silicon-carbide primary (Mersen Boostec class, ~5 kg at 30 kg/m2), Cassegrain afocal expander, dielectric HfO2/SiO2 high-reflector coatings for 343 nm",
+    "gimbal": "two-axis elevation-over-azimuth yoke recessed in the aft cradle; azimuth +/-100 deg, elevation -25/+70 deg; hollow axes carry a coude beam path from the fixed laser bench",
+    "fine_steering": "55 mm space-qualified fast steering mirror (BlueHalo / AeroVironment / CEDRAT class), +/-5 mrad, >800 Hz, closed on target return light",
+    "pointing_budget": "bus 35 urad (0.002 deg, 1 sigma) -> gimbal with inertial reference (LCRD heritage) -> FSM holds the 1.4 urad half-spot at 10 km",
+    "spot_cm_at_10km": 2.8,
+    "aperture_door": "motorised contamination door, closed during thruster burns and outgassing phases",
+    "on_primary_fluence_mj_cm2": 13,
+    "coude_path": "beam rises through the hollow azimuth axis, folds through one hollow elevation trunnion onto the telescope axis"
+  },
+  "tracking": {
+    "acquisition_telescope": "15 cm off-axis visible telescope, 1.5 deg field, V~15 limiting magnitude at short exposure (MSX SBV / Sapphire class); body-fixed, aft-looking",
+    "fine_tracker": "narrow-field visible tracker through the main 0.45 m aperture via dichroic; centroid feeds the fast steering mirror",
+    "thermal_ir": "uncooled LWIR camera on the gimbal for eclipse tracking (ADRAS-J heritage)",
+    "ranging": "low-energy pulses from the main laser (1-5 J, 343 nm) with a photon-counting receiver on the main aperture; 1 m range precision at 10 km",
+    "catalogue": "targets are catalogued objects; TLE / Space-Track ephemeris for approach, onboard angles-only navigation from hundreds of km (ADRAS-J heritage)",
+    "laser_safety": "firing interlock requires: target track confirmed on fine tracker, protected satellites >0.1 deg off the beam axis beyond the target (OrbitFleet rule), USSF Laser Clearinghouse window open, Earth limb >100 km below the line of sight"
+  },
+  "power": {
+    "array": "two roll-out blanket wings (Redwire ROSA Diamond class, 3.3 kW / 36 kg flown on DART), 1.1 x 5.0 m each, 11 m2, fixed sun-facing (-Y) in the dawn-dusk orbit, deployed along +/-Z",
+    "array_bol_w": 3590,
+    "array_eol_w": 3050,
+    "battery": "2.5 kWh lithium-ion (eclipse season and safe mode)",
+    "supercapacitors": "20 kg bank, ~50 kJ, ESA-EPPL-listed cell class (Nesscap) or Skeleton SpaceCap",
+    "bus_voltage_v": 100,
+    "loads_w": {
+      "laser": 2000,
+      "payload sensors and processing": 180,
+      "bus": 320,
+      "thermal pumps and heaters": 120,
+      "total firing": 2620,
+      "hall thruster (not simultaneous with firing)": 650
+    }
+  },
+  "thermal": {
+    "rejected_w": 2250,
+    "approach": "mechanically pumped single-phase loop from the laser cold plates to two deployable radiator panels (Airbus deployable-radiator / loop-heat-pipe heritage) plus the body anti-sun face",
+    "deployable_radiators": "two panels 2.0 x 0.85 m hinged from the anti-sun (+Y) face edges, both faces radiating, 6.8 m2, optical solar reflectors",
+    "body_radiator_m2": 0.9,
+    "radiator_temperature_k": 300,
+    "net_rejection_w_m2": 344,
+    "insulation": "multi-layer insulation with germanium- or ITO-coated outer Kapton (atomic oxygen and charging), survival heaters, louvers on the electronics radiator"
+  },
+  "propulsion": {
+    "thrusters": "two 600 W-class xenon Hall thrusters (Busek BHT-600 / SETS ST-40 / Astra ASE class), prime and redundant, on a two-axis thrust-vector platform at the ram face",
+    "thrust_mn": 35,
+    "isp_s": 1500,
+    "power_w": 650,
+    "propellant": "24 kg xenon in a 25 L COPV; 8.8 kg disposal reserve locked by software and a separate latch valve",
+    "dv_budget_ms": {
+      "disposal spiral 750->300 km x1.1": 273,
+      "1 deg plane change": 130,
+      "two 50 km altitude moves": 52,
+      "formation keeping 5 yr": 40,
+      "collision avoidance 5 yr": 15,
+      "margin": 60,
+      "total": 570
+    },
+    "plume_keepout": "45 deg half-angle cone about +X; radiators, arrays and optics all lie behind the thruster exit plane",
+    "attitude_backup": "no chemical RCS; wheels plus magnetorquers handle momentum; safe mode is sun-pointed with arrays fixed"
+  },
+  "adcs": {
+    "wheels": "four 4 N m s reaction wheels (Blue Canyon RW4 class) in a pyramid, isolated from the optical bench",
+    "star_trackers": "two heads (Sodern Auriga / BCT NST class), anti-sun and zenith-aft baffles",
+    "imu": "fibre-optic gyro (LN-200S class)",
+    "sun_sensors": "fine sun sensors on the sun face and coarse sensors on all faces",
+    "magnetorquers": "three 30 A m2 rods for wheel desaturation",
+    "gnss": "dual-antenna space GNSS receiver, 1 PPS to laser timing and crosslink terminal",
+    "pointing_1sigma_deg": 0.002
+  },
+  "comms": {
+    "crosslink": "one SDA-compatible optical terminal (Mynaric CONDOR Mk3 / CACI CrossBeam / Tesat SCOT80 class), 2.5 Gbps to 6,500 km, hemispherical gimbal on the zenith face; fleet mesh and Kepler optical relay",
+    "ttc": "S-band CCSDS transponder, two hemispherical patch antennas (zenith, nadir)",
+    "downlink": "X-band transmitter, 140 Mbps, nadir patch array: tracker imagery and the per-target firing log",
+    "relay": "L-band GEO relay terminal (Viasat InRange / Addvalue IDRS class) for anytime low-rate command and abort during engagements",
+    "data_products": "published firing log per target: time, range, pulse energy, energy on target, measured orbit change"
+  },
+  "structure_and_mechanisms": {
+    "primary_structure": "aluminium-honeycomb / CFRP facesheet panels on a machined aluminium frame; aft cradle for the gimbal",
+    "mmod": "stuffed Whipple bumper on the ram face over the xenon tank and laser bench",
+    "hdrm": "non-explosive actuators (EBAD NEA 9100 / TiNi Frangibolt class) on both wings, both radiators, the gimbal and the aperture door",
+    "cold_welding": "dissimilar metal pairs at every separable contact, sputtered MoS2 dry film on HDRM interfaces, Braycote 601EF in gimbal bearings, ceramic-coated latch pins (Galileo HGA lesson)",
+    "charging": "ITO-coated outer MLI, single-point ground, conductive array blanket backsheets (polar auroral zone)",
+    "radiation": "2-4 mm aluminium-equivalent electronics enclosures; ~5 krad/yr at 1.85 mm Al at 800 km SSO"
+  },
+  "mass_budget_kg": {
+    "structure and mechanisms": 55,
+    "beam director and optics": 51,
+    "laser (amp, THG, enclosure, drivers, supercaps)": 80,
+    "thermal (radiators, loop, MLI)": 45,
+    "power (arrays, battery, PCDU, harness)": 72,
+    "propulsion dry (thrusters, PPUs, tank)": 26,
+    "ADCS": 20,
+    "communications": 25,
+    "avionics": 9,
+    "acquisition sensors": 9,
+    "dry subtotal": 392,
+    "margin 18 %": 70,
+    "dry total": 462,
+    "xenon": 24,
+    "wet total": 486
+  },
+  "performance": {
+    "power_on_target_w": 98,
+    "coupling_assumed_uns_per_j": 50,
+    "firing_days_at_45pct_duty": {
+      "1 kg": 0.9,
+      "10 kg": 8.6,
+      "50 kg": 43,
+      "150 kg": 129
+    },
+    "pathfinder_goals": [
+      "deorbit several catalogued 1-50 kg fragments from the 700-900 km band",
+      "measure delivered impulse per joule on real, tumbling, mixed-material debris",
+      "measure UV optics degradation per shot under an oxygen-bled enclosure",
+      "demonstrate the fleet crosslink and the published firing log"
+    ]
+  },
+  "subsystems": [
+    {
+      "id": "bus",
+      "label": "Bus structure",
+      "color": "#c9a24a",
+      "explode": [
+        0,
+        0,
+        0
+      ],
+      "summary": "1.0 x 0.95 x 0.85 m ESPA-Grande-class body, 24-inch separation ring, aft cradle for the gimbal, MMOD bumper on the ram face.",
+      "vendors": "Apex Nova / York LX-CLASS / Airbus US Arrow 450 / True Anomaly Jackal class bus core"
+    },
+    {
+      "id": "beam_director",
+      "label": "Beam director",
+      "color": "#8fd3ff",
+      "explode": [
+        -1.2,
+        0,
+        0.3
+      ],
+      "summary": "0.45 m SiC Cassegrain on a two-axis yoke gimbal, fast steering mirror, contamination door, coude feed from the laser bench.",
+      "vendors": "Mersen Boostec SiC; BlueHalo / CEDRAT FSM; LCRD-class gimbal with inertial reference"
+    },
+    {
+      "id": "laser",
+      "label": "Laser",
+      "color": "#c7a0ff",
+      "explode": [
+        0,
+        0,
+        -1.0
+      ],
+      "summary": "20 J, 10 Hz, 1 ns, 343 nm. Yb:YAG multi-slab amplifier + LBO third harmonic in a pressurized O2-bearing enclosure. 2 kW in, 200 W UV out.",
+      "vendors": "Fibertek; Trumpf / Amphos; HiLASE-DiPOLE architecture"
+    },
+    {
+      "id": "tracking",
+      "label": "Tracking sensors",
+      "color": "#7bf0c0",
+      "explode": [
+        -0.8,
+        0,
+        -0.5
+      ],
+      "summary": "15 cm acquisition telescope, narrow-field tracker through the main aperture, LWIR camera, laser ranging receiver.",
+      "vendors": "SBV / Sapphire-class telescope; ADRAS-J-class camera suite"
+    },
+    {
+      "id": "solar_arrays",
+      "label": "Solar arrays",
+      "color": "#2f5fa8",
+      "explode": [
+        0,
+        -0.6,
+        0
+      ],
+      "summary": "Two roll-out blanket wings, 1.1 x 5.0 m, 11 m2, 3.6 kW BOL / 3.05 kW EOL, fixed sun-facing.",
+      "vendors": "Redwire ROSA Diamond class"
+    },
+    {
+      "id": "radiators",
+      "label": "Radiators",
+      "color": "#e8eef5",
+      "explode": [
+        0,
+        1.0,
+        0
+      ],
+      "summary": "Two deployable 2.0 x 0.85 m panels on the anti-sun face, 6.8 m2 both-sided, pumped-loop fed, 2.25 kW rejected at 300 K.",
+      "vendors": "Airbus deployable radiator / loop heat pipe heritage"
+    },
+    {
+      "id": "propulsion",
+      "label": "Propulsion",
+      "color": "#ff9a5c",
+      "explode": [
+        1.0,
+        0,
+        0
+      ],
+      "summary": "Two 600 W xenon Hall thrusters on a thrust-vector platform at the ram face, 25 L xenon tank, 570 m/s budget, locked disposal reserve.",
+      "vendors": "Busek BHT-600 / SETS ST-40 / Astra ASE"
+    },
+    {
+      "id": "adcs",
+      "label": "Attitude control",
+      "color": "#f5d76e",
+      "explode": [
+        0,
+        0,
+        0.9
+      ],
+      "summary": "Four reaction wheels, two star trackers, FOG IMU, magnetorquers, fine sun sensors, dual GNSS.",
+      "vendors": "Blue Canyon RW4; Sodern Auriga; Northrop LN-200S"
+    },
+    {
+      "id": "comms",
+      "label": "Communications",
+      "color": "#ff6f91",
+      "explode": [
+        0.4,
+        0.4,
+        1.0
+      ],
+      "summary": "SDA-compatible optical crosslink terminal (2.5 Gbps, 6,500 km), S-band TT&C, X-band downlink, L-band GEO relay.",
+      "vendors": "Mynaric CONDOR Mk3 / CACI CrossBeam; Syrlinks EWC31 / EWC27; Viasat InRange"
+    },
+    {
+      "id": "avionics",
+      "label": "Avionics & power electronics",
+      "color": "#9aa5b1",
+      "explode": [
+        0,
+        0.3,
+        -0.7
+      ],
+      "summary": "Flight computer, payload processor, laser safety interlock, PCDU, 2.5 kWh battery, 20 kg supercapacitor bank.",
+      "vendors": "rad-tolerant COTS; ESA-EPPL supercapacitor cells"
+    }
+  ]
+}

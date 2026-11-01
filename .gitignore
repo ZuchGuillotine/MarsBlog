@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Shepherd-1 scratch renders (final renders are committed)
+public/shepherd/renders/diag-*.png
+public/shepherd/renders/preview*.png

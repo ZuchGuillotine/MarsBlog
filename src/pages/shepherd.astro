@@ -1,0 +1,311 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ShepherdViewer from '../components/ShepherdViewer';
+import spec from '../../docs/shepherd-1/shepherd-1-spec.json';
+import sizing from '../../docs/shepherd-1/sizing.json';
+
+const subsystems = spec.subsystems.map((s) => ({
+  id: s.id,
+  label: s.label,
+  color: s.color,
+  summary: s.summary,
+  vendors: s.vendors,
+}));
+
+const keyNumbers = [
+  { value: '20 J', label: '343 nm pulses at 10 Hz, 1 ns: 200 W ultraviolet from 2 kW electrical' },
+  { value: '0.45 m', label: 'silicon-carbide beam director on a two-axis gimbal with a fast steering mirror' },
+  { value: '5–12 km', label: 'working range in co-orbital formation, 2.8 cm spot at 10 km' },
+  { value: '486 kg', label: 'wet mass on a 24-inch ESPA Grande port; 11 m² roll-out array, 6.8 m² radiator' },
+];
+
+const renders = [
+  { src: '/shepherd/renders/hero-aft-quarter.jpg', alt: 'Shepherd-1 from aft, sun side, beam director firing toward a debris fragment', caption: 'Aft quarter, sun side. The beam director sits in the aft cradle; wings roll out along nadir and zenith.' },
+  { src: '/shepherd/renders/hero-beam-and-target.jpg', alt: 'Shepherd-1 seen from near the debris target along the beam', caption: 'From the target. In shepherd mode the spacecraft flies 5–12 km ahead and fires back along the target’s velocity.' },
+  { src: '/shepherd/renders/hero-ram-quarter.jpg', alt: 'Ram face with the two Hall thrusters and Whipple bumper', caption: 'Ram face: two 600 W xenon Hall thrusters on a thrust-vector platform, stuffed-Whipple bumpers above and below.' },
+  { src: '/shepherd/renders/hero-anti-sun.jpg', alt: 'Anti-sun face with deployable radiators and crosslink terminal', caption: 'Anti-sun face: two deployable pumped-loop radiators, body OSR radiator, optical crosslink terminal and star trackers on the zenith edge.' },
+  { src: '/shepherd/renders/hero-telescope-close.jpg', alt: 'Close view of the beam director', caption: 'Beam director: 0.45 m SiC primary, Cassegrain secondary on a four-vane spider, contamination door open, LWIR camera and inertial reference unit on the tube.' },
+  { src: '/shepherd/renders/hero-wide.jpg', alt: 'Full deployed span above the Earth limb', caption: 'Deployed: 11.3 m from wing tip to wing tip along nadir–zenith, 5 m across the radiators.' },
+  { src: '/shepherd/renders/exploded.jpg', alt: 'Exploded view of the subsystems', caption: 'Exploded view. Laser bench below the deck, beam director aft, propulsion forward, radiators to the anti-sun side.' },
+  { src: '/shepherd/renders/stowed.jpg', alt: 'Stowed launch configuration', caption: 'Stowed for launch: 1.17 × 1.12 × 0.99 m on a 24-inch separation ring; wings rolled, radiators folded, telescope parked zenith.' },
+];
+
+const mass = Object.entries(spec.mass_budget_kg);
+const loads = Object.entries(spec.power.loads_w);
+const dv = Object.entries(spec.propulsion.dv_budget_ms);
+const pulsePlans = sizing.pulse_plans;
+const targets = sizing.targets.slice(0, 5);
+
+const components = [
+  ['Bus core', 'ESPA-Grande-class structure, avionics, ADCS and power conditioning from a commercial line', 'Apex Nova · York LX-CLASS · Airbus US Arrow 450 · True Anomaly Jackal'],
+  ['Laser', '20 J / 10 Hz / 1 ns at 343 nm; Yb:YAG oscillator and diode-pumped multi-slab amplifier, LBO third harmonic, sealed O₂-bearing enclosure', 'Fibertek (ATLAS, CATS) · Trumpf / Amphos · HiLASE–DiPOLE architecture'],
+  ['Beam director', '0.45 m SiC Cassegrain, two-axis yoke gimbal with hollow coudé axes, 55 mm fast steering mirror, inertial reference unit, contamination door', 'Mersen Boostec SiC · BlueHalo / CEDRAT / AeroVironment FSM · LCRD-class gimbal'],
+  ['Tracking', '15 cm acquisition telescope (V≈15), narrow-field tracker through the main aperture, LWIR camera, photon-counting ranging receiver', 'MSX SBV / Sapphire-class telescope · ADRAS-J-class camera suite'],
+  ['Power', 'Two roll-out blanket wings, 11 m², 3.6 kW BOL; 2.5 kWh battery; 20 kg supercapacitor pulse bank', 'Redwire ROSA Diamond · ESA-EPPL supercapacitor cells (Nesscap) / Skeleton SpaceCap'],
+  ['Thermal', 'Mechanically pumped loop, two deployable 2.0 × 0.85 m OSR radiators, body radiator, louvers, Ge/ITO-coated MLI', 'Airbus deployable radiator / loop-heat-pipe heritage'],
+  ['Propulsion', 'Two 600 W xenon Hall thrusters (prime + redundant) on a two-axis platform, 25 L COPV, locked disposal reserve', 'Busek BHT-600 · SETS ST-40 · Astra Spacecraft Engine'],
+  ['Attitude control', 'Four 4 N·m·s wheels, two star trackers, fibre-optic IMU, magnetorquers, fine sun sensors, dual GNSS', 'Blue Canyon RW4 · Sodern Auriga / BCT NST · Northrop LN-200S'],
+  ['Communications', 'SDA-compatible optical crosslink (2.5 Gbps, 6,500 km), S-band TT&C, X-band downlink, L-band GEO relay for anytime abort', 'Mynaric CONDOR Mk3 / CACI CrossBeam / Tesat SCOT80 · Syrlinks EWC31 / EWC27 · Viasat InRange'],
+  ['Mechanisms', 'Non-explosive release devices on wings, radiators, gimbal and door; dissimilar-metal contacts, MoS₂ dry film, Braycote bearings', 'EBAD NEA 9100 · TiNi Frangibolt · Moog / Honeybee mechanisms'],
+];
+
+const concerns = [
+  ['Cold welding', 'Dissimilar metal pairs at every separable contact, sputtered MoS₂ on release interfaces, ceramic-coated latch pins, Braycote in gimbal bearings. The Galileo high-gain antenna (1991) is the reference failure.'],
+  ['Laser-induced contamination', 'Aeolus lost UV throughput to carbonised outgassing on its optics; the fix was an oxygen trickle. Shepherd-1 seals the amplifier and third-harmonic stage in a pressurised O₂-bearing housing (EarthCARE ATLID) and bleeds O₂ at the exposed optics (Aeolus), with zeolite adsorber panels (ICESat-2).'],
+  ['Atomic oxygen and charging', 'Germanium- or ITO-coated outer Kapton on all MLI, conductive array backsheets, single-point ground. 750 km polar orbit crosses the auroral zone every revolution.'],
+  ['Micrometeoroids and debris', 'Stuffed-Whipple bumpers on the ram face over the xenon tank and laser bench; the orbit sits in the densest debris band in LEO.'],
+  ['Radiation', 'About 5 krad per year behind 1.85 mm of aluminium at 800 km sun-synchronous; 2–4 mm equivalent enclosures and rad-tolerant parts for a five-year life.'],
+  ['Thruster plume', 'Hall-thruster plumes spread about 45°; the thrusters exhaust along the ram direction and nothing sensitive lies ahead of the exit plane. The aperture door closes during burns.'],
+  ['Disposal', 'Natural decay from 750 km would exceed the FCC five-year rule, so disposal is active: a locked xenon reserve, a redundant thruster string, and the loiter-below rule so a dead shepherd falls before its targets.'],
+  ['Pointing', 'Bus pointing of 0.002° misses a 2.8 cm spot at 10 km by a factor of 25; the gimbal carries an inertial reference and the fast steering mirror closes the loop on target return light, as laser-communication terminals do.'],
+  ['Deconfliction', 'Space-based lasers register with the U.S. Space Force Laser Clearinghouse and receive predictive-avoidance windows; the interlock unit also refuses any shot with a protected satellite within 0.1° of the beam axis beyond the target.'],
+];
+
+const downloads = [
+  { href: '/shepherd/shepherd-1.glb', label: 'shepherd-1.glb', note: '3D model, glTF binary (imports into Blender, Unreal, Unity, Cinema 4D)' },
+  { href: '/shepherd/shepherd-1-stowed.glb', label: 'shepherd-1-stowed.glb', note: 'Launch configuration' },
+  { href: '/shepherd/shepherd-1-systems.svg', label: 'shepherd-1-systems.svg', note: 'Systems schematic with budgets' },
+  { href: '/shepherd/shepherd-1-engagement.svg', label: 'shepherd-1-engagement.svg', note: 'Engagement geometry and pulse plan' },
+  { href: '/shepherd/renders/shepherd-1-turntable.mp4', label: 'shepherd-1-turntable.mp4', note: 'Rendered 360° turntable, 6 s loop' },
+  { href: 'https://github.com/ZuchGuillotine/MarsBlog/tree/main/docs/shepherd-1', label: 'docs/shepherd-1', note: 'Design document, spec JSON, sizing script and research notes' },
+];
+---
+
+<BaseLayout
+  title="Shepherd-1: laser-ablation debris-remediation pathfinder"
+  description="Interactive 3D model, renders, schematics and budgets for Shepherd-1, a 486 kg ESPA-Grande-class spacecraft that deorbits catalogued debris fragments with a 343 nm pulsed laser."
+  ogImage="/shepherd/renders/hero-aft-quarter.jpg"
+  className="shepherd-page"
+  showDonationCTA={false}
+>
+  <main class="shepherd">
+    <header class="hero">
+      <div class="kicker"><span></span> Proposed spacecraft · v1 pitch-stage design</div>
+      <h1>Shepherd-1<br /><span>a satellite that shoots junk.</span></h1>
+      <p class="lede">
+        The pathfinder from <a href="/blog/the-case-for-attack-satellites">The Case for Attack Satellites</a>, drawn to the
+        component level: a 486 kg spacecraft on a commercial ESPA-Grande bus that flies a few kilometres ahead of a
+        catalogued debris fragment and lowers its orbit with ultraviolet laser pulses, one ablated microgram at a time.
+        Every subsystem below is sized, placed and matched to flown-class hardware; the laser is the one development item,
+        and it is labelled as such.
+      </p>
+      <dl class="numbers">
+        {keyNumbers.map((n) => (
+          <div><dt>{n.value}</dt><dd>{n.label}</dd></div>
+        ))}
+      </dl>
+    </header>
+
+    <section class="viewer-section" aria-label="Interactive 3D model">
+      <div class="viewer-shell">
+        <ShepherdViewer client:only="react" subsystems={subsystems} />
+      </div>
+      <p class="viewer-note">
+        Drag to orbit, scroll to zoom, hover or click a subsystem. The slider pulls the spacecraft apart by subsystem.
+        <kbd>v</kbd> hides the interface for screen recording. The beam and fragment are drawn at 9 m for visibility; the
+        real range is 5–12 km.
+      </p>
+    </section>
+
+    <section class="prose-block">
+      <h2>What it is</h2>
+      <p>
+        Shepherd-1 is the smallest spacecraft that can still do the job the article describes and measure the number the
+        article depends on: the impulse delivered per joule on real, tumbling, mixed-material debris. It carries a 20 J,
+        10 Hz, 1 ns laser at 343 nm behind a 0.45 m silicon-carbide mirror. In a dawn-dusk sun-synchronous orbit 50 km
+        below the 800 km band where the dangerous mass lives, it rolls out 11 m² of solar blanket, radiates 2.25 kW from
+        two deployable panels, and shepherds catalogued fragments of 1 to 50 kg down to a 200 km perigee: a 10 kg bracket
+        in about nine days of firing, a 50 kg fragment in about six weeks.
+      </p>
+      <p>
+        It keeps everything the article's physics requires: head-on firing so recoil only ever lowers perigee, the
+        loiter-below rule so a dead shepherd falls before its targets and oblateness drifts it between target planes for
+        free, a published per-target firing log, a locked disposal reserve. It changes the scale. The production unit in
+        the article is 2.3 t with a 28 kW array and a 3.3 kW ultraviolet laser; no commercial bus hosts that, and no
+        laser within a hundredfold of it has flown. Shepherd-1 is what fits on a rideshare port today, with the laser
+        held to a de-rated copy of a chain that already runs in a laboratory (HiLASE Bivoj: 50 J at 10 Hz at 343 nm).
+      </p>
+    </section>
+
+    <section class="gallery" aria-label="Renders">
+      <h2>Renders</h2>
+      <div class="video-shell">
+        <video controls loop muted playsinline preload="metadata" poster="/shepherd/renders/hero-aft-quarter.jpg">
+          <source src="/shepherd/renders/shepherd-1-turntable.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="grid">
+        {renders.map((r) => (
+          <figure>
+            <a href={r.src.replace('.jpg', '.png')}><img src={r.src} alt={r.alt} loading="lazy" width="2560" height="1440" /></a>
+            <figcaption>{r.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <section class="schematics" aria-label="Schematics">
+      <h2>Schematics</h2>
+      <figure>
+        <a href="/shepherd/shepherd-1-systems.svg"><img src="/shepherd/shepherd-1-systems.svg" alt="Shepherd-1 systems block diagram with power, thermal, optical and data paths" loading="lazy" /></a>
+        <figcaption>Systems schematic: power, heat, infrared, ultraviolet and data paths, with the mass and power budgets.</figcaption>
+      </figure>
+      <figure>
+        <a href="/shepherd/shepherd-1-engagement.svg"><img src="/shepherd/shepherd-1-engagement.svg" alt="Shepherd-1 engagement geometry" loading="lazy" /></a>
+        <figcaption>Engagement geometry: fly ahead and below, fire head-on, and the pulse plan that follows from a 0.45 m aperture.</figcaption>
+      </figure>
+    </section>
+
+    <section class="tables" aria-label="Budgets">
+      <h2>Budgets</h2>
+      <div class="table-grid">
+        <div>
+          <h3>Mass (kg)</h3>
+          <table>
+            <tbody>
+              {mass.map(([k, v]) => (
+                <tr class={k.includes('total') ? 'total' : ''}><th scope="row">{k}</th><td>{v}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Power while firing (W)</h3>
+          <table>
+            <tbody>
+              {loads.map(([k, v]) => (
+                <tr class={k.startsWith('total') ? 'total' : ''}><th scope="row">{k}</th><td>{v}</td></tr>
+              ))}
+              <tr><th scope="row">array, end of life</th><td>{spec.power.array_eol_w}</td></tr>
+            </tbody>
+          </table>
+          <h3>Delta-v (m/s)</h3>
+          <table>
+            <tbody>
+              {dv.map(([k, v]) => (
+                <tr class={k === 'total' ? 'total' : ''}><th scope="row">{k}</th><td>{v}</td></tr>
+              ))}
+              <tr><th scope="row">xenon loaded / needed</th><td>24 / 18 kg</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Pulse plan vs range</h3>
+          <table>
+            <thead><tr><th>range km</th><th>spot cm</th><th>pulse J</th><th>fluence / optimum</th></tr></thead>
+            <tbody>
+              {pulsePlans.map((p) => (
+                <tr class={p.fluence_fraction >= 0.85 ? 'ok' : ''}><td>{p.range_km}</td><td>{p.spot_cm.toFixed(1)}</td><td>{p.pulse_j.toFixed(1)}</td><td>{p.fluence_fraction.toFixed(2)}</td></tr>
+              ))}
+            </tbody>
+          </table>
+          <h3>Firing time from 800 km to 200 km perigee</h3>
+          <table>
+            <thead><tr><th>target</th><th>days at 50 µN·s/J</th><th>at 25</th></tr></thead>
+            <tbody>
+              {targets.map((t) => (
+                <tr><td>{t.target}</td><td>{t.firing_days_at_45pct_duty}</td><td>{t.firing_days_at_25uNs_per_J}</td></tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="fine">45 % firing duty (apogee half, sunlit); 98 W on target after pointing and surface-orientation losses.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="components" aria-label="Components">
+      <h2>Components and candidate hardware</h2>
+      <table class="components-table">
+        <thead><tr><th>Subsystem</th><th>What is on the vehicle</th><th>Candidate suppliers (public catalogue items)</th></tr></thead>
+        <tbody>
+          {components.map(([a, b, c]) => (
+            <tr><th scope="row">{a}</th><td>{b}</td><td>{c}</td></tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="fine">
+        Candidates are named to show that each slot has flown-class hardware behind it, not as endorsements or commitments.
+        Figures were compiled from public datasheets and press material in November 2026; the design document carries
+        the sources and their verification status.
+      </p>
+    </section>
+
+    <section class="concerns" aria-label="Design concerns">
+      <h2>What a reviewer will look for</h2>
+      <dl>
+        {concerns.map(([k, v]) => (
+          <div><dt>{k}</dt><dd>{v}</dd></div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="downloads" aria-label="Downloads">
+      <h2>Files</h2>
+      <ul>
+        {downloads.map((d) => (
+          <li><a href={d.href}>{d.label}</a><span>{d.note}</span></li>
+        ))}
+      </ul>
+      <p class="fine">
+        Status: {spec.status} Pitch-stage work from Population Mars; the engagement rules and coupling model are those of
+        the <a href="/blog/the-case-for-attack-satellites">article</a> and the OrbitFleet
+        <a href="https://orbitfleet.populationmars.com/debris" target="_blank" rel="noopener noreferrer">debris simulator</a>.
+      </p>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  :global(body.shepherd-page) { background: #06080b; }
+  .shepherd { --ink:#eef1f5; --muted:#9aa3ae; --line:rgba(255,255,255,.1); --uv:#c7a0ff; --cyan:#8fd3ff; min-height:100vh; color:var(--ink); background: radial-gradient(circle at 12% 0%, rgba(120,70,200,.16), transparent 34rem), radial-gradient(circle at 92% 30%, rgba(44,105,160,.12), transparent 36rem), #06080b; padding: clamp(3.5rem,6vw,5.5rem) clamp(1rem,3vw,2.5rem) 6rem; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  .shepherd > * { width:min(1480px,100%); margin-inline:auto; }
+  .kicker { color:#b9a6d6; font:600 .7rem/1.2 ui-monospace,SFMono-Regular,Menlo,monospace; text-transform:uppercase; letter-spacing:.2em; }
+  .kicker span { display:inline-block; width:2.75rem; height:1px; margin:0 .8rem .25rem 0; background:var(--uv); }
+  .hero { display:grid; grid-template-columns: minmax(0,1.2fr) minmax(18rem,.8fr); gap:1.4rem 4rem; align-items:end; padding-bottom:2.5rem; }
+  .hero .kicker, .hero .numbers { grid-column:1/-1; }
+  .hero h1 { margin:.6rem 0 0; max-width:16ch; font:600 clamp(2.9rem,5.4vw,5rem)/1 Inter,ui-sans-serif,system-ui,sans-serif; letter-spacing:-.05em; }
+  .hero h1 span { color:#b9c6d4; font-weight:500; font-family: Georgia,'Times New Roman',serif; font-style:italic; letter-spacing:-.02em; font-size:.62em; display:block; margin-top:.35rem; }
+  .lede { margin:0; max-width:40rem; color:#c0c7d1; font-size:clamp(1rem,1.3vw,1.15rem); line-height:1.7; }
+  .lede a { color:var(--cyan); text-decoration-color: rgba(143,211,255,.4); }
+  .numbers { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem; margin:1.5rem 0 0; padding-top:1.4rem; border-top:1px solid var(--line); }
+  .numbers div { min-width:0; }
+  .numbers dt { font:500 clamp(1.8rem,3vw,2.6rem)/1 Georgia,'Times New Roman',serif; letter-spacing:-.03em; color:#fff; }
+  .numbers dd { margin:.5rem 0 0; color:var(--muted); font-size:.82rem; line-height:1.5; }
+  .viewer-section { margin-top:1rem; }
+  .viewer-shell { height:min(78vh,820px); min-height:560px; border:1px solid var(--line); background:#04060a; box-shadow:0 30px 90px rgba(0,0,0,.45); overflow:hidden; }
+  .viewer-note { margin:.9rem 0 0; color:var(--muted); font-size:.8rem; line-height:1.55; }
+  .viewer-note kbd { padding:0 .3rem; border:1px solid rgba(255,255,255,.25); border-radius:3px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.74rem; }
+  h2 { margin:clamp(3rem,6vw,5rem) 0 1.2rem; padding-top:1.2rem; border-top:1px solid var(--line); font:500 clamp(1.7rem,2.6vw,2.4rem)/1.1 Georgia,'Times New Roman',serif; letter-spacing:-.02em; }
+  h3 { margin:1.4rem 0 .6rem; color:#b9c6d4; font:600 .68rem/1.2 ui-monospace,SFMono-Regular,Menlo,monospace; text-transform:uppercase; letter-spacing:.16em; }
+  .prose-block p { max-width:48rem; margin:0 0 1.2rem; color:#c9d0da; font-size:1.02rem; line-height:1.75; }
+  .video-shell { border:1px solid var(--line); background:#000; overflow:hidden; }
+  .video-shell video { display:block; width:100%; height:auto; aspect-ratio:16/9; }
+  .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.25rem; margin-top:1.25rem; }
+  figure { margin:0; }
+  figure img { display:block; width:100%; height:auto; border:1px solid var(--line); background:#000; }
+  figcaption { margin:.55rem 0 0; color:var(--muted); font-size:.78rem; line-height:1.5; }
+  .schematics figure + figure { margin-top:1.5rem; }
+  .table-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.5rem 2.5rem; }
+  table { width:100%; border-collapse:collapse; font-size:.8rem; line-height:1.4; font-variant-numeric:tabular-nums; }
+  th, td { padding:.42rem .5rem; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+  tbody th { font-weight:400; color:#c9d0da; }
+  td { color:#e7ecf2; text-align:right; }
+  thead th { color:var(--muted); font:600 .62rem/1.2 ui-monospace,SFMono-Regular,Menlo,monospace; text-transform:uppercase; letter-spacing:.1em; }
+  tr.total th, tr.total td { color:#fff; font-weight:600; border-top:1px solid rgba(255,255,255,.25); }
+  tr.ok td { color:var(--uv); }
+  .components-table td { text-align:left; color:#c9d0da; }
+  .components-table th[scope=row] { color:#fff; font-weight:600; white-space:nowrap; }
+  .components-table td:last-child { color:var(--muted); }
+  .fine { margin:.9rem 0 0; max-width:60rem; color:var(--muted); font-size:.76rem; line-height:1.55; }
+  .fine a { color:var(--cyan); }
+  .concerns dl { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.4rem 2rem; margin:0; }
+  .concerns dt { color:#fff; font-weight:600; font-size:.92rem; }
+  .concerns dd { margin:.4rem 0 0; color:var(--muted); font-size:.82rem; line-height:1.6; }
+  .downloads ul { margin:0; padding:0; list-style:none; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.6rem 2rem; }
+  .downloads li { display:grid; gap:.15rem; padding:.7rem 0; border-bottom:1px solid var(--line); }
+  .downloads a { color:var(--cyan); font:600 .82rem/1.3 ui-monospace,SFMono-Regular,Menlo,monospace; text-decoration:none; }
+  .downloads a:hover { text-decoration:underline; }
+  .downloads span { color:var(--muted); font-size:.78rem; }
+  @media (max-width: 1000px) { .hero { grid-template-columns:1fr; } .numbers { grid-template-columns:repeat(2,minmax(0,1fr)); } .table-grid, .concerns dl { grid-template-columns:1fr 1fr; } .grid { grid-template-columns:1fr; } }
+  @media (max-width: 640px) { .shepherd { padding-inline:.75rem; } .numbers, .table-grid, .concerns dl, .downloads ul { grid-template-columns:1fr; } .viewer-shell { height:70vh; min-height:480px; } }
+</style>
