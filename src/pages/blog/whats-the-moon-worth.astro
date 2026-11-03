@@ -1,0 +1,1535 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const sections = [
+  ['who-is-getting-paid', '1. Who is actually getting paid'],
+  ['five-forecasts', '2. Five forecasts measuring five different things'],
+  ['ice', '3. Ice nobody has touched'],
+  ['helium-3', '4. Helium-3, worked through'],
+  ['propellant', '5. Propellant, and why Starship cuts both ways'],
+  ['relays', '6. The relay China already has'],
+  ['tourism', '7. Tourism'],
+  ['who-is-betting', '8. Who is betting anyway'],
+  ['south-pole', '9. Who owns the south pole'],
+  ['two-clubs', '10. Two clubs and a working group'],
+  ['lunar-time', '11. The first rule will be a clock'],
+];
+
+// Figure 1: largest disclosed lunar awards, US$ millions.
+// "ceiling" marks a contract maximum rather than awarded task orders.
+const AWARD_MAX = 4820;
+const awardGroups = [
+  {
+    name: 'Crewed landers (Human Landing System)',
+    rows: [
+      { name: 'SpaceX, Starship HLS (Options A and B)', value: 4040, label: '$4.04B' },
+      { name: 'Blue Origin, Blue Moon', value: 3400, label: '$3.40B' },
+    ],
+  },
+  {
+    name: 'Relay and navigation',
+    rows: [
+      { name: 'Intuitive Machines, Near Space Network lunar relay', value: 4820, label: '$4.82B ceiling', ceiling: true },
+    ],
+  },
+  {
+    name: 'Robotic delivery (CLPS task orders, summed)',
+    rows: [
+      { name: 'Astrobotic (Peregrine, Griffin, 2026 Moon Base orders)', value: 700.4, label: '$700M' },
+      { name: 'Intuitive Machines (IM-1 to IM-4, 2026 order)', value: 467.2, label: '$467M' },
+      { name: 'Blue Origin (VIPER delivery, LTV delivery base)', value: 378, label: '$378M' },
+      { name: 'Firefly (Blue Ghost 1 and 2, 2026 order)', value: 349.5, label: '$350M' },
+      { name: 'Draper / ispace-U.S. (ended July 2026)', value: 73, label: '$73M' },
+    ],
+  },
+  {
+    name: 'Lunar terrain vehicles (May 2026)',
+    rows: [
+      { name: 'Lunar Outpost', value: 220, label: '$220M' },
+      { name: 'Astrolab', value: 219, label: '$219M' },
+    ],
+  },
+  {
+    name: 'Resources',
+    hi: true,
+    rows: [
+      { name: 'Interlune, helium-3 measurement payload (NASA)', value: 6.9, label: '$6.9M' },
+      { name: 'NASA regolith purchases, four companies (2020)', value: 0.025001, label: '$25,001, too small to draw' },
+    ],
+  },
+];
+const pct = (v: number) => `${((v / AWARD_MAX) * 100).toFixed(2)}%`;
+
+// Figure 4: relay and navigation services, first-service timing.
+const T0 = 2024;
+const T1 = 2031;
+const tx = (y: number) => `${(((y - T0) / (T1 - T0)) * 100).toFixed(2)}%`;
+const NOW = 2026 + 10 / 12;
+const relays = [
+  { name: 'Queqiao-2', who: 'China (CNSA)', status: 'Operating', from: 2024 + 2.6 / 12, to: NOW, kind: 'live', note: 'Launched 20 March 2024; served Chang’e-6' },
+  { name: 'Lunar Pathfinder', who: 'SSTL, ESA anchor customer', status: 'In testing', from: 2026 + 11 / 12, to: 2027 + 3 / 12, kind: 'planned', note: 'Rides Blue Ghost Mission 2, no earlier than December 2026' },
+  { name: 'Altus-1', who: 'Intuitive Machines, NASA NSN', status: 'Built, slipped', from: 2027, to: 2027 + 3 / 12, kind: 'planned', note: 'Rides IM-3, first quarter 2027; two more on IM-4' },
+  { name: 'Elytra Dark', who: 'Firefly', status: 'Planned', from: 2026 + 11 / 12, to: 2027 + 6 / 12, kind: 'planned', note: 'Orbiter on Blue Ghost Mission 2' },
+  { name: 'Moonlight', who: 'ESA, Telespazio', status: 'In development', from: 2028, to: 2030, kind: 'planned', note: 'Initial service 2028, full service 2030' },
+  { name: 'LNSS', who: 'JAXA, ArkEdge Space', status: 'In development', from: 2028, to: 2029 + 11 / 12, kind: 'planned', note: 'First navigation satellite around 2028 to 2029' },
+  { name: 'Parsec', who: 'Lockheed Martin (Crescent)', status: 'No date', from: null, to: null, kind: 'none', note: 'Announced March 2023; no launch announced' },
+];
+
+// Figure 5: the two clubs. Counts as of 2 November 2026.
+const ACCORDS = 78;
+const ILRS_STATES = ['China', 'Russia', 'Azerbaijan', 'Belarus', 'Egypt', 'Kazakhstan', 'Nicaragua', 'Pakistan', 'Senegal', 'Serbia', 'South Africa', 'Thailand', 'Venezuela'];
+const BOTH = ['Senegal', 'Serbia', 'Thailand'];
+const MOON_AGREEMENT = 17;
+const MOON_AGREEMENT_ALSO_ACCORDS = 12;
+---
+
+<BaseLayout
+  title="What's the Moon Worth? | Population Mars"
+  description="NASA agreed to buy lunar soil for $25,001 in 2020 and has received none. What the cislunar economy is paying today, what the forecasts count, who is betting, and who gets to write the rules."
+  ogImage="/images/blog/moon-worth-hero.jpg"
+  showDonationCTA={false}
+  className="moon-worth-page"
+>
+  <article class="article-shell">
+    <header class="article-hero">
+      <img
+        src="/images/blog/moon-worth-hero.jpg"
+        alt="The Moon, half lit from the left with its cratered south polar region tilted toward the viewer, and a small Earth in the distance"
+        width="2488"
+        height="1384"
+        fetchpriority="high"
+      />
+      <div class="title-card">
+        <h1>What&rsquo;s the Moon Worth?</h1>
+      </div>
+    </header>
+
+    <div class="article-grid">
+      <aside class="contents" aria-label="Article sections">
+        <p>Contents</p>
+        <ol>
+          {sections.map(([id, label]) => (
+            <li><a href={`#${id}`}>{label}</a></li>
+          ))}
+        </ol>
+      </aside>
+
+      <div class="article-copy">
+<p class="status"><em>Status as of 2 November 2026. Several of the missions and decisions below are scheduled for the next six months.</em></p>
+        <div class="opening">
+<p>On 3 December 2020, NASA agreed to buy small samples of lunar soil from four companies. Lunar Outpost bid $1. ispace&rsquo;s Japanese and European subsidiaries bid $5,000 each. Masten Space Systems bid $15,000. The total was $25,001, and <a href="https://www.nasa.gov/news-release/nasa-selects-companies-to-collect-lunar-resources-for-artemis-demonstrations">the point was legal rather than commercial</a>: a government paying a private company for material collected on the Moon, with title transferring on the surface, under the 1967 Outer Space Treaty.</p>
+<p>Six years later none of the four has delivered. Masten filed for bankruptcy in July 2022 and Astrobotic bought its assets for $4.5 million. ispace&rsquo;s first lander crashed in April 2023, and its second, carrying the European subsidiary&rsquo;s rover, hit the surface on 6 June 2025 after <a href="https://2022.ispace-inc.com/wp-content/uploads/2025/06/20250624-M2-Tech-Cause-Analysis-Press_Release.pdf">its laser rangefinder fed back measurements too late</a>. Lunar Outpost&rsquo;s rover flew on Intuitive Machines&rsquo; Athena lander in March 2025, which came down on its side; the rover never left the deck. Lunar Outpost did collect <a href="https://www.lunaroutpost.com/post/lunar-outpost-becomes-first-company-to-receive-payment-for-space-resources">a milestone payment in 2021</a>, of ten cents.</p>
+<p>The most-cited sale in lunar commerce is worth less than a used car, and it has not closed.</p>
+        </div>
+
+        <section id="who-is-getting-paid">
+          <h2>1. Who is actually getting paid</h2>
+<p>Almost all the money moving toward the Moon today comes from governments, mostly NASA. The largest awards are for vehicles and services NASA wants for its own astronauts.</p>
+
+          <figure class="fig bars-fig" aria-labelledby="fig-awards-title">
+            <p class="fig-kicker">Figure 1</p>
+            <p class="fig-title" id="fig-awards-title">The largest disclosed lunar awards, and the smallest</p>
+            <p class="fig-legend" aria-hidden="true"><span class="key solid"></span>Awarded value <span class="key outline"></span>Contract ceiling (maximum, not money spent) <span class="key hi"></span>Resources</p>
+            <ul class="bars">
+              {awardGroups.map((group) => (
+                <>
+                  <li class="bar-group"><span class="bar-group-name">{group.name}</span></li>
+                  {group.rows.map((row) => (
+                    <li class={`bar-row${group.hi ? ' hi' : ''}${row.ceiling ? ' ceiling' : ''}`} title={`${row.name}: ${row.label}`}>
+                      <span class="bar-name">{row.name}</span>
+                      <span class="bar-track"><span class="bar" style={`--w:${pct(row.value)}`}></span><span class="bar-val">{row.label}</span></span>
+                    </li>
+                  ))}
+                </>
+              ))}
+            </ul>
+            <figcaption>U.S. dollars, nominal, linear scale. CLPS rows sum the task orders each company has been awarded since 2019; not all of that has been paid, and the Blue Origin row includes the VIPER delivery option. Intuitive Machines&rsquo; IM-1 to IM-3 values are from NASA&rsquo;s original award announcements. Sources: NASA, company releases, <a href="https://spacepolicyonline.com/news/nasa-awards-initial-moon-base-rover-and-lander-contracts/">SpacePolicyOnline</a>, <a href="https://www.satellitetoday.com/space-economy/2026/06/30/astrobotic-firefly-aerospace-and-intuitive-machines-win-nasa-lunar-delivery-missions/">Via Satellite</a>, <a href="https://www.interlune.space/press-release/interlune-awarded-6-9-million-contract-from-nasa-for-lunar-resource-development">Interlune</a>.</figcaption>
+          </figure>
+
+<p>SpaceX holds $4.04 billion in Human Landing System awards from 2021 and 2022, and Blue Origin holds a $3.4 billion award from May 2023. Intuitive Machines holds a <a href="https://investors.intuitivemachines.com/news-releases/news-release-details/nasa-awards-intuitive-machines-near-space-network-contract">Near Space Network relay contract</a> with a ceiling of $4.82 billion through 2034, though a ceiling is a maximum and not money spent. Below those sit the Commercial Lunar Payload Services (CLPS) task orders, which pay companies to deliver NASA instruments to the surface. The original CLPS contract had a $2.6 billion ceiling through 2028. On 26 May 2026 NASA picked Astrolab ($219 million) and Lunar Outpost ($220 million) to build lunar terrain vehicles, and on 30 June it handed Astrobotic, Firefly and Intuitive Machines <a href="https://www.satellitetoday.com/space-economy/2026/06/30/astrobotic-firefly-aerospace-and-intuitive-machines-win-nasa-lunar-delivery-missions/">another $590 million</a> in delivery orders between them.</p>
+<p>NASA has since reorganized around this spending. On 24 March 2026 it announced a plan to spend <a href="https://www.bnnbloomberg.ca/business/2026/03/24/nasa-to-spend-us20-billion-on-moon-base-cancel-orbiting-lunar-station/">about $20 billion over seven years</a> on a base near the south pole and to pause the Gateway station. In February it had already changed Artemis III from a landing into <a href="https://spaceflightnow.com/2026/02/27/nasa-announces-major-overhaul-of-artemis-moon-program/">a crewed docking test in Earth orbit</a>, now targeted for summer 2027, which moves the first landing to Artemis IV in 2028. Artemis II flew four astronauts around the Moon from 1 to 10 April 2026, the first people beyond low Earth orbit since December 1972. The administration&rsquo;s <a href="https://spacepolicyonline.com/news/trump-fy2027-budget-supports-moon-missions-but-cuts-everything-else/">FY2027 request</a> asks for $8.5 billion for Artemis inside a NASA budget cut 23 percent overall.</p>
+<p>Other governments buy too. ESA signed an &euro;862 million contract with a Thales Alenia Space-led team in January 2025 for the Argonaut cargo lander, first mission in 2031, and a &euro;123 million first phase of its <a href="https://www.telespazio.com/en/news-and-stories-detail/-/detail/thales-alenia-space-moonlight-telespazio">Moonlight</a> communications system with Telespazio in October 2024. Japan funds ispace through subsidies; most of ispace&rsquo;s project revenue in the year to March 2026 was subsidy income, and the company forecasts a &yen;13 billion net loss for the current year.</p>
+<p>What government money has bought so far is a poor landing record.</p>
+
+          <figure class="fig score-fig" aria-labelledby="fig-landings-title">
+            <p class="fig-kicker">Figure 2</p>
+            <p class="fig-title" id="fig-landings-title">Commercial lunar landing attempts since April 2023</p>
+            <ol class="scorecard">
+              <li class="fail"><time>Apr 2023</time><b>Hakuto-R M1</b><span class="who">ispace</span><span class="outcome"><span class="glyph g-fail" aria-hidden="true"></span>Crashed</span></li>
+              <li class="none"><time>Jan 2024</time><b>Peregrine</b><span class="who">Astrobotic, CLPS</span><span class="outcome"><span class="glyph g-none" aria-hidden="true"></span>Propellant leak, no landing attempt</span></li>
+              <li class="partial"><time>Feb 2024</time><b>IM-1 Odysseus</b><span class="who">Intuitive Machines, CLPS</span><span class="outcome"><span class="glyph g-partial" aria-hidden="true"></span>Landed on its side</span></li>
+              <li class="ok"><time>Mar 2025</time><b>Blue Ghost M1</b><span class="who">Firefly, CLPS</span><span class="outcome"><span class="glyph g-ok" aria-hidden="true"></span>Landed upright, full mission</span></li>
+              <li class="partial"><time>Mar 2025</time><b>IM-2 Athena</b><span class="who">Intuitive Machines, CLPS</span><span class="outcome"><span class="glyph g-partial" aria-hidden="true"></span>Landed on its side, ended next day</span></li>
+              <li class="fail"><time>Jun 2025</time><b>Resilience M2</b><span class="who">ispace</span><span class="outcome"><span class="glyph g-fail" aria-hidden="true"></span>Crashed</span></li>
+              <li class="empty"><time>2026</time><b>No attempts</b><span class="who">Griffin, IM-3, Blue Ghost M2 and Blue Moon MK1 slipped</span><span class="outcome">&mdash;</span></li>
+            </ol>
+            <figcaption>Six attempts, one clean landing. Outcome is shown by symbol and label: filled circle, landed upright; half circle, landed on its side; open circle, no landing attempt; cross, crashed. Sources: <a href="https://www.pbs.org/newshour/science/private-lunar-lander-successfully-touches-down-on-the-moon-with-a-special-delivery-for-nasa">PBS</a>, <a href="https://www.nasa.gov/news-release/nasa-receives-some-data-before-intuitive-machines-ends-lunar-mission/">NASA</a>, <a href="https://www.pbs.org/newshour/science/japanese-private-lunar-lander-falls-silent-while-attempting-moon-touchdown">PBS</a>, company statements.</figcaption>
+          </figure>
+
+<p>Six commercial attempts since April 2023 produced one clean landing, Firefly&rsquo;s Blue Ghost Mission 1 on 2 March 2025. Government landers have done better in the same period: India&rsquo;s Chandrayaan-3 in August 2023 and China&rsquo;s Chang&rsquo;e-6 far-side sample return in June 2024. No lander of any kind has reached the surface in 2026. Astrobotic&rsquo;s Griffin, Intuitive Machines&rsquo; IM-3 and Firefly&rsquo;s second Blue Ghost have all slipped toward 2027, a New Glenn booster <a href="https://payloadspace.com/blue-origins-new-glenn-explodes-on-the-pad/">exploded during a static fire</a> on 28 May 2026 and grounded Blue Origin&rsquo;s first lander, and China <a href="https://spacenews.com/china-delays-change-7-lunar-south-pole-landing-mission-launch/">postponed Chang&rsquo;e-7</a> hours before its August launch.</p>
+<p>The market research firm NSR, now part of Analysys Mason, put the government and military share of the lunar market it forecast at <a href="https://www.space2connect.esa.int/media/presentations/S2C23_SESSION2.pdf">79 percent</a> in 2023. Our estimate for revenue already earned is higher, above 90 percent, because almost every lander dollar so far has come from NASA, ESA or Japan&rsquo;s subsidy programs. The wider space economy runs the other way: the Space Foundation counted <a href="https://www.exterrajsc.com/p/global-space-economy-grows-12-to">$686 billion in 2025</a>, of which about 79 percent was commercial.</p>
+<p class="callout">If you have bought payload space on a lunar lander, we would like to know what you paid per kilogram and what you got back. Send it to <a href="mailto:info@populationmars.com">info@populationmars.com</a>. The public price lists stop at &ldquo;contact us.&rdquo;</p>
+        </section>
+
+        <section id="five-forecasts">
+          <h2>2. Five forecasts measuring five different things</h2>
+<p>Most lunar-economy headlines trace back to a handful of studies. They count different quantities over different periods, so their totals cannot be compared or added.</p>
+<div class="table-shell" role="region" aria-label="Lunar market forecasts and what each counts" tabindex="0"><table class="forecast-table">
+<thead>
+<tr><th>Forecast</th><th>Figure</th><th>What it counts</th></tr>
+</thead>
+<tbody>
+<tr><td><a href="https://space-economy.esa.int/article/119/pwcs-lunar-market-assessment-market-trends-and-challenges-in-the-development-of-a-lunar-economy">PwC, 2021</a></td><td>~$170B (&euro;142B)</td><td>Cumulative lunar market, 2020&ndash;2040: transport, data, resource use</td></tr>
+<tr><td><a href="https://www.nsr.com/?p=32458">NSR, 2022</a></td><td>$105B</td><td>Lunar market over the following decade, 250+ missions</td></tr>
+<tr><td><a href="https://www.space2connect.esa.int/media/presentations/S2C23_SESSION2.pdf">NSR / Analysys Mason, 2023</a></td><td>$136.7B</td><td>Cumulative to 2032; 79% of it government or military</td></tr>
+<tr><td><a href="https://www.pwc.fr/en/publications/2026/01/lunar-market-assessment.html">PwC, Jan 2026</a></td><td>$93.9B&ndash;$127.3B</td><td>Lunar revenue by 2050 across mobility, communications, habitation, energy and water; $72.7B&ndash;$88.5B of infrastructure investment counted separately</td></tr>
+<tr><td><a href="https://www.deloitte.com/us/en/about/press-room/deloitte-report-lunar-economy-could-generate-up-to-566-billion-in-economic-value-through-2050.html">Deloitte, Aug 2026</a></td><td>$343B&ndash;$566B</td><td>Cumulative &ldquo;economic value&rdquo; to 2050, discounted to present value; not revenue</td></tr>
+<tr class="context-row"><td><a href="https://www.exterrajsc.com/p/global-space-economy-grows-12-to">Space Foundation</a>, for scale</td><td>$686B</td><td>The whole space economy in one year, 2025</td></tr>
+</tbody>
+</table></div>
+<p>NSR raised its decade estimate from $105 billion in 2022 to $136.7 billion in 2023. Since then the tone has cooled. In August 2026 Analysys Mason, which now owns NSR, <a href="https://www.analysysmason.com/research/content/articles/moon-base-plans/">counted 116 planned lunar missions</a> over the next ten years, 64 of them government-led, and wrote that NASA&rsquo;s base plans push the market further into the 2030s and make it more concentrated than earlier forecasts suggested.</p>
+<p>Space forecasts have missed before. In 2002 Futron and Zogby <a href="https://www.americaspace.com/wp-content/uploads/space_docs/Space_Tourism_Market_Study_Futron_2002.pdf">projected</a> that suborbital tourism would carry more than 15,000 passengers a year and earn more than $700 million by 2021. In 2021, fewer than twenty passengers flew on suborbital tourist flights.</p>
+        </section>
+
+        <section id="ice">
+          <h2>3. Ice nobody has touched</h2>
+<p>Every resource business plan for the Moon begins with water ice in the permanently shadowed craters near the poles. The evidence that it exists is good. The evidence for how much sits where, and in what form, is thin.</p>
+<p>The best direct number is still from 9 October 2009, when NASA&rsquo;s LCROSS mission drove a rocket stage into Cabeus crater and measured about 155 kilograms of water in the plume, <a href="https://www.aaas.org/news/science-lcross-impact-ejects-minerals-and-frozen-water-crater-moon">an estimated 5.6 percent ice by mass</a> at that spot, plus or minus 2.9. Spectra from India&rsquo;s Chandrayaan-1 <a href="https://moon.nasa.gov/news/59/ice-confirmed-at-the-moons-poles/">confirmed exposed surface ice</a> at both poles in 2018. In May 2026 a study of Chandrayaan-2 radar data reported possible subsurface ice in four of nine doubly shadowed craters near the south pole.</p>
+<p>The missions that were supposed to measure ice in place keep failing to arrive. NASA canceled the VIPER rover in July 2024 after spending about $450 million, then <a href="https://spacepolicyonline.com/news/viper-might-have-a-new-ride-to-the-moon-on-blue-origin/">revived it in September 2025</a> with a $190 million option for Blue Origin to deliver it, now no earlier than late 2027. The <a href="https://www.jpl.nasa.gov/news/nasas-lunar-trailblazer-moon-mission-ends/">Lunar Trailblazer</a> orbiter lost contact the day after launch in February 2025. PRIME-1, the drill and mass spectrometer on Athena, ended up running sideways on a tipped lander. ESA&rsquo;s PROSPECT drill is booked on Intuitive Machines&rsquo; IM-4, around 2027.</p>
+<p>As of November 2026, no one has drilled into the ground at a candidate mining site and measured ice. A Starpath Robotics job listing this year said it plainly: lunar ice accessibility remains unproven.</p>
+        </section>
+
+        <section id="helium-3">
+          <h2>4. Helium-3, worked through</h2>
+<p>Helium-3 is the lunar resource with the most signed paper behind it, and it has nothing to do with fusion power. The buyers want it for dilution refrigerators, which cool quantum computers and other instruments to millikelvin temperatures, and for neutron detectors.</p>
+<p>Interlune, founded by former Blue Origin executives, has assembled the agreements. Maybell Quantum <a href="https://www.interlune.space/press-release/interlune-announces-maybell-quantum-as-first-commercial-customer-to-buy-helium-3">agreed in May 2025</a> to buy thousands of liters for delivery between 2029 and 2035. The U.S. Department of Energy&rsquo;s Isotope Program agreed to buy 3 liters by April 2029, which DOE described as its first purchase of a resource from beyond Earth. In September 2025 <a href="https://bluefors.com/press-releases/bluefors-to-source-Helium-3-from-the-moon-with-interlune-to-power-next-phase-of-quantum-industry-growth/">Bluefors</a>, a Finnish maker of dilution refrigerators, agreed to buy up to 10,000 liters a year from 2028 to 2037, reported as worth about $300 million. Interlune says its agreements total nearly $500 million; that figure is the company&rsquo;s own. It raised an $18 million seed round in March 2024 and two $5 million convertible notes since. In May 2026 NASA gave it <a href="https://www.interlune.space/press-release/interlune-awarded-6-9-million-contract-from-nasa-for-lunar-resource-development">$6.9 million</a> for a payload that will heat regolith and measure the gas it releases, on a CLPS lander in 2028. With Vermeer it has built a <a href="https://payloadspace.com/interlune-unveils-prototype-lunar-helium-3-excavator/">full-scale excavator prototype</a> designed to take in 100 tonnes of regolith an hour.</p>
+<p>The difficulty is concentration. Apollo samples hold helium-3 at roughly 2 to 26 parts per billion. Here is what the Bluefors volume implies, using our own arithmetic and generous assumptions.</p>
+
+          <figure class="fig he3-fig" aria-labelledby="fig-he3-title">
+            <p class="fig-kicker">Figure 3</p>
+            <p class="fig-title" id="fig-he3-title">What one Bluefors-sized year of helium-3 takes</p>
+            <ol class="chain">
+              <li><span class="chain-val">10,000 L</span><span class="chain-what">of helium-3 gas a year, the Bluefors maximum</span></li>
+              <li><span class="chain-val">1.35 kg</span><span class="chain-what">the same gas by mass (about 7,430 liters per kilogram at standard conditions)</span></li>
+              <li><span class="chain-val">135,000&ndash;560,000 t</span><span class="chain-what">of regolith dug and heated a year, at 10 and 2.4 parts per billion, with every atom recovered</span></li>
+              <li><span class="chain-val">1,350&ndash;5,600 h</span><span class="chain-what">of excavator time a year at Interlune&rsquo;s 100 tonnes per hour; a year has 8,760</span></li>
+              <li><span class="chain-val">~21 GWh</span><span class="chain-what">to heat the low case to about 700&nbsp;&deg;C with no heat recovered, an average of about 2.4 MW</span></li>
+              <li class="chain-end"><span class="chain-val">~$27M</span><span class="chain-what">a year in revenue, at the roughly $20 million per kilogram Interlune cites</span></li>
+            </ol>
+            <div class="power-compare" role="img" aria-label="Average heating power of about 2.4 megawatts compared with NASA's 100 kilowatt lunar reactor goal, 24 times larger">
+              <p class="pc-title">Average heating power vs. NASA&rsquo;s first lunar reactor goal</p>
+              <div class="pc-row"><span class="pc-name">Heating, low case</span><span class="pc-track"><span class="pc-bar hi" style="--w:100%"></span></span><span class="pc-val">~2.4 MW</span></div>
+              <div class="pc-row"><span class="pc-name">NASA reactor goal</span><span class="pc-track"><span class="pc-bar" style="--w:4.17%"></span></span><span class="pc-val">0.1 MW</span></div>
+            </div>
+            <figcaption>Population Mars arithmetic. Assumes regolith heat capacity of about 0.8&nbsp;kJ/kg&middot;K and a temperature rise of about 700&nbsp;K; sorting the soil first, as Interlune plans to test, would reduce the mass heated. Grades from Apollo samples; excavator rate and price from Interlune; reactor goal from NASA&rsquo;s August 2025 directive.</figcaption>
+          </figure>
+
+<p>At 10 parts per billion with every atom recovered, 1.35 kilograms means digging and heating about 135,000 tonnes of regolith a year. At 2.4 parts per billion it is about 560,000 tonnes. Laszlo Keszthelyi of the U.S. Geological Survey has estimated that real recovery puts the figure at 100,000 to 1,000,000 tonnes per kilogram, and described the resource as probably unmineable. Heating even the low case to around 700&nbsp;&deg;C, without recovering any of the heat, takes on the order of 21 gigawatt-hours a year, an average of about 2.4 megawatts. NASA&rsquo;s goal for its first lunar reactor is 100 kilowatts.</p>
+<p>Interlune&rsquo;s NASA-funded payload includes a sorter, which suggests it plans to heat only part of what it digs, and its 2027 and 2028 payloads are meant to measure grades at real sites before anyone builds a plant. That is the right order to do things in. At the roughly $20 million per kilogram Interlune cites, the Bluefors volume is worth about $27 million a year, which matches the reported size of the deal. The company is also separating helium-3 from terrestrial helium on Earth, which is the more certain business in the near term.</p>
+        </section>
+
+        <section id="propellant">
+          <h2>5. Propellant, and why Starship cuts both ways</h2>
+<p>The older argument for lunar ice is rocket fuel. In 2016 United Launch Alliance <a href="https://www.space.com/33297-satellite-refueling-business-proposal-ula.html">said it would pay</a> $3,000 per kilogram for propellant delivered to low Earth orbit, $1,000 at the Earth-Moon L1 point and $500 on the lunar surface. A 2019 study led by the Colorado School of Mines <a href="https://www.space.com/moon-mining-space-exploration-report.html">estimated</a> that mining 2,450 tonnes of lunar water a year could support about $2.4 billion a year in propellant sales.</p>
+<p>Phil Metzger, a planetary scientist at the University of Central Florida, concluded in <a href="https://arxiv.org/abs/2303.09011">a 2023 paper in Acta Astronautica</a> that lunar propellant can be commercially viable, and that the deciding variable is how much it costs to land the mining hardware. That is where Starship enters on both sides. If launch from Earth becomes very cheap, Earth-launched propellant undercuts lunar propellant in low Earth orbit, and the lunar product only competes near the Moon. If landing hardware on the Moon becomes very cheap, the mine gets cheaper to build. Neither has happened yet. On 23 October, NASA Administrator Jared Isaacman was still describing a Starship ship-to-ship tanking test as a goal for the end of this year. Both SpaceX&rsquo;s lunar lander and any depot business depend on it.</p>
+        </section>
+
+        <section id="relays">
+          <h2>6. The relay China already has</h2>
+<p>Communications and navigation are the one lunar market with a customer that has already signed, because every surface mission needs a way to talk to Earth from the far side and the poles. They are also the area where the gap between plan and hardware is clearest.</p>
+
+          <figure class="fig relay-fig" aria-labelledby="fig-relay-title">
+            <p class="fig-kicker">Figure 4</p>
+            <p class="fig-title" id="fig-relay-title">Lunar relay and navigation services: operating, and promised</p>
+            <div class="relay-chart">
+              <div class="relay-axis" aria-hidden="true">
+                {[2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031].map((y) => (
+                  <span style={`--x:${tx(y)}`}>{y}</span>
+                ))}
+              </div>
+              <ol class="relay-rows">
+                {relays.map((r) => (
+                  <li class={`relay-${r.kind}`}>
+                    <span class="relay-label"><b>{r.name}</b>{r.who}</span>
+                    <span class="relay-track" title={`${r.name}: ${r.note}`}>
+                      {r.from !== null && r.to !== null && (
+                        <span class="relay-span" style={`--x1:${tx(r.from)};--x2:${tx(r.to)}`}></span>
+                      )}
+                      <span class="relay-note">{r.status}. {r.note}</span>
+                    </span>
+                  </li>
+                ))}
+              </ol>
+              <span class="relay-now" style={`--xn:${((NOW - T0) / (T1 - T0)).toFixed(4)}`} aria-hidden="true"><span>Now</span></span>
+            </div>
+            <figcaption>Solid bar: in service, from launch to today. Open bar: current target, from first service to full service where both are announced. Most of these dates have already slipped at least once. Sources: <a href="https://www.cnsa.gov.cn/english/n6465652/n6465653/c10489434/content.html">CNSA</a>, <a href="https://www.esa.int/ESA_Multimedia/Images/2026/10/Lunar_Pathfinder">ESA</a>, <a href="https://aerospaceamerica.aiaa.org/nasa-expects-one-lunar-launch-this-year-moon-base-manager-says/">Aerospace America</a>, <a href="https://fireflyspace.com/news/firefly-awarded-18-million-nasa-contract-to-provide-radio-frequency-calibration-services-from-lunar-orbit/">Firefly</a>, <a href="https://www.telespazio.com/en/news-and-stories-detail/-/detail/thales-alenia-space-moonlight-telespazio">Telespazio</a>, <a href="https://arkedgespace.com/en/news/2024-11-29_jaxaspacestrategyfund_lnss">ArkEdge Space</a>, <a href="https://spacenews.com/lockheed-martin-launches-crescent-space-to-deliver-critical-services-to-a-growing-lunar-economy/">SpaceNews</a>.</figcaption>
+          </figure>
+
+<p>China&rsquo;s Queqiao-2 relay launched on 20 March 2024 and supported the Chang&rsquo;e-6 far-side landing that June. No Western lunar relay has flown. SSTL&rsquo;s Lunar Pathfinder was still in testing in October 2026. Intuitive Machines&rsquo; first relay satellite slipped with IM-3 into the first quarter of 2027.</p>
+<p>Intuitive Machines is building around that contract anyway. It closed its purchase of Lanteris, formerly Maxar Space Systems, on 13 January 2026 for <a href="https://washingtontechnology.com/companies/2025/11/intuitive-machines-looks-beyond-moon-800m-acquisition/409330/">about $800 million</a>, then bought the Goonhilly Earth Station in Cornwall. Its backlog rose from $213 million at the end of 2025 to <a href="https://www.sec.gov/Archives/edgar/data/0001844452/000162828026056821/lunr-20260630.htm">$1.76 billion on 30 June 2026</a>, and its 2026 revenue guidance is $900 million to $1 billion. Most of that growth comes from satellite manufacturing for Earth orbit. The most prominent lunar company in the United States is becoming a satellite company that also goes to the Moon.</p>
+<p>Data storage on the Moon is a far smaller line. Lonestar Data Holdings flew an 8-terabyte storage payload on Athena in 2025, <a href="https://www.datacenterdynamics.com/en/news/lunar-data-center-firm-lonestar-data-raises-66m-swaps-ceo/">raised $6.6 million</a> in January 2026, and has a <a href="https://www.businesswire.com/news/home/20250402686697/en">preliminary $120 million agreement</a> with Sidus Space for storage spacecraft at Earth-Moon L1 between 2027 and 2030. It is not a firm order.</p>
+        </section>
+
+        <section id="tourism">
+          <h2>7. Tourism</h2>
+<p>dearMoon, Yusaku Maezawa&rsquo;s planned Starship flight around the Moon, was canceled on 1 June 2024. Space Adventures sold a Soyuz circumlunar seat for $100 million in 2005 and raised the price to $150 million in 2011; that flight never happened either. Blue Origin <a href="https://payloadspace.com/blue-pauses-space-tourism-to-focus-on-the-moon/">paused New Shepard</a> on 30 January 2026 to concentrate on its lunar lander. As of November 2026 no private customer has a scheduled flight to the Moon, and no company has published a price.</p>
+        </section>
+
+        <section id="who-is-betting">
+          <h2>8. Who is betting anyway</h2>
+<p>The largest private bets are on transport, and they rest on NASA&rsquo;s lander contracts.</p>
+<p>On 8 February 2026 Elon Musk <a href="https://www.scientificamerican.com/article/elon-musk-says-spacex-to-prioritize-landing-on-the-moon-instead-of-mars-city/">said SpaceX would prioritize</a> a &ldquo;self-growing city&rdquo; on the Moon, achievable in under ten years, ahead of Mars. Four months later SpaceX listed on Nasdaq, raising $75 billion. Blue Origin&rsquo;s pause of its suborbital tourism business is a bet in the same direction. Firefly <a href="https://www.washingtontechnology.com/companies/2025/08/firefly-captures-868m-ipo-proceeds/407318">went public</a> on 7 August 2025 at $45 a share, raising $868 million, and traded under $20 by December 2025; its backlog stood at about $1.5 billion in June 2026.</p>
+<p>The smaller bets are on resources and services: Interlune on helium-3, Starpath Robotics on ice mining with a <a href="https://payloadspace.com/starpath-raises-12m-for-lunar-ice-mining/">$12 million seed round</a>, Blue Origin&rsquo;s <a href="https://www.blueorigin.com/news/blue-alchemist-hits-major-milestone-toward-permanent-sustainable-lunar-infrastructure">Blue Alchemist</a> on making solar cells from regolith with $34.7 million in NASA money, ICON on building with regolith under a $57.2 million NASA contract. Our <a href="/space-economy/#lunar-title">space economy directory</a> lists the companies working on lunar delivery and resources, with links to their recent funding.</p>
+        </section>
+
+        <section id="south-pole">
+          <h2>9. Who owns the south pole</h2>
+<p>Article II of the <a href="https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/outerspacetreaty.html">Outer Space Treaty</a> says the Moon &ldquo;is not subject to national appropriation by claim of sovereignty, by means of use or occupation, or by any other means.&rdquo; More than 115 states are parties. Article I calls the exploration and use of space &ldquo;the province of all mankind.&rdquo; Article IX requires states to act with &ldquo;due regard&rdquo; to the interests of others and to consult before activities that could cause &ldquo;potentially harmful interference.&rdquo; The treaty is silent on whether a company can own what it digs up.</p>
+<p>Four countries have answered that question in national law. The U.S. Commercial Space Launch Competitiveness Act of 2015 says American citizens are entitled to space resources they obtain, &ldquo;including to possess, own, transport, use, and sell&rdquo; them. Luxembourg followed in 2017, the UAE in 2019 and Japan in 2021. The ispace sale to NASA was <a href="https://www.ispace-inc.com/wp-content/uploads/2024/12/EN_ispace_Space-Resources-Act_FINAL.pdf">licensed under Japan&rsquo;s law</a> and Luxembourg&rsquo;s.</p>
+<p>The 1979 <a href="https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/moon-agreement.html">Moon Agreement</a> took the other position. Article 11 calls the Moon&rsquo;s resources &ldquo;the common heritage of mankind&rdquo; and commits parties to set up an international regime to share the benefits once mining becomes feasible. The United States, the Soviet Union and China never joined. It has 17 parties. Saudi Arabia&rsquo;s <a href="https://anzsilperspective.com/saudi-arabias-withdrawal-from-the-moon-agreement/">withdrawal took effect</a> on 5 January 2024, the first withdrawal from any of the UN space treaties. By our count, 12 of the remaining 17 parties have also signed the Artemis Accords, which take the opposite view of resources.</p>
+
+<div class="table-shell" role="region" aria-label="Legal instruments that bear on lunar resources" tabindex="0"><table class="law-table">
+<thead>
+<tr><th>Instrument</th><th>Year</th><th>Who is in</th><th>On resources</th><th>Binding?</th></tr>
+</thead>
+<tbody>
+<tr><td>Outer Space Treaty</td><td>1967</td><td>More than 115 states</td><td>No national appropriation (Art. II); silent on extracted resources</td><td>Yes</td></tr>
+<tr><td>Liability Convention</td><td>1972</td><td>About 100 states</td><td>Liability for damage on the Moon only where fault is shown (Art. III)</td><td>Yes</td></tr>
+<tr><td>Moon Agreement</td><td>1979</td><td>17 states</td><td>&ldquo;Common heritage of mankind&rdquo;; resources in place cannot be property; future international regime (Art. 11)</td><td>Yes, for parties</td></tr>
+<tr><td>U.S. CSLCA, Title IV</td><td>2015</td><td>United States</td><td>Citizens may own and sell resources they obtain</td><td>National law</td></tr>
+<tr><td>Luxembourg, UAE, Japan laws</td><td>2017&ndash;2021</td><td>Three states</td><td>Licensed operators can own what they extract</td><td>National law</td></tr>
+<tr><td>Artemis Accords</td><td>2020</td><td>78 signatories</td><td>Extraction &ldquo;does not inherently constitute national appropriation&rdquo; (Sec. 10); safety zones (Sec. 11)</td><td>No, political</td></tr>
+<tr><td>ILRS agreements</td><td>2021</td><td>About 13 states</td><td>No published position on resource ownership</td><td>No, memoranda</td></tr>
+<tr><td>COPUOS draft principles</td><td>2027 target</td><td>All COPUOS members, by consensus</td><td>Extraction is not by itself appropriation; benefit-sharing &ldquo;considered&rdquo;</td><td>No</td></tr>
+</tbody>
+</table></div>
+
+<p>The practical contest is narrower than any treaty. Ice sits in permanently shadowed craters, and the places that get sunlight almost continuously, useful for power and for staying warm, sit on crater rims nearby. Martin Elvis, Tony Milligan and Alanna Krolikowski estimated in <a href="https://arxiv.org/abs/1608.01989">a 2016 paper in Space Policy</a> that the most illuminated peaks near the south pole total about one square kilometer. Using one, they argued, requires keeping others from disturbing it, which comes close to appropriation in practice. NASA&rsquo;s Artemis candidate landing regions all lie within six degrees of the south pole. Chang&rsquo;e-7&rsquo;s preferred target is <a href="https://www.planetary.org/space-missions/change-7">the rim of Shackleton crater</a>.</p>
+<p>Section 11 of the <a href="https://www3.nasa.gov/specials/artemis-accords/img/Artemis-Accords-signed-13Oct2020.pdf">Artemis Accords</a> lets signatories declare &ldquo;safety zones&rdquo; around their operations, which are supposed to be temporary, scaled to the activity and publicly notified. Critics say a zone around a power plant on a sunlit ridge can become a claim in all but name. The U.S. government has used the same argument about others. In August 2025 Acting Administrator Sean Duffy directed NASA to field a lunar reactor of at least 100 kilowatts by about 2030. His directive warned that the first country to deploy one <a href="https://www.scientificamerican.com/article/nasa-boosts-plans-for-nuclear-reactor-on-the-moon/">&ldquo;could declare a keep-out zone which would significantly inhibit the United States.&rdquo;</a> Russia and China signed a memorandum on a lunar power plant in May 2025, and in December Roscosmos <a href="https://wnn.world-nuclear.org/articles/russia-targeting-lunar-power-station-by-2036">contracted NPO Lavochkin</a> to build one by 2036.</p>
+        </section>
+
+        <section id="two-clubs">
+          <h2>10. Two clubs and a working group</h2>
+
+          <figure class="fig clubs-fig" aria-labelledby="fig-clubs-title">
+            <p class="fig-kicker">Figure 5</p>
+            <p class="fig-title" id="fig-clubs-title">Who has signed what, one dot per state</p>
+            <p class="fig-legend" aria-hidden="true"><span class="dot-key accords"></span>Artemis Accords <span class="dot-key ilrs"></span>ILRS <span class="dot-key both"></span>Both <span class="dot-key ma"></span>Moon Agreement only</p>
+            <div class="club">
+              <p class="club-name"><b>Artemis Accords</b> 78 signatories</p>
+              <div class="dots" role="img" aria-label={`78 dots for Artemis Accords signatories; ${BOTH.length} of them, ${BOTH.join(', ')}, have also joined the ILRS`}>
+                {Array.from({ length: ACCORDS }, (_, i) => (
+                  <span class={`dot ${i >= ACCORDS - BOTH.length ? 'both' : 'accords'}`}></span>
+                ))}
+              </div>
+              <p class="club-note">8 at signing in October 2020, 59 at the end of 2025, 78 after Vietnam on 28 October 2026. Last three dots: {BOTH.join(', ')}, also ILRS members.</p>
+            </div>
+            <div class="club">
+              <p class="club-name"><b>International Lunar Research Station</b> about 13 states</p>
+              <div class="dots" role="img" aria-label={`${ILRS_STATES.length} dots for ILRS member states: ${ILRS_STATES.join(', ')}`}>
+                {ILRS_STATES.map((s) => (
+                  <span class={`dot ${BOTH.includes(s) ? 'both' : 'ilrs'}`} title={s}></span>
+                ))}
+              </div>
+              <p class="club-note">China, Russia, Azerbaijan, Belarus, Egypt, Kazakhstan, Nicaragua, Pakistan, Senegal, Serbia, South Africa, Thailand, Venezuela. CNSA counts 17 countries and international organizations; its stated goal is 50.</p>
+            </div>
+            <div class="club">
+              <p class="club-name"><b>Moon Agreement</b> 17 parties</p>
+              <div class="dots" role="img" aria-label="17 dots for Moon Agreement parties; 12 of them have also signed the Artemis Accords">
+                {Array.from({ length: MOON_AGREEMENT }, (_, i) => (
+                  <span class={`dot ${i < MOON_AGREEMENT_ALSO_ACCORDS ? 'accords' : 'ma'}`}></span>
+                ))}
+              </div>
+              <p class="club-note">12 of the 17 have also signed the Artemis Accords, by our count against NASA&rsquo;s signatory list. The other five: Kazakhstan, Kuwait, Lebanon, Pakistan, Venezuela.</p>
+            </div>
+            <figcaption>Counts as of 2 November 2026. ILRS membership is reported differently by different trackers. Sources: <a href="https://www.nasa.gov/news-release/nasa-celebrates-as-artemis-accords-surpasses-75-signatories/">NASA</a>, <a href="https://en.vietnamplus.vn/vietnam-joins-artemis-accords-on-space-exploration-post354462.vnp">VietnamPlus</a>, <a href="https://www.ifri.org/en/media-external-article/china-adds-new-moon-base-project-partners-struggles-attract-national-level">IFRI</a>, <a href="https://payloadspace.com/senegal-becomes-2nd-ilrs-member-to-join-artemis-accords">Payload</a>, <a href="https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/status/index.html">UNOOSA</a>.</figcaption>
+          </figure>
+
+<p>The Artemis Accords are a set of non-binding political commitments that NASA and the State Department opened with eight signatories on 13 October 2020. Section 10 says that extracting space resources &ldquo;does not inherently constitute national appropriation.&rdquo; Vietnam became the 78th signatory on 28 October 2026. Nineteen countries signed this year, more than in any previous year, and many of them, including C&ocirc;te d&rsquo;Ivoire, Morocco, Mauritius, Uzbekistan and Vietnam, are not spacefaring powers.</p>
+<p>China and Russia signed the agreement for the International Lunar Research Station in March 2021, with a basic station near the south pole targeted for 2035. China has set <a href="https://spacenews.com/china-wants-50-countries-involved-in-its-ilrs-moon-base/">a goal of 50 countries</a> and international organizations within ten years. Independent counts put national members at about 13; CNSA says 17 countries and organizations. Thailand, Senegal and Serbia have joined both.</p>
+<p>The multilateral track runs through Vienna. A <a href="https://www.unoosa.org/oosa/en/ourwork/copuos/lsc/space-resources/index.html">working group</a> of the UN Committee on the Peaceful Uses of Outer Space (COPUOS), chaired by the Australian lawyer Steven Freeland, has been drafting an initial set of recommended principles for space resource activities. Drafts tabled in April 2026 say that extraction consistent with the Outer Space Treaty does not by itself amount to appropriation, keep resources &ldquo;in place&rdquo; as part of outer space, and treat benefit-sharing as something to be &ldquo;considered&rdquo; as appropriate. Iran and other delegations have pressed for language on unequal access and equitable shares. The United States <a href="https://vienna.usmission.gov/u-s-statement-agenda-item-9-65th-session-of-the-copuos-lsc-april-2026/">told the subcommittee</a> in April that debating how to share benefits from resources not yet extracted is counterproductive. Intersessional meetings started on 24 September, and the group aims for consensus at the Legal Subcommittee in April 2027. Whatever comes out will be non-binding. <a href="https://opiniojuris.org/2026/09/25/space-resources-and-the-anatomy-of-consensus-at-copuos/">Opinio Juris</a> has a readable account of how the drafts reached their current wording.</p>
+<p>For a country without a launch program, the bargain on offer has changed since 1979. The Moon Agreement promised a share of revenue from an international regime. The Accords offer access to missions and partners, in exchange for accepting that whoever extracts a resource can own it. Most of the countries signing this year have taken that bargain. At a meeting of Accords signatories in Antalya in October, ISRO&rsquo;s chairman urged that discussions under the Accords move into COPUOS, where everyone is in the room.</p>
+
+          <figure class="fig timeline-fig" aria-labelledby="fig-law-title">
+            <p class="fig-kicker">Figure 6</p>
+            <p class="fig-title" id="fig-law-title">Who decided what about the Moon, and when</p>
+            <ol class="timeline">
+              <li><time>10 Oct 1967</time><p>Outer Space Treaty enters into force.</p></li>
+              <li><time>11 Jul 1984</time><p>Moon Agreement enters into force. No major spacefaring state joins.</p></li>
+              <li><time>25 Nov 2015</time><p>U.S. law lets citizens own space resources they obtain.</p></li>
+              <li><time>20 Jul 2017</time><p>Luxembourg: &ldquo;Space resources are capable of being appropriated.&rdquo;</p></li>
+              <li><time>13 Oct 2020</time><p>Artemis Accords signed by eight countries.</p></li>
+              <li><time>3 Dec 2020</time><p>NASA agrees to buy lunar regolith for $25,001.</p></li>
+              <li><time>9 Mar 2021</time><p>China and Russia sign the ILRS agreement.</p></li>
+              <li><time>5 Jan 2024</time><p>Saudi Arabia&rsquo;s withdrawal from the Moon Agreement takes effect.</p></li>
+              <li><time>Aug 2025</time><p>NASA reactor directive warns of a rival &ldquo;keep-out zone.&rdquo;</p></li>
+              <li><time>24 Mar 2026</time><p>NASA plans a south-pole base; Gateway paused.</p></li>
+              <li><time>Apr 2026</time><p>COPUOS working group tables draft resource principles.</p></li>
+              <li><time>28 Oct 2026</time><p>Vietnam becomes the 78th Accords signatory.</p></li>
+              <li class="future"><time>31 Dec 2026</time><p>Deadline for a U.S. strategy on Coordinated Lunar Time.</p></li>
+              <li class="future"><time>Apr 2027</time><p>Target for consensus on the COPUOS principles.</p></li>
+            </ol>
+            <figcaption>Filled markers are past events; open markers are scheduled. Sources are linked in the text and listed below.</figcaption>
+          </figure>
+        </section>
+
+        <section id="lunar-time">
+          <h2>11. The first rule will be a clock</h2>
+<p>A clock on the Moon runs about 58.7 microseconds a day faster than one on Earth, because gravity there is weaker. That is enough to matter for navigation, where a microsecond of timing error is about 300 meters of position error. In April 2024 the White House Office of Science and Technology Policy <a href="https://www.nbcnews.com/science/space/white-house-nasa-create-standard-time-moon-rcna146373">told NASA to deliver a strategy</a> for Coordinated Lunar Time by 31 December 2026. The International Astronomical Union <a href="https://iau.org/static/resolutions/IAU2024_Resol2_English.pdf">defined a lunar coordinate time</a> in August 2024, and in October 2026 the General Conference on Weights and Measures <a href="https://www.bipm.org/en/cgpm-2026/resolution-6">adopted a resolution</a> on an international lunar reference time scale traceable to UTC. NASA had not published its strategy by the start of November.</p>
+<p>Of everything discussed here, lunar time is the one standard likely to be agreed by every spacefaring country before anyone mines anything. Every lander and relay will need it, Chinese ones included. Ownership of a sunlit ridge will be settled later, and probably by whoever is standing on it.</p>
+        </section>
+
+        <section id="sources" class="sources">
+          <h2>Sources</h2>
+          <ol class="source-list">
+            <li><a href="https://www.nasa.gov/news-release/nasa-selects-companies-to-collect-lunar-resources-for-artemis-demonstrations">NASA, companies selected to collect lunar resources (3 Dec 2020)</a></li>
+            <li><a href="https://www.lunaroutpost.com/post/lunar-outpost-becomes-first-company-to-receive-payment-for-space-resources">Lunar Outpost, first payment for space resources (2021)</a></li>
+            <li><a href="https://2022.ispace-inc.com/wp-content/uploads/2025/06/20250624-M2-Tech-Cause-Analysis-Press_Release.pdf">ispace, Mission 2 technical cause analysis (24 Jun 2025)</a></li>
+            <li><a href="https://www.ispace-inc.com/wp-content/uploads/2024/12/EN_ispace_Space-Resources-Act_FINAL.pdf">ispace, Mission 2 licence under Japan&rsquo;s Space Resources Act (Dec 2024)</a></li>
+            <li><a href="https://investors.intuitivemachines.com/news-releases/news-release-details/nasa-awards-intuitive-machines-near-space-network-contract">Intuitive Machines, Near Space Network lunar relay award (Sep 2024)</a></li>
+            <li><a href="https://spacepolicyonline.com/news/nasa-awards-initial-moon-base-rover-and-lander-contracts/">SpacePolicyOnline, initial Moon Base rover and lander contracts (May 2026)</a></li>
+            <li><a href="https://www.satellitetoday.com/space-economy/2026/06/30/astrobotic-firefly-aerospace-and-intuitive-machines-win-nasa-lunar-delivery-missions/">Via Satellite, June 2026 CLPS delivery awards</a></li>
+            <li><a href="https://www.astrobotic.com/astrobotic-awarded-2-nasa-contracts-for-clps-moon-base-missions/">Astrobotic, Moon Base CLPS awards (Jun 2026)</a></li>
+            <li><a href="https://www.ispace-inc.com/2026/07/15/ispace-u-s-update-on-contract-with-draper/">ispace-U.S., update on Draper contract (Jul 2026)</a></li>
+            <li><a href="https://www.bnnbloomberg.ca/business/2026/03/24/nasa-to-spend-us20-billion-on-moon-base-cancel-orbiting-lunar-station/">Reuters via BNN Bloomberg, NASA Moon base plan (24 Mar 2026)</a></li>
+            <li><a href="https://spaceflightnow.com/2026/02/27/nasa-announces-major-overhaul-of-artemis-moon-program/">Spaceflight Now, Artemis overhaul (27 Feb 2026)</a></li>
+            <li><a href="https://www.opb.org/article/2026/04/10/artemis-ii-astronauts-return-from-moon-with-a-splashdown-to-close-out-a-record-breaking-lunar-voyage">OPB, Artemis II splashdown (10 Apr 2026)</a></li>
+            <li><a href="https://spacepolicyonline.com/news/trump-fy2027-budget-supports-moon-missions-but-cuts-everything-else/">SpacePolicyOnline, FY2027 NASA budget request</a></li>
+            <li><a href="https://www.telespazio.com/en/news-and-stories-detail/-/detail/thales-alenia-space-moonlight-telespazio">Telespazio, Moonlight programme</a></li>
+            <li><a href="https://www.pbs.org/newshour/science/private-lunar-lander-successfully-touches-down-on-the-moon-with-a-special-delivery-for-nasa">PBS, Blue Ghost Mission 1 landing (Mar 2025)</a></li>
+            <li><a href="https://www.nasa.gov/news-release/nasa-receives-some-data-before-intuitive-machines-ends-lunar-mission/">NASA, IM-2 mission ends (Mar 2025)</a></li>
+            <li><a href="https://www.pbs.org/newshour/science/japanese-private-lunar-lander-falls-silent-while-attempting-moon-touchdown">PBS, ispace Mission 2 (Jun 2025)</a></li>
+            <li><a href="https://payloadspace.com/blue-origins-new-glenn-explodes-on-the-pad/">Payload, New Glenn static-fire explosion (May 2026)</a></li>
+            <li><a href="https://spacenews.com/china-delays-change-7-lunar-south-pole-landing-mission-launch/">SpaceNews, Chang&rsquo;e-7 delayed (Aug 2026)</a></li>
+            <li><a href="https://www.space2connect.esa.int/media/presentations/S2C23_SESSION2.pdf">NSR, lunar market presentation, ESA Space2Connect (2023)</a></li>
+            <li><a href="https://www.exterrajsc.com/p/global-space-economy-grows-12-to">Summary of the Space Foundation 2026 report on the 2025 space economy</a></li>
+            <li><a href="https://space-economy.esa.int/article/119/pwcs-lunar-market-assessment-market-trends-and-challenges-in-the-development-of-a-lunar-economy">ESA, PwC lunar market assessment (2021)</a></li>
+            <li><a href="https://www.nsr.com/?p=32458">NSR, Moon Market Analysis, 2nd edition (2022)</a></li>
+            <li><a href="https://www.pwc.fr/en/publications/2026/01/lunar-market-assessment.html">PwC, Lunar Market Assessment, 2nd edition (Jan 2026)</a></li>
+            <li><a href="https://www.deloitte.com/us/en/about/press-room/deloitte-report-lunar-economy-could-generate-up-to-566-billion-in-economic-value-through-2050.html">Deloitte, Building the Lunar Economy (Aug 2026)</a></li>
+            <li><a href="https://www.analysysmason.com/research/content/articles/moon-base-plans/">Analysys Mason, Moon base plans and the lunar market (Aug 2026)</a></li>
+            <li><a href="https://www.americaspace.com/wp-content/uploads/space_docs/Space_Tourism_Market_Study_Futron_2002.pdf">Futron/Zogby, Space Tourism Market Study (2002)</a></li>
+            <li><a href="https://www.aaas.org/news/science-lcross-impact-ejects-minerals-and-frozen-water-crater-moon">AAAS, LCROSS results in Science (2010)</a></li>
+            <li><a href="https://moon.nasa.gov/news/59/ice-confirmed-at-the-moons-poles/">NASA, ice confirmed at the Moon&rsquo;s poles (2018)</a></li>
+            <li><a href="https://spacepolicyonline.com/news/viper-might-have-a-new-ride-to-the-moon-on-blue-origin/">SpacePolicyOnline, VIPER revived with Blue Origin (Sep 2025)</a></li>
+            <li><a href="https://www.jpl.nasa.gov/news/nasas-lunar-trailblazer-moon-mission-ends/">JPL, Lunar Trailblazer mission ends (Jul 2025)</a></li>
+            <li><a href="https://www.interlune.space/press-release/interlune-announces-maybell-quantum-as-first-commercial-customer-to-buy-helium-3">Interlune, Maybell Quantum and DOE agreements (May 2025)</a></li>
+            <li><a href="https://bluefors.com/press-releases/bluefors-to-source-Helium-3-from-the-moon-with-interlune-to-power-next-phase-of-quantum-industry-growth/">Bluefors, helium-3 agreement with Interlune (Sep 2025)</a></li>
+            <li><a href="https://www.interlune.space/press-release/interlune-awarded-6-9-million-contract-from-nasa-for-lunar-resource-development">Interlune, NASA contract (May 2026)</a></li>
+            <li><a href="https://payloadspace.com/interlune-unveils-prototype-lunar-helium-3-excavator/">Payload, Interlune excavator prototype (May 2025)</a></li>
+            <li><a href="https://popsci.com/science/interlune-moon-mining">Popular Science, on Interlune and helium-3 grades</a></li>
+            <li><a href="https://www.space.com/33297-satellite-refueling-business-proposal-ula.html">Space.com, ULA propellant prices (2016)</a></li>
+            <li><a href="https://www.space.com/moon-mining-space-exploration-report.html">Space.com, commercial lunar propellant architecture study (2019)</a></li>
+            <li><a href="https://arxiv.org/abs/2303.09011">Metzger, Economics of in-space industry and competitiveness of lunar-derived rocket propellant (2023)</a></li>
+            <li><a href="https://www.cnsa.gov.cn/english/n6465652/n6465653/c10489434/content.html">CNSA, Queqiao-2 launch (Mar 2024)</a></li>
+            <li><a href="https://www.esa.int/ESA_Multimedia/Images/2026/10/Lunar_Pathfinder">ESA, Lunar Pathfinder in testing (Oct 2026)</a></li>
+            <li><a href="https://aerospaceamerica.aiaa.org/nasa-expects-one-lunar-launch-this-year-moon-base-manager-says/">Aerospace America, lunar launch schedule (2026)</a></li>
+            <li><a href="https://washingtontechnology.com/companies/2025/11/intuitive-machines-looks-beyond-moon-800m-acquisition/409330/">Washington Technology, Intuitive Machines&ndash;Lanteris deal (Nov 2025)</a></li>
+            <li><a href="https://www.sec.gov/Archives/edgar/data/0001844452/000162828026056821/lunr-20260630.htm">Intuitive Machines, Form 10-Q for Q2 2026</a></li>
+            <li><a href="https://www.datacenterdynamics.com/en/news/lunar-data-center-firm-lonestar-data-raises-66m-swaps-ceo/">DatacenterDynamics, Lonestar funding (Jan 2026)</a></li>
+            <li><a href="https://www.businesswire.com/news/home/20250402686697/en">Business Wire, Lonestar and Sidus Space agreement (Apr 2025)</a></li>
+            <li><a href="https://payloadspace.com/blue-pauses-space-tourism-to-focus-on-the-moon/">Payload, Blue Origin pauses New Shepard (Jan 2026)</a></li>
+            <li><a href="https://www.scientificamerican.com/article/elon-musk-says-spacex-to-prioritize-landing-on-the-moon-instead-of-mars-city/">Scientific American, SpaceX prioritizes the Moon (Feb 2026)</a></li>
+            <li><a href="https://www.washingtontechnology.com/companies/2025/08/firefly-captures-868m-ipo-proceeds/407318">Washington Technology, Firefly IPO (Aug 2025)</a></li>
+            <li><a href="https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/outerspacetreaty.html">UNOOSA, Outer Space Treaty</a></li>
+            <li><a href="https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/moon-agreement.html">UNOOSA, Moon Agreement</a></li>
+            <li><a href="https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/status/index.html">UNOOSA, status of international agreements</a></li>
+            <li><a href="https://anzsilperspective.com/saudi-arabias-withdrawal-from-the-moon-agreement/">ANZSIL Perspective, Saudi Arabia&rsquo;s withdrawal from the Moon Agreement</a></li>
+            <li><a href="https://arxiv.org/abs/1608.01989">Elvis, Milligan &amp; Krolikowski, The Peaks of Eternal Light, Space Policy (2016)</a></li>
+            <li><a href="https://arxiv.org/abs/2103.09045">Elvis, Krolikowski &amp; Milligan, Concentrated lunar resources, Phil. Trans. R. Soc. A (2021)</a></li>
+            <li><a href="https://www.planetary.org/space-missions/change-7">The Planetary Society, Chang&rsquo;e-7</a></li>
+            <li><a href="https://www3.nasa.gov/specials/artemis-accords/img/Artemis-Accords-signed-13Oct2020.pdf">The Artemis Accords (text)</a></li>
+            <li><a href="https://www.scientificamerican.com/article/nasa-boosts-plans-for-nuclear-reactor-on-the-moon/">Scientific American, NASA lunar reactor directive (Aug 2025)</a></li>
+            <li><a href="https://wnn.world-nuclear.org/articles/russia-targeting-lunar-power-station-by-2036">World Nuclear News, Russian lunar power station by 2036 (Dec 2025)</a></li>
+            <li><a href="https://www.nasa.gov/news-release/nasa-celebrates-as-artemis-accords-surpasses-75-signatories/">NASA, Artemis Accords pass 75 signatories (Sep 2026)</a></li>
+            <li><a href="https://en.vietnamplus.vn/vietnam-joins-artemis-accords-on-space-exploration-post354462.vnp">VietnamPlus, Vietnam joins the Artemis Accords (Oct 2026)</a></li>
+            <li><a href="https://spacenews.com/china-wants-50-countries-involved-in-its-ilrs-moon-base/">SpaceNews, China&rsquo;s ILRS membership goal (Sep 2024)</a></li>
+            <li><a href="https://www.ifri.org/en/media-external-article/china-adds-new-moon-base-project-partners-struggles-attract-national-level">IFRI, ILRS partners</a></li>
+            <li><a href="https://payloadspace.com/senegal-becomes-2nd-ilrs-member-to-join-artemis-accords">Payload, Senegal joins both ILRS and the Accords</a></li>
+            <li><a href="https://www.unoosa.org/oosa/en/ourwork/copuos/lsc/space-resources/index.html">UNOOSA, Working Group on Legal Aspects of Space Resource Activities</a></li>
+            <li><a href="https://opiniojuris.org/2026/09/25/space-resources-and-the-anatomy-of-consensus-at-copuos/">Opinio Juris, space resources and consensus at COPUOS (Sep 2026)</a></li>
+            <li><a href="https://vienna.usmission.gov/u-s-statement-agenda-item-9-65th-session-of-the-copuos-lsc-april-2026/">U.S. Mission Vienna, statement to the COPUOS Legal Subcommittee (Apr 2026)</a></li>
+            <li><a href="https://www.nbcnews.com/science/space/white-house-nasa-create-standard-time-moon-rcna146373">NBC News, White House directs a lunar time standard (Apr 2024)</a></li>
+            <li><a href="https://iau.org/static/resolutions/IAU2024_Resol2_English.pdf">IAU, Resolution II (2024)</a></li>
+            <li><a href="https://www.bipm.org/en/cgpm-2026/resolution-6">BIPM, CGPM 2026 Resolution 6</a></li>
+          </ol>
+          <p class="credit">Hero image: rendered by Population Mars from NASA Lunar Reconnaissance Orbiter data, the LROC color mosaic and LOLA elevation model from NASA&rsquo;s CGI Moon Kit. Earth texture from NASA&rsquo;s Blue Marble. Relief exaggerated about seven times.</p>
+        </section>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  :global(html) {
+    scroll-padding-top: 5.5rem;
+  }
+
+  :global(body.moon-worth-page) {
+    background: #eeede8;
+    color: #1f2226;
+  }
+
+  :global(.moon-worth-page main) {
+    background: #eeede8;
+  }
+
+  .article-shell {
+    --paper: #fcfcfb;
+    --ink: #1f2226;
+    --muted: #5d6168;
+    --rule: #d8d6cf;
+    --rule-strong: #a5a296;
+    --accent: #b0731f;
+    --accent-ink: #8a5713;
+    --second: #3366a8;
+    --context: #b8b4a9;
+    --tint: #f3f1ea;
+    width: min(1320px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: clamp(1rem, 3vw, 2.5rem) 0 clamp(4rem, 8vw, 8rem);
+  }
+
+  .article-hero {
+    position: relative;
+    overflow: hidden;
+    min-height: clamp(22rem, 52vw, 38rem);
+    background: #050608;
+    box-shadow: 0 2rem 6rem rgba(20, 22, 28, 0.2);
+  }
+
+  .article-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 45%, rgba(3, 4, 6, 0.15) 62%, rgba(3, 4, 6, 0.82));
+    pointer-events: none;
+  }
+
+  .article-hero img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% 50%;
+  }
+
+  .title-card {
+    position: absolute;
+    z-index: 1;
+    right: clamp(1.25rem, 5vw, 5.5rem);
+    bottom: clamp(1.25rem, 5vw, 4.75rem);
+    left: clamp(1.25rem, 5vw, 5.5rem);
+    color: #fbf8f1;
+  }
+
+  .title-card h1 {
+    max-width: 11ch;
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(3.25rem, 7vw, 6.4rem);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.05em;
+    text-wrap: balance;
+    text-shadow: 0 0.15em 0.8em rgba(0, 0, 0, 0.45);
+  }
+
+  .article-grid {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 48rem) 1fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
+    padding: clamp(3rem, 7vw, 6.5rem) clamp(1rem, 4vw, 4rem);
+    background: var(--paper);
+    box-shadow: 0 2rem 6rem rgba(20, 22, 28, 0.08);
+  }
+
+  .contents {
+    position: sticky;
+    top: 6rem;
+    padding-top: 0.35rem;
+    border-top: 2px solid var(--accent);
+  }
+
+  .contents p {
+    margin: 0.85rem 0 1rem;
+    color: var(--accent-ink);
+    font: 700 0.7rem/1.2 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .contents ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contents li + li {
+    border-top: 1px solid rgba(176, 115, 31, 0.22);
+  }
+
+  .contents a {
+    display: block;
+    padding: 0.65rem 0;
+    color: #6a6e74;
+    font: 600 0.7rem/1.4 ui-sans-serif, system-ui, sans-serif;
+    text-decoration: none;
+    transition: color 160ms ease, transform 160ms ease;
+  }
+
+  .contents a:hover,
+  .contents a:focus-visible {
+    color: var(--accent-ink);
+    transform: translateX(0.2rem);
+  }
+
+  .article-copy {
+    grid-column: 2;
+    min-width: 0;
+    color: var(--ink);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.05rem, 1.35vw, 1.19rem);
+    line-height: 1.78;
+  }
+
+  .article-copy p {
+    margin: 0 0 1.45em;
+  }
+
+  .opening {
+    margin-bottom: 5rem;
+  }
+
+  .opening p:first-child {
+    color: #3a3d42;
+    font-size: clamp(1.35rem, 2.3vw, 1.78rem);
+    line-height: 1.52;
+  }
+
+  .opening p:first-child::first-letter {
+    float: left;
+    margin: 0.05em 0.12em 0 0;
+    color: var(--accent-ink);
+    font-size: 4.35em;
+    line-height: 0.75;
+  }
+
+  section {
+    scroll-margin-top: 5.5rem;
+  }
+
+  section + section {
+    margin-top: 5.5rem;
+  }
+
+  h2 {
+    margin: 0 0 1.25rem;
+    padding-top: 1.35rem;
+    border-top: 1px solid var(--rule-strong);
+    color: #191b1f;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: clamp(1.85rem, 3.2vw, 2.8rem);
+    font-weight: 650;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  a {
+    color: var(--accent-ink);
+    text-decoration-color: rgba(138, 87, 19, 0.42);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  a:hover {
+    text-decoration-color: currentColor;
+  }
+
+  a:focus-visible,
+  .table-shell:focus-visible {
+    outline: 3px solid rgba(138, 87, 19, 0.6);
+    outline-offset: 4px;
+  }
+
+  .status {
+    margin: 0 0 2rem;
+    padding: 0.7rem 0.9rem;
+    border-left: 3px solid var(--accent);
+    background: var(--tint);
+    color: var(--muted);
+    font: 500 0.82rem/1.5 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .status em {
+    font-style: normal;
+  }
+
+  .callout {
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    background: var(--tint);
+    font-size: 0.95em;
+  }
+
+  /* Tables */
+  .table-shell {
+    --table-min: 40rem;
+    width: 100%;
+    margin: 2.25rem 0 2rem;
+    overflow-x: auto;
+    border: 1px solid var(--rule-strong);
+    border-radius: 0.2rem;
+    background: var(--paper);
+    box-shadow: 0 0.85rem 2.25rem rgba(20, 22, 28, 0.06);
+    overscroll-behavior-inline: contain;
+    scrollbar-color: var(--accent) #e8e5dc;
+  }
+
+  table {
+    width: 100%;
+    min-width: var(--table-min);
+    border-collapse: collapse;
+    color: #2a2d31;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.84rem;
+    line-height: 1.45;
+  }
+
+  th,
+  td {
+    padding: 0.8rem 0.85rem;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    text-align: left;
+  }
+
+  th:last-child,
+  td:last-child {
+    border-right: 0;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #25282d;
+    color: #f8f7f3;
+    font-weight: 700;
+  }
+
+  tbody tr:nth-child(even) {
+    background: var(--tint);
+  }
+
+  tbody tr:hover {
+    background: #ebe7da;
+  }
+
+  .forecast-table td:nth-child(2) {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    font-weight: 650;
+  }
+
+  .forecast-table .context-row td {
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .law-table {
+    --table-min: 46rem;
+  }
+
+  /* Figures */
+  .fig {
+    margin: 2.75rem 0 2.5rem;
+    padding: 1.4rem 1.4rem 1.2rem;
+    border: 1px solid var(--rule-strong);
+    background: var(--paper);
+    box-shadow: 0 0.85rem 2.25rem rgba(20, 22, 28, 0.06);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .fig-kicker {
+    margin: 0 0 0.3rem !important;
+    color: var(--accent-ink);
+    font: 700 0.68rem/1.2 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .fig-title {
+    margin: 0 0 1.1rem !important;
+    color: #191b1f;
+    font-size: 1.05rem;
+    font-weight: 650;
+    line-height: 1.3;
+    text-wrap: balance;
+  }
+
+  .fig-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 1rem;
+    margin: -0.4rem 0 1rem !important;
+    color: var(--muted);
+    font-size: 0.74rem;
+    line-height: 1.3;
+  }
+
+  .fig figcaption {
+    margin-top: 1.1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.55;
+  }
+
+  /* Figure 1: award bars */
+  .key {
+    display: inline-block;
+    width: 0.9rem;
+    height: 0.6rem;
+    margin-right: 0.35rem;
+    border-radius: 0 3px 3px 0;
+    vertical-align: middle;
+  }
+
+  .key.solid {
+    background: var(--context);
+  }
+
+  .key.outline {
+    border: 1.5px solid #6f6b60;
+    background: transparent;
+  }
+
+  .key.hi {
+    background: var(--accent);
+  }
+
+  .bars {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .bar-group {
+    margin-top: 1rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--rule-strong);
+    color: #191b1f;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .bar-group:first-child {
+    margin-top: 0;
+  }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    gap: 0.8rem;
+    align-items: center;
+    padding: 0.32rem 0;
+  }
+
+  .bar-name {
+    color: var(--muted);
+    font-size: 0.76rem;
+    line-height: 1.3;
+  }
+
+  .bar-track {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-width: 0;
+  }
+
+  .bar {
+    flex: none;
+    width: calc(var(--w) * 0.7);
+    min-width: 2px;
+    height: 0.8rem;
+    border-radius: 0 4px 4px 0;
+    background: var(--context);
+  }
+
+  .bar-row.ceiling .bar {
+    border: 1.5px solid #6f6b60;
+    background: repeating-linear-gradient(90deg, transparent 0 6px, rgba(111, 107, 96, 0.08) 6px 7px);
+  }
+
+  .bar-row.hi .bar {
+    background: var(--accent);
+  }
+
+  .bar-row.hi .bar-name {
+    color: var(--ink);
+    font-weight: 650;
+  }
+
+  .bar-val {
+    color: var(--ink);
+    font: 600 0.72rem/1.2 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Figure 2: landing scorecard */
+  .scorecard {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .scorecard li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.8rem 0.85rem;
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--rule-strong);
+    background: var(--tint);
+  }
+
+  .scorecard time {
+    color: var(--muted);
+    font: 700 0.7rem/1.3 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  .scorecard b {
+    color: #191b1f;
+    font-size: 0.92rem;
+  }
+
+  .scorecard .who {
+    color: var(--muted);
+    font-size: 0.74rem;
+    line-height: 1.35;
+  }
+
+  .scorecard .outcome {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    color: var(--ink);
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .glyph {
+    position: relative;
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    margin-right: 0.45rem;
+    border-radius: 50%;
+    vertical-align: -0.08rem;
+    box-sizing: border-box;
+  }
+
+  .g-ok {
+    background: var(--accent);
+  }
+
+  .g-partial {
+    border: 2px solid var(--ink);
+    background: linear-gradient(90deg, var(--ink) 0 50%, transparent 50% 100%);
+  }
+
+  .g-none {
+    border: 2px solid var(--ink);
+  }
+
+  .g-fail {
+    border-radius: 0;
+  }
+
+  .g-fail::before,
+  .g-fail::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -0.05rem;
+    width: 0.85rem;
+    height: 2px;
+    background: var(--ink);
+  }
+
+  .g-fail::before {
+    transform: rotate(45deg);
+  }
+
+  .g-fail::after {
+    transform: rotate(-45deg);
+  }
+
+  .scorecard li.ok {
+    border-top-color: var(--accent);
+    background: #fbf3e4;
+  }
+
+
+  .scorecard li.empty {
+    border-style: dashed;
+    border-top-width: 1px;
+    background: transparent;
+  }
+
+  /* Figure 3: helium-3 chain */
+  .chain {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+
+  .chain li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.6rem 0 0.6rem 1.6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .chain li::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0.7rem;
+    color: var(--muted);
+    font: 700 0.68rem/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  .chain-val {
+    color: #191b1f;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .chain-what {
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .chain li.chain-end .chain-val {
+    color: var(--accent-ink);
+  }
+
+  .power-compare {
+    margin-top: 1.2rem;
+  }
+
+  .pc-title {
+    margin: 0 0 0.5rem !important;
+    color: #191b1f;
+    font-size: 0.8rem;
+    font-weight: 650;
+  }
+
+  .pc-row {
+    display: grid;
+    grid-template-columns: 9rem minmax(0, 1fr) 4.5rem;
+    gap: 0.7rem;
+    align-items: center;
+    padding: 0.25rem 0;
+  }
+
+  .pc-name {
+    color: var(--muted);
+    font-size: 0.76rem;
+  }
+
+  .pc-track {
+    min-width: 0;
+  }
+
+  .pc-bar {
+    display: block;
+    width: var(--w);
+    min-width: 3px;
+    height: 0.8rem;
+    border-radius: 0 4px 4px 0;
+    background: var(--context);
+  }
+
+  .pc-bar.hi {
+    background: var(--accent);
+  }
+
+  .pc-val {
+    color: var(--ink);
+    font: 600 0.72rem/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Figure 4: relay timeline */
+  .relay-chart {
+    position: relative;
+    --label-w: 12rem;
+  }
+
+  .relay-axis {
+    position: relative;
+    height: 1.4rem;
+    margin-left: var(--label-w);
+    border-bottom: 1px solid var(--rule-strong);
+  }
+
+  .relay-axis span {
+    position: absolute;
+    left: var(--x);
+    bottom: 0.35rem;
+    transform: translateX(-50%);
+    color: var(--muted);
+    font: 500 0.68rem/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .relay-axis span:first-child {
+    transform: none;
+  }
+
+  .relay-axis span:last-child {
+    transform: translateX(-100%);
+  }
+
+  .relay-rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .relay-rows li {
+    display: grid;
+    grid-template-columns: var(--label-w) minmax(0, 1fr);
+    align-items: stretch;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .relay-label {
+    padding: 0.55rem 0.9rem 0.55rem 0;
+    color: var(--muted);
+    font-size: 0.72rem;
+    line-height: 1.3;
+  }
+
+  .relay-label b {
+    display: block;
+    color: var(--ink);
+    font-size: 0.82rem;
+  }
+
+  .relay-track {
+    position: relative;
+    min-height: 3.4rem;
+    background: linear-gradient(90deg, var(--rule) 1px, transparent 1px) 0 0 / calc(100% / 7) 100%;
+  }
+
+  .relay-span {
+    position: absolute;
+    top: 0.65rem;
+    left: var(--x1);
+    width: calc(var(--x2) - var(--x1));
+    min-width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 0.35rem;
+  }
+
+  .relay-live .relay-span {
+    background: var(--second);
+  }
+
+  .relay-planned .relay-span {
+    border: 2px solid var(--second);
+    background: var(--paper);
+  }
+
+  .relay-note {
+    position: absolute;
+    z-index: 2;
+    text-shadow: 0 0 3px var(--paper), 0 0 3px var(--paper), 0 0 3px var(--paper);
+    top: 1.65rem;
+    left: 0.4rem;
+    right: 0.4rem;
+    color: var(--ink);
+    font-size: 0.7rem;
+    line-height: 1.3;
+  }
+
+  .relay-none .relay-note {
+    top: 0.65rem;
+    color: var(--muted);
+  }
+
+  .relay-now {
+    position: absolute;
+    top: 1.4rem;
+    bottom: 0;
+    left: calc(var(--label-w) + (100% - var(--label-w)) * var(--xn));
+    border-left: 1px solid #191b1f;
+    pointer-events: none;
+  }
+
+  .relay-now span {
+    position: absolute;
+    top: -1.3rem;
+    left: -0.3rem;
+    transform: translateX(-100%);
+    padding: 0 0.15rem;
+    color: #191b1f;
+    font: 700 0.62rem/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: var(--paper);
+  }
+
+  /* Figure 5: clubs */
+  .dot-key {
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    margin-right: 0.3rem;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
+
+  .dot-key.accords,
+  .dot.accords {
+    background: var(--accent);
+  }
+
+  .dot-key.ilrs,
+  .dot.ilrs {
+    background: var(--second);
+  }
+
+  .dot-key.both,
+  .dot.both {
+    background: linear-gradient(90deg, var(--accent) 0 50%, var(--second) 50% 100%);
+  }
+
+  .dot-key.ma,
+  .dot.ma {
+    background: transparent;
+    box-shadow: inset 0 0 0 2px #77736a;
+  }
+
+  .club + .club {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .club-name {
+    margin: 0 0 0.5rem !important;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  .club-name b {
+    margin-right: 0.4rem;
+    color: #191b1f;
+    font-size: 0.9rem;
+  }
+
+  .dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .dot {
+    display: block;
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 50%;
+  }
+
+  .club-note {
+    margin: 0.55rem 0 0 !important;
+    color: var(--muted);
+    font-size: 0.74rem;
+    line-height: 1.45;
+  }
+
+  /* Figure 6: timeline */
+  .timeline {
+    position: relative;
+    margin: 0;
+    padding: 0 0 0 1.2rem;
+    list-style: none;
+    border-left: 2px solid var(--rule-strong);
+  }
+
+  .timeline li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    gap: 0.9rem;
+    padding: 0.45rem 0;
+  }
+
+  .timeline li::before {
+    content: '';
+    position: absolute;
+    top: 0.85rem;
+    left: calc(-1.2rem - 6px);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 2px var(--paper);
+  }
+
+  .timeline li.future::before {
+    background: var(--paper);
+    border: 2px solid var(--accent);
+    width: 6px;
+    height: 6px;
+  }
+
+  .timeline time {
+    color: var(--accent-ink);
+    font: 700 0.74rem/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .timeline p {
+    margin: 0 !important;
+    color: var(--ink);
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  /* Sources */
+  .source-list {
+    margin: 0;
+    padding-left: 1.3rem;
+    color: var(--muted);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .source-list li + li {
+    margin-top: 0.45rem;
+  }
+
+  .credit {
+    margin-top: 1.5rem !important;
+    color: var(--muted);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1020px) {
+    .article-grid {
+      grid-template-columns: minmax(0, 48rem);
+      justify-content: center;
+    }
+
+    .contents {
+      position: static;
+      display: none;
+    }
+
+    .article-copy {
+      grid-column: 1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .article-shell {
+      width: 100%;
+      padding-top: 0;
+    }
+
+    .article-hero {
+      min-height: 28rem;
+    }
+
+    .article-hero img {
+      object-position: 72% 50%;
+    }
+
+    .title-card h1 {
+      font-size: clamp(3rem, 15vw, 5rem);
+    }
+
+    .article-grid {
+      padding: 3rem 1rem 4.5rem;
+      box-shadow: none;
+    }
+
+    .article-copy {
+      font-size: 1.04rem;
+      line-height: 1.72;
+    }
+
+    .opening {
+      margin-bottom: 4rem;
+    }
+
+    section + section {
+      margin-top: 4rem;
+    }
+
+    .table-shell {
+      width: calc(100vw - 1.5rem);
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+
+    table {
+      font-size: 0.78rem;
+    }
+
+    th,
+    td {
+      padding: 0.7rem;
+    }
+
+    .fig {
+      margin-inline: -0.4rem;
+      padding: 1.1rem 0.9rem 1rem;
+    }
+
+    .bar-row {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+
+    .bar {
+      width: calc(var(--w) * 0.62);
+    }
+
+    .chain li {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+    }
+
+    .pc-row {
+      grid-template-columns: 6.5rem minmax(0, 1fr) 3.8rem;
+    }
+
+    .relay-chart {
+      --label-w: 6.6rem;
+    }
+
+    .relay-label {
+      font-size: 0.64rem;
+    }
+
+    .relay-label b {
+      font-size: 0.74rem;
+    }
+
+    .relay-axis span:nth-child(even),
+    .relay-axis span:nth-child(3) {
+      visibility: hidden;
+    }
+
+    .relay-track {
+      min-height: 4.4rem;
+    }
+
+    .relay-note {
+      font-size: 0.64rem;
+    }
+
+    .timeline li {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
+    }
+
+    .contents a {
+      transition: none;
+    }
+  }
+
+  @media print {
+    :global(body.moon-worth-page),
+    :global(.moon-worth-page main) {
+      background: #fff;
+    }
+
+    .article-shell {
+      width: 100%;
+      padding: 0;
+    }
+
+    .article-hero {
+      min-height: 8cm;
+      box-shadow: none;
+    }
+
+    .article-grid {
+      display: block;
+      padding: 1.5cm 0;
+      box-shadow: none;
+    }
+
+    .contents {
+      display: none;
+    }
+
+    .article-copy {
+      font-size: 10.5pt;
+      line-height: 1.5;
+    }
+
+    .table-shell {
+      overflow: visible;
+      box-shadow: none;
+      break-inside: avoid;
+    }
+
+    table {
+      min-width: 0;
+      font-size: 7.5pt;
+    }
+
+    th {
+      position: static;
+    }
+
+    .fig {
+      break-inside: avoid;
+      box-shadow: none;
+    }
+
+    a {
+      color: inherit;
+    }
+  }
+</style>
