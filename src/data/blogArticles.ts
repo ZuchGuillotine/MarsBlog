@@ -9,6 +9,15 @@ export interface BlogArticleSummary {
 
 export const blogArticles: BlogArticleSummary[] = [
   {
+    title: 'Tomorrow, You’re Only a Day Away',
+    description:
+      'Voyager 1 took 49 years to travel one light-day. Here’s what it found, what its map got wrong, and what it would take to beat its time.',
+    href: '/blog/tomorrow-youre-only-a-day-away/',
+    image: '/images/blog/voyager-light-day/voyager-1-launch.jpg',
+    imageAlt: 'Black-and-white photograph of Voyager 1 lifting off aboard a Titan IIIE–Centaur rocket',
+    topic: 'Deep-space exploration',
+  },
+  {
     title: "What's the Moon Worth?",
     description:
       'NASA agreed to buy lunar soil for $25,001 in 2020 and has received none. What the cislunar economy is paying today, what the forecasts actually count, who is betting, and who gets to write the rules.',

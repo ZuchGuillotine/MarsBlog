@@ -1,0 +1,1007 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Tomorrow, You’re Only a Day Away"
+  description="Voyager 1 took 49 years to travel one light-day. Here’s what it found, what its map got wrong, and what it would take to beat its time."
+  ogImage="/images/blog/voyager-light-day/voyager-1-launch.jpg"
+  showDonationCTA={false}
+  className="voyager-page"
+>
+  <article class="voyager-shell">
+    <header class="hero">
+      <div class="title">
+        <p class="eyebrow">Deep-space exploration</p><h1>
+          Tomorrow, You’re Only a Day Away
+        </h1>
+      </div>
+      <figure class="hero-photo">
+        <img
+          src="/images/blog/voyager-light-day/voyager-1-launch.jpg"
+          width="1178"
+          height="1500"
+          fetchpriority="high"
+          alt="Black-and-white photograph of the Titan IIIE–Centaur lifting off with Voyager 1 above the launch pad"
+        /><figcaption>
+          Voyager 1 leaves Cape Canaveral, September 5, 1977. <a
+            href="https://science.nasa.gov/photojournal/voyager-1-launch-1977/"
+            >NASA/JPL-Caltech</a>
+        </figcaption>
+      </figure>
+    </header>
+    <div class="layout">
+      <nav class="contents" aria-label="Article contents">
+        <p class="mono">Contents</p><ol>
+          <li><a href="#journey">1. The 49-year day</a></li>
+          <li><a href="#map">2. The map back home</a></li>
+          <li><a href="#speed">3. How fast is fast?</a></li>
+          <li><a href="#builders">4. Who’s building it?</a></li>
+          <li><a href="#sources">Sources</a></li>
+        </ol>
+      </nav>
+      <div class="article">
+        <p class="dek">
+          Voyager 1 took 49 years to reach a distance light covers in a day.
+          What did we get for those years, and how many could we take off the
+          next trip?
+        </p>
+        <p class="date mono">
+          <time datetime="2026-11-18">November 18, 2026</time>
+        </p>
+        <p>
+          At 2:16 a.m. Pacific on November 18, Voyager 1 became the first thing
+          humans have made to reach one light-day from Earth. Send it a radio
+          command at that distance and the signal gets there tomorrow. An
+          immediate reply gets back about a day after that. The spacecraft
+          needed 49 years and a little over two months to put that much space
+          between us. <a
+            href="https://science.nasa.gov/mission/voyager/where-are-voyager-1-and-voyager-2-now/"
+            >NASA’s mission tracker</a
+          >.
+        </p>
+        <p>
+          That’s 25.9 billion kilometers, or 173 times the average distance from
+          Earth to the Sun. At Voyager’s current speed of about 17 kilometers
+          per second relative to the Sun, it would cover the average Earth–Moon
+          distance in a little over six hours. Let it run at that speed for a
+          full year and it still covers only about 30 light-minutes. <a
+            href="https://science.nasa.gov/mission/voyager/voyager-1/"
+            >NASA’s Voyager 1 mission history</a
+          >.
+        </p>
+
+        <section id="journey">
+          <h2>1. The 49-year day</h2>
+          <p>
+            NASA’s Jet Propulsion Laboratory, run by Caltech, built both
+            Voyagers in Pasadena. General Electric manufactured their computers
+            to JPL specifications. Caltech physicist Ed Stone led the mission
+            science as project scientist. The team built the spacecraft for a
+            five-year mission to Jupiter and Saturn, with the planets lined up
+            so that one close flyby could set up the next. Voyager 1 launched 16
+            days after its twin and took a quicker route to Jupiter. <a
+              href="https://science.nasa.gov/mission/voyager/frequently-asked-questions/"
+              >NASA spacecraft FAQ</a
+            > · <a href="https://science.nasa.gov/mission/voyager/fact-sheet/"
+              >Mission fact sheet</a
+            > · <a href="https://www.jpl.nasa.gov/ed-stone-trail/"
+              >JPL’s Ed Stone history</a
+            >.
+          </p>
+          <p>
+            At Jupiter in 1979, Voyager 1 found a faint ring around the planet.
+            Then JPL navigation engineer Linda Morabito noticed a crescent
+            sticking out of the edge of Io in a picture she was using to check
+            the spacecraft’s trajectory. It was a volcanic plume, the first
+            active eruption ever seen beyond Earth. At Saturn in 1980, the probe
+            revealed the fine structure of the rings and found Titan wrapped in
+            a thick, nitrogen-rich atmosphere. The close pass by Titan sent
+            Voyager 1 north of the plane of the planets. Voyager 2 took the
+            route on to Uranus and Neptune. <a
+              href="https://science.nasa.gov/mission/voyager/voyager-1/"
+              >Voyager 1’s encounters</a
+            > · <a
+              href="https://www.jpl.nasa.gov/images/pia00379-volcanic-eruptions-on-io/"
+              >The image Morabito examined</a
+            >.
+          </p>
+          <figure class="io-photo">
+            <img
+              src="/images/blog/voyager-light-day/io-volcanic-plume.jpg"
+              width="800"
+              height="800"
+              alt="Voyager 1 image of Io showing a curved volcanic plume extending from the moon’s edge"
+              loading="lazy"
+            /><figcaption>
+              Io on March 8, 1979. The plume off the limb gave away the presence
+              of a volcano. <a
+                href="https://science.nasa.gov/photojournal/volcanic-eruptions-on-io/"
+                >NASA/JPL</a
+              >.
+            </figcaption>
+          </figure>
+          <figure class="timeline-figure">
+            <div class="panel">
+              <span class="figure-label mono">Figure 1</span><h3>
+                Voyager 1’s journey from launch to one light-day
+              </h3>
+              <div class="metrics">
+                <div>
+                  <strong>49 years</strong><span>since launch</span>
+                </div><div>
+                  <strong>173 AU</strong><span>Earth-to-probe distance</span>
+                </div><div>
+                  <strong>48 hours</strong><span
+                    >approximate radio round trip</span>
+                </div>
+              </div>
+              <ol class="timeline">
+                <li>
+                  <time>1977</time><span>Launches from Cape Canaveral.</span>
+                </li>
+                <li>
+                  <time>1979</time><span
+                    >Flies past Jupiter. Images reveal a ring and active
+                    volcanism on Io.</span>
+                </li>
+                <li>
+                  <time>1980</time><span
+                    >Flies past Saturn and Titan, then heads out of the plane of
+                    the planets.</span>
+                </li>
+                <li>
+                  <time>1990</time><span
+                    >Photographs Earth for the last time.</span>
+                </li>
+                <li>
+                  <time>2012</time><span
+                    >Crosses the heliopause into interstellar space.</span>
+                </li>
+                <li>
+                  <time>2026</time><span
+                    >Reaches one light-day from Earth.</span>
+                </li>
+              </ol>
+            </div>
+            <figcaption>
+              Selected mission milestones. One astronomical unit (AU) is about
+              149.6 million kilometers. <a
+                href="https://science.nasa.gov/mission/voyager/voyager-1/"
+                >NASA mission history</a
+              > · <a
+                href="https://science.nasa.gov/resource/voyager-one-light-day-downloads/"
+                >Light-day milestone</a
+              >.
+            </figcaption>
+          </figure>
+          <p>
+            Fourteen years of that journey have been spent outside the
+            heliosphere, the bubble the solar wind blows into the surrounding
+            space. Voyager 1 crossed its edge on August 25, 2012. A later burst
+            of plasma oscillations let the team measure the density of its
+            surroundings and confirm it had entered interstellar space. The
+            boundary Voyager crossed marks where the solar wind gives way to the
+            interstellar medium. The Sun’s gravity reaches much farther. <a
+              href="https://science.nasa.gov/mission/voyager/questions-and-answers-with-dr-ed-stone/"
+              >NASA’s account of the crossing</a
+            >.
+          </p>
+          <p>
+            The clock is still running. Plutonium decay supplies heat to the
+            probe’s radioisotope generators, and the electricity available for
+            science and communications has dwindled. In September 2026 the team
+            switched several systems to lower-power alternatives to extend the
+            life of the remaining instruments. In October, Voyager went quiet
+            for about 48 hours. A backup set of thrusters had come on
+            automatically, and the signal returned before the team sent
+            troubleshooting commands. At this distance, the spacecraft has to be
+            able to take care of itself while its operators are still finding
+            out what happened. <a
+              href="https://science.nasa.gov/blogs/voyager/2026/10/29/nasas-voyager-1-conserves-power-resolves-brief-communications-pause/"
+              >NASA’s October mission update</a
+            >.
+          </p>
+          <figure class="photo-wide">
+            <img
+              src="/images/blog/voyager-light-day/pale-blue-dot.jpg"
+              width="1600"
+              height="1583"
+              alt="A tiny pale dot representing Earth sits in a broad shaft of scattered sunlight against a dark background"
+              loading="lazy"
+            /><figcaption>
+              Earth as seen by Voyager 1 on February 14, 1990, from roughly 6
+              billion kilometers away. The dot takes up less than one pixel in
+              the original image. Shown here in the 2020 reprocessing of the
+              original data. <a
+                href="https://science.nasa.gov/photojournal/pale-blue-dot-revisited/"
+                >NASA/JPL-Caltech</a
+              >.
+            </figcaption>
+          </figure>
+        </section>
+
+        <section id="map">
+          <h2>2. The map back home</h2>
+          <p>
+            Bolted to each Voyager is a gold-plated copper record carrying
+            sounds and images from Earth. One engraving on its cover is Frank
+            Drake’s return address. Fourteen spokes point toward pulsars, the
+            rotating remnants of dead stars whose beams sweep past us at
+            measurable intervals. Those intervals are written in binary, using a
+            transition in hydrogen to define the unit of time. A fifteenth line
+            points toward the center of the Milky Way. The spokes are meant to
+            locate the Sun, which gives a finder a solar system to look in. <a
+              href="https://science.nasa.gov/mission/voyager/golden-record-cover/"
+              >NASA’s guide to the cover</a
+            > · <a href="https://www.pbs.org/the-farthest/science/pulsar-map/"
+              >How to read Drake’s map</a
+            >.
+          </p>
+          <figure>
+            <div class="diptych">
+              <div>
+                <img
+                  src="/images/blog/voyager-light-day/golden-record-installation.jpg"
+                  width="1050"
+                  height="834"
+                  alt="Engineers work on the Voyager spacecraft beside the round Golden Record cover"
+                  loading="lazy"
+                />
+              </div><div>
+                <img
+                  src="/images/blog/voyager-light-day/golden-record-cover.jpg"
+                  width="1000"
+                  height="1000"
+                  alt="Golden Record cover, with the starburst of pulsar directions engraved on the lower left"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <figcaption>
+              Engineers install Voyager 1’s Golden Record cover in 1977. The
+              starburst on the lower left of the cover is the pulsar map. <a
+                href="https://science.nasa.gov/photojournal/voyager-installing-the-golden-record/"
+                >Installation, NASA/JPL-Caltech</a
+              > · <a
+                href="https://science.nasa.gov/mission/voyager/golden-record-cover/"
+                >Cover, NASA/JPL</a
+              >.
+            </figcaption>
+          </figure>
+          <p>
+            Some of the coordinates were rough even for a finder who reads
+            binary. Robert Johnston’s reconstruction puts the pulsar J0953+0755
+            at roughly 390 light-years based on the engraving’s scale. A later
+            radio parallax measurement puts it around 850 light-years away.
+            Another spoke, for J0826+2637, is off by about 18 degrees in its
+            projected bearing relative to the galactic-center line in that
+            reconstruction. The timing has an outlier too. Running the engraved
+            periods backward gives dates clustered around 1970 for most of the
+            pulsars. For J1645−0317, the same reconstruction yields a date more
+            than three millennia before launch. Pulsars’ spin periods change
+            over time, and that calculation assumes a steady slowdown. The
+            engraved numbers describe the sky at a particular epoch, so a finder
+            would have to account for how the clocks had changed. There is a
+            clue for that too. A spot of uranium-238 on the cover acts as an
+            independent clock. <a
+              href="https://www.johnstonsarchive.net/astro/pulsarmap.html"
+              >Johnston’s reconstruction</a
+            > · <a href="https://doi.org/10.1088/0004-637x/755/1/39"
+              >Radio parallax measurements</a
+            > · <a
+              href="https://science.nasa.gov/mission/voyager/golden-record-cover/"
+              >NASA’s description of the uranium clock</a
+            >.
+          </p>
+          <p>
+            Voyager’s own navigators use radio tracking from the Deep Space
+            Network. The engraving anticipates a different approach for future
+            missions. In 2017 NASA’s SEXTANT experiment on the International
+            Space Station used the arrival times of X-ray pulses from four
+            pulsars to estimate its own position. With an up-to-date timing
+            model, a spacecraft can use the pulses as celestial clocks and work
+            out where it is before anyone on Earth has heard from it. <a
+              href="https://www.nasa.gov/centers-and-facilities/goddard/nasa-team-first-to-demonstrate-x-ray-navigation-in-space/"
+              >NASA’s SEXTANT demonstration</a
+            >.
+          </p>
+        </section>
+
+        <section id="speed">
+          <h2>3. How fast is fast?</h2>
+          <p>
+            Cutting Voyager’s time in half takes an average outward speed near
+            33 kilometers per second. Getting there in a decade takes roughly
+            82. A good departure gets you some of the way. A high-energy launch
+            and the right Jupiter flyby can send a probe outward faster using
+            familiar technology. A Johns Hopkins Applied Physics Laboratory
+            study modeled an interstellar probe with an escape speed near 7 AU
+            per year, almost twice Voyager’s current rate. That speed works out
+            to about 25 years per light-day. The mission is a study, and the
+            actual stopwatch would depend on the launch trajectory and time
+            spent getting to Jupiter. <a
+              href="https://spacephysics.princeton.edu/sites/g/files/toruqf1376/files/documents/brandt_2023.pdf"
+              >Johns Hopkins APL’s Interstellar Probe study</a
+            >.
+          </p>
+          <figure>
+            <div class="panel">
+              <span class="figure-label mono">Figure 2</span><h3>
+                How long to cover one light-day?
+              </h3>
+              <div
+                class="speed-chart"
+                role="list"
+                aria-label="Transit times across one light-day"
+              >
+                <div class="speed-row observed" role="listitem">
+                  <span>Voyager 1<small>Actual elapsed time</small></span><span
+                    class="rail"
+                    aria-hidden="true"
+                    ><span class="bar" style="--bar:99.69%"></span></span
+                  ><strong>49.2 yr</strong>
+                </div>
+                <div class="speed-row" role="listitem">
+                  <span
+                    >7 AU/yr · 33 km/s<small>APL study cruise speed</small
+                    ></span
+                  ><span class="rail" aria-hidden="true"
+                    ><span class="bar" style="--bar:86.48%"></span></span
+                  ><strong>24.7 yr</strong>
+                </div>
+                <div class="speed-row" role="listitem">
+                  <span>50 km/s<small>Illustrative cruise speed</small></span
+                  ><span class="rail" aria-hidden="true"
+                    ><span class="bar" style="--bar:78.61%"></span></span
+                  ><strong>16.4 yr</strong>
+                </div>
+                <div class="speed-row" role="listitem">
+                  <span>100 km/s<small>Illustrative cruise speed</small></span
+                  ><span class="rail" aria-hidden="true"
+                    ><span class="bar" style="--bar:65.30%"></span></span
+                  ><strong>8.2 yr</strong>
+                </div>
+                <div class="speed-row" role="listitem">
+                  <span
+                    >1% of light speed<small>Illustrative cruise speed</small
+                    ></span
+                  ><span class="rail" aria-hidden="true"
+                    ><span class="bar" style="--bar:0.00%"></span></span
+                  ><strong>100 days</strong>
+                </div>
+              </div>
+              <div class="mark-wrap" aria-hidden="true">
+                <div class="marks">
+                  <span style="--tick:0%">100 d</span><span
+                    style="--tick:24.88%">1 yr</span
+                  ><span style="--tick:69.09%">10 yr</span><span
+                    style="--tick:100%">50 yr</span>
+                </div>
+              </div>
+            </div>
+            <figcaption>
+              Logarithmic scale beginning at 100 days. Voyager’s row is
+              observed. Other rows divide 25.9 billion kilometers by the stated
+              cruise speed and omit acceleration, flybys, braking, and Earth’s
+              motion. The illustrative speeds are comparison points.
+            </figcaption>
+          </figure>
+          <p>
+            At this distance, a fly-through and a rendezvous are two different
+            jobs. An instrument that samples interstellar plasma can keep going.
+            A ship delivering cargo has to arrive at the right place and shed
+            its speed. For a fast probe, the relevant question is what
+            scientific payload can survive the trip and transmit its data. For a
+            Mars cargo ship, count the kilograms delivered and the time elapsed
+            from departure to arrival, including the maneuvers at both ends.
+          </p>
+        </section>
+
+        <section id="builders">
+          <h2>4. Who’s building it?</h2>
+          <h3>Electric propulsion has already flown</h3>
+          <p>
+            NASA’s Psyche spacecraft uses xenon Hall thrusters and a
+            solar-electric chassis built by Maxar Space Systems, now <a
+              href="https://investors.intuitivemachines.com/news-releases/news-release-details/intuitive-machines-completes-acquisition-lanteris-space-systems"
+              >Lanteris Space Systems, part of Intuitive Machines</a
+            >. After its 2026 Mars flyby, Psyche resumed thrusting toward its
+            asteroid. Electric thrusters can get more momentum change out of
+            each kilogram of propellant than chemical engines, but they produce
+            low thrust and need time to build up speed. Solar power also drops
+            with the square of distance. At Jupiter, each square meter of panel
+            receives about one twenty-seventh the sunlight it gets near Earth. <a
+              href="https://science.nasa.gov/mission/psyche/spacecraft/"
+              >NASA’s Psyche spacecraft guide</a
+            > · <a
+              href="https://science.nasa.gov/blogs/psyche/2026/10/22/pedal-to-the-metal-nasas-psyche-heads-toward-asteroid-belt/"
+              >October flight update</a
+            >.
+          </p>
+          <p>
+            <a href="https://www.adastrarocket.com/">Ad Astra Rocket Company</a
+            >, founded by former NASA astronaut Franklin Chang Díaz, is working
+            on higher-power plasma propulsion. Its VASIMR test engine ran for 88
+            continuous hours at 80 kilowatts in a ground test. The next question
+            for this class of engine is how to supply sustained power and reject
+            heat with a spacecraft light enough to accelerate appreciably. A
+            fast exhaust stream helps conserve propellant. The ship’s
+            acceleration still depends on how much thrust that stream produces
+            and how much mass it has to move. <a
+              href="https://www.adastrarocket.com/wp-content/uploads/2021/12/2021_AIAA_ASCEND_VASIMR.pdf"
+              >Ad Astra’s AIAA test report</a
+            >.
+          </p>
+          <h3>Fission could keep the thrusters on farther out</h3>
+          <p>
+            NASA and the U.S. Department of Energy are building <a
+              href="https://www.nasa.gov/mission/space-reactor-1-freedom/"
+              >Space Reactor-1 Freedom</a
+            >, a nuclear-electric demonstration aimed at a 2028 launch. Idaho
+            National Laboratory is developing the reactor and <a
+              href="https://www.sierralobo.com/">Sierra Lobo</a
+            > is supplying the machinery that turns reactor heat into electricity.
+            That electricity drives the thrusters. The engineering question for faster
+            trips is how much electrical power a flight system can deliver for each
+            kilogram of reactor, shielding, power conversion gear and radiators.
+            <a
+              href="https://www.nasa.gov/centers-and-facilities/glenn/sr-1-freedom-advances-with-progress-on-nuclear-power-module/"
+              >NASA’s October hardware update</a
+            >.
+          </p>
+          <p>
+            There’s also nuclear thermal propulsion. A reactor heats propellant
+            directly, trading some of electric propulsion’s propellant
+            efficiency for much higher thrust. <a
+              href="https://www.ga.com/fission-energy-systems/nuclear-thermal-propulsion"
+              >General Atomics Electromagnetic Systems</a
+            > is developing and ground-testing fuel technology for that approach.
+            This could help with high-thrust departure or arrival burns. For a light-day
+            fly-through, the useful measure is the final escape speed after the vehicle
+            has carried and expelled its propellant. <a
+              href="https://www.gao.gov/assets/gao-25-107591.pdf"
+              >GAO’s assessment of NASA’s propulsion portfolio</a
+            >.
+          </p>
+          <h3>Fusion teams are testing pieces of an engine</h3>
+          <p>
+            Richard Dinan’s UK company <a href="https://pulsarfusion.com/"
+              >Pulsar Fusion</a
+            > reported first plasma in its Sunbird exhaust test rig in March 2026.
+            In California, <a href="https://www.helicityspace.com/"
+              >Helicity Space</a
+            > is developing a pulsed fusion propulsion concept with co-founders Setthivoine
+            You, Marta Calvo and Stephane Lintner, and investment from Lockheed Martin
+            Ventures. A useful fusion rocket has to sustain useful output, direct
+            it into thrust, and carry the equipment that makes it work. Sunbird’s
+            reported milestone established that the test rig made plasma. A measured
+            fusion-powered thrust run and a viable flight mass are further milestones.
+            <a
+              href="https://www.militaryaerospace.com/uncrewed/news/55372912/pulsar-fusion-reaches-first-plasma-milestone-in-sunbird-fusion-propulsion-system"
+              >Sunbird test coverage</a
+            > · <a href="https://www.helicityspace.com/aboutus"
+              >Helicity’s team</a
+            > · <a href="https://www.helicityspace.com/news"
+              >Helicity’s investment announcement</a
+            >.
+          </p>
+          <h3>Sails can leave the power source behind</h3>
+          <p>
+            Sunlight can push a sail without propellant. NASA has deployed an
+            80-square-meter sail in orbit, and <a
+              href="https://redwirespace.com/">Redwire</a
+            > and <a href="https://www.nexolve.com/">NeXolve</a> built deployment
+            hardware and sail film, respectively, for a much larger NASA ground test
+            led by a Marshall team that included Les Johnson. A close pass by the
+            Sun could give a lightweight sail a much stronger push. One 2026 analysis
+            estimated that an ideal sail passing within 0.05 AU of the Sun could
+            reach 105 km/s if the spacecraft and sail together weighed about five
+            grams per square meter of sail. That’s a demanding mass budget before
+            accounting for what survives the heat. <a
+              href="https://arxiv.org/abs/2602.04198"
+              >Solar-sail trajectory analysis</a
+            >.
+          </p>
+          <p>
+            A laser sail replaces sunlight with a concentrated beam. <a
+              href="https://breakthroughinitiatives.org/initiative/3"
+              >Breakthrough Starshot</a
+            >, launched by Yuri Milner and Stephen Hawking, studied accelerating
+            gram-scale probes to about 20 percent of light speed. At that cruise
+            speed, one light-day takes five days. The project went on hiatus in
+            2025 without a launch. Caltech’s team led by Harry Atwater measured
+            laser radiation pressure on a tiny tethered sail in the lab. A
+            free-flying probe would need a sail that stays centered in the beam
+            and survives the heating, plus a way to point back and communicate
+            across the distance. <a
+              href="https://www.nasa.gov/technology/nasa-solar-sail-technology-passes-crucial-deployment-test/"
+              >NASA’s sail deployment work</a
+            > · <a
+              href="https://www.caltech.edu/about/news/the-pressure-to-explore-caltech-researchers-take-first-experimental-steps-toward-lightsails-that-could-reach-distant-star-systems"
+              >Caltech’s lab result</a
+            > · <a
+              href="https://engineering.wisc.edu/news/smooth-sailing-how-optics-and-photonics-could-propel-probes-to-outer-space/"
+              >University of Wisconsin’s Starshot update</a
+            >.
+          </p>
+        </section>
+        <p>
+          There’s a credible route to beating Voyager by decades for a small
+          probe. Getting a heavier spacecraft there in a few years is a
+          different power and mass problem. And the achievement we should try to
+          repeat is the part that happens at the end. A spacecraft launched in
+          1977 is still taking measurements in a place we’d never been. If we
+          send a faster one after it, give it something worth measuring and a
+          radio we’ll still be listening for when it gets there.
+        </p>
+        <section id="sources">
+          <h2>Sources and figure notes</h2>
+          <ul class="sources">
+            <li>
+              <a
+                href="https://science.nasa.gov/mission/voyager/where-are-voyager-1-and-voyager-2-now/"
+                >NASA’s Voyager tracker</a
+              > gives the milestone time. One light-day is 25,902,068,371 km using
+              the defined speed of light. Earth-relative range varies as Earth moves
+              around the Sun.
+            </li>
+            <li>
+              <a
+                href="https://spacephysics.princeton.edu/sites/g/files/toruqf1376/files/documents/brandt_2023.pdf"
+                >APL’s Interstellar Probe study</a
+              > supplies the 7 AU/year comparison. The chart uses Julian years of
+              365.25 days. The other speeds are arithmetic illustrations.
+            </li>
+            <li>
+              The title is from “Tomorrow” in <cite>Annie</cite>, with music by
+              Charles Strouse and lyrics by Martin Charnin. <a
+                href="https://www.mtishows.com/annie?showid=000306"
+                >Music Theatre International</a
+              >. Photographs are credited to NASA/JPL-Caltech or NASA/JPL in
+              their captions.
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .voyager-shell {
+    color-scheme: light;
+    --ink: #1f2226;
+    --muted: #545961;
+    --accent: #8a5713;
+    --rule: #d8d6cf;
+    --paper: #fcfcfb;
+    --tint: #f3f1ea;
+    --blue: #395d84;
+  }
+  :global(body.voyager-page),
+  :global(.voyager-page main) {
+    background: #eeede8;
+  }
+  .voyager-shell {
+    color: var(--ink);
+    font-family: Georgia, serif;
+  }
+  .voyager-shell section {
+    scroll-margin-top: 6rem;
+  }
+  a {
+    color: var(--accent);
+    text-underline-offset: 0.18em;
+  }
+  a:hover {
+    color: var(--ink);
+  }
+  a:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  figure {
+    margin: 2rem 0;
+  }
+  .voyager-shell {
+    width: min(1240px, calc(100% - 2rem));
+    margin: auto;
+    padding: clamp(1rem, 3vw, 2.5rem) 0 4rem;
+  }
+  .mono,
+  .eyebrow {
+    font:
+      700 0.72rem/1.4 ui-monospace,
+      monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .hero {
+    margin: 0;
+    background: #111316;
+    color: #f9f6ef;
+    display: grid;
+    grid-template-columns: 1.17fr 0.83fr;
+    min-height: 31rem;
+  }
+  .title {
+    padding: clamp(1.25rem, 6vw, 5rem);
+    align-self: end;
+  }
+  .eyebrow {
+    margin: 0 0 1.15rem;
+    color: #ebc17a;
+  }
+  .title h1 {
+    font-size: clamp(3.2rem, 7.5vw, 6.25rem);
+    font-weight: 400;
+    line-height: 0.96;
+    margin: 0;
+    letter-spacing: -0.058em;
+    max-width: 11ch;
+    text-wrap: balance;
+  }
+  .hero-photo {
+    position: relative;
+    min-height: 21rem;
+    margin: 0;
+  }
+  .hero-photo img {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 45%;
+    filter: sepia(0.1);
+  }
+  .hero-photo figcaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem 0.9rem;
+    color: #fff;
+    background: #121212d9;
+  }
+  .hero-photo a {
+    color: #f5d8a4;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 47rem);
+    gap: clamp(1.3rem, 5vw, 5rem);
+    padding: clamp(1.5rem, 5vw, 4.25rem);
+    background: var(--paper);
+    justify-content: center;
+  }
+  .contents {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+    border-top: 2px solid #b0731f;
+    font:
+      0.86rem/1.4 system-ui,
+      sans-serif;
+  }
+  .contents p {
+    color: var(--accent);
+    margin: 0.75rem 0;
+  }
+  .contents ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .contents a {
+    display: block;
+    text-decoration: none;
+    color: var(--muted);
+    padding: 0.66rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .contents a:hover {
+    text-decoration: underline;
+  }
+  .dek {
+    font-size: clamp(1.35rem, 3vw, 1.86rem);
+    line-height: 1.29;
+    margin: 0 0 1.4rem;
+    letter-spacing: -0.025em;
+  }
+  .date {
+    margin: 0 0 1.8rem;
+    color: var(--muted);
+  }
+  .article {
+    min-width: 0;
+  }
+  .article p:not(.dek):not(.date) {
+    font-size: 1.1rem;
+    line-height: 1.66;
+    margin: 0 0 1.13rem;
+  }
+  .article h2 {
+    font-weight: 400;
+    font-size: clamp(1.82rem, 4vw, 2.52rem);
+    line-height: 1.08;
+    letter-spacing: -0.033em;
+    margin: 2.8rem 0 1.18rem;
+    padding-top: 1.05rem;
+    border-top: 1px solid var(--rule);
+  }
+  .article h3 {
+    font:
+      700 1.09rem/1.35 system-ui,
+      sans-serif;
+    margin: 1.85rem 0 0.64rem;
+  }
+  figcaption,
+  .figure-note {
+    font:
+      0.81rem/1.53 system-ui,
+      sans-serif;
+    color: var(--muted);
+  }
+  figcaption {
+    margin-top: 0.62rem;
+  }
+  .figure-label {
+    display: block;
+    color: var(--accent);
+    margin: 0 0 0.42rem;
+  }
+  .panel {
+    background: var(--tint);
+    border: 1px solid var(--rule);
+    padding: clamp(0.9rem, 3vw, 1.55rem);
+  }
+  .panel h3 {
+    margin: 0 0 0.82rem;
+    font:
+      400 1.46rem/1.18 Georgia,
+      serif;
+  }
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin: 0 0 1rem;
+  }
+  .metrics div {
+    border-top: 2px solid #b0731f;
+    padding: 0.5rem 0.2rem 0;
+  }
+  .metrics strong {
+    display: block;
+    font:
+      400 clamp(1.32rem, 4vw, 2.23rem) / 1.1 Georgia,
+      serif;
+  }
+  .metrics span {
+    display: block;
+    margin-top: 0.28rem;
+    font:
+      0.76rem/1.3 system-ui,
+      sans-serif;
+    color: var(--muted);
+  }
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font:
+      0.89rem/1.4 system-ui,
+      sans-serif;
+  }
+  .timeline li {
+    border-top: 1px solid var(--rule);
+    padding: 0.52rem 0;
+    display: grid;
+    grid-template-columns: 3.9rem 1fr;
+    gap: 0.45rem;
+  }
+  .timeline time {
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .diptych {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .diptych img {
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+  .diptych > div:first-child img {
+    object-position: 56% center;
+  }
+  .io-photo {
+    max-width: 27rem;
+    margin-inline: auto;
+  }
+  .photo-wide img {
+    max-height: 30rem;
+    object-fit: contain;
+    background: #131318;
+  }
+  .speed-chart {
+    display: grid;
+    gap: 0.75rem;
+    margin: 1.2rem 0 0.55rem;
+  }
+  .speed-row {
+    display: grid;
+    grid-template-columns: minmax(8.9rem, 13rem) minmax(2rem, 1fr) 5.25rem;
+    gap: 0.6rem;
+    align-items: center;
+    font:
+      0.83rem/1.24 system-ui,
+      sans-serif;
+  }
+  .speed-row small {
+    display: block;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+  .speed-row strong {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .rail {
+    height: 0.54rem;
+    background: #e1ddd2;
+    position: relative;
+  }
+  .bar {
+    display: block;
+    width: var(--bar);
+    height: 100%;
+    background: var(--blue);
+  }
+  .observed .bar {
+    background: #a86a21;
+  }
+  .marks {
+    grid-column: 2;
+    position: relative;
+    height: 0.8rem;
+    color: var(--muted);
+    font:
+      0.69rem/1 ui-monospace,
+      monospace;
+  }
+  .marks span {
+    position: absolute;
+    left: var(--tick);
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .marks span:first-child {
+    transform: none;
+  }
+  .marks span:last-child {
+    transform: translateX(-100%);
+  }
+  .bar[style='--bar:0.00%'] {
+    min-width: 2px;
+  }
+  .mark-wrap {
+    display: grid;
+    grid-template-columns: minmax(8.9rem, 13rem) minmax(2rem, 1fr) 5.25rem;
+    gap: 0.6rem;
+    margin-top: 0.7rem;
+  }
+  .sources {
+    font:
+      0.9rem/1.6 system-ui,
+      sans-serif;
+    padding-left: 1.25rem;
+  }
+  .sources li {
+    margin-bottom: 0.4rem;
+  }
+  @media (max-width: 800px) {
+    .layout {
+      display: block;
+    }
+    .contents {
+      position: static;
+      margin-bottom: 1.7rem;
+    }
+    .contents ol {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 1rem;
+    }
+    .contents a {
+      padding: 0.35rem 0;
+    }
+    .hero {
+      min-height: 0;
+    }
+    .hero-photo {
+      min-height: 23rem;
+    }
+  }
+  @media (max-width: 510px) {
+    .voyager-shell {
+      width: calc(100% - 1.2rem);
+    }
+    .hero {
+      grid-template-columns: 1fr;
+    }
+    .title {
+      padding: 1.4rem;
+    }
+    .hero-photo {
+      min-height: 15rem;
+    }
+    .hero-photo img {
+      object-position: 50% 44%;
+    }
+    .layout {
+      padding: 1.2rem 0.95rem;
+    }
+    .diptych {
+      gap: 0.65rem;
+    }
+    .speed-row,
+    .mark-wrap {
+      grid-template-columns: minmax(6rem, 1fr) minmax(3rem, 1fr) 3.5rem;
+      gap: 0.4rem;
+    }
+    .speed-row {
+      font-size: 0.74rem;
+    }
+    .marks {
+      font-size: 0.6rem;
+    }
+    .marks span:nth-child(2),
+    .marks span:nth-child(3) {
+      display: none;
+    }
+    .article p:not(.dek):not(.date) {
+      font-size: 1.02rem;
+    }
+  }
+  @media print {
+    .voyager-shell {
+      background: #fff;
+      width: 100%;
+    }
+    .layout {
+      display: block;
+      padding: 0;
+    }
+    .contents {
+      display: none;
+    }
+    .hero {
+      min-height: 20rem;
+      break-after: avoid;
+    }
+    .title {
+      padding: 1.5rem;
+    }
+    .hero-photo {
+      min-height: 20rem;
+    }
+    figure {
+      break-inside: avoid;
+    }
+    .article h2,
+    .article h3 {
+      break-after: avoid;
+    }
+    .article {
+      padding-top: 1.5rem;
+    }
+  }
+</style>
