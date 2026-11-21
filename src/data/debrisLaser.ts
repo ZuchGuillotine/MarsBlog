@@ -17,21 +17,18 @@ export const kindLabel: Record<Kind, string> = {
 
 export const glance: { k: string; v: string }[] = [
   { k: 'Output', v: '5.0 J, 5 ns pulses at 355 nm (ultraviolet)' },
-  { k: 'Firing pattern', v: '10 Hz for 300 s, once per orbit' },
+  { k: 'Firing pattern', v: '10 Hz for 300 s per orbit on its first flight' },
   { k: 'Payload', v: '19.65 kg in 560 × 380 × 165 mm' },
   { k: 'Host', v: 'ESPA-class small satellite, 700–800 km orbit' },
   { k: 'Bus power', v: '43 W orbit average at 28 V DC' },
+  { k: 'Next milestone', v: 'Coupling measurement on debris materials, six months' },
 ];
 
 export const heroNumbers: { value: string; label: string; kind: Kind }[] = [
   { value: '5.0 J', label: 'per pulse at 355 nm, 1.0 GW peak', kind: 'target' },
-  { value: '3,000', label: 'shots per orbit in one 300 s burst', kind: 'target' },
-  {
-    value: '0.75 N·s',
-    label: 'impulse per burst if every pulse couples at 50 µN·s/J',
-    kind: 'calculated',
-  },
-  { value: '19.65 kg', label: 'laser payload mass, before growth allowance', kind: 'target' },
+  { value: '3,000', label: 'shots per orbit on its first flight, in one 300 s burst', kind: 'target' },
+  { value: '2 days', label: 'to change a one-tonne derelict’s speed by 1 cm/s', kind: 'calculated' },
+  { value: '5 weeks', label: 'to bring a 1 kg fragment down from 800 km', kind: 'calculated' },
 ];
 
 // ---- How it works ---------------------------------------------------------
@@ -98,7 +95,7 @@ export const specGroups: { title: string; rows: [string, string, string?][] }[] 
       ['Pulse energy', '5.0 J'],
       ['Pulse width', '5.0 ns FWHM', 'Single longitudinal mode'],
       ['Peak power', '1.0 GW'],
-      ['Repetition rate', '10 Hz', 'Externally triggered'],
+      ['Repetition rate', '10 Hz on its first flight', 'Head sized for 50 Hz; externally triggered'],
       ['Average optical power', '50 W during a burst', '2.5 W averaged over the orbit'],
       ['Beam profile', 'Super-Gaussian flat-top, order 6', 'Linear polarization, > 100:1'],
       ['Beam quality', 'M² ≤ 1.3'],
@@ -111,7 +108,7 @@ export const specGroups: { title: string; rows: [string, string, string?][] }[] 
       ['Orbit', '700–800 km low Earth orbit', '99–101 minute period'],
       ['Burst', '300 s, 3,000 shots', 'Once per orbit, 5.1% duty'],
       ['Recovery', '93 minutes', 'Thermal bleed and buffer recharge'],
-      ['Design life', '> 10⁸ shots', 'About six years at one burst per orbit'],
+      ['Design life', '> 10⁸ shots', 'About six years at one burst per orbit; 10⁹ needed for the growth path'],
     ],
   },
   {
@@ -188,51 +185,80 @@ export const survivability: { n: string; problem: string; numbers: string; respo
 ];
 
 // ---- Roadmap and cost -----------------------------------------------------
-// Labour is engineers × years × the rate below. Hardware is estimated per
-// subsystem from the internal materials list and reported here by stage only.
-export const ENGINEER_RATE = 400_000; // USD per engineer-year, fully loaded
-export const CONTINGENCY = 0.3;
+// Labour is engineers × years × a blended rate that includes employer costs.
+// Hardware is estimated per subsystem from the internal materials list, with a
+// reserve for spares and re-buys, and reported here by stage only.
+export const FOUNDING_RATE = 185_000; // USD per engineer-year, founding team
+export const LATER_RATE = 250_000; // USD per engineer-year, later hires
+export const CONTINGENCY = 0.2;
 
 export interface Stage {
   v: string;
   title: string;
   status: string;
   months: number;
-  engineers: number;
+  engineers: number; // 0 = run by another stage's team
+  rate: number;
+  team: string;
+  seed: boolean;
   hardware: number; // USD
   test: number; // USD
   build: string[];
   proves: string;
   exit: string;
-  hardwareNote: string;
 }
 
 export const stages: Stage[] = [
   {
+    v: 'V0',
+    title: 'Coupling measurement',
+    status: 'First',
+    months: 6,
+    engineers: 0,
+    rate: FOUNDING_RATE,
+    team: 'V1 team',
+    seed: true,
+    hardware: 120_000,
+    test: 30_000,
+    build: [
+      'A commercial 355 nm nanosecond laser, bought off the shelf',
+      'Vacuum chamber with an impulse pendulum',
+      'Samples of real debris materials: aluminium, composite, insulation, solar cell, paint',
+    ],
+    proves:
+      'The impulse each joule delivers at this wavelength and pulse length, which every timeline on this page rests on and which has not been published.',
+    exit: 'Measured coupling against fluence for at least five materials, published.',
+  },
+  {
     v: 'V1',
     title: 'Ground test prototype',
-    status: 'Next',
+    status: 'Seed',
     months: 18,
-    engineers: 6,
-    hardware: 1_100_000,
-    test: 200_000,
+    engineers: 4,
+    rate: FOUNDING_RATE,
+    team: '4 founding engineers',
+    seed: true,
+    hardware: 1_900_000,
+    test: 250_000,
     build: [
       'Full optical train on an open laboratory bench, in air',
-      'Commercial-grade crystals, diode stacks and drivers',
-      'Laboratory cooling in place of the thermal capacitor',
+      'Amplifiers and optics sized for 50 Hz, run at 10 Hz',
+      'Commercial-grade crystals, diode stacks and drivers, with spares',
     ],
     proves:
       'That the amplifier chain extracts 10 J with the beam quality the harmonic stage needs, and what the real conversion and wall-plug efficiencies are.',
     exit: '5 J at 355 nm, 10 Hz, sustained for 300 s bursts, with measured efficiency at each stage.',
-    hardwareNote: 'Optics and crystals, commercial pump diodes and drivers, diagnostics and laser-safe lab fit-out.',
   },
   {
     v: 'V2',
     title: 'Vacuum engineering model',
     status: 'Planned',
     months: 18,
-    engineers: 10,
-    hardware: 2_600_000,
+    engineers: 7,
+    rate: LATER_RATE,
+    team: '7 engineers',
+    seed: false,
+    hardware: 3_200_000,
     test: 900_000,
     build: [
       'Flight form factor: silicon carbide bench, sealed housing, oxygen system',
@@ -242,15 +268,17 @@ export const stages: Stage[] = [
     proves:
       'That the laser runs sealed in vacuum on its own stored energy and stored cold, and that the optics stay clean.',
     exit: 'Orbit-like burst cycles in a thermal-vacuum chamber, and a contamination life test of at least 10⁷ shots with no loss of output.',
-    hardwareNote: 'First flight-geometry structure, conductively cooled diode stacks, custom power electronics, vacuum test rigs.',
   },
   {
     v: 'V3',
     title: 'Qualification model',
     status: 'Planned',
     months: 18,
-    engineers: 12,
-    hardware: 4_200_000,
+    engineers: 9,
+    rate: LATER_RATE,
+    team: '9 engineers',
+    seed: false,
+    hardware: 4_800_000,
     test: 1_800_000,
     build: [
       'Flight design built with screened, flight-grade parts',
@@ -258,15 +286,17 @@ export const stages: Stage[] = [
     ],
     proves: 'That the design survives launch and the orbital environment for its design life.',
     exit: 'Vibration at 14 g rms, shock, thermal-vacuum cycling, electromagnetic compatibility, radiation lot tests, and 10⁸ shots on life-test hardware.',
-    hardwareNote: 'Screened diodes, damage-tested optics lots, radiation-tolerant electronics, qualification test campaigns.',
   },
   {
     v: 'V4',
     title: 'Flight model',
     status: 'Planned',
     months: 15,
-    engineers: 12,
-    hardware: 4_800_000,
+    engineers: 9,
+    rate: LATER_RATE,
+    team: '9 engineers',
+    seed: false,
+    hardware: 5_300_000,
     test: 1_500_000,
     build: [
       'Flight unit and a kit of critical spares',
@@ -274,12 +304,11 @@ export const stages: Stage[] = [
     ],
     proves: 'A fully operational, deployable payload.',
     exit: 'Accepted flight unit delivered and commissioned on orbit.',
-    hardwareNote: 'Flight unit, spares, acceptance testing and integration support.',
   },
 ];
 
 export const stageCost = (s: Stage) => {
-  const labour = s.engineers * (s.months / 12) * ENGINEER_RATE;
+  const labour = s.engineers * (s.months / 12) * s.rate;
   return { labour, hardware: s.hardware, test: s.test, total: labour + s.hardware + s.test };
 };
 
@@ -288,7 +317,7 @@ export const costExclusions: string[] = [
   'The host spacecraft and launch',
   'Ground segment and mission operations',
   'Licensing and regulatory work',
-  'Facilities, management and company overhead beyond the loaded labour rate',
+  'Founder salaries, facilities and company overhead',
 ];
 
 // ---- Open engineering items ------------------------------------------------
@@ -296,8 +325,14 @@ export const openItems: { item: string; detail: string; closes: string }[] = [
   {
     item: 'Working spot size',
     detail:
-      'Efficient coupling on metals needs several joules per square centimetre at this pulse length, so a 5 J pulse must arrive in a spot about a centimetre across. That fixes how close the craft has to work, and it is the main limit on what this laser can do.',
+      'Efficient coupling on metals needs several joules per square centimetre at this pulse length, so a 5 J pulse must arrive in a spot about a centimetre across. That means the craft flies in close formation with one object at a time. Working from a long standoff would take hundreds of joules per pulse and is a different system.',
     closes: 'System design',
+  },
+  {
+    item: 'Shot life',
+    detail:
+      'A design life of 10⁸ shots is about 10,500 N·s of useful impulse: roughly 64 kg brought down from 800 km, or a thousand nudges of a one-tonne object. Firing faster uses that life up sooner, so the larger configurations need 10⁹ shots or more. Pump diodes have been tested that far. Ultraviolet optics at these fluences have not.',
+    closes: 'V2–V3',
   },
   {
     item: 'Efficiency chain',

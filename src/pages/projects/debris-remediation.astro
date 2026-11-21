@@ -22,7 +22,8 @@ import {
   costExclusions,
   openItems,
   references,
-  ENGINEER_RATE,
+  FOUNDING_RATE,
+  LATER_RATE,
   CONTINGENCY,
 } from '../../data/debrisLaser';
 import {
@@ -30,9 +31,12 @@ import {
   directionCases,
   massClasses,
   couplingCases,
+  configs,
   timeline,
-  nudgeBursts,
+  nudge,
+  shotsPerOrbit,
   formatDuration,
+  formatShots,
   orbitalPeriodS,
   orbitalSpeedKmS,
   deorbitDeltaV,
@@ -49,13 +53,13 @@ const nav = [
   ['schematic', 'Schematic'],
   ['specs', 'Specifications'],
   ['environment', 'Environment'],
-  ['timelines', 'De-orbit timelines'],
+  ['timelines', 'Timelines'],
   ['roadmap', 'Roadmap and cost'],
   ['open-items', 'Open items'],
 ];
 
 // ---- timeline defaults (also the no-JavaScript view) -----------------------
-const base = { altKm: 800, attitude: 0.6, offAxisDeg: 0 };
+const base = { altKm: 800, attitude: 0.6, offAxisDeg: 0, config: 'a' };
 const AXIS_MIN = 3600; // 1 hour
 const AXIS_MAX = 2000 * 365.25 * 86400; // 2,000 years
 const pos = (s: number) =>
@@ -70,53 +74,71 @@ const ticks = [
   { s: 100 * YEAR, label: '100 years' },
   { s: 1000 * YEAR, label: '1,000 yr' },
 ];
-const DESIGN_LIFE_S = (1e8 / laser.shotsPerBurst) * orbitalPeriodS(750);
+const MID = couplingCases[1].value;
 const rows = massClasses.map(m => {
   const at = (cm: number) => timeline({ massKg: m.kg, cm, ...base });
-  const mid = at(couplingCases[1].value);
-  return { ...m, mid, fast: at(couplingCases[2].value), slow: at(couplingCases[0].value) };
+  return { ...m, mid: at(MID), fast: at(couplingCases[2].value), slow: at(couplingCases[0].value) };
 });
 const nudgeMasses = [
-  { kg: 100, label: '100 kg' },
-  { kg: 1000, label: '1 t' },
+  { kg: 100, label: '100 kg satellite' },
+  { kg: 1000, label: '1 t satellite' },
   { kg: 9000, label: '9 t rocket stage' },
 ];
-const nudges = nudgeMasses.map(m => {
-  const b = nudgeBursts({ massKg: m.kg, cm: couplingCases[1].value, ...base }, 0.01);
-  return { ...m, bursts: b, time: formatDuration(b * orbitalPeriodS(base.altKm)) };
-});
+const nudges = nudgeMasses.map(m => ({ ...m, ...nudge({ massKg: m.kg, cm: MID, ...base }, 0.01) }));
 const altitudeTable = [500, 600, 700, 800, 1000, 1200].map(h => ({
   h,
   v: orbitalSpeedKmS(h),
   dv: deorbitDeltaV(h),
   period: orbitalPeriodS(h) / 60,
 }));
-const baseImpulse = timeline({ massKg: 1, cm: couplingCases[1].value, ...base }).impulsePerBurst;
+const baseline = timeline({ massKg: 1, cm: MID, ...base });
+
+// One laser life, at the default factors.
+const lifeImpulse = baseline.impulsePerShot * laser.designLifeShots;
+const lifeMassKg = lifeImpulse / baseline.deltaV;
+const lifeNudges = lifeImpulse / (1000 * 0.01);
+const shotsFor100kg = timeline({ massKg: 100, cm: MID, ...base }).shots;
+
+// Same laser, more power: each firing pattern at the default factors.
+const growth = configs.map(c => {
+  const t = (kg: number) => timeline({ massKg: kg, cm: MID, ...base, config: c.id });
+  return {
+    c,
+    shotsPerYear: (shotsPerOrbit(c.id, base.altKm) * YEAR) / orbitalPeriodS(base.altKm),
+    kg10: formatDuration(t(10).seconds),
+    kg100: formatDuration(t(100).seconds),
+    t1: formatDuration(t(1000).seconds),
+  };
+});
+// Calendar life has to count whole orbits, not firing seconds.
+const calendarLife = (id: string) =>
+  (laser.designLifeShots / shotsPerOrbit(id, base.altKm)) * orbitalPeriodS(base.altKm);
 
 // ---- cost ------------------------------------------------------------------
 const costs = stages.map(s => ({ s, c: stageCost(s) }));
-const totals = costs.reduce(
-  (t, { c }) => ({
-    labour: t.labour + c.labour,
-    hardware: t.hardware + c.hardware,
-    test: t.test + c.test,
-    total: t.total + c.total,
-  }),
-  { labour: 0, hardware: 0, test: 0, total: 0 }
-);
+const sum = (list: typeof costs) =>
+  list.reduce(
+    (t, { c }) => ({
+      labour: t.labour + c.labour,
+      hardware: t.hardware + c.hardware,
+      test: t.test + c.test,
+      total: t.total + c.total,
+    }),
+    { labour: 0, hardware: 0, test: 0, total: 0 }
+  );
+const totals = sum(costs);
+const seed = sum(costs.filter(x => x.s.seed));
 const engineerYears = stages.reduce((t, s) => t + s.engineers * (s.months / 12), 0);
-const totalMonths = stages.reduce((t, s) => t + s.months, 0);
+const totalMonths = stages.filter(s => s.engineers > 0).reduce((t, s) => t + s.months, 0);
 const maxStage = Math.max(...costs.map(x => x.c.total));
-const usd = (n: number) => `$${(n / 1e6).toFixed(1)}M`;
+const usd = (n: number) => (n < 5e5 ? `$${(n / 1e6).toFixed(2)}M` : `$${(n / 1e6).toFixed(1)}M`);
 const pct = (n: number) => `${((n / maxStage) * 100).toFixed(2)}%`;
+const flightTeam = stages[stages.length - 1];
 
 const refIndex = Object.fromEntries(references.map((r, i) => [r.id, i + 1]));
 const cite = (...ids: string[]) => ids.map(id => refIndex[id]).filter(Boolean).join(', ');
 
-const modelConfig = {
-  axisMin: AXIS_MIN,
-  axisMax: AXIS_MAX,
-};
+const modelConfig = { axisMin: AXIS_MIN, axisMax: AXIS_MAX, lifeShots: laser.designLifeShots };
 ---
 
 <BaseLayout
@@ -136,16 +158,16 @@ const modelConfig = {
           <h1>The SLP-5 debris laser</h1>
           <p class="thesis">
             A proposed 5-joule ultraviolet laser payload for the Shepherd-1 craft. Each pulse
-            vaporises a few micrograms off a piece of debris, and the recoil slows it. Three
-            thousand pulses an orbit, repeated for days or months, lower a fragment until the
-            atmosphere takes it.
+            vaporises a few micrograms off a piece of debris, and the recoil changes its speed. A
+            few days of pulses move a dead satellite off a collision course. A few weeks of them
+            bring a fragment down.
           </p>
           <p class="status-line">
             <span class="dot" aria-hidden="true"></span><strong>Stage:</strong> concept design.
             Nothing is built, and every figure here is a design target or a calculation.
           </p>
           <div class="actions">
-            <a class="button primary" href="#timelines">De-orbit timelines <span aria-hidden="true">↓</span></a>
+            <a class="button primary" href="#timelines">Timelines <span aria-hidden="true">↓</span></a>
             <a class="button" href="#schematic">Schematic <span aria-hidden="true">↓</span></a>
             <a class="button ghost" href={`${ORBITFLEET_URL}/debris`} rel="noopener">
               Debris simulation <span aria-hidden="true">↗</span>
@@ -358,13 +380,20 @@ const modelConfig = {
 
     <!-- ================= 05 TIMELINES ================= -->
     <section class="shell section" id="timelines" aria-labelledby="tl-title">
-      <p class="eyebrow">05 · De-orbit timelines</p>
-      <h2 id="tl-title">Days for fragments. Decades for dead satellites.</h2>
+      <p class="eyebrow">05 · Nudge and de-orbit timelines</p>
+      <h2 id="tl-title">Days to nudge a derelict. Weeks to bring down a fragment.</h2>
       <p class="intro">
-        The time to bring something down is a momentum budget: the object’s mass times the speed
-        it has to lose, divided by the impulse one burst delivers. Mass sets the scale. Altitude
-        sets the speed to be lost. The direction of the push relative to the object’s velocity,
-        and how the object is turning, set how much of each pulse counts.
+        The craft flies in close formation with one object at a time, ahead of it on the same
+        orbit, and fires back along the track. That gives it two jobs. A nudge changes an
+        object’s speed by about a centimetre per second, enough to turn a predicted collision
+        into a miss. A de-orbit takes off a hundred metres per second or more, until the
+        atmosphere finishes the work.
+      </p>
+      <p class="intro">
+        Both are a momentum budget: mass times the change in speed, divided by the impulse each
+        pulse delivers. Altitude sets the speed to be lost. The direction of the push and how the
+        object is turning set how much of each pulse counts. The firing pattern sets how fast the
+        pulses come.
       </p>
 
       <div class="calc" data-calc data-config={JSON.stringify(modelConfig)}>
@@ -376,6 +405,19 @@ const modelConfig = {
               <output id="alt-out" data-alt-out>{base.altKm} km</output>
             </span>
           </label>
+          <fieldset class="ctl">
+            <legend class="ctl-label">Firing pattern (same laser)</legend>
+            <div class="seg">
+              {
+                configs.map(c => (
+                  <label>
+                    <input type="radio" name="config" value={c.id} checked={c.id === base.config} />
+                    <span>{c.label}</span>
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
           <fieldset class="ctl">
             <legend class="ctl-label">Attitude of the debris</legend>
             <div class="seg">
@@ -410,22 +452,54 @@ const modelConfig = {
             <dd data-stat-v>{orbitalSpeedKmS(base.altKm).toFixed(2)} km/s</dd>
           </div>
           <div>
-            <dt>Speed to lose</dt>
-            <dd data-stat-dv>{Math.round(deorbitDeltaV(base.altKm))} m/s</dd>
+            <dt>Speed to lose for a de-orbit</dt>
+            <dd data-stat-dv>{Math.round(baseline.deltaV)} m/s</dd>
           </div>
           <div>
-            <dt>Impulse per burst</dt>
-            <dd data-stat-j>{baseImpulse.toFixed(2)} N·s</dd>
+            <dt>Shots per orbit</dt>
+            <dd data-stat-n>{Math.round(shotsPerOrbit(base.config, base.altKm)).toLocaleString('en-US')}</dd>
           </div>
           <div>
-            <dt>Bursts per day</dt>
-            <dd data-stat-n>{(86400 / orbitalPeriodS(base.altKm)).toFixed(1)}</dd>
+            <dt>Impulse per orbit</dt>
+            <dd data-stat-j>{baseline.impulsePerOrbit.toFixed(2)} N·s</dd>
           </div>
         </dl>
 
+        <div class="nudge">
+          <div>
+            <h3>Nudge: 1 cm/s to avoid a collision</h3>
+            <p>
+              Two dead objects cannot dodge each other. A change of about a centimetre per second,
+              applied a day or more before a predicted close approach, moves the pass by
+              kilometres. This is the job the laser does well from its first flight, on objects
+              far too large for it to bring down.
+            </p>
+          </div>
+          <table class="data-table nudge-table">
+            <thead>
+              <tr>
+                <th scope="col">Object</th>
+                <th scope="col">Shots</th>
+                <th scope="col">Elapsed time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                nudges.map(n => (
+                  <tr data-nudge data-mass={n.kg}>
+                    <th scope="row">{n.label}</th>
+                    <td class="mono" data-nudge-b>{n.shots.toLocaleString('en-US')}</td>
+                    <td class="mono" data-nudge-t>{formatDuration(n.seconds)}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
         <div class="tl-chart">
           <p class="tl-title">
-            Time to lower perigee to {DISPOSAL_PERIGEE_KM} km, one burst per orbit
+            De-orbit: time to lower perigee to {DISPOSAL_PERIGEE_KM} km
             <span>Dot: 50 µN·s/J. Bar: 100 down to 25 µN·s/J.</span>
           </p>
           <div class="tl-rows" role="table" aria-label="Time to de-orbit by debris mass">
@@ -433,7 +507,7 @@ const modelConfig = {
               <span class="tl-axis-pad"></span>
               <span class="tl-track">
                 {ticks.map(t => <i class="tick" style={`left:${pos(t.s)}%`}><b>{t.label}</b></i>)}
-                <i class="life" style={`left:${pos(DESIGN_LIFE_S)}%`}><b>laser design life</b></i>
+                <i class="life" data-life style={`left:${pos(calendarLife(base.config))}%`}><b>10⁸-shot design life</b></i>
               </span>
               <span class="tl-axis-pad end"></span>
             </div>
@@ -446,7 +520,7 @@ const modelConfig = {
                   </span>
                   <span class="tl-track" role="presentation">
                     {ticks.map(t => <i class="grid" style={`left:${pos(t.s)}%`} />)}
-                    <i class="life-line" style={`left:${pos(DESIGN_LIFE_S)}%`} />
+                    <i class="life-line" data-life style={`left:${pos(calendarLife(base.config))}%`} />
                     <i
                       class="range"
                       data-range
@@ -456,66 +530,88 @@ const modelConfig = {
                   </span>
                   <span class="tl-value" role="cell" data-value>{formatDuration(r.mid.seconds)}</span>
                   <span class="tl-detail" role="cell" data-detail>
-                    {r.mid.bursts.toLocaleString('en-US')} bursts · {formatDuration(r.fast.seconds)} to {formatDuration(r.slow.seconds)}
+                    {formatShots(r.mid.shots)} · {formatDuration(r.fast.seconds)} to {formatDuration(r.slow.seconds)}
                   </span>
                 </div>
               ))
             }
           </div>
         </div>
-
-        <div class="nudge">
-          <div>
-            <h3>The other use: a nudge</h3>
-            <p>
-              Avoiding a predicted collision takes far less than a de-orbit. A change of about a
-              centimetre per second, applied a day or more ahead, moves a pass by kilometres. On
-              that task the same laser is useful against objects it could never bring down.
-            </p>
-          </div>
-          <table class="data-table nudge-table">
-            <thead>
-              <tr>
-                <th scope="col">Object</th>
-                <th scope="col">Bursts for 1 cm/s</th>
-                <th scope="col">Elapsed time</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                nudges.map(n => (
-                  <tr data-nudge data-mass={n.kg}>
-                    <th scope="row">{n.label}</th>
-                    <td class="mono" data-nudge-b>{n.bursts.toLocaleString('en-US')}</td>
-                    <td class="mono" data-nudge-t>{n.time}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-        </div>
       </div>
+
+      <h3 class="table-title" id="growth">Same laser, more power</h3>
+      <p class="sub-intro">
+        The laser head does not change between these rows. What changes is how long and how fast
+        it fires, which is set by the power and radiator area the host spacecraft can give it.
+        Times are for 800 km, a slowly tumbling object and 50 µN·s/J.
+      </p>
+      <div class="table-wrap">
+        <table class="data-table growth-table">
+          <thead>
+            <tr>
+              <th scope="col">Firing pattern</th>
+              <th scope="col">Host</th>
+              <th scope="col">Bus power</th>
+              <th scope="col">Radiator</th>
+              <th scope="col">10 kg down</th>
+              <th scope="col">100 kg down</th>
+              <th scope="col">1 t down</th>
+              <th scope="col">10⁸ shots last</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              growth.map(g => (
+                <tr>
+                  <th scope="row">{g.c.label}</th>
+                  <td data-label="Host">{g.c.host}</td>
+                  <td class="mono" data-label="Bus power">{g.c.bus}</td>
+                  <td class="mono" data-label="Radiator">{g.c.radiator}</td>
+                  <td class="mono" data-label="10 kg down">{g.kg10}</td>
+                  <td class="mono" data-label="100 kg down">{g.kg100}</td>
+                  <td class="mono" data-label="1 t down">{g.t1}</td>
+                  <td class="mono" data-label="10⁸ shots last">{formatDuration(calendarLife(g.c.id))}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="src-line">
+        Bus power and radiator ranges run from the 8.3% efficiency target to 6%. Firing all the way
+        round the orbit lowers it about half as efficiently as firing at one point, which is
+        included.
+      </p>
 
       <div class="reading">
         <article>
-          <h3>What the chart says</h3>
+          <h3>What the first flight does</h3>
           <p>
-            At 800 km, a 1 kg fragment comes down in about five weeks and a 10 kg panel in about a
-            year. A 100 kg satellite would take longer than the laser’s design life, and a
-            one-tonne satellite about a century. At this power the SLP-5 removes fragments and
-            nudges large objects. De-orbiting tonne-class derelicts in weeks needs kilowatts of
-            average power, roughly three hundred times more than this payload’s 2.5 W orbit
-            average.
+            Firing for 5% of each orbit, the laser brings a 1 kg fragment down from 800 km in
+            about five weeks and a 10 kg object in about a year. It nudges a one-tonne derelict by
+            1 cm/s in about two days. It does not bring down dead satellites: at this firing rate
+            a 100 kg object would take ten years.
+          </p>
+        </article>
+        <article>
+          <h3>One laser life</h3>
+          <p>
+            The head is designed for 10⁸ shots. At these factors that is about {
+              (Math.round(lifeImpulse / 100) * 100).toLocaleString('en-US')
+            } N·s of useful impulse: about {Math.round(lifeMassKg)} kg brought down from 800 km, or
+            about {(Math.round(lifeNudges / 100) * 100).toLocaleString('en-US')} nudges of a one-tonne object. A 100 kg
+            satellite costs {(shotsFor100kg / 1e8).toFixed(1)} × 10⁸ shots however fast they are
+            fired. So the larger configurations depend on raising shot life toward 10⁹ as much as
+            on power.
           </p>
         </article>
         <article>
           <h3>Velocity and direction</h3>
           <p>
             Only the part of the push that opposes the velocity lowers the orbit, so the craft
-            works from ahead of its target, flying the same orbit at nearly the same speed. That
-            is what lets it spend a full 300 s burst on one object every orbit. A push from the
-            side does a quarter as much per unit of impulse, and a push from behind raises the
-            orbit.
+            works from ahead of its target, flying the same orbit at nearly the same speed. A push
+            from the side does a quarter as much per unit of impulse, and a push from behind
+            raises the orbit, which is what a collision-avoidance nudge sometimes wants.
           </p>
         </article>
         <article>
@@ -534,16 +630,15 @@ const modelConfig = {
         <div class="math-body">
           <dl>
             <div>
-              <dt>Energy per burst</dt>
+              <dt>Energy per shot</dt>
               <dd>
-                {laser.shotsPerBurst.toLocaleString('en-US')} shots × {laser.pulseEnergyJ} J = 15 kJ emitted; {
-                  DELIVERY_EFFICIENCY * 100
-                }% assumed to land on the target at a coupling fluence
+                {laser.pulseEnergyJ} J emitted; {DELIVERY_EFFICIENCY * 100}% assumed to land on the target at a
+                coupling fluence
               </dd>
             </div>
             <div>
               <dt>Coupling coefficient</dt>
-              <dd>50 µN·s per joule, shown with 25 and 100. Published values for nanosecond pulses span this range and beyond [{cite('phipps2012', 'ladroit', 'odc2023')}]</dd>
+              <dd>50 µN·s per joule, shown with 25 and 100. Published values for nanosecond pulses span this range and beyond [{cite('phipps2012', 'ladroit', 'odc2023')}]. V0 measures it</dd>
             </div>
             <div>
               <dt>Attitude factor</dt>
@@ -554,8 +649,12 @@ const modelConfig = {
               <dd>Cosine of the angle between the push and the anti-velocity direction</dd>
             </div>
             <div>
+              <dt>Firing arc</dt>
+              <dd>A push applied an angle θ round the orbit from the ideal point counts (1 + cos θ) ÷ 2, so continuous firing is half as efficient as a short burst</dd>
+            </div>
+            <div>
               <dt>Speed to lose</dt>
-              <dd>The single retrograde impulse that drops the far side of a circular orbit to {DISPOSAL_PERIGEE_KM} km, with every burst placed at the same point of the orbit</dd>
+              <dd>The single retrograde impulse that drops the far side of a circular orbit to {DISPOSAL_PERIGEE_KM} km</dd>
             </div>
             <div>
               <dt>After that</dt>
@@ -563,7 +662,7 @@ const modelConfig = {
             </div>
           </dl>
           <p class="math-result">
-            time = mass × Δv ÷ (15 kJ × {DELIVERY_EFFICIENCY} × C<sub>m</sub> × attitude × cos θ) × orbital period
+            time = mass × Δv ÷ (shots per orbit × {laser.pulseEnergyJ} J × {DELIVERY_EFFICIENCY} × C<sub>m</sub> × attitude × cos θ × arc factor) × orbital period
           </p>
           <div class="table-wrap">
             <table class="data-table alt-table">
@@ -604,17 +703,23 @@ const modelConfig = {
     <section class="band section" id="roadmap" aria-labelledby="roadmap-title">
       <div class="shell">
         <p class="eyebrow">06 · Roadmap and cost</p>
-        <h2 id="roadmap-title">Four builds, {usd(totals.total)} before contingency.</h2>
+        <h2 id="roadmap-title">{usd(seed.total)} to a working prototype.</h2>
         <p class="intro">
-          Each version exists to retire a specific risk before the next, more expensive one is
-          built. Engineering is costed at ${ENGINEER_RATE.toLocaleString('en-US')} per engineer per
-          year. Hardware is estimated from the internal materials list and reported by stage.
+          The seed stage is V0 and V1: a measurement in six months and a working 5 J prototype in
+          eighteen, built by four founding engineers. Each later version retires a specific risk
+          before the next, more expensive one is built, and all four use the same optical design.
+        </p>
+        <p class="intro">
+          Engineering is costed at a blended ${FOUNDING_RATE.toLocaleString('en-US')} per engineer
+          per year for the founding team and ${LATER_RATE.toLocaleString('en-US')} for later hires,
+          including employer costs. Hardware is estimated from the internal materials list, with a
+          reserve for spares and re-buys, and reported by stage.
         </p>
 
         <div class="roadmap">
           {
             costs.map(({ s, c }) => (
-              <article class:list={['stage', { current: s.v === 'V1' }]}>
+              <article class:list={['stage', { current: s.seed }]}>
                 <header>
                   <span class="stage-v">{s.v}</span>
                   <span class="tag">{s.status}</span>
@@ -623,7 +728,7 @@ const modelConfig = {
                 <p class="stage-cost">
                   {usd(c.total)}
                   <span>
-                    {s.months} months · {s.engineers} engineers
+                    {s.months} months · {s.team}
                   </span>
                 </p>
                 <h4>Build</h4>
@@ -656,7 +761,7 @@ const modelConfig = {
                       {s.title}
                     </span>
                     <span class="bar-track">
-                      <i class="c-labour" style={`width:${pct(c.labour)}`} title={`Engineering ${usd(c.labour)}`} />
+                      {c.labour > 0 && <i class="c-labour" style={`width:${pct(c.labour)}`} title={`Engineering ${usd(c.labour)}`} />}
                       <i class="c-hardware" style={`width:${pct(c.hardware)}`} title={`Hardware ${usd(c.hardware)}`} />
                       <i class="c-test" style={`width:${pct(c.test)}`} title={`Test ${usd(c.test)}`} />
                       <b>{usd(c.total)}</b>
@@ -686,8 +791,8 @@ const modelConfig = {
                       <th scope="row">
                         {s.v} · {s.title}
                       </th>
-                      <td class="mono" data-label="Engineer-years">{(s.engineers * (s.months / 12)).toFixed(0)}</td>
-                      <td class="mono" data-label="Engineering">{usd(c.labour)}</td>
+                      <td class="mono" data-label="Engineer-years">{s.engineers ? (s.engineers * (s.months / 12)).toFixed(0) : 'V1 team'}</td>
+                      <td class="mono" data-label="Engineering">{s.engineers ? usd(c.labour) : 'in V1'}</td>
                       <td class="mono" data-label="Hardware">{usd(c.hardware)}</td>
                       <td class="mono" data-label="Test">{usd(c.test)}</td>
                       <td class="mono strong" data-label="Total">{usd(c.total)}</td>
@@ -696,8 +801,16 @@ const modelConfig = {
                 }
               </tbody>
               <tfoot>
+                <tr class="seed-row">
+                  <th scope="row">Seed stage: V0 and V1</th>
+                  <td class="mono" data-label="Engineer-years">{(seed.labour / FOUNDING_RATE).toFixed(0)}</td>
+                  <td class="mono" data-label="Engineering">{usd(seed.labour)}</td>
+                  <td class="mono" data-label="Hardware">{usd(seed.hardware)}</td>
+                  <td class="mono" data-label="Test">{usd(seed.test)}</td>
+                  <td class="mono strong" data-label="Total">{usd(seed.total)}</td>
+                </tr>
                 <tr>
-                  <th scope="row">All four stages</th>
+                  <th scope="row">All five stages</th>
                   <td class="mono" data-label="Engineer-years">{engineerYears.toFixed(0)}</td>
                   <td class="mono" data-label="Engineering">{usd(totals.labour)}</td>
                   <td class="mono" data-label="Hardware">{usd(totals.hardware)}</td>
@@ -705,7 +818,7 @@ const modelConfig = {
                   <td class="mono strong" data-label="Total">{usd(totals.total)}</td>
                 </tr>
                 <tr>
-                  <th scope="row" colspan="5">With {CONTINGENCY * 100}% contingency</th>
+                  <th scope="row" colspan="5">All five stages with {CONTINGENCY * 100}% contingency</th>
                   <td class="mono strong" data-label={`With ${CONTINGENCY * 100}% contingency`}>{usd(totals.total * (1 + CONTINGENCY))}</td>
                 </tr>
               </tfoot>
@@ -723,11 +836,14 @@ const modelConfig = {
           <div>
             <h3>How to read the estimate</h3>
             <p>
-              Run back to back, the four stages take {(totalMonths / 12).toFixed(1)} years. The
-              estimate assumes a small commercial team and commercial practices. Agency ultraviolet
-              space lasers have cost several times more and taken more than a decade, mostly
-              because of the optics-lifetime problems in section 04. Schedule is the larger risk:
-              each extra year of a twelve-person team adds $4.8M.
+              V0 runs in the first six months of V1, on the same team, while the prototype’s
+              long-lead parts are on order. Run back to back, V1 to V4 take {(totalMonths / 12).toFixed(1)} years
+              and end with the first-flight configuration; the larger configurations in
+              <a href="#growth">section 05</a> follow it on bigger spacecraft. The estimate assumes
+              a small team working at commercial pace. Agency ultraviolet space lasers have cost
+              several times more and taken more than a decade, mostly because of the optics-lifetime
+              problems in section 04. Schedule is the larger risk: each extra year of the {flightTeam.engineers}-person
+              flight team adds about {usd(flightTeam.engineers * flightTeam.rate)}.
             </p>
           </div>
         </div>
@@ -823,8 +939,10 @@ const modelConfig = {
 <script>
   import {
     timeline,
-    nudgeBursts,
+    nudge,
+    shotsPerOrbit,
     formatDuration,
+    formatShots,
     orbitalPeriodS,
     orbitalSpeedKmS,
     deorbitDeltaV,
@@ -833,7 +951,7 @@ const modelConfig = {
 
   const calc = document.querySelector<HTMLElement>('[data-calc]');
   if (calc) {
-    const cfg = JSON.parse(calc.dataset.config ?? '{}') as { axisMin: number; axisMax: number };
+    const cfg = JSON.parse(calc.dataset.config ?? '{}') as { axisMin: number; axisMax: number; lifeShots: number };
     const lo = Math.log10(cfg.axisMin);
     const hi = Math.log10(cfg.axisMax);
     const pos = (s: number) => Math.min(100, Math.max(0, ((Math.log10(s) - lo) / (hi - lo)) * 100));
@@ -841,38 +959,47 @@ const modelConfig = {
     const altOut = calc.querySelector<HTMLElement>('[data-alt-out]')!;
     const q = <T extends HTMLElement>(sel: string) => calc.querySelector<T>(sel)!;
     const checked = (name: string) =>
-      Number(calc.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value ?? 0);
+      calc.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value ?? '';
+    const mid = couplingCases[1].value;
 
     const update = () => {
       const altKm = Number(alt.value);
-      const attitude = checked('attitude');
-      const offAxisDeg = checked('direction');
-      const base = { altKm, attitude, offAxisDeg };
+      const base = {
+        altKm,
+        attitude: Number(checked('attitude')),
+        offAxisDeg: Number(checked('direction')),
+        config: checked('config') || 'a',
+      };
+      const perOrbit = shotsPerOrbit(base.config, altKm);
+      const one = timeline({ massKg: 1, cm: mid, ...base });
       altOut.textContent = `${altKm.toLocaleString('en-US')} km`;
       q('[data-stat-v]').textContent = `${orbitalSpeedKmS(altKm).toFixed(2)} km/s`;
       q('[data-stat-dv]').textContent = `${Math.round(deorbitDeltaV(altKm))} m/s`;
-      q('[data-stat-j]').textContent = `${timeline({ massKg: 1, cm: couplingCases[1].value, ...base }).impulsePerBurst.toFixed(2)} N·s`;
-      q('[data-stat-n]').textContent = (86400 / orbitalPeriodS(altKm)).toFixed(1);
+      q('[data-stat-n]').textContent = Math.round(perOrbit).toLocaleString('en-US');
+      q('[data-stat-j]').textContent = `${one.impulsePerOrbit.toFixed(one.impulsePerOrbit < 10 ? 2 : 1)} N·s`;
+
+      const life = (cfg.lifeShots / perOrbit) * orbitalPeriodS(altKm);
+      calc.querySelectorAll<HTMLElement>('[data-life]').forEach(el => (el.style.left = `${pos(life)}%`));
 
       calc.querySelectorAll<HTMLElement>('[data-row]').forEach(row => {
         const massKg = Number(row.dataset.mass);
         const at = (cm: number) => timeline({ massKg, cm, ...base });
-        const mid = at(couplingCases[1].value);
+        const m = at(mid);
         const fast = at(couplingCases[2].value);
         const slow = at(couplingCases[0].value);
         const range = row.querySelector<HTMLElement>('[data-range]')!;
         range.style.left = `${pos(fast.seconds)}%`;
         range.style.width = `${Math.max(0.6, pos(slow.seconds) - pos(fast.seconds))}%`;
-        row.querySelector<HTMLElement>('[data-dot]')!.style.left = `${pos(mid.seconds)}%`;
-        row.querySelector<HTMLElement>('[data-value]')!.textContent = formatDuration(mid.seconds);
+        row.querySelector<HTMLElement>('[data-dot]')!.style.left = `${pos(m.seconds)}%`;
+        row.querySelector<HTMLElement>('[data-value]')!.textContent = formatDuration(m.seconds);
         row.querySelector<HTMLElement>('[data-detail]')!.textContent =
-          `${mid.bursts.toLocaleString('en-US')} bursts · ${formatDuration(fast.seconds)} to ${formatDuration(slow.seconds)}`;
+          `${formatShots(m.shots)} · ${formatDuration(fast.seconds)} to ${formatDuration(slow.seconds)}`;
       });
 
       calc.querySelectorAll<HTMLElement>('[data-nudge]').forEach(row => {
-        const b = nudgeBursts({ massKg: Number(row.dataset.mass), cm: couplingCases[1].value, ...base }, 0.01);
-        row.querySelector<HTMLElement>('[data-nudge-b]')!.textContent = b.toLocaleString('en-US');
-        row.querySelector<HTMLElement>('[data-nudge-t]')!.textContent = formatDuration(b * orbitalPeriodS(altKm));
+        const n = nudge({ massKg: Number(row.dataset.mass), cm: mid, ...base }, 0.01);
+        row.querySelector<HTMLElement>('[data-nudge-b]')!.textContent = n.shots.toLocaleString('en-US');
+        row.querySelector<HTMLElement>('[data-nudge-t]')!.textContent = formatDuration(n.seconds);
       });
     };
     calc.addEventListener('input', update);
@@ -2226,6 +2353,118 @@ const modelConfig = {
     .tl-row .range,
     .tl-row .dot {
       transition: none;
+    }
+  }
+
+  /* ---------- revision: firing patterns, growth table, five-stage roadmap ---------- */
+  .calc-controls {
+    grid-template-columns: 1fr 1fr 1.1fr 1.2fr;
+  }
+  .sub-intro {
+    font-size: 15px;
+    color: var(--soft);
+    max-width: 820px;
+    margin-bottom: 14px !important;
+  }
+  .table-title {
+    margin-top: 56px;
+  }
+  .growth-table {
+    min-width: 980px;
+  }
+  .growth-table tbody tr:first-child th,
+  .growth-table tbody tr:first-child td {
+    background: #141225;
+  }
+  .reading {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 40px;
+  }
+  .nudge {
+    border-top: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .roadmap {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .stage {
+    padding: 20px 18px;
+  }
+  .stage h3 {
+    font-size: 18px;
+  }
+  .stage-cost {
+    font-size: 24px !important;
+  }
+  .data-table tfoot tr.seed-row :is(th, td) {
+    color: var(--accent);
+  }
+  .intro + .intro {
+    margin-top: 12px !important;
+  }
+  .cost-notes a {
+    color: var(--accent);
+    text-underline-offset: 3px;
+  }
+  @media (max-width: 1240px) {
+    .roadmap {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .calc-controls {
+      grid-template-columns: 1fr 1fr;
+    }
+    .calc-controls > :first-child {
+      grid-column: auto;
+    }
+  }
+  @media (max-width: 900px) {
+    .roadmap,
+    .reading {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .roadmap,
+    .reading,
+    .calc-controls {
+      grid-template-columns: 1fr;
+    }
+    .growth-table {
+      min-width: 0;
+    }
+    .growth-table thead {
+      display: none;
+    }
+    .growth-table :is(tbody, tr, th, td) {
+      display: block;
+      width: 100% !important;
+    }
+    .growth-table tr {
+      border-top: 1px solid #55607a;
+      padding: 12px 0;
+    }
+    .growth-table :is(th, td) {
+      border: 0 !important;
+      padding: 3px 0;
+      background: none !important;
+    }
+    .growth-table td[data-label] {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      white-space: normal;
+      text-align: right;
+    }
+    .growth-table td[data-label]::before {
+      content: attr(data-label);
+      font:
+        10px 'JetBrains Mono',
+        monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: left;
     }
   }
 </style>
