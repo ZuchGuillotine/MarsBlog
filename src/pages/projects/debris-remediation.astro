@@ -1,0 +1,2231 @@
+---
+// Debris remediation — the SLP-5 laser payload proposed for the Shepherd-1 craft.
+// Laser payload only: tracking and beam delivery are deliberately not described,
+// and the parts-level materials list is not published.
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SlpViewer from '../../components/debris/SlpViewer.astro';
+import SlpSchematic from '../../components/debris/SlpSchematic.astro';
+import { ORBITFLEET_URL, mailto } from '../../data/site';
+import {
+  glance,
+  heroNumbers,
+  kindLabel,
+  steps,
+  whyChoices,
+  specGroups,
+  energyLadder,
+  survivability,
+  stages,
+  stageCost,
+  costExclusions,
+  openItems,
+  references,
+  ENGINEER_RATE,
+  CONTINGENCY,
+} from '../../data/debrisLaser';
+import {
+  attitudeCases,
+  directionCases,
+  massClasses,
+  couplingCases,
+  timeline,
+  nudgeBursts,
+  formatDuration,
+  orbitalPeriodS,
+  orbitalSpeedKmS,
+  deorbitDeltaV,
+  laser,
+  DELIVERY_EFFICIENCY,
+  DISPOSAL_PERIGEE_KM,
+} from '../../lib/debrisLaserModel';
+
+const posterPath = '/images/debris/slp5-poster.jpg';
+const hasPoster = fs.existsSync(path.join(process.cwd(), 'public', posterPath));
+
+const nav = [
+  ['how', 'How it works'],
+  ['schematic', 'Schematic'],
+  ['specs', 'Specifications'],
+  ['environment', 'Environment'],
+  ['timelines', 'De-orbit timelines'],
+  ['roadmap', 'Roadmap and cost'],
+  ['open-items', 'Open items'],
+];
+
+// ---- timeline defaults (also the no-JavaScript view) -----------------------
+const base = { altKm: 800, attitude: 0.6, offAxisDeg: 0 };
+const AXIS_MIN = 3600; // 1 hour
+const AXIS_MAX = 2000 * 365.25 * 86400; // 2,000 years
+const pos = (s: number) =>
+  Math.min(100, Math.max(0, ((Math.log10(s) - Math.log10(AXIS_MIN)) / (Math.log10(AXIS_MAX) - Math.log10(AXIS_MIN))) * 100));
+const YEAR = 365.25 * 86400;
+const ticks = [
+  { s: 3600, label: '1 hour' },
+  { s: 86400, label: '1 day' },
+  { s: 30.44 * 86400, label: '1 month' },
+  { s: YEAR, label: '1 year' },
+  { s: 10 * YEAR, label: '10 years' },
+  { s: 100 * YEAR, label: '100 years' },
+  { s: 1000 * YEAR, label: '1,000 yr' },
+];
+const DESIGN_LIFE_S = (1e8 / laser.shotsPerBurst) * orbitalPeriodS(750);
+const rows = massClasses.map(m => {
+  const at = (cm: number) => timeline({ massKg: m.kg, cm, ...base });
+  const mid = at(couplingCases[1].value);
+  return { ...m, mid, fast: at(couplingCases[2].value), slow: at(couplingCases[0].value) };
+});
+const nudgeMasses = [
+  { kg: 100, label: '100 kg' },
+  { kg: 1000, label: '1 t' },
+  { kg: 9000, label: '9 t rocket stage' },
+];
+const nudges = nudgeMasses.map(m => {
+  const b = nudgeBursts({ massKg: m.kg, cm: couplingCases[1].value, ...base }, 0.01);
+  return { ...m, bursts: b, time: formatDuration(b * orbitalPeriodS(base.altKm)) };
+});
+const altitudeTable = [500, 600, 700, 800, 1000, 1200].map(h => ({
+  h,
+  v: orbitalSpeedKmS(h),
+  dv: deorbitDeltaV(h),
+  period: orbitalPeriodS(h) / 60,
+}));
+const baseImpulse = timeline({ massKg: 1, cm: couplingCases[1].value, ...base }).impulsePerBurst;
+
+// ---- cost ------------------------------------------------------------------
+const costs = stages.map(s => ({ s, c: stageCost(s) }));
+const totals = costs.reduce(
+  (t, { c }) => ({
+    labour: t.labour + c.labour,
+    hardware: t.hardware + c.hardware,
+    test: t.test + c.test,
+    total: t.total + c.total,
+  }),
+  { labour: 0, hardware: 0, test: 0, total: 0 }
+);
+const engineerYears = stages.reduce((t, s) => t + s.engineers * (s.months / 12), 0);
+const totalMonths = stages.reduce((t, s) => t + s.months, 0);
+const maxStage = Math.max(...costs.map(x => x.c.total));
+const usd = (n: number) => `$${(n / 1e6).toFixed(1)}M`;
+const pct = (n: number) => `${((n / maxStage) * 100).toFixed(2)}%`;
+
+const refIndex = Object.fromEntries(references.map((r, i) => [r.id, i + 1]));
+const cite = (...ids: string[]) => ids.map(id => refIndex[id]).filter(Boolean).join(', ');
+
+const modelConfig = {
+  axisMin: AXIS_MIN,
+  axisMax: AXIS_MAX,
+};
+---
+
+<BaseLayout
+  title="SLP-5 Debris Remediation Laser | Population Mars"
+  description="A proposed 5-joule, 355 nm pulsed ultraviolet laser payload for removing orbital debris by ablation: how it works, the full schematic, de-orbit timelines by mass and altitude, and a staged cost estimate."
+  ogImage={hasPoster ? posterPath : undefined}
+>
+  <div class="slp">
+    <!-- ================= HERO ================= -->
+    <header class="hero shell">
+      <div class="crumbs">
+        <span>Our projects</span><span aria-hidden="true">/</span><span>Debris remediation</span>
+      </div>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Population Mars · orbital debris remediation</p>
+          <h1>The SLP-5 debris laser</h1>
+          <p class="thesis">
+            A proposed 5-joule ultraviolet laser payload for the Shepherd-1 craft. Each pulse
+            vaporises a few micrograms off a piece of debris, and the recoil slows it. Three
+            thousand pulses an orbit, repeated for days or months, lower a fragment until the
+            atmosphere takes it.
+          </p>
+          <p class="status-line">
+            <span class="dot" aria-hidden="true"></span><strong>Stage:</strong> concept design.
+            Nothing is built, and every figure here is a design target or a calculation.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="#timelines">De-orbit timelines <span aria-hidden="true">↓</span></a>
+            <a class="button" href="#schematic">Schematic <span aria-hidden="true">↓</span></a>
+            <a class="button ghost" href={`${ORBITFLEET_URL}/debris`} rel="noopener">
+              Debris simulation <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+        <aside class="glance" aria-labelledby="glance-title">
+          <h2 id="glance-title" class="eyebrow">At a glance</h2>
+          <dl>
+            {
+              glance.map(g => (
+                <div>
+                  <dt>{g.k}</dt>
+                  <dd>{g.v}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </aside>
+      </div>
+
+      <div class="viewer-wrap">
+        <SlpViewer poster={hasPoster ? posterPath : undefined} />
+      </div>
+
+      <ul class="numbers" aria-label="Key numbers">
+        {
+          heroNumbers.map(n => (
+            <li>
+              <span class="num">{n.value}</span>
+              <span class="num-label">{n.label}</span>
+              <span class="kind">{kindLabel[n.kind]}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </header>
+
+    <!-- ================= STICKY NAV ================= -->
+    <nav class="section-nav" aria-label="Page sections">
+      <div class="shell nav-inner">
+        <div class="nav-links">
+          {nav.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+        </div>
+      </div>
+    </nav>
+
+    <!-- ================= 01 HOW IT WORKS ================= -->
+    <section class="shell section" id="how" aria-labelledby="how-title">
+      <p class="eyebrow">01 · How it works</p>
+      <h2 id="how-title">Push debris with its own vapour.</h2>
+      <p class="intro">
+        A short, intense pulse of light turns a thin layer of a surface into plasma. The plasma
+        leaves at kilometres per second, and the object recoils the other way. Nothing touches the
+        debris and nothing has to grab it. Fired against the direction of travel, each pulse takes
+        a little speed off, and a slower object drops to a lower orbit
+        <sup class="ref"><a href="#ref-phipps2012">[{refIndex.phipps2012}]</a></sup>.
+      </p>
+      <p class="intro">
+        The laser itself is a chain: a small, very clean pulse is amplified a thousand-fold in
+        infrared, then converted to ultraviolet.
+      </p>
+      <ol class="steps">
+        {
+          steps.map(s => (
+            <li>
+              <span class="step-n">{s.n}</span>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+              <p class="step-stat">{s.stat}</p>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="orbit-cycle" role="img" aria-label="One orbit: a 300 second burst followed by 93 minutes of recovery">
+        <div class="cycle-head">
+          <span>One orbit, to scale</span>
+          <span>98 minutes</span>
+        </div>
+        <div class="cycle-bar">
+          <span class="cycle-fire"></span>
+          <span class="cycle-rest"></span>
+        </div>
+        <div class="cycle-legend">
+          <span><i class="fire"></i>Burst: 300 s, 3,000 shots, 600 W drawn from the buffer</span>
+          <span><i class="rest"></i>Recovery: 93 min, wax refreezes, buffer recharges at 43 W</span>
+        </div>
+      </div>
+
+      <div class="why-grid">
+        {
+          whyChoices.map(w => (
+            <article>
+              <h3>{w.title}</h3>
+              <p>{w.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ================= 02 SCHEMATIC ================= -->
+    <section class="band section" id="schematic" aria-labelledby="schem-h">
+      <div class="shell">
+        <p class="eyebrow">02 · System schematic</p>
+        <h2 id="schem-h">Two decks: light above, power and heat below.</h2>
+        <p class="intro">
+          The optical train is folded onto one silicon carbide bench inside a sealed cavity. Power
+          electronics, the energy buffer and the thermal capacitor sit underneath, coupled to the
+          bench by conduction.
+        </p>
+        <SlpSchematic />
+
+        <h3 class="table-title">Pulse energy through the chain</h3>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Stage</th>
+                <th scope="col">Pulse energy</th>
+                <th scope="col">Wavelength</th>
+                <th scope="col">Beam</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                energyLadder.map(e => (
+                  <tr>
+                    <th scope="row">{e.stage}</th>
+                    <td class="mono">{e.energy}</td>
+                    <td class="mono">{e.wavelength}</td>
+                    <td>{e.beam}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 03 SPECIFICATIONS ================= -->
+    <section class="shell section" id="specs" aria-labelledby="specs-title">
+      <p class="eyebrow">03 · Specifications</p>
+      <h2 id="specs-title">Design targets.</h2>
+      <p class="intro">
+        These are the numbers the design is built to. None has been measured. Where a target is
+        aggressive, it is listed again under <a href="#open-items">open items</a>.
+      </p>
+      <div class="spec-grid">
+        {
+          specGroups.map(g => (
+            <section class="spec-group" aria-label={g.title}>
+              <h3>{g.title}</h3>
+              <dl>
+                {g.rows.map(([k, v, note]) => (
+                  <div>
+                    <dt>{k}</dt>
+                    <dd>
+                      <span class="spec-v">{v}</span>
+                      {note && <span class="spec-note">{note}</span>}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ================= 04 ENVIRONMENT ================= -->
+    <section class="band section" id="environment" aria-labelledby="env-title">
+      <div class="shell">
+        <p class="eyebrow">04 · Surviving the environment</p>
+        <h2 id="env-title">Four ways orbit kills an ultraviolet laser.</h2>
+        <p class="intro">
+          Space lidar missions have shown that the laser physics is the easier part. Keeping
+          ultraviolet optics alive in vacuum for years is the harder one
+          <sup class="ref"
+            ><a href="#ref-lux2024">[{refIndex.lux2024}]</a><a href="#ref-esaaeolus">[{refIndex.esaaeolus}]</a><a
+              href="#ref-riede">[{refIndex.riede}]</a
+            ></sup
+          >.
+        </p>
+        <ol class="pushback">
+          {
+            survivability.map(p => (
+              <li>
+                <span class="pb-n">{p.n}</span>
+                <div class="pb-body">
+                  <h3>{p.problem}</h3>
+                  <p class="pb-num">{p.numbers}</p>
+                  <p class="pb-resp">
+                    <strong>Response.</strong>
+                    {p.response}
+                  </p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="src-line">
+          Sources: Aeolus oxygen purge [{cite('lux2024', 'esaaeolus')}]; coatings in vacuum [{cite('riede')}]; 885
+          nm absorption band [{cite('lavi2000')}]; wax properties [{cite('faden2019')}].
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= 05 TIMELINES ================= -->
+    <section class="shell section" id="timelines" aria-labelledby="tl-title">
+      <p class="eyebrow">05 · De-orbit timelines</p>
+      <h2 id="tl-title">Days for fragments. Decades for dead satellites.</h2>
+      <p class="intro">
+        The time to bring something down is a momentum budget: the object’s mass times the speed
+        it has to lose, divided by the impulse one burst delivers. Mass sets the scale. Altitude
+        sets the speed to be lost. The direction of the push relative to the object’s velocity,
+        and how the object is turning, set how much of each pulse counts.
+      </p>
+
+      <div class="calc" data-calc data-config={JSON.stringify(modelConfig)}>
+        <form class="calc-controls" aria-label="Timeline inputs">
+          <label class="ctl">
+            <span class="ctl-label">Altitude (circular orbit)</span>
+            <span class="ctl-row">
+              <input type="range" min="500" max="1200" step="50" value={base.altKm} data-alt aria-describedby="alt-out" />
+              <output id="alt-out" data-alt-out>{base.altKm} km</output>
+            </span>
+          </label>
+          <fieldset class="ctl">
+            <legend class="ctl-label">Attitude of the debris</legend>
+            <div class="seg">
+              {
+                attitudeCases.map(a => (
+                  <label>
+                    <input type="radio" name="attitude" value={a.factor} checked={a.factor === base.attitude} />
+                    <span>{a.label}</span>
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+          <fieldset class="ctl">
+            <legend class="ctl-label">Push direction against velocity</legend>
+            <div class="seg">
+              {
+                directionCases.map(d => (
+                  <label>
+                    <input type="radio" name="direction" value={d.deg} checked={d.deg === base.offAxisDeg} />
+                    <span>{d.label}</span>
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+        </form>
+
+        <dl class="calc-stats">
+          <div>
+            <dt>Orbital speed</dt>
+            <dd data-stat-v>{orbitalSpeedKmS(base.altKm).toFixed(2)} km/s</dd>
+          </div>
+          <div>
+            <dt>Speed to lose</dt>
+            <dd data-stat-dv>{Math.round(deorbitDeltaV(base.altKm))} m/s</dd>
+          </div>
+          <div>
+            <dt>Impulse per burst</dt>
+            <dd data-stat-j>{baseImpulse.toFixed(2)} N·s</dd>
+          </div>
+          <div>
+            <dt>Bursts per day</dt>
+            <dd data-stat-n>{(86400 / orbitalPeriodS(base.altKm)).toFixed(1)}</dd>
+          </div>
+        </dl>
+
+        <div class="tl-chart">
+          <p class="tl-title">
+            Time to lower perigee to {DISPOSAL_PERIGEE_KM} km, one burst per orbit
+            <span>Dot: 50 µN·s/J. Bar: 100 down to 25 µN·s/J.</span>
+          </p>
+          <div class="tl-rows" role="table" aria-label="Time to de-orbit by debris mass">
+            <div class="tl-axis" aria-hidden="true">
+              <span class="tl-axis-pad"></span>
+              <span class="tl-track">
+                {ticks.map(t => <i class="tick" style={`left:${pos(t.s)}%`}><b>{t.label}</b></i>)}
+                <i class="life" style={`left:${pos(DESIGN_LIFE_S)}%`}><b>laser design life</b></i>
+              </span>
+              <span class="tl-axis-pad end"></span>
+            </div>
+            {
+              rows.map(r => (
+                <div class="tl-row" role="row" data-row data-mass={r.kg} tabindex="0">
+                  <span class="tl-mass" role="rowheader">
+                    <strong>{r.label}</strong>
+                    <small>{r.example}</small>
+                  </span>
+                  <span class="tl-track" role="presentation">
+                    {ticks.map(t => <i class="grid" style={`left:${pos(t.s)}%`} />)}
+                    <i class="life-line" style={`left:${pos(DESIGN_LIFE_S)}%`} />
+                    <i
+                      class="range"
+                      data-range
+                      style={`left:${pos(r.fast.seconds)}%;width:${Math.max(0.6, pos(r.slow.seconds) - pos(r.fast.seconds))}%`}
+                    />
+                    <i class="dot" data-dot style={`left:${pos(r.mid.seconds)}%`} />
+                  </span>
+                  <span class="tl-value" role="cell" data-value>{formatDuration(r.mid.seconds)}</span>
+                  <span class="tl-detail" role="cell" data-detail>
+                    {r.mid.bursts.toLocaleString('en-US')} bursts · {formatDuration(r.fast.seconds)} to {formatDuration(r.slow.seconds)}
+                  </span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="nudge">
+          <div>
+            <h3>The other use: a nudge</h3>
+            <p>
+              Avoiding a predicted collision takes far less than a de-orbit. A change of about a
+              centimetre per second, applied a day or more ahead, moves a pass by kilometres. On
+              that task the same laser is useful against objects it could never bring down.
+            </p>
+          </div>
+          <table class="data-table nudge-table">
+            <thead>
+              <tr>
+                <th scope="col">Object</th>
+                <th scope="col">Bursts for 1 cm/s</th>
+                <th scope="col">Elapsed time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                nudges.map(n => (
+                  <tr data-nudge data-mass={n.kg}>
+                    <th scope="row">{n.label}</th>
+                    <td class="mono" data-nudge-b>{n.bursts.toLocaleString('en-US')}</td>
+                    <td class="mono" data-nudge-t>{n.time}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="reading">
+        <article>
+          <h3>What the chart says</h3>
+          <p>
+            At 800 km, a 1 kg fragment comes down in about five weeks and a 10 kg panel in about a
+            year. A 100 kg satellite would take longer than the laser’s design life, and a
+            one-tonne satellite about a century. At this power the SLP-5 removes fragments and
+            nudges large objects. De-orbiting tonne-class derelicts in weeks needs kilowatts of
+            average power, roughly three hundred times more than this payload’s 2.5 W orbit
+            average.
+          </p>
+        </article>
+        <article>
+          <h3>Velocity and direction</h3>
+          <p>
+            Only the part of the push that opposes the velocity lowers the orbit, so the craft
+            works from ahead of its target, flying the same orbit at nearly the same speed. That
+            is what lets it spend a full 300 s burst on one object every orbit. A push from the
+            side does a quarter as much per unit of impulse, and a push from behind raises the
+            orbit.
+          </p>
+        </article>
+        <article>
+          <h3>Attitude</h3>
+          <p>
+            Recoil acts along the surface normal, not along the beam. A flat face square to the
+            beam uses nearly all of each pulse. A tumbling plate averages well below that, and
+            off-centre hits change its spin. The attitude factors here are assumptions until
+            someone measures them on real debris.
+          </p>
+        </article>
+      </div>
+
+      <details class="math">
+        <summary>How these numbers are calculated</summary>
+        <div class="math-body">
+          <dl>
+            <div>
+              <dt>Energy per burst</dt>
+              <dd>
+                {laser.shotsPerBurst.toLocaleString('en-US')} shots × {laser.pulseEnergyJ} J = 15 kJ emitted; {
+                  DELIVERY_EFFICIENCY * 100
+                }% assumed to land on the target at a coupling fluence
+              </dd>
+            </div>
+            <div>
+              <dt>Coupling coefficient</dt>
+              <dd>50 µN·s per joule, shown with 25 and 100. Published values for nanosecond pulses span this range and beyond [{cite('phipps2012', 'ladroit', 'odc2023')}]</dd>
+            </div>
+            <div>
+              <dt>Attitude factor</dt>
+              <dd>{attitudeCases.map(a => `${a.factor} ${a.label.toLowerCase()}`).join('; ')}</dd>
+            </div>
+            <div>
+              <dt>Direction factor</dt>
+              <dd>Cosine of the angle between the push and the anti-velocity direction</dd>
+            </div>
+            <div>
+              <dt>Speed to lose</dt>
+              <dd>The single retrograde impulse that drops the far side of a circular orbit to {DISPOSAL_PERIGEE_KM} km, with every burst placed at the same point of the orbit</dd>
+            </div>
+            <div>
+              <dt>After that</dt>
+              <dd>Drag at a {DISPOSAL_PERIGEE_KM} km perigee finishes the descent in weeks to months, depending on the object’s area-to-mass ratio and on solar activity. Not included in the times shown</dd>
+            </div>
+          </dl>
+          <p class="math-result">
+            time = mass × Δv ÷ (15 kJ × {DELIVERY_EFFICIENCY} × C<sub>m</sub> × attitude × cos θ) × orbital period
+          </p>
+          <div class="table-wrap">
+            <table class="data-table alt-table">
+              <thead>
+                <tr>
+                  <th scope="col">Altitude</th>
+                  <th scope="col">Orbital speed</th>
+                  <th scope="col">Period</th>
+                  <th scope="col">Speed to lose</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  altitudeTable.map(a => (
+                    <tr>
+                      <th scope="row">{a.h.toLocaleString('en-US')} km</th>
+                      <td class="mono">{a.v.toFixed(2)} km/s</td>
+                      <td class="mono">{a.period.toFixed(1)} min</td>
+                      <td class="mono">{Math.round(a.dv)} m/s</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+          <p>
+            <strong>What the model leaves out.</strong> Finding, tracking and holding the beam on
+            the target; time spent moving between targets; eclipse and operational downtime; and
+            the propellant the craft spends keeping station as its target descends. Each one makes
+            the real times longer. The model also assumes the pulse arrives at a fluence that
+            couples well, which for a 5 J pulse means a spot about a centimetre across.
+          </p>
+        </div>
+      </details>
+    </section>
+
+    <!-- ================= 06 ROADMAP ================= -->
+    <section class="band section" id="roadmap" aria-labelledby="roadmap-title">
+      <div class="shell">
+        <p class="eyebrow">06 · Roadmap and cost</p>
+        <h2 id="roadmap-title">Four builds, {usd(totals.total)} before contingency.</h2>
+        <p class="intro">
+          Each version exists to retire a specific risk before the next, more expensive one is
+          built. Engineering is costed at ${ENGINEER_RATE.toLocaleString('en-US')} per engineer per
+          year. Hardware is estimated from the internal materials list and reported by stage.
+        </p>
+
+        <div class="roadmap">
+          {
+            costs.map(({ s, c }) => (
+              <article class:list={['stage', { current: s.v === 'V1' }]}>
+                <header>
+                  <span class="stage-v">{s.v}</span>
+                  <span class="tag">{s.status}</span>
+                </header>
+                <h3>{s.title}</h3>
+                <p class="stage-cost">
+                  {usd(c.total)}
+                  <span>
+                    {s.months} months · {s.engineers} engineers
+                  </span>
+                </p>
+                <h4>Build</h4>
+                <ul class="dash-list">
+                  {s.build.map(b => <li>{b}</li>)}
+                </ul>
+                <h4>Proves</h4>
+                <p>{s.proves}</p>
+                <h4>Exit criterion</h4>
+                <p class="exit">{s.exit}</p>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="cost">
+          <div class="cost-chart">
+            <h3>Cost by stage</h3>
+            <ul class="cost-key" aria-label="Cost categories">
+              <li><i class="c-labour"></i>Engineering</li>
+              <li><i class="c-hardware"></i>Hardware and materials</li>
+              <li><i class="c-test"></i>Test and facilities</li>
+            </ul>
+            <div class="bars">
+              {
+                costs.map(({ s, c }) => (
+                  <div class="bar-row">
+                    <span class="bar-label">
+                      <strong>{s.v}</strong>
+                      {s.title}
+                    </span>
+                    <span class="bar-track">
+                      <i class="c-labour" style={`width:${pct(c.labour)}`} title={`Engineering ${usd(c.labour)}`} />
+                      <i class="c-hardware" style={`width:${pct(c.hardware)}`} title={`Hardware ${usd(c.hardware)}`} />
+                      <i class="c-test" style={`width:${pct(c.test)}`} title={`Test ${usd(c.test)}`} />
+                      <b>{usd(c.total)}</b>
+                    </span>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="data-table cost-table">
+              <thead>
+                <tr>
+                  <th scope="col">Stage</th>
+                  <th scope="col">Engineer-years</th>
+                  <th scope="col">Engineering</th>
+                  <th scope="col">Hardware</th>
+                  <th scope="col">Test</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  costs.map(({ s, c }) => (
+                    <tr>
+                      <th scope="row">
+                        {s.v} · {s.title}
+                      </th>
+                      <td class="mono" data-label="Engineer-years">{(s.engineers * (s.months / 12)).toFixed(0)}</td>
+                      <td class="mono" data-label="Engineering">{usd(c.labour)}</td>
+                      <td class="mono" data-label="Hardware">{usd(c.hardware)}</td>
+                      <td class="mono" data-label="Test">{usd(c.test)}</td>
+                      <td class="mono strong" data-label="Total">{usd(c.total)}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="row">All four stages</th>
+                  <td class="mono" data-label="Engineer-years">{engineerYears.toFixed(0)}</td>
+                  <td class="mono" data-label="Engineering">{usd(totals.labour)}</td>
+                  <td class="mono" data-label="Hardware">{usd(totals.hardware)}</td>
+                  <td class="mono" data-label="Test">{usd(totals.test)}</td>
+                  <td class="mono strong" data-label="Total">{usd(totals.total)}</td>
+                </tr>
+                <tr>
+                  <th scope="row" colspan="5">With {CONTINGENCY * 100}% contingency</th>
+                  <td class="mono strong" data-label={`With ${CONTINGENCY * 100}% contingency`}>{usd(totals.total * (1 + CONTINGENCY))}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="cost-notes">
+          <div>
+            <h3>Not included</h3>
+            <ul class="dash-list">
+              {costExclusions.map(x => <li>{x}</li>)}
+            </ul>
+          </div>
+          <div>
+            <h3>How to read the estimate</h3>
+            <p>
+              Run back to back, the four stages take {(totalMonths / 12).toFixed(1)} years. The
+              estimate assumes a small commercial team and commercial practices. Agency ultraviolet
+              space lasers have cost several times more and taken more than a decade, mostly
+              because of the optics-lifetime problems in section 04. Schedule is the larger risk:
+              each extra year of a twelve-person team adds $4.8M.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 07 OPEN ITEMS ================= -->
+    <section class="shell section" id="open-items" aria-labelledby="open-title">
+      <p class="eyebrow">07 · Open engineering items</p>
+      <h2 id="open-title">Where the design does not yet close.</h2>
+      <p class="intro">
+        A review of the concept against published results found these gaps. They are listed so
+        that the targets above are read as targets, and each has a stage that settles it.
+      </p>
+      <div class="open-list">
+        {
+          openItems.map(o => (
+            <article>
+              <header>
+                <h3>{o.item}</h3>
+                <span class="tag">Closes in {o.closes}</span>
+              </header>
+              <p>{o.detail}</p>
+            </article>
+          ))
+        }
+      </div>
+      <p class="src-line">
+        Sources: flown-laser efficiency and damage [{cite('lux2024', 'riede')}]; diode derating [{cite('nasadiode')}];
+        coupling fluence [{cite('phipps2012', 'ladroit')}].
+      </p>
+    </section>
+
+    <!-- ================= SCOPE ================= -->
+    <section class="band section scope" aria-labelledby="scope-title">
+      <div class="shell scope-grid">
+        <div>
+          <p class="eyebrow">Scope of this page</p>
+          <h2 id="scope-title">The laser, and only the laser.</h2>
+        </div>
+        <div>
+          <p>
+            This page describes the laser payload up to its output port. The system that finds a
+            target, points the beam and decides when to fire is not described here, and neither is
+            the parts-level materials list.
+          </p>
+          <p>
+            The case for laser remediation, and the reasons a debris laser needs open operation and
+            oversight, are set out in
+            <a href="/blog/the-case-for-attack-satellites">The Case for Attack Satellites</a>. The
+            orbital mechanics can be explored in the
+            <a href={`${ORBITFLEET_URL}/debris`} rel="noopener">OrbitFleet debris simulation</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= REFERENCES ================= -->
+    <section class="shell section refs" id="references" aria-labelledby="refs-title">
+      <p class="eyebrow">References</p>
+      <h2 id="refs-title" class="sr-only">References</h2>
+      <ol class="ref-list">
+        {
+          references.map(r => (
+            <li id={`ref-${r.id}`}>
+              <a href={r.url} rel="noopener">{r.text}</a>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <!-- ================= CLOSING ================= -->
+    <section class="closing section">
+      <div class="shell closing-grid">
+        <div>
+          <p class="eyebrow">Debris remediation</p>
+          <h2>Review it, break it, help build V1.</h2>
+          <p>
+            The next step is a ground prototype that measures what this page can only estimate.
+            Laser engineers, optics-qualification labs and funders shorten that most.
+          </p>
+        </div>
+        <div class="closing-actions">
+          <a class="button primary" href={mailto('SLP-5 debris laser')}>Get in touch <span aria-hidden="true">↗</span></a>
+          <a class="button" href="/support">Support the research <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  import {
+    timeline,
+    nudgeBursts,
+    formatDuration,
+    orbitalPeriodS,
+    orbitalSpeedKmS,
+    deorbitDeltaV,
+    couplingCases,
+  } from '../../lib/debrisLaserModel';
+
+  const calc = document.querySelector<HTMLElement>('[data-calc]');
+  if (calc) {
+    const cfg = JSON.parse(calc.dataset.config ?? '{}') as { axisMin: number; axisMax: number };
+    const lo = Math.log10(cfg.axisMin);
+    const hi = Math.log10(cfg.axisMax);
+    const pos = (s: number) => Math.min(100, Math.max(0, ((Math.log10(s) - lo) / (hi - lo)) * 100));
+    const alt = calc.querySelector<HTMLInputElement>('[data-alt]')!;
+    const altOut = calc.querySelector<HTMLElement>('[data-alt-out]')!;
+    const q = <T extends HTMLElement>(sel: string) => calc.querySelector<T>(sel)!;
+    const checked = (name: string) =>
+      Number(calc.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value ?? 0);
+
+    const update = () => {
+      const altKm = Number(alt.value);
+      const attitude = checked('attitude');
+      const offAxisDeg = checked('direction');
+      const base = { altKm, attitude, offAxisDeg };
+      altOut.textContent = `${altKm.toLocaleString('en-US')} km`;
+      q('[data-stat-v]').textContent = `${orbitalSpeedKmS(altKm).toFixed(2)} km/s`;
+      q('[data-stat-dv]').textContent = `${Math.round(deorbitDeltaV(altKm))} m/s`;
+      q('[data-stat-j]').textContent = `${timeline({ massKg: 1, cm: couplingCases[1].value, ...base }).impulsePerBurst.toFixed(2)} N·s`;
+      q('[data-stat-n]').textContent = (86400 / orbitalPeriodS(altKm)).toFixed(1);
+
+      calc.querySelectorAll<HTMLElement>('[data-row]').forEach(row => {
+        const massKg = Number(row.dataset.mass);
+        const at = (cm: number) => timeline({ massKg, cm, ...base });
+        const mid = at(couplingCases[1].value);
+        const fast = at(couplingCases[2].value);
+        const slow = at(couplingCases[0].value);
+        const range = row.querySelector<HTMLElement>('[data-range]')!;
+        range.style.left = `${pos(fast.seconds)}%`;
+        range.style.width = `${Math.max(0.6, pos(slow.seconds) - pos(fast.seconds))}%`;
+        row.querySelector<HTMLElement>('[data-dot]')!.style.left = `${pos(mid.seconds)}%`;
+        row.querySelector<HTMLElement>('[data-value]')!.textContent = formatDuration(mid.seconds);
+        row.querySelector<HTMLElement>('[data-detail]')!.textContent =
+          `${mid.bursts.toLocaleString('en-US')} bursts · ${formatDuration(fast.seconds)} to ${formatDuration(slow.seconds)}`;
+      });
+
+      calc.querySelectorAll<HTMLElement>('[data-nudge]').forEach(row => {
+        const b = nudgeBursts({ massKg: Number(row.dataset.mass), cm: couplingCases[1].value, ...base }, 0.01);
+        row.querySelector<HTMLElement>('[data-nudge-b]')!.textContent = b.toLocaleString('en-US');
+        row.querySelector<HTMLElement>('[data-nudge-t]')!.textContent = formatDuration(b * orbitalPeriodS(altKm));
+      });
+    };
+    calc.addEventListener('input', update);
+    calc.querySelector('form')?.addEventListener('submit', e => e.preventDefault());
+  }
+</script>
+
+<style>
+  .slp {
+    --ink: #eef0f5;
+    --muted: #9aa2b3;
+    --soft: #c5cbd8;
+    --line: #262b37;
+    --line-strong: #3a4152;
+    --accent: #b9a4ff;
+    --bg: #0b0d12;
+    --band: #10141c;
+    --panel: #151a23;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Inter, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    overflow-x: clip;
+  }
+  .slp * {
+    box-sizing: border-box;
+  }
+  :where(.slp) :where(h1, h2, h3, h4, p, figure, dl, dd, ul, ol) {
+    margin: 0;
+  }
+  :where(.slp) :where(h1, h2, h3) {
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+  }
+  :where(.slp) :where(h2) {
+    font-size: clamp(28px, 3.4vw, 44px);
+    text-wrap: balance;
+  }
+  :where(.slp) :where(h3) {
+    font-size: 20px;
+  }
+  .slp a {
+    color: inherit;
+  }
+  .slp :is(a, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+  .slp section[id] {
+    scroll-margin-top: 124px;
+  }
+  .shell {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+  .band {
+    background: var(--band);
+    border-block: 1px solid var(--line);
+  }
+  .eyebrow,
+  .tag,
+  .kind,
+  .button,
+  .crumbs,
+  .section-nav,
+  .glance dt,
+  .src-line,
+  .data-table thead th,
+  .data-table td::before,
+  .stage-v,
+  .stage h4,
+  .pb-n,
+  .step-n,
+  .step-stat,
+  .num-label,
+  .mono,
+  .math summary,
+  .ctl-label,
+  .calc-stats dt,
+  .spec-group dt {
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 18px !important;
+  }
+  .intro {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--soft);
+    max-width: 820px;
+    margin-top: 18px !important;
+  }
+  .intro a {
+    color: var(--accent);
+    text-underline-offset: 3px;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    border: 1px solid #55607a;
+    color: #d5dae5;
+    padding: 5px 8px;
+    white-space: nowrap;
+  }
+  .kind {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border: 1px solid #55607a;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .ref {
+    font-size: 10px;
+    margin-left: 2px;
+  }
+  .ref a {
+    text-decoration: none;
+    color: var(--accent);
+  }
+  .src-line {
+    margin-top: 22px !important;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .dash-list {
+    list-style: none;
+    padding: 0;
+  }
+  .dash-list li {
+    position: relative;
+    padding-left: 18px;
+    margin-top: 8px;
+    color: var(--soft);
+  }
+  .dash-list li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+  .mono {
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  /* ---------- buttons ---------- */
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    min-height: 46px;
+    padding: 12px 18px;
+    border: 1px solid #5d6680;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background 0.18s,
+      border-color 0.18s;
+  }
+  .button:hover {
+    background: #1b2130;
+    border-color: var(--accent);
+  }
+  .slp .button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #14101f;
+  }
+  .slp .button.primary:hover {
+    background: #d0c2ff;
+  }
+  .button.ghost {
+    border-color: transparent;
+    color: var(--soft);
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    padding-top: 28px;
+    padding-bottom: 56px;
+  }
+  .crumbs {
+    display: flex;
+    gap: 10px;
+    font-size: 11px;
+    color: var(--muted);
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 56px;
+    padding-top: 44px;
+    align-items: start;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 5.6vw, 72px);
+    letter-spacing: -0.05em;
+  }
+  .thesis {
+    font-size: 20px;
+    line-height: 1.55;
+    color: #dde1ea;
+    max-width: 680px;
+    margin-top: 22px !important;
+  }
+  .status-line {
+    margin-top: 20px !important;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--soft);
+  }
+  .status-line strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+    transform: translateY(-1px);
+  }
+  .glance {
+    border: 1px solid var(--line-strong);
+    background: linear-gradient(135deg, #171c27, #11151d);
+    padding: 22px 24px 10px;
+  }
+  .glance .eyebrow {
+    margin-bottom: 8px !important;
+  }
+  .glance dl div {
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+  }
+  .glance dl div:first-child {
+    border-top: 0;
+  }
+  .glance dt {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .glance dd {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-top: 3px;
+  }
+  .viewer-wrap {
+    margin-top: 44px;
+  }
+  .numbers {
+    list-style: none;
+    padding: 0;
+    margin-top: 28px !important;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--line);
+  }
+  .numbers li {
+    padding: 20px 20px 18px;
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .numbers li:last-child {
+    border-right: 0;
+  }
+  .num {
+    font-size: 32px;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .num-label {
+    font-size: 11px;
+    line-height: 1.55;
+    color: var(--soft);
+  }
+  .numbers .kind {
+    align-self: flex-start;
+    margin-top: auto;
+  }
+
+  /* ---------- sticky nav ---------- */
+  .section-nav {
+    position: sticky;
+    top: 64px;
+    z-index: 30;
+    background: rgba(11, 13, 18, 0.96);
+    backdrop-filter: blur(6px);
+    border-block: 1px solid var(--line);
+  }
+  .nav-links {
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+  .nav-links a {
+    white-space: nowrap;
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    padding: 15px 0;
+    color: #c0c6d4;
+  }
+  .nav-links a:hover {
+    color: var(--accent);
+  }
+
+  /* ---------- how it works ---------- */
+  .steps {
+    list-style: none;
+    padding: 0;
+    margin-top: 36px !important;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .steps li {
+    border: 1px solid var(--line-strong);
+    background: var(--band);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .step-n {
+    font-size: 12px;
+    color: var(--accent);
+  }
+  .steps p {
+    font-size: 14px;
+    color: var(--soft);
+  }
+  .steps .step-stat {
+    margin-top: auto !important;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .orbit-cycle {
+    margin-top: 28px;
+    border: 1px solid var(--line-strong);
+    padding: 20px 22px;
+  }
+  .cycle-head {
+    display: flex;
+    justify-content: space-between;
+    font:
+      11px 'JetBrains Mono',
+      monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cycle-bar {
+    display: flex;
+    gap: 2px;
+    height: 18px;
+    margin-top: 12px;
+  }
+  .cycle-fire {
+    flex: 0 0 5.1%;
+    background: #9085e9;
+    border-radius: 2px 0 0 2px;
+  }
+  .cycle-rest {
+    flex: 1;
+    background: #262c3a;
+    border-radius: 0 2px 2px 0;
+  }
+  .cycle-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--soft);
+  }
+  .cycle-legend span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cycle-legend i {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    flex: none;
+  }
+  .cycle-legend .fire {
+    background: #9085e9;
+  }
+  .cycle-legend .rest {
+    background: #262c3a;
+    border: 1px solid #4a5266;
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 44px;
+  }
+  .why-grid article {
+    border-top: 2px solid #4b3f86;
+    padding-top: 16px;
+  }
+  .why-grid h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .why-grid p {
+    font-size: 14px;
+    color: var(--soft);
+  }
+
+  /* ---------- tables ---------- */
+  .table-title {
+    margin-top: 48px;
+    margin-bottom: 8px;
+  }
+  .table-wrap {
+    overflow-x: auto;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .data-table th,
+  .data-table td {
+    text-align: left;
+    vertical-align: top;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .data-table thead th {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    border-bottom: 1px solid #55607a;
+  }
+  .data-table tbody th,
+  .data-table tfoot th {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .data-table td {
+    color: var(--soft);
+  }
+  .data-table td.strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .data-table tfoot th,
+  .data-table tfoot td {
+    border-top: 1px solid #55607a;
+    border-bottom: 0;
+  }
+  .data-table tfoot tr + tr :is(th, td) {
+    border-top: 1px solid var(--line);
+  }
+
+  /* ---------- specs ---------- */
+  .spec-grid {
+    margin-top: 36px;
+    columns: 2;
+    column-gap: 40px;
+  }
+  .spec-group {
+    break-inside: avoid;
+    margin-bottom: 28px;
+  }
+  .spec-group h3 {
+    font:
+      600 12px 'JetBrains Mono',
+      monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-bottom: 10px;
+    border-bottom: 1px solid #55607a;
+  }
+  .spec-group dl div {
+    display: grid;
+    grid-template-columns: minmax(150px, 38%) 1fr;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .spec-group dt {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    padding-top: 3px;
+  }
+  .spec-v {
+    display: block;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .spec-note {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* ---------- environment ---------- */
+  .pushback {
+    list-style: none;
+    padding: 0;
+    margin-top: 32px !important;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .pushback li {
+    display: flex;
+    gap: 18px;
+    border: 1px solid var(--line-strong);
+    background: var(--bg);
+    padding: 24px;
+  }
+  .pb-n {
+    font-size: 12px;
+    color: var(--accent);
+    padding-top: 3px;
+  }
+  .pb-body h3 {
+    margin-bottom: 12px;
+  }
+  .pb-num {
+    font-size: 14px;
+    color: var(--soft);
+  }
+  .pb-resp {
+    margin-top: 12px !important;
+    font-size: 14px;
+    color: var(--ink);
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .pb-resp strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ---------- timelines ---------- */
+  .calc {
+    margin-top: 36px;
+    border: 1px solid var(--line-strong);
+    background: var(--band);
+  }
+  .calc-controls {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr 1.25fr;
+    gap: 24px;
+    padding: 22px 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .ctl {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+    display: block;
+  }
+  .ctl-label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    padding: 0;
+  }
+  .ctl-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .ctl-row input[type='range'] {
+    flex: 1;
+    min-width: 0;
+    accent-color: #9085e9;
+    height: 28px;
+  }
+  .ctl-row output {
+    font:
+      600 15px 'JetBrains Mono',
+      monospace;
+    min-width: 78px;
+    text-align: right;
+  }
+  .seg {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .seg label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13.5px;
+    color: var(--soft);
+    cursor: pointer;
+  }
+  .seg input {
+    accent-color: #9085e9;
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    flex: none;
+  }
+  .seg label:has(input:checked) {
+    color: var(--ink);
+  }
+  .calc-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--line);
+  }
+  .calc-stats div {
+    padding: 16px 24px;
+    border-right: 1px solid var(--line);
+  }
+  .calc-stats div:last-child {
+    border-right: 0;
+  }
+  .calc-stats dt {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .calc-stats dd {
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .tl-chart {
+    padding: 22px 24px 18px;
+  }
+  .tl-title {
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 20px;
+  }
+  .tl-title span {
+    font:
+      400 11px 'JetBrains Mono',
+      monospace;
+    color: var(--muted);
+  }
+  .tl-rows {
+    margin-top: 14px;
+    --label-w: 210px;
+    --value-w: 104px;
+  }
+  .tl-axis,
+  .tl-row {
+    display: grid;
+    grid-template-columns: var(--label-w) 1fr var(--value-w);
+    column-gap: 16px;
+    align-items: center;
+  }
+  .tl-axis {
+    height: 44px;
+    align-items: stretch;
+  }
+  .tl-track {
+    position: relative;
+    display: block;
+    height: 100%;
+    min-height: 40px;
+  }
+  .tl-axis .tick,
+  .tl-axis .life {
+    position: absolute;
+    bottom: 0;
+    height: 6px;
+    width: 1px;
+    background: #55607a;
+  }
+  .tl-axis .tick b,
+  .tl-axis .life b {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font:
+      400 10.5px 'JetBrains Mono',
+      monospace;
+    color: var(--muted);
+  }
+  .tl-axis .life {
+    background: #d9a441;
+    height: 6px;
+  }
+  .tl-axis .life b {
+    bottom: 27px;
+    color: #e2c383;
+  }
+  .tl-axis .life::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 22px;
+    width: 1px;
+    height: 4px;
+    background: #d9a441;
+  }
+  .tl-row {
+    border-top: 1px solid var(--line);
+    padding: 0;
+    cursor: default;
+  }
+  .tl-row:hover,
+  .tl-row:focus-visible {
+    background: #171c27;
+  }
+  .tl-mass {
+    padding: 8px 0 8px 2px;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+  }
+  .tl-mass strong {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .tl-mass small {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .tl-row .grid,
+  .tl-row .life-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #222836;
+  }
+  .tl-row .life-line {
+    background: rgba(217, 164, 65, 0.55);
+  }
+  .tl-row .range {
+    position: absolute;
+    top: 50%;
+    height: 6px;
+    margin-top: -3px;
+    border-radius: 3px;
+    background: #4b3f86;
+    transition:
+      left 0.25s ease,
+      width 0.25s ease;
+  }
+  .tl-row .dot {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    margin: -6px 0 0 -6px;
+    border-radius: 50%;
+    background: #a79cf2;
+    box-shadow: 0 0 0 2px var(--band);
+    transition: left 0.25s ease;
+  }
+  .tl-value {
+    font:
+      600 14px 'JetBrains Mono',
+      monospace;
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .tl-detail {
+    grid-column: 2 / -1;
+    font:
+      11px 'JetBrains Mono',
+      monospace;
+    color: var(--muted);
+    padding: 0 0 8px;
+    margin-top: -6px;
+  }
+  .nudge {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 24px;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .nudge h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .nudge p {
+    font-size: 14px;
+    color: var(--soft);
+  }
+  .reading {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 32px;
+    margin-top: 40px;
+  }
+  .reading article {
+    border-top: 2px solid #4b3f86;
+    padding-top: 16px;
+  }
+  .reading h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .reading p {
+    font-size: 14px;
+    color: var(--soft);
+  }
+  .math {
+    margin-top: 36px;
+    border: 1px dashed #55607a;
+    background: #0e1118;
+  }
+  .math summary {
+    cursor: pointer;
+    padding: 16px 20px;
+    font-size: 12px;
+    color: var(--accent);
+  }
+  .math-body {
+    padding: 0 20px 20px;
+    font-size: 14px;
+    color: var(--soft);
+  }
+  .math-body dl div {
+    display: grid;
+    grid-template-columns: minmax(170px, 26%) 1fr;
+    gap: 16px;
+    padding: 8px 0;
+    border-top: 1px solid var(--line);
+  }
+  .math-body dt {
+    color: var(--muted);
+  }
+  .math-body dd {
+    color: var(--ink);
+  }
+  .math-body p {
+    margin-top: 14px !important;
+    max-width: 900px;
+  }
+  .math-result {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--ink) !important;
+    padding: 12px 0;
+    border-block: 1px solid var(--line);
+    max-width: none !important;
+  }
+  .math-body strong {
+    color: var(--ink);
+  }
+  .alt-table {
+    margin-top: 14px;
+    max-width: 640px;
+  }
+
+  /* ---------- roadmap ---------- */
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .stage {
+    border: 1px solid var(--line-strong);
+    background: var(--bg);
+    padding: 22px;
+  }
+  .stage.current {
+    border-color: var(--accent);
+    background: #141225;
+  }
+  .stage header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .stage-v {
+    font-size: 28px;
+    color: var(--accent);
+  }
+  .stage h3 {
+    font-size: 20px;
+  }
+  .stage-cost {
+    margin-top: 10px !important;
+    font-size: 26px !important;
+    letter-spacing: -0.02em;
+    color: var(--ink) !important;
+    line-height: 1.2;
+  }
+  .stage-cost span {
+    display: block;
+    font:
+      11px 'JetBrains Mono',
+      monospace;
+    letter-spacing: 0;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .stage h4 {
+    margin-top: 18px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .stage p,
+  .stage li {
+    font-size: 13.5px;
+    color: var(--soft);
+  }
+  .stage h4 + p {
+    margin-top: 6px !important;
+  }
+  .stage .exit {
+    color: var(--ink);
+  }
+  .cost {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 48px;
+    margin-top: 48px;
+    align-items: start;
+  }
+  .cost h3,
+  .cost-notes h3 {
+    margin-bottom: 12px;
+  }
+  .cost-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    list-style: none;
+    padding: 0;
+    font-size: 12.5px;
+    color: var(--soft);
+  }
+  .cost-key li {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .cost-key i {
+    width: 11px;
+    height: 11px;
+    border-radius: 2px;
+  }
+  .c-labour {
+    background: #3987e5;
+  }
+  .c-hardware {
+    background: #d95926;
+  }
+  .c-test {
+    background: #199e70;
+  }
+  .bars {
+    margin-top: 18px;
+    display: grid;
+    gap: 14px;
+  }
+  .bar-label {
+    display: block;
+    font-size: 13px;
+    color: var(--soft);
+    margin-bottom: 5px;
+  }
+  .bar-label strong {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--ink);
+    margin-right: 8px;
+  }
+  .bar-track {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 20px;
+    padding-right: 64px;
+  }
+  .bar-track i {
+    height: 100%;
+    display: block;
+  }
+  .bar-track i:nth-of-type(3) {
+    border-radius: 0 4px 4px 0;
+  }
+  .bar-track b {
+    font:
+      600 13px 'JetBrains Mono',
+      monospace;
+    margin-left: 8px;
+    margin-right: -64px;
+    white-space: nowrap;
+  }
+  .cost-notes {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 48px;
+    margin-top: 44px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .cost-notes p {
+    font-size: 14px;
+    color: var(--soft);
+  }
+
+  /* ---------- open items ---------- */
+  .open-list {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px 32px;
+  }
+  .open-list article {
+    border-top: 2px solid #4b3f86;
+    padding-top: 16px;
+  }
+  .open-list header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .open-list h3 {
+    font-size: 18px;
+  }
+  .open-list p {
+    font-size: 14px;
+    color: var(--soft);
+  }
+
+  /* ---------- scope ---------- */
+  .scope-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .scope h2 {
+    font-size: clamp(24px, 2.6vw, 34px);
+  }
+  .scope-grid p {
+    color: var(--soft);
+    max-width: 640px;
+  }
+  .scope-grid p + p {
+    margin-top: 14px !important;
+  }
+  .scope-grid a {
+    color: var(--accent);
+    text-underline-offset: 3px;
+  }
+
+  /* ---------- references ---------- */
+  .refs {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+  .ref-list {
+    list-style: decimal;
+    padding-left: 26px;
+    columns: 2;
+    column-gap: 48px;
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .ref-list li {
+    margin-bottom: 8px;
+    break-inside: avoid;
+  }
+  .ref-list a {
+    text-decoration: none;
+    color: var(--soft);
+    overflow-wrap: anywhere;
+  }
+  .ref-list a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+  .ref-list li:target {
+    background: #1b1830;
+  }
+
+  /* ---------- closing ---------- */
+  .closing {
+    border-top: 1px solid var(--line);
+    background: #141225;
+  }
+  .closing-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .closing p:not(.eyebrow) {
+    color: var(--soft);
+    margin-top: 16px !important;
+    max-width: 560px;
+  }
+  .closing-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 320px;
+    width: 100%;
+    justify-self: end;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1100px) {
+    .roadmap {
+      grid-template-columns: 1fr 1fr;
+    }
+    .steps,
+    .open-list {
+      grid-template-columns: 1fr 1fr;
+    }
+    .numbers {
+      grid-template-columns: 1fr 1fr;
+    }
+    .numbers li:nth-child(2) {
+      border-right: 0;
+    }
+    .numbers li:nth-child(-n + 2) {
+      border-bottom: 1px solid var(--line);
+    }
+    .calc-controls {
+      grid-template-columns: 1fr 1fr;
+    }
+    .calc-controls > :first-child {
+      grid-column: 1 / -1;
+    }
+    .cost,
+    .cost-notes {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+  @media (max-width: 900px) {
+    .shell {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .section {
+      padding-top: 56px;
+      padding-bottom: 56px;
+    }
+    .spec-grid {
+      columns: 1;
+    }
+    .hero-grid,
+    .pushback,
+    .nudge,
+    .reading,
+    .why-grid,
+    .scope-grid,
+    .closing-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .closing-actions {
+      justify-self: start;
+    }
+    .ref-list {
+      columns: 1;
+    }
+    .calc-stats {
+      grid-template-columns: 1fr 1fr;
+    }
+    .calc-stats div:nth-child(2) {
+      border-right: 0;
+    }
+    .calc-stats div:nth-child(-n + 2) {
+      border-bottom: 1px solid var(--line);
+    }
+  }
+  @media (max-width: 640px) {
+    .slp {
+      font-size: 14px;
+    }
+    .shell {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+    .thesis {
+      font-size: 17px;
+    }
+    .intro {
+      font-size: 15px;
+    }
+    .hero h1 {
+      font-size: 38px;
+    }
+    .steps,
+    .open-list,
+    .roadmap,
+    .numbers,
+    .calc-controls {
+      grid-template-columns: 1fr;
+    }
+    .numbers li {
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .numbers li:last-child {
+      border-bottom: 0;
+    }
+    .actions .button {
+      flex: 1 1 100%;
+    }
+    .button.ghost {
+      display: none;
+    }
+    .pushback li {
+      padding: 18px;
+      gap: 12px;
+    }
+    .spec-group dl div,
+    .math-body dl div {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .calc-controls,
+    .tl-chart,
+    .nudge {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+    .calc-stats div {
+      padding: 14px 16px;
+    }
+    .calc-stats dd {
+      font-size: 20px;
+    }
+    .tl-rows {
+      --label-w: 64px;
+      --value-w: 84px;
+    }
+    .tl-rows .tl-axis,
+    .tl-rows .tl-row {
+      column-gap: 10px;
+    }
+    .tl-mass small {
+      display: none;
+    }
+    .tl-axis .tick:nth-child(odd) b {
+      display: none;
+    }
+    .tl-axis .life b {
+      display: none;
+    }
+    .tl-detail {
+      grid-column: 1 / -1;
+      margin-top: -2px;
+    }
+    .cost-table thead {
+      display: none;
+    }
+    .cost-table :is(tbody, tfoot, tr, th, td) {
+      display: block;
+      width: 100% !important;
+    }
+    .cost-table tr {
+      border-top: 1px solid #55607a;
+      padding: 12px 0;
+    }
+    .cost-table :is(th, td) {
+      border: 0 !important;
+      padding: 3px 0;
+    }
+    .cost-table td[data-label] {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .cost-table td[data-label]::before {
+      content: attr(data-label);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tl-row .range,
+    .tl-row .dot {
+      transition: none;
+    }
+  }
+</style>

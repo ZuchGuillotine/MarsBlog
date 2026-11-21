@@ -1,0 +1,330 @@
+---
+// Interactive 3D cutaway of the SLP-5 laser payload. The scene module (three.js)
+// is loaded only when the viewer scrolls into view. Without WebGL, or before
+// the module loads, the poster image stands in.
+interface Props {
+  poster?: string;
+}
+const { poster } = Astro.props;
+---
+
+<figure class="slp-viewer" data-slp-viewer>
+  <div class="slp-stage">
+    {
+      poster && (
+        <img
+          class="slp-poster"
+          src={poster}
+          alt="Cutaway render of the SLP-5 laser payload: a two-deck housing with the optical train on the upper deck and an ultraviolet beam leaving the exit port."
+          width="1920"
+          height="1080"
+          decoding="async"
+          data-slp-poster
+        />
+      )
+    }
+    <div class="slp-canvas" data-slp-canvas></div>
+    <div class="slp-labels" data-slp-labels aria-hidden="true"></div>
+
+    <ul class="slp-key" aria-label="Beam colours">
+      <li><i style="background:#ff3b30"></i>885 nm pump</li>
+      <li><i style="background:#ff7a1a"></i>1064 nm infrared</li>
+      <li><i style="background:#1fe07a"></i>532 nm green</li>
+      <li><i style="background:#8f5bff"></i>355 nm ultraviolet</li>
+    </ul>
+
+    <div class="slp-controls" role="group" aria-label="3D view controls" hidden data-slp-controls>
+      <button type="button" data-slp-explode aria-pressed="false">Separate decks</button>
+      <button type="button" data-slp-labels-toggle aria-pressed="true">Labels</button>
+      <button type="button" data-slp-pause aria-pressed="false">Pause</button>
+      <button type="button" data-slp-reset>Reset view</button>
+    </div>
+    <p class="slp-hint" data-slp-hint hidden>Drag to rotate · pinch or Ctrl + scroll to zoom</p>
+  </div>
+  <figcaption>
+    <span>
+      Concept model of the SLP-5 payload, built from the design dimensions on this page. Beam
+      colours are false colour: every wavelength here except green is invisible to the eye.
+      The pulse is slowed about 300-million-fold; a real pulse crosses the bench in a few
+      nanoseconds, ten times a second.
+    </span>
+  </figcaption>
+</figure>
+
+<script>
+  import type { SlpSceneHandle } from './slpScene';
+
+  const root = document.querySelector<HTMLElement>('[data-slp-viewer]');
+  if (root) {
+    const controlsEl = root.querySelector<HTMLElement>('[data-slp-controls]');
+    const hint = root.querySelector<HTMLElement>('[data-slp-hint]');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let handle: SlpSceneHandle | null = null;
+    let started = false;
+
+    const webglOk = () => {
+      try {
+        const c = document.createElement('canvas');
+        return !!(c.getContext('webgl2') || c.getContext('webgl'));
+      } catch {
+        return false;
+      }
+    };
+
+    const start = async () => {
+      if (started) return;
+      started = true;
+      if (!webglOk()) return;
+      try {
+        const { initSlpScene } = await import('./slpScene');
+        handle = initSlpScene(root, {
+          reducedMotion: reduce.matches,
+          onReady: () => {
+            root.classList.add('is-live');
+            if (controlsEl) controlsEl.hidden = false;
+            if (hint) hint.hidden = false;
+          },
+        });
+        (window as unknown as { __slp?: SlpSceneHandle }).__slp = handle;
+      } catch (err) {
+        console.error('SLP-5 viewer failed to start', err);
+      }
+    };
+
+    const io = new IntersectionObserver(
+      entries => {
+        if (entries.some(e => e.isIntersecting)) {
+          io.disconnect();
+          start();
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    io.observe(root);
+
+    const toggle = (sel: string, fn: (on: boolean, btn: HTMLButtonElement) => void) => {
+      const btn = root.querySelector<HTMLButtonElement>(sel);
+      btn?.addEventListener('click', () => {
+        const on = btn.getAttribute('aria-pressed') !== 'true';
+        btn.setAttribute('aria-pressed', String(on));
+        fn(on, btn);
+      });
+    };
+    toggle('[data-slp-explode]', on => handle?.setExploded(on));
+    toggle('[data-slp-labels-toggle]', on => handle?.setLabels(on));
+    toggle('[data-slp-pause]', (on, btn) => {
+      handle?.setPaused(on);
+      btn.textContent = on ? 'Play' : 'Pause';
+    });
+    root.querySelector('[data-slp-reset]')?.addEventListener('click', () => handle?.resetView());
+    root.addEventListener('pointerdown', () => hint?.classList.add('is-used'), { once: true });
+  }
+</script>
+
+<style>
+  .slp-viewer {
+    margin: 0;
+    border: 1px solid var(--line-strong, #3a4152);
+    background: #0b0d12;
+  }
+  .slp-stage {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    min-height: 340px;
+    max-height: 78vh;
+    width: 100%;
+    overflow: hidden;
+    background: radial-gradient(120% 90% at 50% 30%, #141924 0%, #0b0d12 70%);
+  }
+  .slp-poster,
+  .slp-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .slp-poster {
+    object-fit: cover;
+    transition: opacity 0.6s ease;
+  }
+  .slp-canvas {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .slp-canvas :global(canvas) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+  }
+  .slp-canvas :global(canvas:active) {
+    cursor: grabbing;
+  }
+  .is-live .slp-canvas {
+    opacity: 1;
+  }
+  .is-live .slp-poster {
+    opacity: 0;
+  }
+  .slp-labels {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .slp-labels :global(.slp-label) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    will-change: transform;
+    font:
+      500 11px/1.25 'JetBrains Mono',
+      monospace;
+    letter-spacing: 0.02em;
+    color: #e9edf5;
+    white-space: nowrap;
+  }
+  .slp-labels :global(.slp-label i) {
+    position: absolute;
+    left: -3px;
+    top: -3px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(11, 13, 18, 0.7);
+  }
+  .slp-labels :global(.slp-label span) {
+    position: absolute;
+    bottom: var(--lift, 14px);
+    padding: 4px 8px;
+    background: rgba(11, 13, 18, 0.78);
+    border: 1px solid rgba(233, 237, 245, 0.28);
+    backdrop-filter: blur(3px);
+  }
+  .slp-labels :global(.slp-label span::after) {
+    content: '';
+    position: absolute;
+    top: 100%;
+    width: 1px;
+    height: calc(var(--lift, 14px) - 2px);
+    background: rgba(233, 237, 245, 0.55);
+  }
+  .slp-labels :global(.slp-label-r span) {
+    left: 10px;
+  }
+  .slp-labels :global(.slp-label-r span::after) {
+    left: -11px;
+  }
+  .slp-labels :global(.slp-label-l span) {
+    right: 10px;
+  }
+  .slp-labels :global(.slp-label-l span::after) {
+    right: -11px;
+  }
+  .slp-key {
+    position: absolute;
+    left: 14px;
+    top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font:
+      11px/1.4 'JetBrains Mono',
+      monospace;
+    color: #c5cbd8;
+    pointer-events: none;
+  }
+  .slp-key li {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .slp-key i {
+    width: 14px;
+    height: 4px;
+    border-radius: 2px;
+  }
+  .slp-controls {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+  .slp-controls[hidden],
+  .slp-hint[hidden] {
+    display: none;
+  }
+  .slp-controls button {
+    font:
+      600 11px/1 'JetBrains Mono',
+      monospace;
+    letter-spacing: 0.04em;
+    color: #e9edf5;
+    background: rgba(17, 20, 28, 0.82);
+    border: 1px solid #4a5266;
+    border-radius: 0;
+    padding: 9px 11px;
+    min-height: 34px;
+    cursor: pointer;
+  }
+  .slp-controls button:hover {
+    border-color: #b9a4ff;
+  }
+  .slp-controls button[aria-pressed='true'] {
+    background: #b9a4ff;
+    border-color: #b9a4ff;
+    color: #14101f;
+  }
+  .slp-controls button:focus-visible {
+    outline: 2px solid #b9a4ff;
+    outline-offset: 2px;
+  }
+  .slp-hint {
+    position: absolute;
+    left: 14px;
+    bottom: 14px;
+    margin: 0;
+    font:
+      11px/1.4 'JetBrains Mono',
+      monospace;
+    color: #8f97a8;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .slp-hint:global(.is-used) {
+    opacity: 0;
+  }
+  figcaption {
+    padding: 10px 16px;
+    border-top: 1px solid var(--line, #262b37);
+    font:
+      11px/1.55 'JetBrains Mono',
+      monospace;
+    color: var(--muted, #9aa2b3);
+  }
+  @media (max-width: 720px) {
+    .slp-stage {
+      aspect-ratio: 4 / 3.4;
+    }
+    .slp-hint {
+      display: none;
+    }
+    .slp-key {
+      font-size: 10px;
+      gap: 4px 12px;
+    }
+    .slp-controls {
+      left: 12px;
+      justify-content: flex-start;
+    }
+  }
+</style>

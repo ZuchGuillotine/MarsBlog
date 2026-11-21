@@ -50,6 +50,12 @@ const structuredData = {
     },
   ],
 };
+// "Our Projects" menu: one entry per project page.
+const projectLinks = [
+  { href: '/construction/sintering-bricks', label: 'Solar Paving' },
+  { href: '/projects/debris-remediation', label: 'Debris Remediation' },
+];
+const onProjectPage = projectLinks.some((p) => Astro.url.pathname.startsWith(p.href));
 const footerLinks = [
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
@@ -161,7 +167,29 @@ const footerLinks = [
                 class:list={['nav-link-dark', { 'nav-link-dark-active': Astro.url.pathname.startsWith('/blog') }]}
                 aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}
               >Blog</a>
-              <a href="/construction/sintering-bricks" class="nav-link-dark">Solar Paving</a>
+              <div class="projects-menu" data-projects-menu>
+                <button
+                  type="button"
+                  class:list={['nav-link-dark projects-toggle', { 'nav-link-dark-active': onProjectPage }]}
+                  aria-expanded="false"
+                  aria-controls="projects-menu-desktop"
+                  data-projects-toggle
+                >
+                  Our Projects
+                  <svg class="projects-chevron" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 4l4 4 4-4" /></svg>
+                </button>
+                <ul class="projects-panel" id="projects-menu-desktop" data-projects-panel>
+                  {projectLinks.map((p) => (
+                    <li>
+                      <a
+                        href={p.href}
+                        class:list={['projects-link', { 'projects-link-active': Astro.url.pathname.startsWith(p.href) }]}
+                        aria-current={Astro.url.pathname.startsWith(p.href) ? 'page' : undefined}
+                      >{p.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
               {showDonationCTA && (
                 <a href="/support" class="btn-primary ml-6">
                   Support Research
@@ -202,7 +230,29 @@ const footerLinks = [
               class:list={['block nav-link-dark', { 'nav-link-dark-active': Astro.url.pathname.startsWith('/blog') }]}
               aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}
             >Blog</a>
-            <a href="/construction/sintering-bricks" class="block nav-link-dark">Solar Paving</a>
+            <div data-projects-menu>
+              <button
+                type="button"
+                class:list={['nav-link-dark projects-toggle projects-toggle-mobile', { 'nav-link-dark-active': onProjectPage }]}
+                aria-expanded="false"
+                aria-controls="projects-menu-mobile"
+                data-projects-toggle
+              >
+                Our Projects
+                <svg class="projects-chevron" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 4l4 4 4-4" /></svg>
+              </button>
+              <ul class="projects-sub" id="projects-menu-mobile" data-projects-panel hidden>
+                {projectLinks.map((p) => (
+                  <li>
+                    <a
+                      href={p.href}
+                      class:list={['block nav-link-dark', { 'nav-link-dark-active': Astro.url.pathname.startsWith(p.href) }]}
+                      aria-current={Astro.url.pathname.startsWith(p.href) ? 'page' : undefined}
+                    >{p.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
             {showDonationCTA && (
               <a href="/support" class="block btn-primary mt-4">
                 Support Research
@@ -284,6 +334,42 @@ const footerLinks = [
       }
     </script>
     
+    <!-- "Our Projects" menu: click or keyboard to open, Escape or outside click to close -->
+    <script>
+      const menus = document.querySelectorAll<HTMLElement>('[data-projects-menu]');
+      const setOpen = (menu: HTMLElement, open: boolean) => {
+        const toggle = menu.querySelector<HTMLElement>('[data-projects-toggle]');
+        const panel = menu.querySelector<HTMLElement>('[data-projects-panel]');
+        toggle?.setAttribute('aria-expanded', String(open));
+        menu.classList.toggle('is-open', open);
+        if (panel?.hasAttribute('hidden') || panel?.classList.contains('projects-sub')) {
+          panel.toggleAttribute('hidden', !open);
+        }
+      };
+      menus.forEach((menu) => {
+        const toggle = menu.querySelector<HTMLElement>('[data-projects-toggle]');
+        toggle?.addEventListener('click', () => {
+          setOpen(menu, toggle.getAttribute('aria-expanded') !== 'true');
+        });
+        menu.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') {
+            setOpen(menu, false);
+            toggle?.focus();
+          }
+        });
+        menu.addEventListener('focusout', (event) => {
+          if (!menu.contains(event.relatedTarget as Node | null) && !menu.querySelector('.projects-sub')) {
+            setOpen(menu, false);
+          }
+        });
+      });
+      document.addEventListener('click', (event) => {
+        menus.forEach((menu) => {
+          if (!menu.contains(event.target as Node) && !menu.querySelector('.projects-sub')) setOpen(menu, false);
+        });
+      });
+    </script>
+
     <!-- DateTime update script -->
     <script>
       function updateDateTime() {
