@@ -112,6 +112,65 @@
     @apply border-mars-orange text-mars-orange bg-gray-800;
   }
 
+  /* "Our Projects" header menu */
+  .projects-menu {
+    @apply relative;
+  }
+
+  .projects-toggle {
+    @apply inline-flex items-center gap-2 cursor-pointer text-left;
+  }
+
+  .projects-toggle-mobile {
+    @apply flex w-full justify-between text-left;
+  }
+
+  .projects-chevron {
+    @apply transition-transform duration-200;
+  }
+
+  .is-open > .projects-toggle .projects-chevron,
+  .projects-menu:hover .projects-chevron {
+    transform: rotate(180deg);
+  }
+
+  .projects-panel {
+    @apply absolute right-0 top-full z-50 m-0 hidden list-none p-0;
+    @apply min-w-[13rem] border-2 border-gray-500 bg-gray-900 shadow-xl;
+    margin-top: 2px;
+  }
+
+  /* Bridge the gap so the panel stays open while the pointer travels to it. */
+  .projects-panel::before {
+    content: '';
+    @apply absolute left-0 right-0;
+    top: -8px;
+    height: 8px;
+  }
+
+  .projects-menu:hover .projects-panel,
+  .projects-menu.is-open .projects-panel {
+    @apply block;
+  }
+
+  .projects-link {
+    @apply block whitespace-nowrap px-4 py-3 font-display font-medium text-white;
+    @apply transition-colors duration-200 hover:bg-gray-800 hover:text-mars-orange;
+  }
+
+  .projects-link + .projects-link,
+  .projects-panel li + li {
+    @apply border-t border-gray-700;
+  }
+
+  .projects-link-active {
+    @apply text-mars-orange;
+  }
+
+  .projects-sub {
+    @apply m-0 mt-1 list-none space-y-1 border-l-2 border-gray-500 pl-3;
+  }
+
   /* Mars-themed prose */
   .prose-mars {
     @apply prose prose-lg max-w-none;

@@ -1,0 +1,375 @@
+---
+// SLP-5 system schematic as an SVG block diagram. Laser payload only: the
+// output and trigger interfaces are drawn as plain ports, and nothing beyond
+// them (tracking, pointing, beam delivery) appears here.
+
+const C = {
+  ir: '#ff7a1a',
+  pump: '#ff3b30',
+  green: '#1fe07a',
+  uv: '#8f5bff',
+  elec: '#7fb2ff',
+  ctrl: '#aab2c2',
+};
+
+let out = '';
+const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const rect = (x: number, y: number, w: number, h: number, cls: string) =>
+  (out += `<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}"/>`);
+const text = (x: number, y: number, t: string, cls: string, anchor = 'start') =>
+  (out += `<text x="${x}" y="${y}" class="${cls}" text-anchor="${anchor}">${esc(t)}</text>`);
+const lines = (x: number, y: number, ts: string[], cls: string, lh = 16, anchor = 'start') =>
+  ts.forEach((t, i) => text(x, y + i * lh, t, cls, anchor));
+const chip = (x: number, y: number, w: number, h: number, ts: string[], cls = 'chip') => {
+  rect(x, y, w, h, cls);
+  const lh = 14;
+  const y0 = y + h / 2 - ((ts.length - 1) * lh) / 2 + 4;
+  ts.forEach((t, i) => text(x + w / 2, y0 + i * lh, t, i === 0 ? 'chip-t' : 'chip-s', 'middle'));
+};
+const path = (d: string, color: string, width = 3, extra = '') =>
+  (out += `<path d="${d}" fill="none" stroke="${color}" stroke-width="${width}" stroke-linejoin="round" ${extra}/>`);
+const arrow = (d: string, color: string, width = 3, extra = '') =>
+  path(d, color, width, `marker-end="url(#ah-${color.slice(1)})" ${extra}`);
+const stage = (x: number, y: number, w: number, h: number, n: string, title: string) => {
+  rect(x, y, w, h, 'stage');
+  out += `<text x="${x + 12}" y="${y + 21}" class="stage-t"><tspan class="stage-n">${n}</tspan>  ${esc(title)}</text>`;
+};
+
+// ---- frames ----------------------------------------------------------------
+rect(180, 40, 980, 606, 'frame');
+text(192, 30, 'UPPER DECK · HERMETIC OPTICAL CAVITY · 40 Pa DRY O₂ · SILICON CARBIDE BENCH', 'frame-t');
+rect(180, 690, 980, 236, 'frame');
+text(192, 680, 'LOWER DECK · POWER, CONTROL AND THERMAL · CONDUCTION-COUPLED CHASSIS', 'frame-t');
+
+// ---- row 1: oscillator, pre-amplifier, oxygen -----------------------------
+stage(204, 62, 300, 114, '1', 'MASTER OSCILLATOR');
+chip(216, 114, 84, 46, ['CW seed', 'diode']);
+chip(312, 114, 84, 46, ['Nd:YAG ring', 'piezo lock']);
+chip(408, 114, 84, 46, ['BBO', 'Q-switch']);
+path('M300 137 H312 M396 137 H408', C.ir, 3);
+
+arrow('M504 137 H582', C.ir);
+text(547, 124, '10 mJ', 'beam-t', 'middle');
+text(547, 160, '1064 nm', 'beam-s', 'middle');
+
+stage(590, 62, 310, 114, '2', 'PRE-AMPLIFIER AND SHAPER');
+chip(602, 114, 88, 46, ['Faraday', 'isolator']);
+chip(702, 114, 88, 46, ['Flat-top', 'apodizer']);
+chip(802, 114, 88, 46, ['Nd:YAG slab', '2 passes']);
+path('M690 137 H702 M790 137 H802', C.ir, 3);
+
+rect(930, 62, 206, 114, 'aux');
+text(942, 83, 'O₂ PURGE', 'stage-t');
+lines(942, 108, ['50 g reserve at 150 bar', 'Micro-bleed regulator', 'Holds 40 Pa in the cavity'], 'note');
+
+// ---- row 2: power amplifier ---------------------------------------------
+stage(204, 250, 696, 186, '3', 'POWER AMPLIFIER · DOUBLE PASS');
+// beam lines: pass 1 (toward the mirror) and pass 2 (back to the polarizer)
+path('M816 314 H324', C.ir, 2.5);
+path('M324 330 H816', C.ir, 2.5);
+chip(816, 298, 72, 48, ['TFP', 'polarizer']);
+chip(668, 298, 128, 48, ['Nd:YAG slab A', 'zig-zag']);
+chip(568, 298, 84, 48, ['90° quartz', 'rotator']);
+chip(424, 298, 128, 48, ['Nd:YAG slab B', 'zig-zag']);
+chip(340, 298, 68, 48, ['λ/4', 'plate']);
+chip(216, 298, 108, 48, ['SBS mirror', 'phase conjugate']);
+// direction ticks in the gaps
+out += `<path d="M812 314 l-7 -4 v8 z M664 314 l-7 -4 v8 z M564 314 l-7 -4 v8 z M420 314 l-7 -4 v8 z M336 314 l-7 -4 v8 z" fill="${C.ir}"/>`;
+out += `<path d="M328 330 l7 -4 v8 z M412 330 l7 -4 v8 z M556 330 l7 -4 v8 z M656 330 l7 -4 v8 z M800 330 l7 -4 v8 z" fill="${C.ir}"/>`;
+text(610, 290, 'pass 1 ←', 'beam-s', 'middle');
+text(610, 360, '→ pass 2', 'beam-s', 'middle');
+// pump stacks
+chip(668, 368, 128, 40, ['885 nm stack A', '62 kW peak'], 'chip pumpchip');
+chip(424, 368, 128, 40, ['885 nm stack B', '62 kW peak'], 'chip pumpchip');
+for (const x of [700, 732, 764, 456, 488, 520]) arrow(`M${x} 368 V352`, C.pump, 2.5);
+
+// input from the pre-amplifier, output to the harmonic stage
+arrow('M852 176 V290', C.ir);
+text(864, 214, '0.8 J', 'beam-t');
+text(864, 232, '15 × 15 mm flat-top', 'beam-s');
+arrow('M852 346 V462', C.ir, 4);
+text(864, 452, '10 J · 1064 nm · 4.4 J/cm²', 'beam-t');
+
+rect(930, 250, 206, 150, 'aux');
+text(942, 271, 'WHY TWO PASSES', 'stage-t');
+lines(
+  942,
+  294,
+  [
+    'The mirror returns a wavefront-',
+    'reversed beam, so distortion',
+    'from the hot slabs cancels on',
+    'the way back. The λ/4 plate',
+    'turns polarization 90° so the',
+    'polarizer ejects the pulse.',
+  ],
+  'note'
+);
+
+// ---- row 3: harmonics and output -------------------------------------------
+stage(204, 470, 932, 162, '4', 'HARMONIC GENERATION AND BEAM CONDITIONING');
+chip(768, 506, 168, 48, ['LBO · Type I · 150 °C', '1064 → 532 nm']);
+chip(572, 506, 168, 48, ['LBO · Type II · 45 °C', '1064 + 532 → 355 nm']);
+chip(432, 506, 112, 48, ['Dichroic', 'separator']);
+chip(320, 506, 88, 48, ['1.33× UV', 'expander']);
+chip(216, 506, 84, 48, ['Exit window', '+ shutter']);
+// between the crystals: green with residual infrared
+path('M768 526 H740', C.green, 3);
+path('M768 534 H740', C.ir, 2);
+// after the second crystal: ultraviolet with residual green and infrared
+path('M572 522 H544', C.uv, 3);
+path('M572 530 H544', C.green, 2);
+path('M572 537 H544', C.ir, 2);
+path('M432 530 H408 M320 530 H300', C.uv, 3);
+// residual to the dump
+arrow('M484 554 V574', C.green, 2.5);
+arrow('M494 554 V574', C.ir, 2.5);
+chip(420, 582, 136, 40, ['SiC beam dump', '50 W in a burst'], 'chip heatchip');
+text(568, 598, 'Unconverted 1064 and 532 nm,', 'note');
+text(568, 614, '5 J per pulse', 'note');
+// conversion summary at the right of the row
+lines(960, 598, ['Half of the infrared energy', 'leaves as ultraviolet'], 'note');
+
+// ultraviolet out through the housing wall
+arrow('M216 530 H104', C.uv, 5);
+text(10, 496, 'OPTICAL OUTPUT', 'ext-t');
+lines(10, 566, ['5.0 J · 355 nm', '5 ns · 10 Hz', '20 mm flat-top', '1.59 J/cm²'], 'ext-v', 19);
+
+// ---- lower deck: power ---------------------------------------------------
+arrow('M130 752 H196', C.elec, 2.5);
+text(10, 730, 'SPACECRAFT BUS', 'ext-t');
+lines(10, 778, ['28 V DC', '43 W orbit average'], 'ext-v', 19);
+chip(204, 722, 216, 60, ['Burst energy buffer', '50 Wh · 600 W for 300 s']);
+arrow('M420 752 H448', C.elec, 2.5);
+chip(456, 722, 204, 60, ['Pulse capacitor bank', '60 J at 300 V']);
+arrow('M660 752 H688', C.elec, 2.5);
+chip(696, 722, 304, 60, ['GaN pulsed diode drivers', '124 kW peak · 230 µs · 10 Hz']);
+// drive current up to the diode stacks (hops the infrared output line)
+path('M1000 752 H1148 V420 H862', C.elec, 2.5);
+path('M842 420 H488', C.elec, 2.5);
+path('M862 420 a10 10 0 0 0 -20 0', C.elec, 2.5);
+arrow('M732 420 V415', C.elec, 2.5);
+arrow('M488 420 V415', C.elec, 2.5);
+text(1136, 742, 'pump drive current', 'beam-s', 'end');
+
+// ---- lower deck: control and thermal -----------------------------------------
+arrow('M130 866 H196', C.ctrl, 2, 'stroke-dasharray="2 5" stroke-linecap="round"');
+text(10, 844, 'EXTERNAL TRIGGER', 'ext-t');
+lines(10, 892, ['10 Hz fire gate'], 'ext-v', 19);
+chip(204, 832, 246, 68, ['Laser control electronics', 'Q-switch · ovens · shutter · O₂', 'Housekeeping telemetry']);
+arrow('M400 832 V804 H848 V790', C.ctrl, 2, 'stroke-dasharray="2 5" stroke-linecap="round"');
+text(624, 798, 'pulse timing', 'beam-s', 'middle');
+
+chip(520, 832, 250, 68, ['Thermal capacitor (wax in Cu foam)', 'Absorbs 550 W burst heat at 28 °C', '165 kJ per burst · 195 kJ capacity'], 'chip heatchip');
+arrow('M770 866 H798', '#ffb454', 2.5, 'stroke-dasharray="7 5"');
+chip(806, 832, 176, 68, ['4 copper heat pipes', 'to the radiator interface'], 'chip heatchip');
+arrow('M982 866 H1226', '#ffb454', 2.5, 'stroke-dasharray="7 5"');
+text(1180, 844, 'BUS RADIATOR', 'ext-t');
+lines(1180, 892, ['28.1 W continuous', '≈ 0.12 m² at 25 °C'], 'ext-v', 19);
+
+const svg = out;
+const markerColors = [C.ir, C.pump, C.green, C.uv, C.elec, C.ctrl, '#ffb454'];
+---
+
+<figure class="schem">
+  <div class="schem-scroll" tabindex="0" role="group" aria-label="SLP-5 system schematic, scrollable on small screens">
+    <svg
+      viewBox="0 0 1340 944"
+      role="img"
+      aria-labelledby="schem-title schem-desc"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title id="schem-title">SLP-5 laser payload system schematic</title>
+      <desc id="schem-desc">
+        Upper deck: a master oscillator produces a 10 millijoule 1064 nanometre pulse; a
+        pre-amplifier and shaper raise it to 0.8 joules; a double-pass power amplifier with two
+        diode-pumped slabs and a phase-conjugate mirror raises it to 10 joules; two LBO crystals
+        convert half of it to 5 joules at 355 nanometres, which leaves through an expander and
+        exit window. Unconverted light goes to a beam dump. Lower deck: spacecraft bus power
+        charges an energy buffer that feeds a capacitor bank and pulsed diode drivers; a wax
+        thermal capacitor absorbs burst heat and bleeds it through heat pipes to the bus
+        radiator.
+      </desc>
+      <defs>
+        {
+          markerColors.map(c => (
+            <marker
+              id={`ah-${c.slice(1)}`}
+              viewBox="0 0 10 10"
+              refX="7"
+              refY="5"
+              markerWidth="5"
+              markerHeight="5"
+              orient="auto-start-reverse"
+              markerUnits="strokeWidth"
+            >
+              <path d="M0 0 L10 5 L0 10 z" fill={c} />
+            </marker>
+          ))
+        }
+      </defs>
+      <g set:html={svg} />
+    </svg>
+  </div>
+  <figcaption>
+    <ul class="schem-key" aria-label="Line key">
+      <li><i style={`background:${C.ir}`}></i>1064 nm infrared</li>
+      <li><i style={`background:${C.pump}`}></i>885 nm pump light</li>
+      <li><i style={`background:${C.green}`}></i>532 nm green</li>
+      <li><i style={`background:${C.uv}`}></i>355 nm ultraviolet</li>
+      <li><i style={`background:${C.elec}`}></i>Electrical power</li>
+      <li><i class="dashed" style="--c:#ffb454"></i>Heat</li>
+      <li><i class="dotted" style={`--c:${C.ctrl}`}></i>Timing</li>
+    </ul>
+    <p>
+      Diode stacks, slabs and the beam dump conduct their heat through the bench to the thermal
+      capacitor. Control and sensor lines to the upper deck are not drawn. The output and trigger
+      ports are the payload boundary; what connects to them is outside this page.
+    </p>
+  </figcaption>
+</figure>
+
+<style>
+  .schem {
+    margin: 0;
+    border: 1px solid var(--line-strong, #3a4152);
+    background: #0f1218;
+  }
+  .schem-scroll {
+    overflow-x: auto;
+    padding: 18px 14px 10px;
+  }
+  .schem-scroll:focus-visible {
+    outline: 2px solid var(--accent, #b9a4ff);
+    outline-offset: -2px;
+  }
+  svg {
+    display: block;
+    width: 100%;
+    min-width: 1040px;
+    height: auto;
+  }
+  svg :global(text) {
+    font-family: Inter, Arial, sans-serif;
+    fill: #e9edf5;
+  }
+  svg :global(.frame) {
+    fill: none;
+    stroke: #46506a;
+    stroke-width: 1.5;
+    stroke-dasharray: 8 6;
+  }
+  svg :global(.frame-t) {
+    font:
+      600 11px 'JetBrains Mono',
+      monospace;
+    letter-spacing: 0.1em;
+    fill: #9aa2b3;
+  }
+  svg :global(.stage) {
+    fill: #151a23;
+    stroke: #2f3848;
+    stroke-width: 1;
+  }
+  svg :global(.aux) {
+    fill: none;
+    stroke: #2f3848;
+    stroke-width: 1;
+  }
+  svg :global(.stage-t) {
+    font:
+      600 11px 'JetBrains Mono',
+      monospace;
+    letter-spacing: 0.08em;
+    fill: #c5cbd8;
+  }
+  svg :global(.stage-n) {
+    fill: #b9a4ff;
+  }
+  svg :global(.chip) {
+    fill: #1e2531;
+    stroke: #55607a;
+    stroke-width: 1;
+  }
+  svg :global(.pumpchip) {
+    stroke: #a8473f;
+  }
+  svg :global(.heatchip) {
+    stroke: #8a6a3a;
+  }
+  svg :global(.chip-t) {
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+  svg :global(.chip-s) {
+    font-size: 11.5px;
+    fill: #b4bccb;
+  }
+  svg :global(.beam-t) {
+    font:
+      600 12.5px 'JetBrains Mono',
+      monospace;
+  }
+  svg :global(.beam-s) {
+    font:
+      11px 'JetBrains Mono',
+      monospace;
+    fill: #aab2c2;
+  }
+  svg :global(.note) {
+    font-size: 12px;
+    fill: #aab2c2;
+  }
+  svg :global(.ext-t) {
+    font:
+      600 11px 'JetBrains Mono',
+      monospace;
+    letter-spacing: 0.1em;
+    fill: #b9a4ff;
+  }
+  svg :global(.ext-v) {
+    font:
+      500 13px 'JetBrains Mono',
+      monospace;
+  }
+  figcaption {
+    padding: 12px 16px 14px;
+    border-top: 1px solid var(--line, #262b37);
+  }
+  .schem-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    margin: 0 0 10px;
+    padding: 0;
+    list-style: none;
+    font:
+      11px/1.4 'JetBrains Mono',
+      monospace;
+    color: #c5cbd8;
+  }
+  .schem-key li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .schem-key i {
+    width: 22px;
+    height: 3px;
+    border-radius: 2px;
+  }
+  .schem-key i.dashed {
+    background: repeating-linear-gradient(90deg, var(--c) 0 6px, transparent 6px 10px);
+  }
+  .schem-key i.dotted {
+    background: repeating-linear-gradient(90deg, var(--c) 0 2px, transparent 2px 6px);
+  }
+  figcaption p {
+    margin: 0;
+    font:
+      11px/1.55 'JetBrains Mono',
+      monospace;
+    color: var(--muted, #9aa2b3);
+    max-width: 980px;
+  }
+</style>
